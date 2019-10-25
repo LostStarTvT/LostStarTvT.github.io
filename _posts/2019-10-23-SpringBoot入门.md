@@ -1,3 +1,11 @@
+---
+layout: post
+title: SpringBoot入门
+tags:  java
+
+---
+> 本篇主要介绍使用SpringBoot的基础知识，进行搭新的项目的和项目的解析。
+
 ## Spring boot文件目录
 
 其中pom.xml文件就是整个项目的配置文件，相当于安卓的gradle配置文件。 也即是可以在这里面添加依赖文件等其他的东西。但是在进行更新  。
