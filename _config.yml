@@ -30,8 +30,11 @@ hydrogen-blog:
 MathJax: false
 
 #install emoji
+# plugins:
+#   - jemoji
+
 plugins:
-  - jemoji
+  - jekyll-paginate
 
 # social account
 image:
