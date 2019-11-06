@@ -48,3 +48,7 @@ facebook:
   app_id: null
   #authors: null
 #  admins:
+
+# kramdown:
+#   parse_block_html: true
+# markdown: kramdown

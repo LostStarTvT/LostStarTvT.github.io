@@ -2,7 +2,6 @@
 layout: post
 title: SpringBoot入门
 tags:  java
-
 ---
 > 本篇主要介绍使用SpringBoot的基础知识，进行搭新的项目的和项目的解析。
 
