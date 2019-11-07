@@ -8,7 +8,7 @@ stickie: true
 
 > 本博客主要用来记录Java EE的学习，顺带一些其他的不定期更新~
 >
-> 一下为剑指offer常用的链接
+> 以下为剑指offer常用的链接
 
 1. [java面经](https://snailclimb.top/JavaGuide/#/?tdsourcetag=s_pctim_aiomsg&id=%e5%9f%ba%e7%a1%80)  
 
