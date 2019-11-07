@@ -15,7 +15,7 @@ permalink: /about.html
 在校研究生，CS专业~   
 
 有问题可以通过以下方式联系   
-GitHub：[LostStarTvT]( https://github.com/LostStarTvT/ )
+GitHub：[LostStarTvT]( https://github.com/LostStarTvT/ )  
 Email:  <maps_loading@163.com>    
 ![gakki镇楼](../image/gakki.jpg)
 
