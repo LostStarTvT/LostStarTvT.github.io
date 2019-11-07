@@ -13,13 +13,10 @@ permalink: /about.html
 > 为拯救gakki而努力coding~
 
 在校研究生，CS专业~   
-A boy
 
-有问题可以通过以下方式联系  
+有问题可以通过以下方式联系   
 GitHub：[LostStarTvT]( https://github.com/LostStarTvT/ )
-
 Email:  <maps_loading@163.com>    
-
 ![gakki镇楼](../image/gakki.jpg)
 
 
