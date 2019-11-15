@@ -591,11 +591,11 @@ int main(){
 
 ps 额外的题： 经典的贪心算法的会场安排问题。
 
-![img](../image/greed1.png)
+![img](/image/greed1.png)
 
  
 
-![img](../image/greed2.png)
+![img](/image/greed2.png)
 
 ```c
 #include<cstdio>

@@ -30,7 +30,7 @@ tags: java
    }
 ```
 进行输入的结果显示:  
-![样例显示](../image/inputLine.png)
+![样例显示](/image/inputLine.png)
 
 ### 指定数组长度然后进行循环输入
 
@@ -59,6 +59,6 @@ tags: java
     }
 ```
 进行输入的结果显示：  
-![输入多个](../image/inputmulit.png)
+![输入多个](/image/inputmulit.png)
 
 以上两种可以满足大多数进行输入的情况。
