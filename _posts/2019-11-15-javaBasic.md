@@ -59,6 +59,6 @@ tags: java
     }
 ```
 进行输入的结果显示：  
-![输入多个](/image/inputmulit.png)
+![输入多个](/image/inputMulit.png)
 
 以上两种可以满足大多数进行输入的情况。
