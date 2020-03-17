@@ -11,13 +11,13 @@ tags: java  Algorithm
 
 二叉树即为只有两个节点的存储结构    
 
-满二叉树：所有叶子节点都在最后一层，且总的结点数为2^n - 1;    
+**满二叉树**：所有叶子节点都在最后一层，且总的结点数为2^n - 1;    
 
-完全二叉树：所有的叶子节点都在最后一层或者是倒数第二层，且最后一层叶子节点在左边连续，倒数第二层在右边连续。   
+**完全二叉树**：所有的叶子节点都在最后一层或者是倒数第二层，且最后一层叶子节点在左边连续，倒数第二层在右边连续。   
 
-二叉搜索树、二叉排序树：即左结点一定小于右结点，并且左子树一定都小于右子树的值。官方定义：它或者是一棵空树，或者是具有下列性质的[二叉树](https://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%A0%91/1602879)： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为[二叉排序树](https://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91/10905079)。  
+**二叉搜索树、二叉排序树**：即左结点一定小于右结点，并且左子树一定都小于右子树的值。官方定义：它或者是一棵空树，或者是具有下列性质的[二叉树](https://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%A0%91/1602879)： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为[二叉排序树](https://baike.baidu.com/item/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91/10905079)。  
 
-二叉树的深度： 深度即为从根节点遍历到叶子节点的最长路径长度。  
+**二叉树的深度**： 深度即为从根节点遍历到叶子节点的最长路径长度。  
 
 二叉树数据结构类型:    
 
@@ -165,7 +165,7 @@ public void lastOrder(Tree root){
 
 ### 三、剑指Offer题目
 
-##### 1.景象二叉树
+#### 1.镜像二叉树
 
 **题目意思**: 生成二叉树的景象树，即将所有的叶子节点对称交换，如下所示；  
 
@@ -496,3 +496,131 @@ ArrayList<ArrayList<Integer>> disList = new ArrayList<ArrayList<Integer>>();
     }
 ```
 
+#### 8. 判断二叉树是否为平衡二叉树
+
+**题目大意**：判断二叉树是否为平衡二叉树
+
+**解题思路**：所谓平衡二叉树也就是左右子树的高度相差不超过1，并且每个子树的左高度相差也不超过1，实现的方法就是不断的进行进行左右子树的高度，然后计算差值，作为判断依据。
+
+```java
+public int TreeDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int left = TreeDepth(root.left);
+        int right = TreeDepth(root.right);
+
+        return Math.max(left,right) + 1;
+
+    }
+
+    //判断是否是平衡二叉树
+    //平衡二叉树 左右子树高度不大于2.即最高高度为1。
+    public boolean IsBalanced_Solution(TreeNode root) {
+        if (root == null )  //这个很关键，对于空的二叉树也是平衡二叉树。
+            return true;
+
+       int left = TreeDepth(root.left);
+       int right = TreeDepth(root.right);
+
+       if (Math.abs(left - right) > 1)
+           return false;
+       else {
+           return  IsBalanced_Solution(root.left) && IsBalanced_Solution(root.right); //判断左右子树是否也是平衡二叉树。
+           //当为遍历到null 的时候就会返回true， 这样的到底的时候就会出现true ，如果不遍历子树可能会出现 子树不是二叉树的情形。
+       }
+    }
+```
+
+#### 9.判断二叉树是否为对称二叉树
+
+**题目描述**：给定一个二叉树根结点，然后判断是否为镜像二叉树。  
+
+**解题思路**：对于对称二叉树，下图所示即为对称二叉树，刚开始在解题的时候，其实想错了，只想到了左右结点相等， 其实不相等的也会出现。其实这个题目还没有想太明白。。
+
+[![duicheng.png](https://pic.tyzhang.top/images/2020/03/17/duicheng.png)](https://pic.tyzhang.top/image/qon)
+
+```java
+ boolean isSymmetrical(TreeNode pRoot)
+    {
+          return pRoot == null ||  judge(pRoot.left,pRoot.right);
+
+    }
+
+    boolean judge(TreeNode node1,TreeNode node2){ //使用两个结点来进行控制。
+
+        if (node1 == null && node2 == null)
+            return  true; //同时为null的时候表示为true
+        if (node1 == null || node2 ==null)
+            return false; //表示只有一个为空的时候，则不对称。需要返回
+
+        if (node1.val != node2.val)
+            return false; //这里使用的是false 
+        else //意思是如果相等，则接着判断左子树的右子树 与右子树的左子树是否相等。才有条件接着去验证。
+            return judge(node1.right,node2.left) && judge(node1.left,node2.right);
+    }
+```
+
+#### 10.给定一个节点，返回二叉树中序遍历的下一个结点
+
+**题目描述**：给定一个二叉链表树，和其中的一个节点，找到其中序遍历的下一个结点，其中一个结点不仅包括一左右结点，而且包括其父结点。  
+
+**思路描述**：在刚开始的时候就想到使用栈的中序遍历进行实现，即首先找到根结点，然后使用栈的中序遍历，当找到给定结点时，下一个一定是需要的节点，直接进行返回即可。  
+
+ps:中间出现了一个小错误，就是在找到根结点的时候，没有 分清p.next !=null 的判定条件和p!=null的判定条件的意味，其中，前者表示的p一定不会null，但是后者则可能出现，p==null的情况，因为后面都跟着p=p.next。所以需要注意~~  
+
+```java
+//通过pNode可以找到其父节点。
+    public TreeLinkNode GetNext(TreeLinkNode pNode)
+    {
+        if (pNode == null)
+            return null;
+
+        TreeLinkNode root;
+        TreeLinkNode p = pNode;
+        while (p.next!=null){  //p 不能为null  否则会出现错误。  不能p!=null 这样p就可能出现null值。
+            p = p.next;
+        }
+        root = pNode;
+
+        Stack<TreeLinkNode> stack = new Stack<>();
+
+        stack.push(root);
+        boolean flag = false;
+        while (!stack.isEmpty()){
+            while (stack.peek().left != null)
+                stack.push(stack.peek().left);
+			
+            while (!stack.isEmpty()){
+                TreeLinkNode cur = stack.pop();
+                if (flag)//flag为true 则表示此节点为需要找到的值。
+                    return cur;
+                if (cur == pNode){
+                    flag = true;
+                }
+				
+                //为什么是if ？ 因为在找到一个right节点以后，就必须将其所有的左节点加进去进行遍历。
+                if (stack.peek().right !=null){ 
+                    stack.push(stack.peek().right);
+                    break;
+                }
+            }
+        }
+
+        return  null;
+
+    }
+
+
+public class TreeLinkNode {
+    int val;
+    TreeLinkNode left = null;
+    TreeLinkNode right = null;
+    TreeLinkNode next = null;
+
+    TreeLinkNode(int val) {
+        this.val = val;
+    }
+}
+```
+
+#### 11.未完待续~~
