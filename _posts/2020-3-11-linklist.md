@@ -17,3 +17,61 @@ tags: java  algorithm
 2. 通过遍历将random指向复制
 3. 拆分链表，
 
+[![complexLinkList.md.jpg](https://pic.tyzhang.top/images/2020/03/17/complexLinkList.md.jpg)](https://pic.tyzhang.top/image/FbH)
+
+**具体的代码**
+
+```java
+public RandomListNode CloneNew(RandomListNode pHead)
+    {
+        if (pHead == null) return null;
+        RandomListNode cur = pHead;
+
+        RandomListNode pre;
+        while (cur != null){
+            RandomListNode newNode = new RandomListNode(cur.label);
+            //将其插入到链表中。
+            pre = cur.next;
+            cur.next = newNode;
+            newNode.next = pre;
+            cur = pre;
+        }
+
+        //复制随机链表
+        //
+        cur = pHead;
+        while (cur!=null ){
+            if (cur.random!=null){ //如果不为null
+                cur.next.random = cur.random.next; //因为相同的链表就是后面的那个。 cur.random 为原始的数据 .next 就是新建的那个。
+            }
+           cur =  cur.next.next;
+        }
+
+        //拆分链表
+        cur = pHead;
+        pre = cur.next;
+        RandomListNode head = pre;
+        while (cur!=null){
+            cur.next = pre.next;
+            cur = pre.next;
+            if (cur ==null){
+                break;
+            }
+            pre.next = cur.next;
+            pre = cur.next;
+        }
+        return head;
+    }
+
+
+class RandomListNode {
+    int label;
+    RandomListNode next = null;
+    RandomListNode random = null;
+
+    RandomListNode(int label) {
+        this.label = label;
+    }
+}
+```
+
