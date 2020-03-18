@@ -10,7 +10,7 @@ stickie: true
 >
 > 以下为剑指offer常用的链接
 
-1. [java面经](https://snailclimb.top/JavaGuide/#/?tdsourcetag=s_pctim_aiomsg&id=%e5%9f%ba%e7%a1%80)  
+1. [手撕算法](<https://github.com/labuladong/fucking-algorithm>)  
 
 2. [java知识学习]( https://cyc2018.github.io/CS-Notes/#/README )
 

@@ -623,4 +623,58 @@ public class TreeLinkNode {
 }
 ```
 
-#### 11.未完待续~~
+#### 11.按照之字形打印二叉树
+
+**题目大意**：实现一个按照之字形打印二叉树，即第一行按照从左到右，第二行按照从右到左，第三行按照从从左往右一次类推。  
+
+**解题思路**：刚开始看到第一反应是按照层序遍历使用queue进行遍历，但是在进行手动模拟的时候总是得不到想要的结果，而且控制条件很不好找，然后忽然想到了Stack，因为是后进先出，所以可以通过控制入栈的顺序来达到对应的效果。即第一行使用先左后右入栈，即在第二行输出时是先右向左，在第二行入栈时，先右后左子树进行入栈，这样在输出的时候是先左后右的，就是题干上面的意思。图示如下：
+
+[![zhi.md.png](https://pic.tyzhang.top/images/2020/03/18/zhi.md.png)](https://pic.tyzhang.top/image/LHN)
+
+左边为一个二叉树的结构，输出顺序位1 2 3 4 所示的箭头方向，右边为入栈顺序，通过使用两个栈s1,s2来进行交替入栈，即在输出s1栈数据的同时进行对s2的入栈操作。但是需要主要的是需要控制入栈左右子树的顺序，因为输出的倒序的，所以从左往右的入栈顺序位从右往左，反之亦然。  将出栈的结点保存即可。
+
+具体代码：
+
+```java
+ //之字形实现二叉树遍历
+    public ArrayList<ArrayList<Integer>> Print(TreeNode pRoot) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> list = new ArrayList<>();
+
+        Stack<TreeNode> first = new Stack<>();
+        Stack<TreeNode> second = new Stack<>();
+
+        if (pRoot==null) return result;
+
+        first.push(pRoot);
+        while (!first.isEmpty() || !second.isEmpty()){
+            TreeNode cur; //记录出栈顺序
+
+            while (!first.isEmpty()){ //为空时则为本层遍历结束
+                cur = first.pop();
+                list.add(cur.val);
+
+                if (cur.left!=null) second.push(cur.left);
+                if (cur.right!=null) second.push(cur.right);
+            }
+
+            if (!list.isEmpty()){ //将结果保存
+                result.add(new ArrayList<>(list));
+                list.clear();
+            }
+            while (!second.isEmpty()){
+                cur = second.pop();
+                list.add(cur.val);
+                if (cur.right!=null) first.push(cur.right);
+                if (cur.left!=null) first.push(cur.left);
+            }
+            if (!list.isEmpty()){
+                result.add(new ArrayList<>(list));
+                list.clear();
+            }
+        }
+        return result;
+    }
+```
+
+#### 12.未完待续~

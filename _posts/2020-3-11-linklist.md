@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 剑指offer解题记录
-tags: java  algorithm  
+tags: java  Algorithm  
 ---
 
 
