@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 二叉树刷题总结
-tags: java  Algorithm
+tags: Algorithm
 ---
 
 
@@ -677,5 +677,60 @@ public class TreeLinkNode {
     }
 ```
 
-#### 12.未完待续~
+#### 12.按层打印二叉树
+
+**题目大意**：从上往下按层打印二叉树，同一结点从左往右输出，每层输出一行。
+
+**解题思路**：其实和上一题的思路类似，就是利用两个队列来进行交替输出，即每一个队列交替保存每行，然后进行输出即可。
+
+```java
+ArrayList<ArrayList<Integer> > Print(TreeNode pRoot) {
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> list = new ArrayList<>();
+
+        Queue<TreeNode> first = new LinkedList<>();
+        Queue<TreeNode> second = new LinkedList<>();
+
+        if (pRoot == null) return result;
+
+        first.add(pRoot);
+
+        TreeNode cur;
+        while (!first.isEmpty() || !second.isEmpty()){
+
+            while (!first.isEmpty()){
+                cur = first.remove();
+                list.add(cur.val);
+
+                if (cur.left != null) second.add(cur.left); //使用第二个队列进行保存
+                if (cur.right!=null) second.add(cur.right);
+            }
+
+            if (!list.isEmpty()){
+                result.add(new ArrayList<>(list));
+                list.clear();
+            }
+
+            while (!second.isEmpty()){
+                cur = second.remove();
+
+                list.add(cur.val);
+
+                if (cur.left !=null) first.add(cur.left); //使用第一个队列进行保存
+                if (cur.right!=null) first.add(cur.right);
+            }
+
+            if (!list.isEmpty()){
+                result.add(new ArrayList<>(list));
+                list.clear();
+            }
+        }
+        return result;
+    }
+```
+
+#### 13.未完待续~
+
+
 
