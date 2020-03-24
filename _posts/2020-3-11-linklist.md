@@ -158,4 +158,39 @@ public int MoreThanHalfNum_SolutionNew(int [] array) {
 
 大佬写法：还不会写..
 
-#### 4.未完待续~~
+
+
+#### 4.计算整数中出现1的次数
+
+**题目大意**：给定数字n，求出1-n中所有数字出现1的次数，例如1-13，总共有1、10、11、12、13故1总共出现了6次。  
+
+**解题思路**：对于这种题型最直观的解法就是暴力遍历求解，虽然能够很好的解决但是效率太低.. 看到别人的解法发现这种是分布是有规律的，可以归纳总结出来，但是没有看懂..有机会在再看看  
+
+```java
+ //求出任意非负证书区间中1出现的次数。从1到n
+    public int NumberOf1Between1AndN_Solution(int n) {
+
+        int result = 0;
+        for (int i = 1; i <= n ; i++) {
+            result +=getNumber(i);
+        }
+
+        return result;
+    }
+
+    private int getNumber(int n){ //求出数字n中的1的个数
+        int count = 0;
+        int result = 0;
+        while (n!=0){
+            result = n %10;
+            if (result == 1)
+                count++;
+            n = n/10;
+        }
+        return count;
+    }
+```
+
+
+
+#### 5.未完待续~~
