@@ -156,9 +156,48 @@ public int MoreThanHalfNum_SolutionNew(int [] array) {
     }
 ```
 
-大佬写法：还不会写..
+堆排序输出前k个最小值：  
 
+主要是利用堆的性质，因为每次堆的头部都是该数组中的最小值，所以通过依次获取到最小值，便得到前k最小的值，具体堆的思路可以参考排序算法帖子。  
 
+```java
+ public ArrayList<Integer> GetLeastNumbers_Solution(int [] input, int k) {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
+        if (input.length == 0 || k > input.length) return arrayList;
+        //构建堆
+        for (int i = input.length / 2  - 1; i >= 0 ; i--) {
+            adjustDown(input,i,input.length);
+        }
+        //进行输出排序。输出堆顶
+        //输出k个值 因为每次是将堆头部的值记录，而且头部值是从结尾处复制过来，所以每次调整堆也需要将长度减i，
+        for (int i = 1; i <= k ; i++) {
+            arrayList.add(input[0]); //每次都将头部添加进去。
+            input[0] = input[input.length -i]; //将最后一个值添加到数组头部。
+            adjustDown(input,0,input.length - i);
+        }
+        return arrayList;
+    }
+
+    //使用堆排序进行下调
+    void adjustDown(int [] array,int i,int n){
+        int j = 2* i + 1;//获取左子树
+        int tmp = array[i]; //需要插入的值
+        while (j<n){
+
+            if (j+1<n && array[j+1] < array[j]) //找到小值
+                j++;
+
+            if (tmp <= array[j])//已经是最小值
+                break;
+
+            array[i] = array[j];
+            array[j] = tmp; //将数值交换。
+            i = j; //记录节点转移到下一个节点
+            j = 2 * i +1;
+        }
+    }
+```
 
 #### 4.计算整数中出现1的次数
 
@@ -191,6 +230,9 @@ public int MoreThanHalfNum_SolutionNew(int [] array) {
     }
 ```
 
+#### 5.把数组排成最小数
 
 
-#### 5.未完待续~~
+
+#### 6. 未完待续
+
