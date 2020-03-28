@@ -232,7 +232,52 @@ public int MoreThanHalfNum_SolutionNew(int [] array) {
 
 #### 5.把数组排成最小数
 
+**题目大意**：输入一个整数数组，然后将数组中的所有数据拼接排成一个数，打印能够拼接处的所有数字中的最小一个，例如输入数组{3,32,321}，打印输出这三个数字排成的最小数字321323.  
 
+**解题思路**：刚开始其实没有想好怎么做，在以为要暴力破解，想太多，在参考大佬的做法以后，只能大概了解，主要的做法就是使用String类型的排序，然后进行升序排序，运用的到接口为Collections.sort() 方法里面的compareTo()接口。  
+
+**排序API介绍**：  
+
+compareTo方法，能够对int型排序，也能对对象排序，其对象包括String等内置类和自定义类，只需要实现Comparator<>()接口即可。使用方法如下，对于compareTo（）方法来说，s1.comparaTo(s2)代表含义为s1-s2，此时表示的为升序，也可以自动的指定。 若改成s2.compareTo(s1) 则表示 为降序，
+
+```java
+ Collections.sort(list, new Comparator<>(){
+            public int compare(Integer str1,Integer str2){
+                return s1.compareTo(s2);
+            }
+        });
+```
+
+解题代码：
+
+通过利用compareTo接口进行比较操作，进行升序排序，即先后组合组合找到较小值进行升序排序。。  
+
+```java
+ public String PrintMinNumber(int [] numbers) {
+        int n;
+        String s="";
+        ArrayList<Integer> list= new ArrayList<>();
+        n=numbers.length;
+        for(int i=0;i<n;i++){
+            list.add(numbers[i]);
+
+        }
+        Collections.sort(list, new Comparator<>(){
+
+            public int compare(Integer str1,Integer str2){
+                String s1=str1+""+str2;// 返回string类型的比较。
+                String s2=str2+""+str1;
+                return s1.compareTo(s2);
+            }
+        });
+
+        for(int j:list){
+            s+=j;
+        }
+        return s;
+
+    }
+```
 
 #### 6. 未完待续
 
