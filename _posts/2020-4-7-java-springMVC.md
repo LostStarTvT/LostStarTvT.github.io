@@ -44,3 +44,38 @@ MVC提倡，每一层都只编写自己的东西，不写任何其他的代码�
 另外springMVC的MVC实现思想：
 
 [![springMVC.png](https://pic.tyzhang.top/images/2020/04/07/springMVC.png)](https://pic.tyzhang.top/image/ddyA)
+
+## 3.springMVC配置文件
+
+### 3.1配置文件
+
+resources/springmvc.xml。
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd 			http://www.springframework.org/schema/context  https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--开启注解扫描扫描-->
+    <context:component-scan base-package="cn.dwj"/>
+
+    <!--视图解析器-->
+    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--即返回视图的前缀拼接-->
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <!--返回视图的后缀拼接-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!--开启springMVC框架注解支持-->
+    <mvc:annotation-driven/>
+</beans>
+```
+
+
+
