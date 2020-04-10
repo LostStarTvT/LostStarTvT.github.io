@@ -12,15 +12,15 @@ tags: java
 
 创建spring项目的时候，尽量都要使用maven进行创建，这样就不需要进行导包测试，就会很方便。以下是创建过程：  
 
-1. 按照图片上的123进行操作。首先新建一个maven工程，然后选择Create from archetype，这样maven便会自动帮你配置成一个web项目，点击next按钮。
+1.按照图片上的123进行操作。首先新建一个maven工程，然后选择Create from archetype，这样maven便会自动帮你配置成一个web项目，点击next按钮。  
 
 [![maven1.png](https://pic.tyzhang.top/images/2020/04/09/maven1.png)](https://pic.tyzhang.top/image/dCsT)
 
-2. 点击下一步，进行取包名和项目名字，然后点击next。
+2.点击下一步，进行取包名和项目名字，然后点击next。  
 
 [![maven2.png](https://pic.tyzhang.top/images/2020/04/09/maven2.png)](https://pic.tyzhang.top/image/d95n)
 
-3. 在这里按照可以设置让maven更快的下载依赖，首先点击1的加号，然后输入图片中的内容，然后点击ok下一步，这样便能在新建项目的时候依赖不会慢慢的下载，很快就能建立好项目。
+3.在这里按照可以设置让maven更快的下载依赖，首先点击1的加号，然后输入图片中的内容，然后点击ok下一步，这样便能在新建项目的时候依赖不会慢慢的下载，很快就能建立好项目。  
 
 ```java
 archetyoeCatalog
@@ -29,13 +29,13 @@ internal
 
 [![maven3.png](https://pic.tyzhang.top/images/2020/04/09/maven3.png)](https://pic.tyzhang.top/image/dDvS)
 
-4. 在next以后，便会到了finish界面，此时如果项目存储路径对的话，就直接finish即可。
+4.在next以后，便会到了finish界面，此时如果项目存储路径对的话，就直接finish即可。    
 
-5. 建好的项目界面。此时需要进行更改项目目录，以下为新建好项目的原始样貌。
+5.建好的项目界面。此时需要进行更改项目目录，以下为新建好项目的原始样貌。    
 
 [![maven5.png](https://pic.tyzhang.top/images/2020/04/09/maven5.png)](https://pic.tyzhang.top/image/dMn9)
 
-6. 对比上图需要创建java和resources目录，并且分别对其右键将java文件夹更改为source root 、将resources文件夹更改为resources root目录。如下图所示。这样整个的目录结构便完成。
+6.对比上图需要创建java和resources目录，并且分别对其右键将java文件夹更改为source root 、将resources文件夹更改为resources root目录。如下图所示。这样整个的目录结构便完成。  
 
 [![mavenfile2.png](https://pic.tyzhang.top/images/2020/04/09/mavenfile2.png)](https://pic.tyzhang.top/image/dT9p)  
 
@@ -93,7 +93,9 @@ internal
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+        http://www.springframework.org/schema/context 
+        https://www.springframework.org/schema/context/spring-context.xsd">
     <!--开启注解扫描扫描-->
     <context:component-scan base-package="cn.dwj"/>
 
@@ -146,7 +148,7 @@ internal
 
 因为新建的配置为一个项目，需要有对应的tomcat容器进行运行。  
 
-首先点击add configuration 按钮，跳转到新增界面，然后点击左上角加号，找到对应的tomcat配置界面，并选择local。如下所示： 图标1表示可以更改tomcat运行环境的名字，图标2表示选择自己本地下载的tomcat环境，建议下载到项目的相同目录，直接下载解压好就行。  
+首先点击add configuration 按钮，跳转到新增界面，然后点击左上角加号，找到对应的tomcat配置界面，并选择local。如下所示： 图标1表示可以更改tomcat运行环境的名字，图标2表示选择自己本地下载的tomcat运行程序，没有的需要点击config进行配置，建议下载到项目的相同目录，直接下载解压好就行。  
 
 [![tomcat.png](https://pic.tyzhang.top/images/2020/04/09/tomcat.png)](https://pic.tyzhang.top/image/d52N)
 
@@ -217,9 +219,7 @@ public class HelloController {
 
 ```
 
-运行程序以后便能点击访问到对应的success界面。
-
-
+运行程序以后便能点击访问到对应的success界面。  
 
 ## 5. 流程解析
 
