@@ -586,6 +586,7 @@ private IAccountDao accountDao = null;
 通过查以上的表格找到**IAccountDao**便能够注入成功。  
 
 如果是该接口有两个实现类的话，如下所示：
+
 |   key String   |                        value Object                         |
 | :------------: | :---------------------------------------------------------: |
 | accountService | class **AccountServiceImpl** implements **IAccountService** |
