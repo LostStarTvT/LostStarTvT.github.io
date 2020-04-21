@@ -3,7 +3,8 @@ layout: default
 ---
 <article itemscope itemtype="">
 
-  <!-- <header class="post-header">
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
     <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
       <time datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
@@ -13,9 +14,9 @@ layout: default
       {% if page.author %}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ page.author }}</span></span>
       {% endif %}</p>
-  </header> -->
+  </header>
 <script type="text/javascript" async
-src="cdn: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   document.getElementsByTagName("img").className="bbb";
   </script>
   
