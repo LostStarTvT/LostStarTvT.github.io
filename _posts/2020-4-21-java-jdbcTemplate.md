@@ -1,6 +1,6 @@
 ---
 layout: post
-title:Spring中的JdbcTemplate学习记录
+title: Spring中的JdbcTemplate学习记录
 tags: java  
 ---
 
