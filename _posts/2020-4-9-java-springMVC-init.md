@@ -7,7 +7,9 @@ tags: java
 
 > 记录使用maven创建springMVC项目的过程，并使用tomcat服务器进行运行项目。
 
-
+##  目录
+* 目录
+{:toc}
 ## 1.创建maven项目
 
 创建spring项目的时候，尽量都要使用maven进行创建，这样就不需要进行导包测试，就会很方便。以下是创建过程：  

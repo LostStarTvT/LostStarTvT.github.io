@@ -7,6 +7,9 @@ tags: java
 
 > 看Java SpringMVC视频学习笔记总结
 
+##  目录
+* 目录
+{:toc}
 ## 0.说明
 
 [视频链接](https://www.bilibili.com/video/BV1d4411g7tv?p=320) b站的spring springMVC MyBatis视频课程，这个课程其实比较老，而且最新版的spring源码已经更改，但是其思想还是没有变的，学习基础的话还是可以看。  
