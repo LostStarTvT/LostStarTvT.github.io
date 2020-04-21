@@ -12,7 +12,6 @@ tags: java
 * 目录
 {:toc }
 ## 1. 对于数据库的事务分析
-
 ```java
 @Override
 public void transfer(String sourceName, String targetName, Float money) {
