@@ -1,12 +1,10 @@
 ---
-layout: post
-permalink: /archives/
-title: "archives"
+layout: default
 ---
 <ul>
   {% for post in site.posts %}
 
-  
+
     {% unless post.next %}
       <h2>{{ post.date | date: '%Y年' }}</h2>
     {% else %}
