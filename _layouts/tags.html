@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Tags
-tagline: （ • ̀ω•́ ） 这里竟然是标签哎！
+tagline: hey we go！
 ---
 <article>
 
@@ -21,11 +21,11 @@ tagline: （ • ̀ω•́ ） 这里竟然是标签哎！
     {% for post in site.tags[this_word] %}
       {% if post.title != null %}
         <div class="tagged-post">
-          <h3 class="title">
+          <h4 class="title">
             <a href="{{ post.url | relative_url }}">
               {{ post.title }}
             </a>
-          </h3>
+          </h4>
           <div class="meta">
             {{ post.date | date: "%B %-d, %Y" }}
           </div>
