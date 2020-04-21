@@ -1,7 +1,10 @@
 ---
 layout: default
 ---
-<ul>
+
+<article>
+
+  <ul>
   {% for post in site.posts %}
 
 
@@ -18,3 +21,4 @@ layout: default
     <li>{{ post.date | date:"%m月%d日：" }} <a href="{{ post.url }}">{{ post.title }}</a></li>
   {% endfor %}
 </ul>
+</article>
