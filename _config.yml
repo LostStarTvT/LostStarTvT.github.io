@@ -49,6 +49,7 @@ facebook:
   #authors: null
 #  admins:
 
-# kramdown:
-#   parse_block_html: true
-# markdown: kramdown
+# 添加目录插件
+kramdown:
+  parse_block_html: true
+markdown: kramdown
