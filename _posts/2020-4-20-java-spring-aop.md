@@ -1,11 +1,11 @@
 ---
 layout: post
-title: Spring Aop 学习
+title: Spring AOP 学习
 tags: java  
 ---
 
 
-> 记录spring Aop 的知识，配以简单的例子进行说明。
+> 记录spring AOP 的知识，配以简单的例子进行说明。
 
 
 ## 1. 对于数据库的事务分析
@@ -32,11 +32,11 @@ public void transfer(String sourceName, String targetName, Float money) {
 
 解决方案：
 
-所以需要TheadLocal对象，把Connection和当前线程绑定，从而使得一个线程中只有一个能够控制事务的对象。
+所以需要`TheadLocal`对象，把`Connection`和当前线程绑定，从而使得一个线程中只有一个能够控制事务的对象。
 
-主要就是借助java的事务管理，将多个事务整合成一个原子性操作。
+**主要就是借助java的事务管理，将多个事务整合成一个原子性操作。**
 
-需要借助两个工具类`ConnectionUtils.class`和`TransactionManager.class`
+需要借助两个工具类`ConnectionUtils.class`和`TransactionManager.class`定义事务操作。
 
 ```java
 /**
@@ -152,7 +152,7 @@ public class TransactionManager {
  * @author Seven on 2020/4/14
  */
 public class AccountServiceImpl implements IAccountService {
-
+	//使用spring注入。
     private IAccountDao iAccountDao;
 	public void setiAccountDao(IAccountDao iAccountDao) {
         this.iAccountDao = iAccountDao;
@@ -203,7 +203,7 @@ public class AccountServiceImpl implements IAccountService {
 }
 ```
 
-对应的dao操作也需要进行改造
+对应的dao操作也需要进行改造，主要是要在sql中加上`connectionUtils.getThreadConnection()`将多个操作绑定成同一个事务，实现同步同步操作。
 
 ```java
 // Describe: 账户的持久层实现类
@@ -260,7 +260,7 @@ spring配置，将需要的bean注入进去。
     <bean id="connectionUtils" class="com.diaowenjie.utils.ConnectionUtils">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
-	<!--runner 和 DataSource 省略不表-->
+	<!--runner 和 DataSource 省略不表 主要就是配置数据库连接，在ioc文章中有说。-->
     <!--配置事务管理器-->
     <bean id="txManager" class="com.diaowenjie.utils.TransactionManager">
         <property name="connectionUtils" ref="connectionUtils"/>
@@ -268,13 +268,15 @@ spring配置，将需要的bean注入进去。
 </beans>
 ```
 
-经过以上的配置便能够实现事务的原子性规划。
+经过以上的配置便能够实现事务的原子性操作。
 
 ## 2.动态代理
 
+### 2.1基于接口的动态代理实现方法
+
 特点：字节码随用随创建，随用随加载
 
-作用: 不修改源码的基础上对方法增强
+作用: 不修改源码的基础上对方法增强，例如增加log，其实最主要的思想就是抽取公共代码，让代码更加的简洁容易维护。
 
 1. 分类:
    1. 基于接口的动态代理
@@ -288,8 +290,6 @@ spring配置，将需要的bean注入进去。
    1. `ClassLoader`:类加载器，他是用于加载代理对象字节码的，和被代理对象使用相同的类加载器，固定写
    2. Class[ ]:自己码数组，他是用于让代理对象和被代理对象有相同的方法，固定写法
    3. `InvocationHandler`:用于提供增强的代码，让是让我们写如何代理，我们一般都是写一个该接口的实现类，通常情况下都是匿名类，但是不是必须的。此接口的实现类都是谁用谁写。
-
-### 2.1基于接口的动态代理实现方法
 
 基于生产者的代理实现，总共有三个类，一个生产者类进行生产产品，一个经销商接口，一个用户类。
 
@@ -364,9 +364,17 @@ public class Client {
 }
 ```
 
+运行结果：
+
+```shell
+销售产品800
+```
+
+即相当于经销商代理半路抽取了20%的手续费。即对方法实现再包装。
+
 ### 2.2 基于类的动态代理
 
-这个就需要借助第三方的jar包来实现。
+这个就需要借助第三方的jar包来实现。总体的实现方法与基于接口的实现类似。
 
 ```xml
 <dependency>
@@ -430,11 +438,13 @@ public class Client {
 }
 ```
 
-主要就是写增强方法。
+主要就是写增强方法。运行结果也是经销商抽取了20%的手续费。
 
 ## 3.基于动态代理实现事务原子性
 
-`BeanFactory.class`对比于事务分析中的原子性操作，使用以下方法进行为service层中每一个方法加上事务。因为是调用类中的方法， 所以当直接给一个类进行增加事务操作时，也相当于为类中每一个方法加上事务？
+使用动态代理技术实现标题1中的事务，即抽取事务绑定代码，然后使用动态代理为每个方法加上事务。 
+
+`BeanFactory.class`对比于事务分析中的原子性操作，使用以下方法进行为service层中每一个方法加上事务。因为是调用类中的方法， 所以当直接给一个类进行增加事务操作时，也相当于为类中每一个方法加上事务？相当于代理商为每个数据库操作加了一个保险。
 
 ```java
 public class BeanFactory {
@@ -493,20 +503,22 @@ public class BeanFactory {
 }
 ```
 
-此时也需要更改xml中的配置，需要将工厂类增加到容器中去
+此时也需要更改xml中的配置，需要将工厂类增加到容器中去，并且为工厂类注入需要改造的正常service，工厂类返回改造后的增强proxyAccountService 
 
 ```xml
 <!-- 配置beanFactory-->
 <bean id="beanFactory" class="com.diaowenjie.factory.BeanFactory">
     <property name="txManager" ref="txManager"/>
-    <!--注入service-->
+    <!--注入service 需要将正常的service注入到工厂类去改造。-->
     <property name="accountService" ref="accountService"/>
 </bean>
 
-<!-- 配置工厂类service-->
+<!-- 配置工厂类service 此service为增强后的service-->
 <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"/>
 <!--    因为有两个所有在测试类中就需要进行更改。-->
+
 <!--配置service-->
+<!--这个service是正常的service-->
 <bean id="accountService" class="com.diaowenjie.service.impl.AccountServiceImpl">
     <!--注入runner-->
     <property name="iAccountDao" ref="accountDao"></property>
@@ -522,7 +534,7 @@ public class BeanFactory {
 public class AccountServiceTest {
 
     @Autowired 
-    @Qualifier("proxyAccountService") //因为有两个service类，所以需要指定。
+    @Qualifier("proxyAccountService") //因为有两个service类，所以需要指定。 指定调用增强后的service对象，
     private IAccountService accountService;
 
     @Test
@@ -644,12 +656,12 @@ public class Logger {
    1. 关键字:` execution`(表达式)
 
    2. 表达式:访问修饰符 `返回值 包名.包名.包名...类名.方法名(参数列表)`
-   3. 标准的表达式写法:` public void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()` 
-   4. 访问修饰符(public)可以省略:`void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()`
-   5. 返回值可以使用通配符\*，表示任意返回值:`* com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()`
-   6. 包名可以使用通配符，表示任意包，但是有几级包，就需要写几个\*.:`* *.*.*.*.AccountServiceImpl.saveAccount()`
+   3. 标准的表达式写法：` public void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()` 
+   4. 访问修饰符(public)可以省略：`void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()`
+   5. 返回值可以使用通配符\*，表示任意返回值：`* com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()`
+   6. 包名可以使用通配符，表示任意包，但是有几级包，就需要写几个`*. ` ：`* *.*.*.*.AccountServiceImpl.saveAccount()`
    7. 包名可以使用\..表示当前包及其子包：`* *..AccountServiceImpl.saveAccount()`
-   8. 类名和方法名都可以使用\*来进行通配:`* *..*.*()`但是()表示无参。
+   8. 类名和方法名都可以使用\*来进行通配：`* *..*.*()`但是()表示无参。
    9. 参数列表：
       1. 可以直接写数据类型：
          1. 基本类型直接写名称 : e.g.  `int`
@@ -854,7 +866,9 @@ public Object aroundPrintLog(ProceedingJoinPoint pjp){
     Object rtValue = null;
     try {
         System.out.println("Logger类中的方法printLog开始记录日志...前置");
-        rtValue= pjp.proceed(args);
+        
+        rtValue= pjp.proceed(args); //目标调用方法。
+        
         System.out.println("Logger类中的方法printLog开始记录日志...后置");
         return rtValue;
     } catch (Throwable throwable) {
