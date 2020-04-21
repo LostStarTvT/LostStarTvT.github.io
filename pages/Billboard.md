@@ -2,7 +2,6 @@
 layout: page
 title: Billboard
 tagline: Biu~
-permalink: /Billboard.html
 ---
 
 ## 止战之殇 
