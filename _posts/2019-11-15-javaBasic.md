@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java:基础知识
+title: Java：基础知识
 tags: java
 ---
 

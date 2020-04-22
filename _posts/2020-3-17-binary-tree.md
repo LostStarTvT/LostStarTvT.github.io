@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Algorithm:二叉树
+title: Algorithm：二叉树
 tags: Algorithm
 ---
 

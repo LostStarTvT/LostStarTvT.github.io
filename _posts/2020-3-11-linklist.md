@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Algorithm:剑指offer解题
+title: Algorithm：剑指offer解题
 tags: Algorithm  
 ---
 

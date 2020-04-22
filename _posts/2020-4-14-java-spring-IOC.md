@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spring:IOC & DI
+title: Spring：IOC & DI
 tags: java  
 ---
 

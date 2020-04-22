@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java:多线程
+title: Java：多线程
 tags: java  
 ---
 
