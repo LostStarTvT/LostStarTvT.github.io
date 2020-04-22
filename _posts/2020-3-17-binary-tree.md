@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 二叉树刷题总结
+title: Algorithm:二叉树
 tags: Algorithm
 ---
 

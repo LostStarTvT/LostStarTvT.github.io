@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spring Ioc、DI 学习
+title: Spring:IOC & DI
 tags: java  
 ---
 

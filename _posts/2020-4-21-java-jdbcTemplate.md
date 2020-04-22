@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spring中的jdbcTemplate和事务控制
+title: Spring:JdbcTemplate & Transaction
 tags: java  
 ---
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: idea使用maven创建springMVC项目
+title: SpringMVC:使用idea创建项目
 tags: java  
 ---
 
