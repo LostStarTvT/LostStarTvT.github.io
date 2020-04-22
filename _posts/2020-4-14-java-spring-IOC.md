@@ -10,7 +10,7 @@ tags: java
 ##  目录
 * 目录
 {:toc}
-## 1.Spring的思想实现之工厂模式创建对象
+## 1.工厂模式创建对象
 
 耦合：程序之间的依赖，分为两种：
 
@@ -143,7 +143,7 @@ public class BeanFactory {
 IAccountDao accountDao = (IAccountDao) BeanFactory.getBean("accountDao");
 ```
 
-## 2. 使用Spring创建对象
+## 2. Spring创建对象
 
 控制反转(ioc)：把创建对象的权利交给框架，是框架的最重要的特征， 并非面向对象的专业术语，它包括依赖注入(DI)和依赖查找(dependency lookup)    
 
@@ -198,7 +198,7 @@ public class Client {
 
 2. BeanFactory：多例对象适用。它在创建核心容器的时候，创建对象的策略是采取延迟加载的方式，也即是说，什么时候根据id创建对象了，什么时候开始真正的创建对象。
 
-## 3.springXML配置版注入操作
+## 3.SpringXML配置
 
 ### 3.1 新建bean对象
 
@@ -487,7 +487,7 @@ public class AccountServiceImpl implements IAccountService {
     </bean>
 ```
 
-## 4.spring注解版操作
+## 4.Spring注解版配置
 
 开启注解版最重要的操作就是开启注解扫描。
 
@@ -647,9 +647,9 @@ private IAccountDao accountDao = null;
 
 **属性**：value；指定范围的取值，常用取值：singleton（默认 单列）  prototype（多例）
 
-## 5.结合spring配置的方式进行的增删改查
+## 5.Spring项目增删改查
 
-### 5.1基本项目结构
+### 5.1基本项目文件
 
 首先是整体的文件，使用三层架构进行测试，其中：  
 
@@ -657,12 +657,12 @@ dao层负责数据持久化：
 
 ```java
 public class AccountDaoImpl implements IAccountDao {
-
+	//注入 数据查询
     private QueryRunner runner;
-	
     public void setRunner(QueryRunner runner) {
         this.runner = runner;
     }
+    //查找所有用户
     public List<Account> findAllAccount() {
         try {
             return runner.query("select * from account",new BeanListHandler<Account>(Account.class));
@@ -683,6 +683,7 @@ public class AccountServiceImpl implements IAccountService {
     public void setiAccountDao(IAccountDao iAccountDao) {
         this.iAccountDao = iAccountDao;
     }
+    //查询所有用户
     public List<Account> findAllAccount() {
         return iAccountDao.findAllAccount();
     }
@@ -691,7 +692,7 @@ public class AccountServiceImpl implements IAccountService {
 
 ### 5.2 纯xml配置版
 
-spring配置文件：
+基于以上的基本文件进行spring配置：主要就是将需要的文件配置进行spring容器中，然后配置对象之间的依赖。  
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -714,6 +715,7 @@ spring配置文件：
         <!--注入runner对象,对应类有个set方法-->
         <property name="runner" ref="runner"/>
     </bean>
+    
     <!--配置QueryRunner，需要依赖数据源对象--->
     <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">
         <constructor-arg name="ds" ref="dataSource"/>
@@ -816,7 +818,7 @@ spring配置文件: 出现注解的配置文件并存的局面。
 </beans>
 ```
 
-## 6.使用java配置文件代替xml
+## 6.Spring纯注解版
 
 其实xml可以说是一直简单的java文件翻版，即spring中使用xml简化java文件的书写。这样也就是说可以完全使用java文件进行配置spring项目。  
 
@@ -980,7 +982,7 @@ jdbc.password = A123456
 
 通过以上的方式可以感受到， 纯注解和纯xml的都是很费时，建议使用xml+注解的方式。其中使用别人的包的建议使用注解的方式，比较方便。
 
-## 7.Junit测试，使用spring 容器的方式进行测试
+## 7.Junit测试之使用spring 容器的方式进行测试
 
 #### 出现问题
 

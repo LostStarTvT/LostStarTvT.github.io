@@ -11,7 +11,7 @@ tags: java
 
 * 目录
 {:toc }
-## 1. 对于数据库的事务分析
+## 1. 数据库操作事务分析
 
 ```java
 @Override
@@ -263,6 +263,7 @@ spring配置，将需要的bean注入进去。
     <bean id="connectionUtils" class="com.diaowenjie.utils.ConnectionUtils">
         <property name="dataSource" ref="dataSource"></property>
     </bean>
+    
 	<!--runner 和 DataSource 省略不表 主要就是配置数据库连接，在ioc文章中有说。-->
     <!--配置事务管理器-->
     <bean id="txManager" class="com.diaowenjie.utils.TransactionManager">
@@ -518,7 +519,7 @@ public class BeanFactory {
 
 <!-- 配置工厂类service 此service为增强后的service-->
 <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"/>
-<!--    因为有两个所有在测试类中就需要进行更改。-->
+<!--因为有两个所有在测试类中就需要进行更改。-->
 
 <!--配置service-->
 <!--这个service是正常的service-->
