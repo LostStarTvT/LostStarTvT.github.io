@@ -438,12 +438,12 @@ SqlMapConfig.xml中配置的内容和顺序如下：
 
 ```xml
 <properties resource="jdbcConfig.properties"></properties>
-<properties url="jdbcConfig.properties"></properties>
+<properties url=" http://localhost:8080/mybatiserver/demo.properties"></properties>
 ```
 
 **resource属性：**常用的。用于指定配置文件的位置，是按照类路径的写法来写，必须存在于类路径下。  
 
-**url属性：**是要求按照url的写法来写地址。e.g. http://localhost:8080/mybatiserver/demo  
+**url属性：**不常用。是要求按照url的写法来写地址。e.g. http://localhost:8080/mybatiserver/demo.properties读取网络资源。
 
 1.首先是配置properties文件。在里面写好jdbc配置  
 

@@ -131,7 +131,7 @@ public interface IUserDao {
 }
 ```
 
-mysbatis主配置文件resource/sqlMapConfig.xml
+mybatis主配置文件resource/sqlMapConfig.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -163,7 +163,7 @@ mysbatis主配置文件resource/sqlMapConfig.xml
 </configuration>
 ```
 
-映射配置文件/resource/com/diaowenjie/dao/IUserDao.xml，三即文件夹目录，需要和接口文件IUserDao.class目录保持一致。
+映射配置文件/resource/com/diaowenjie/dao/IUserDao.xml，三层文件夹目录，需要和接口文件IUserDao.class目录保持一致。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -181,7 +181,7 @@ mysbatis主配置文件resource/sqlMapConfig.xml
 **搭建环境注意事项：**  
 
 1. 创建IUserDao.xml和IUserDao.java是为了和之前保持一致，在Mybatis中它把持久层的操作接口和映射文件叫做Mapper，所以IUserDao和IUserMapper是一样的。
-2. 在idea中创建目录时，它和包是不一样的，包输入`com.diaowenjie.dao`这是三级目录结构，但是文件夹这样输入时一级目录，需要一个一个的新建。
+2. 在idea中创建目录时，它和包是不一样的，包输入`com.diaowenjie.dao`这是三级目录结构，但是文件夹这样输入时是一级目录，所以需要一个一个的新建文件夹。
 3. mybatis的映射配置文件位置必须和dao接口的包结构相同。
 4. 映射文件的`mapper`标签和`namespace`属性的取值必须是dao接口的全类型限定名。
 5. 映射配置文件的操作配置(select)，id属性的取值必须是dao接口的方法名。
