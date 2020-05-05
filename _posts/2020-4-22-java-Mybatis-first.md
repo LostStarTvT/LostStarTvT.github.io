@@ -13,6 +13,8 @@ tags: java
 {:toc}
 # 1.Mybatis基础知识
 
+[相关视频学习博客](https://blog.csdn.net/a1092882580/article/details/104086181)    [学习视频](https://www.bilibili.com/video/BV1Db411s7F5)  
+
 三层架构：
 
 1. 表现层：用于展示数据的
