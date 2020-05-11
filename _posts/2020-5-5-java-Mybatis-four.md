@@ -263,7 +263,7 @@ public void testFirstLevelCache(){
 }
 ```
 
-一级缓存的范围，当调用SQLSession的修改，添加，删除，commit()，close()等方法时，就会清楚一级缓存。
+一级缓存的范围，当调用SQLSession的修改，添加，删除，commit()，close()等方法时，就会清除一级缓存。
 
 如下所示，在两次查询中插入一个更新操作，然后日志如下并且两个对象也不一样。
 
