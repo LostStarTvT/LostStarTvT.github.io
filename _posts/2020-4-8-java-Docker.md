@@ -36,9 +36,9 @@ docker客户端(Client)：连接docker主机进行操作；
 
 docker仓库(Registry)：用来保存各种打包好的软件镜像；  
 
-docker镜像(Images)：软件打包好的镜像；放在docker仓库中；  
+**docker镜像(Images)：软件打包好的镜像；放在docker仓库中；**  
 
-docker容器(Container)：镜像启动后的实例称为一个容器；容器是独立运行的一个或一组应用；  
+**docker容器(Container)：镜像启动后的实例称为一个容器；容器是独立运行的一个或一组应用；**  
 
 **docker镜像与容器的关系，类似与类与对象的关系。即镜像为类，容器为对象，即容器为具体镜像的运行实例。**
 
@@ -62,8 +62,12 @@ docker容器(Container)：镜像启动后的实例称为一个容器；容器是
 CentOS 安转docker
 1、检查内核版本，必须是3.10及以上
 uname -r
+2、安装yum-utils:
+yum install -y yum-utils device-mapper-persistent-data lvm2
+3.为yum源添加docker仓库位置
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 2、安装docker
-yum install docker
+yum install docker-ce
 3、输入y确认安装
 4、启动docker
 [root@localhost ~]# systemctl start docker
@@ -74,28 +78,6 @@ Docker version 1.12.6, build 3e8e77d/1.12.6
 Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
 6、停止docker
 systemctl stop docker
-
-```
-
-**linux安装：（测试的是Ubuntu 14.0.98?）**
-
-```shell
-//参考链接 https://www.runoob.com/docker/ubuntu-docker-install.html
-设置阿里云为安转服务器。
-curl -sSL http://acs-public-mirror.oss-cn-hangzhou.aliyuncs.com/docker-engine/internet | sh -
-//安装需要的包
-sudo apt-get install linux-image-extra-$(uname -r) linux-image-extra-virtual
-//添加使用 HTTPS 传输的软件包以及 CA 证书
-sudo apt-get update
-sudo apt-get install apt-transport-https ca-certificates
-//.添加GPG密钥
-sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
-// 添加软件源
-echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" | sudo tee /etc/apt/sources.list.d/docker.list
-// 更新软件包缓存
-sudo apt-get update
-//安装。
-sudo apt-get install -y docker.io
 ```
 
 ## 3.Docker常用命令&操作
@@ -108,6 +90,7 @@ sudo apt-get install -y docker.io
 | 拉取 | docker pull 镜像名:tag                          | :tag是可选的，tag表示标签，多为软件的版本，默认是latest  |
 | 列表 | docker images                                   | 查看所有本地镜像                                         |
 | 删除 | docker rmi image-id                             | 删除指定的本地镜像                                       |
+| 删除 | docker rm container-id                          | 删除安装的容器，即使用镜像安转程序。                     |
 
 [官方网站](https://hub.docker.com/) 
 
