@@ -135,14 +135,24 @@ ubunte
 开启 ufw enable
 查看状态 ufw status
 
-
 11、查看容器的日志
 docker logs container-name/container-id
+
+12、启动所有的容器命令
+docker start $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+13、关闭所有的容器命令
+docker stop $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+14、删除所有的容器命令
+docker rm $(docker ps -a | awk '{ print $1}' | tail -n +2)
+
+15、删除所有的镜像
+docker rmi $(docker p_w_picpaths | awk '{print $3}' |tail -n +2)
 
 更多命令参看
 https://docs.docker.com/engine/reference/commandline/docker/
 可以参考每一个镜像的文档
-
 ```
 
 ### 3）、安装MySQL示例
