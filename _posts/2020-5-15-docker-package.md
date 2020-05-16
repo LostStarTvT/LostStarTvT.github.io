@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 将项目部署到docker进行运行
+title: 项目使用docker进行部署
 tags: java
 ---
 
@@ -17,7 +17,7 @@ tags: java
 ## Docker Registry 2.0搭建
 
 ```shell
-docker run -d -p 5000:5000 --restart=always --name registry2 registry:2Copy to clipboardErrorCopied
+docker run -d -p 5000:5000 --restart=always --name registry2 registry:2
 ```
 
 如果遇到镜像下载不下来的情况，需要修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值，然后重启docker服务：
@@ -25,7 +25,7 @@ docker run -d -p 5000:5000 --restart=always --name registry2 registry:2Copy to c
 ```json
 {
   "registry-mirrors": ["https://registry.docker-cn.com"]
-}Copy to clipboardErrorCopied
+}
 ```
 
 ## Docker开启远程API
