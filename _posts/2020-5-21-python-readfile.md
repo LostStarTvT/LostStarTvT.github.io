@@ -1,16 +1,24 @@
 ---
 layout: post
-title: python匹配不定文件名
+title: Python 匹配不定文件名
 tags: python
 ---
 
 
-> 在进行数据处理的时候，可能会有数据文件名称不一致的问题，本文使用fnmatch 进行匹配文件名称然后进行批量读取文件。
+> 在进行数据处理的时候，可能会有数据文件名称不一致的问题，本文使用 fnmatch 进行匹配文件名称然后进行批量读取文件。
 
 ##  目录
 * 目录
 {:toc}
-# 一、读取结果
+# 一、使用场景
+
+在处理数据的时候，总会出现很多不同的文件需要一一读取，但是因为有些命名不规范导致读取很麻烦，比如说下如下所示：
+
+![example99c2a4d0a4c971b3.png](https://pic.tyzhang.top/images/2020/05/23/example99c2a4d0a4c971b3.png)
+
+需要读取每个文件夹中的HandPhone_keyboard的数据，但是因为命名的不规范，后缀为HTC与Sam，使得读取文件很复杂。python中的`fnmatch`插件可以很好的解决这种文件读取，采用的方法为先将文件夹中的所有的文件名称读取进来，然后使用`fnmatch`进行匹配需要的文件夹名称。
+
+# 二、读取结果
 
 最终读取的结果如下，可以发现，前面是比较有规律的，但是后面的可能是(Samsung_S6)，或者是(HTC_One)，那么就需要进行匹配然后读取出来文件。
 
@@ -37,7 +45,7 @@ tags: python
 ./data/20/20_HandPhone_Keyboard_(HTC_One).csv
 ```
 
-# 二、实现代码
+# 三、实现代码
 
 代码中主要的就是使用字符串进行拼接出来路径，然后进行读取文件。对于`fnmatch`，实现的方法为首先目录中的所有文件名使用`os.listdir`读取进来，然后使用`fnmatch.fnmatchcase`方法进行匹配，如果匹配成功则输出。其中`pattern = str(i) + '_HandPhone_Keyboard_*.csv'`是进行匹配的规则，其中\*表示后面的所有字符都进行匹配。
 
@@ -56,8 +64,9 @@ if __name__ == '__main__':
 
     base_path = "./data/"  # 设置文件路径。
     person_number = 20  # 保存有多少用户
-
-    # 获取本地路径 ，使用fnmatchcase方法读取出来所有的使用手机按压数据。
+	
+    # 最终路径 ./data/20/20_HandPhone_Keyboard_(HTC_One).csv
+    # 获取本地路径 ，使用fnmatchcase方法读取出来所有的需要路径。
     paths = []
     for i in range(1, person_number + 1):
         # 获取文件夹中所有的文件目录

@@ -219,7 +219,7 @@ get、post方法为内置方法，以下 对于delete和put方法进行说明，
 
 index.jsp
 
-```html
+```jsp
 <%--其中1为请求参数--%>
 <form action="/user/book/1" method="post">
     <%--添加了一个_name 的方法--%>
