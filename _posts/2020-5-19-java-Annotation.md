@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java Annotation
+title: Java：Annotation
 tags: java
 ---
 
