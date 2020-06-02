@@ -5,12 +5,14 @@ tags: java
 ---
 
 
-> 记录在springBoot项目中使用maven将项目打包并且部署到docker服务器上。
+> 记录在springBoot项目中使用maven将项目打包并且部署到docker服务器上。 需要注意的是在部署的时候一定要考虑安全问题，否则的话容易服务器被别人利用，被黑客攻击。
 
 ##  目录
 * 目录
 {:toc}
 [参考链接](http://www.macrozheng.com/#/reference/docker_maven)
+
+此方法会默认监听所有的请求，也就是说所有人都可以上传docker镜像到这个服务器，安全性为0。虽然可以指定固定的ip才能上传成功，但是因为在学校没有自己的ip所以便不能够实现。但在内网测试的时候还是可以，如果放到公网上就需要仔细考虑安全问题。一个暴力的办法就是部署成功以后关闭2375端口。或者换一个方法实现。
 
 # 一、Docker Registry
 
@@ -48,6 +50,29 @@ ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
 ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock
 ```
 
+如果是阿里云的docker则是如下：
+
+```shell
+ExecStart=/usr/bin/dockerd-current \      
+          
+          -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock \
+          --add-runtime docker-runc=/usr/libexec/docker/docker-runc-current \
+          --default-runtime=docker-runc \
+          --exec-opt native.cgroupdriver=systemd \
+          --userland-proxy-path=/usr/libexec/docker/docker-proxy-current \
+          --init-path=/usr/libexec/docker/docker-init-current \
+          --seccomp-profile=/etc/docker/seccomp.json \
+          $OPTIONS \
+          $DOCKER_STORAGE_OPTIONS \
+          $DOCKER_NETWORK_OPTIONS \
+          $ADD_REGISTRY \
+          $BLOCK_REGISTRY \
+          $INSECURE_REGISTRY \
+          $REGISTRIES
+```
+
+但是最好不要这样写，因为` -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock \`表示任何的ip都能访问这个docker服务器，然后我的就被种上挖矿病毒。。 但是在本地进行的时候还是可以的，所以在实际的生产环境中还是用多加注意。。**不要轻易使用这个方法。**或者就是自己使用完以后就关闭端口。防止别人使用。
+
 ### 让Docker支持http上传镜像
 
 其中地址就是直接写服务器自己的地址。
@@ -59,7 +84,7 @@ echo '{ "insecure-registries":["192.168.3.130:5000"] }' > /etc/docker/daemon.jso
 ### 修改配置后需要使用如下命令使配置生效
 
 ```shell
-systemctl daemon-reloadCopy
+systemctl daemon-reload
 ```
 
 ### 重新启动Docker服务
