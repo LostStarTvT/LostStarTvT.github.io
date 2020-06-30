@@ -12,7 +12,7 @@ tags: java
 {:toc}
 # 什么叫做接口回调 ？ 
 
- 核心思想就是利用java的动态绑定， 即父类可以调用子类的方法。父类进行定义接口，然后在方法中只是调用一样接口中的方法， 具体的方法实现是在子类进行实现，但是需要在父类中定义一个接口注册函数，然后才能实现子类与父类之间的关联。
+ 核心思想就是利用java的动态绑定，利用多态的特性去调用接口的实现方法。 使用用法：在A类中定义接口方法， 在B类中实现A中的接口方法，然后将自己的实现方法注册到A类中，这样在A类中调用自己的接口就相当与调用B类中定义的方法，这样便能够实现AB类中的数据交互，因为方法是在B类中进行实现的，也相当于把A类接口中的参数传递给B类，这样B类便可以进行处理A中的参数，并且还能将处理后的参数传递给A类。实现双向的数据交互。
 
 # 接口回调的作用 ？
 
@@ -24,72 +24,63 @@ tags: java
 
  NumberKeyboardView.java 中接口的定义。 接口获取到的数据。
 
-1.在父类中进行定义接口和接口注册函数。
+1.在A类中定义接口和接口注册函数。
 
 ```java
-NumberKeyboardView.java
+public class NumberKeyboardView {
+    //1 定义接口类。
+    private OnNumberClickListener onNumberClickListener; 
 
-//1 定义要用到的类为对象。
-private OnNumberClickListener onNumberClickListener; 
+    //2 实现接口的注册方法，相当于进行绑定。
+    public void  setOnNumberClickListener(OnNumberClickListener onNumberClickListener){
+        this.onNumberClickListener = onNumberClickListener;
+    }
 
-//2 实现接口的注册方法，相当于进行绑定。
-public void  setOnNumberClickListener(OnNumberClickListener onNumberClickListener){
-    this.onNumberClickListener = onNumberClickListener;
+    // 3 调用接口中的方法。
+    if (onNumberClickListener != null) {
+        if (number != null) {
+            onNumberClickListener.getUserPressure(event.getPressure()); //就是说在这个类中会自动的调用这个接口，自己没有实现内容，但是继承的类会实现，之后调用实例化中的代码即可。
+            if (number.equals("delete")) {
+                onNumberClickListener.onNumberDelete(); //相同的调用这个接口。
+
+            } else {
+                onNumberClickListener.onNumberReturn(number);
+            }
+        }
+    } 
+
+    // 定义接口对象。
+    public interface OnNumberClickListener {
+            //回调点击的数字
+            public void onNumberReturn(String number);
+
+            //删除键的回调
+            public void onNumberDelete();
+
+            //获取按键压力的回调
+            public void getUserPressure(float pre);
+        }
 }
 
-// 3 进行调用改接口对象中的方法。
-if (onNumberClickListener != null) {
-    if (number != null) {
-        onNumberClickListener.getUserPressure(event.getPressure()); //就是说在这个类中会自动的调用这个接口，自己没有实现内容，但是继承的类会实现，之后调用实例化中的代码即可。
-        if (number.equals("delete")) {
-            onNumberClickListener.onNumberDelete(); //相同的调用这个接口。
-
-        } else {
-            onNumberClickListener.onNumberReturn(number);
-        }
-    }
-} 
-
-// 定义接口对象。
-public interface OnNumberClickListener {
-        //回调点击的数字
-        public void onNumberReturn(String number);
-
-        //删除键的回调
-        public void onNumberDelete();
-
-        //获取按键压力的回调
-        public void getUserPressure(float pre);
-    }
 ```
 
-2.子类进行继承接口，并获取父类对象实例进行注册接口。
+2.在B类中继承并且实现接口，并获取父类对象实例进行注册接口。
 
 ```java
 //1 首先是继承接口。
 public class MainActivity extends Activity implements NumberKeyboardView.OnNumberClickListener {
-
+	
+    // 获取A类实例。
     private NumberKeyboardView mNkvKeyboard;
-    private TextView mTvText;
-    private TextView mPressure;
-    private String str = "";
-    private String preStr = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         initView();
     }
 
     private void initView() {
-        mTvText = (TextView) findViewById(R.id.am_tv_text);
-        mPressure = (TextView) findViewById(R.id.am_tv_text_press);
-
-        mNkvKeyboard = (NumberKeyboardView) findViewById(R.id.am_nkv_keyboard);
         
-        //进行注册和绑定接口。 调用该类中的绑定接口方法。
+        // 调用A类中的注册函数
         mNkvKeyboard.setOnNumberClickListener(this);
     }
  
@@ -122,8 +113,6 @@ public class MainActivity extends Activity implements NumberKeyboardView.OnNumbe
 }
 ```
 
- 在父类中直接的调用一个虚的接口， 在子进行实现接口的内容， 根据java的多态性，会在运行时直接绑定子中实现的代码，也即是向上绑定。
+通过以上的方式便能实现在A类中进行调用接口方法的时候其实是调用的B类中的函数，实现数据的传输。这样其实也算是一种异步的数据传输，不需要B类去一直检查A类有没有数据需要传输。 
 
-所以说接口这个东西会很好用。
-
-从以上的例子可以看出来，在使用netty的异步方法时候，例如Future。
+从以上的例子可以看出来，在使用netty的异步方法时候，例如Future，也是使用的相同的思想去实现，即Channel中处理还数据以后就会调用Future函数。
