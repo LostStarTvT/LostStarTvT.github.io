@@ -27,9 +27,10 @@ tags: java
 
 ```java
 public class MyRunable implements Runable{
-	@Override
+	
+    @Override
     public void run(){
-    //...
+    	//...
     }
 }
 
