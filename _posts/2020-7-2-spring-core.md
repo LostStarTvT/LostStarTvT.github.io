@@ -424,4 +424,4 @@ Bean的完整生命周期经历了各种方法调用，这些方法可以划分�
 
 一个完整的声明周期流图，从这上main可以看出来，会调用两个后置处理器，即BeanFactory的后置处理器，BeanPostProcessor的后置处理器。还有就是设置感知器Aware，其中后置处理器总共调用了六次。
 
-![beanLifiCycAll.png](https://pic.tyzhang.top/images/2020/07/02/beanLifiCycAll.png)
+[![beanLifiCycAll.png](https://pic.tyzhang.top/images/2020/07/02/beanLifiCycAll.png)](https://pic.tyzhang.top/image/Bktc)
