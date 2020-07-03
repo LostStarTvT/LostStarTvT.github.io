@@ -21,25 +21,25 @@ tags: java
 
 线程池的状态：
 
-1. RUNNING:接受新任务并且处理阻塞队列里的任务。
-2. SHUTDOWN:拒绝新任务但是处理阻塞队列里的任务。
-3. STOP:拒绝新任务并且抛弃阻塞队列里的任务，同时会中断正在处理的任务。
-4. TIDYING:所有的任务都执行完了（包括阻塞队列里面的任务）后当期那线程池活动线程数为0，将要调用terminated方法。
-5. TERMINAYTED:终止状态，terminated方法调用完成以后的状态。
+1. `RUNNING`:接受新任务并且处理阻塞队列里的任务。
+2. `SHUTDOWN`:拒绝新任务但是处理阻塞队列里的任务。
+3. `STOP`:拒绝新任务并且抛弃阻塞队列里的任务，同时会中断正在处理的任务。
+4. `TIDYING`:所有的任务都执行完了（包括阻塞队列里面的任务）后当期那线程池活动线程数为0，将要调用terminated方法。
+5. `TERMINAYTED`:终止状态，terminated方法调用完成以后的状态。
 
 线程池状态转换：
 
-- RUNNING ->SHUTDOWN:显示的调用shutdown方法，或者隐式的调用了finalize()方法里面的shutdown()方法。
-- RUNNING或SHUTDOWN->STOP:显示的调用了shutdownNow()方法。
-- SHUTDOWN->TIDYING:当线程池和任务队列都为空时。
-- STOP->TIDYING:当线程池为空时。
-- TIDYING->TERMINAYTED:当terminated() hook方法执行完成时。
+- `RUNNING ->SHUTDOWN`:显示的调用shutdown方法，或者隐式的调用了finalize()方法里面的shutdown()方法。
+- `RUNNING`或`SHUTDOWN->STOP`:显示的调用了shutdownNow()方法。
+- `SHUTDOWN->TIDYING`:当线程池和任务队列都为空时。
+- `STOP->TIDYING`:当线程池为空时。
+- `TIDYING->TERMINAYTED`:当terminated() hook方法执行完成时。
 
 Executors提供的线程池类型：以下主要是是通过配置Executors参数实现不同的线程池类型。
 
-1. newFixedThreadPool(int nThread) 创建有n个Thread的线程池。
-2. newSingleThreadExecutor() 创建具有一个线程的线程池。
-3. newCachedThreadPool() 创建一个按需的线程池。
+1. `newFixedThreadPool(int nThread)` 创建有n个Thread的线程池。
+2. `newSingleThreadExecutor() `创建具有一个线程的线程池。
+3. `newCachedThreadPool() `创建一个按需的线程池。
 
 # 自定义线程池
 
@@ -208,7 +208,7 @@ public interface RejectPolicy<T> {
 
 ## 线程池
 
-线程池类主要就是提供一个execute(Runnable task)接口进行接受任务。需要传递一个实现Runable接口的对象，然后让然后线程池进行运行，相当于不用定一个Thread对象了。
+线程池类主要就是提供一个execute(Runnable task)接口进行接受任务。需要传递一个实现Runable接口的对象，然后让然后线程池进行运行，相当于不用定义一个Thread对象了。
 
 ```java
 package multiRun.Pool;
@@ -239,10 +239,10 @@ public class ThreadPool {
     // 执行任务
     public void execute(Runnable task) {
         synchronized (workers) {
-            // 如果worker还没有创建完 有新任务怎么新建一个worker进行工作，
+            // 进行创建worker线程。
             if (workers.size() < coreSize) {
 
-                // task就是
+                // 将传递过来的任务传递给工人。
                 Worker worker = new Worker(task);
 
                 System.out.println("新增worker{}"+ worker);
@@ -251,7 +251,7 @@ public class ThreadPool {
                 // worker 是一个继承Thread的类，所有可以调用start方法。
                 worker.start();
             } else {
-                // 如果worker都被用了，那么就尝试放进等待队列。 如果队列满了还可能去阻塞这些队列。
+                // 如果worker都被用了，那么就尝试放进等待队列。 如果队列满了还可能去阻塞这些队列。 使用主线程去添加任务到队列
                 taskQueue.tryPut(rejectPolicy, task);
             }
         }
@@ -275,7 +275,6 @@ public class ThreadPool {
                     // 为什么会调用接口的方法？ 其实相当于重写，因为这个方法线程肯定会执行，用户在外面虽然不能直接的待用这个方法，但是内部的程序是可以调用
                     //这个方法进行实现功能的。。
                     task.run();
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -303,7 +302,6 @@ while (task != null || (task = taskQueue.poll(timeout, timeUnit)) != null) {
         // 为什么会调用接口的方法？ 其实相当于重写，因为这个方法线程肯定会执行，用户在外面虽然不能直接的待用这个方法，但是内部的程序是可以调用
         //这个方法进行实现功能的。。
         task.run();
-
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -404,7 +402,7 @@ public class Demo {
 worker被移除{}Thread[Thread-0,5,main]
 ```
 
-通过以上的线程复用解决了批量任务时频繁开启线程的开销，通过复用能够大大的提升程序的执行效率，另外当所有的任务执行完成时候线程worker也会被摧毁，重新调用的时候也会重新创建新的线程worker，之前我还以为是新建的时候直接创建，然后等待任务的分配，其实这样也是一个懒加载的实现。即用的时候给你创建，但是以后再用就不用创建了。然后都用完了还自动的删除掉。达到节约资源的目的。
+**通过以上的线程复用解决了批量任务时频繁开启线程的开销，通过复用能够大大的提升程序的执行效率，另外当所有的任务执行完成时候线程worker也会被摧毁，重新调用的时候也会重新创建新的线程worker，**之前我还以为是新建的时候直接创建，然后等待任务的分配，其实这样也是一个懒加载的实现。即用的时候给你创建，但是以后再用就不用创建了。然后都用完了还自动的删除掉。达到节约资源的目的。
 
 # 线程池配置相关
 
