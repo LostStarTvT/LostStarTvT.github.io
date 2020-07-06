@@ -56,15 +56,16 @@ public class ConnectionUtils {
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+    
     /**
      * 获取当前线程的连接
      * @return
      */
     public Connection getThreadConnection(){
         try {
-            //1.先从ThreadLocal上获取
+            //1.先从ThreadLocal上获取， get的话都是与当前线程绑定的东西，所以如果没有就会重新索取一个连接实例。。
             Connection conn = t1.get();
-            //2.判断当前线程是否有连接
+            //2.判断当前线程是否有连接  因为get的
             if (conn == null){
                 //3.从数据源中获取一个连接，并且存入到ThreadLocal中。
                 conn = dataSource.getConnection();
