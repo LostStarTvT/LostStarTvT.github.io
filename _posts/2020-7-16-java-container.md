@@ -174,7 +174,7 @@ debug的情况如下：可以看出地址不同而且HashCode不同。但比较�
 
 ![equalString.png](https://pic.tyzhang.top/images/2020/07/16/equalString.png)
 
-以上分析便说明了，默认情况下调用equal判断是不是同一个对象，相同对象才会返回True，而同一个对象那么HashCode肯定相同，因为保存在对象头中。而我们需要的是调用equal的时候判断对象内容是否相同。是两个不同的对象进行比较，所以此时必须要重写HashCode方法，使得两个内容相同的对象的HashCode一致，一种方法就是对对象的内容进行HASH散列，参考String的实现。
+以上分析便说明了，默认情况下调用equal判断是不是同一个对象，当且仅当是同一个对象才会返回True，而同一个对象那么HashCode肯定相同，因为保存在对象头中。而我们需要的是调用equal的时候判断对象内容是否相同，此时是两个不同的对象进行比较，不同对象头中的默认调用hashCode必定不相同，所以必须要重写HashCode方法，使得两个内容相同的对象的HashCode一致，一种方法就是对对象的内容进行HASH散列，参考String的实现。
 
 在有些情况下，程序设计者在设计一个类的时候为需要重写equals方法，比如String类，但是千万要注意，**在重写equals方法的同时，必须重写hashCode方法。** 
 
@@ -186,7 +186,7 @@ debug的情况如下：可以看出地址不同而且HashCode不同。但比较�
 
 ## hashCode()与 equals()的相关规定
 
-以下的规定为重写equals是需要满足的条件，默认也是满足的，因为只有当且仅当`System.out.println(student.equals(student));` 即自己和自己比较时才会返回True。默认情况下内容相同的对象返回False，所以要重写。
+以下的规定为**重写equals时需要满足的条件，**默认也是满足的，因为只有当且仅当`System.out.println(student.equals(student));` 即自己和自己比较时才会返回True。默认情况下内容相同的对象返回False，所以要重写。
 
 1. 如果两个对象相等，则 hashcode 一定也是相同的
 2. 两个对象相等,对两个对象分别调用 equals 方法都返回 true
