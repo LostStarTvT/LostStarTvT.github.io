@@ -186,7 +186,7 @@ debug的情况如下：可以看出地址不同而且HashCode不同。但比较�
 
 ## hashCode()与 equals()的相关规定
 
-以下的规定为**重写equals时需要满足的条件，**默认也是满足的，因为只有当且仅当`System.out.println(student.equals(student));` 即自己和自己比较时才会返回True。默认情况下内容相同的对象返回False，所以要重写。
+以下的规定为**重写equals时需要满足的条件，**默认也是满足的，因为只有当且仅当`System.out.println(student.equals(student));` 即自己和自己比较时才会返回True，对应到HashMap中就是“我找我自己，我就与我自己对比”。而默认情况下内容相同的对象返回False，所以要重写。
 
 1. 如果两个对象相等，则 hashcode 一定也是相同的
 2. 两个对象相等,对两个对象分别调用 equals 方法都返回 true
