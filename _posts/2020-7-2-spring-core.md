@@ -376,6 +376,8 @@ public interface BeanPostProcessor {
 
 ## Bean的生命周期
 
+Bean的声明周期可以简单的理解，首先Spring中都是使用工厂方式进行创建Bean，所以首先需要创建BeanFactory，为了提供扩展性，所以在创建BeanFactory的时候，也会调用后置处理器BeanFactoryPostProcesser()方法，用来扩展或者是操作BeanFactory，在创建好工厂以后，便开始用工厂创建Bean。在这期间还需要设置各种Aware接口方法，同样为了进行扩展，也会在创建Bean的时候调用BeanPostProcesser()进行扩展Bean，其中AOP也是在调用BeanPostProcesser()的时候进行的，在这期间也会进行对象的生命周期，即初始化函数，进行赋值。在完成之后便完成了Bean的创建，之后便是Bean的销毁与回收。
+
 以下为比较详细的Bean的声明周期。
 
 - 通过构造方法函数或工厂方法重新创建Bean实例
