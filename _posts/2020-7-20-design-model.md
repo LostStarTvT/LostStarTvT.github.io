@@ -16,7 +16,7 @@ tags: java
 
 一种最常用的模式，在spring中大量使用，默认的Bean就是一个单例的，所谓单例也就是在获取对象的时候返回的都是同一个对象，不会创建第二个对象，类比于现实生活中的一个班级班长只有一个。
 
-## 一 懒汉加载单例
+## 一、懒汉加载单例
 
 该模式的特点是类加载时没有生成单例，只有当第一次调用 getlnstance 方法时才去创建这个单例。
 
@@ -39,7 +39,7 @@ public class LazySingleton
 
 注意：如果编写的是多线程程序，则不要删除上例代码中的关键字 volatile 和 synchronized，否则将存在线程非安全的问题。如果不删除这两个关键字就能保证线程安全，但是每次访问时都要同步，会影响性能，且消耗更多的资源，这是懒汉式单例的缺点。
 
-## 二 饿汉加载单例
+## 二、饿汉加载单例
 
 该模式的特点是类一旦加载就创建一个单例，保证在调用 getInstance 方法之前单例已经存在了。
 
@@ -57,10 +57,10 @@ public class HungrySingleton
 
 # 工厂模式
 
-工程模式也是一种很常用的模式，对于工厂来说最重要的就是解耦和好扩展，顾名思义，对于消费者来说，当想生产一辆车的时候，只需要向工厂申请就好，细节不需要知道，而且使用工厂模式的话，还比较好扩展，因为是运用的是接口编程思想。
+工程模式也是一种很常用的模式，对于工厂来说最重要的就是解耦和好扩展，顾名思义，对于消费者来说，当想生产一辆车的时候，只需要向工厂申请就好，细节不需要知道，而且使用工厂模式的话，还比较好扩展，因为是运用的是接口编程思想。在Spring中大量使用工厂模式进行创建Bean。
 
 **实例：**
-　　创建一个可以绘制不同形状的绘图工具，可以绘制圆形，正方形，三角形，每个图形都会有一个draw()方法用于绘图，不看代码先考虑一下如何通过该模式设计完成此功能
+创建一个可以绘制不同形状的绘图工具，可以绘制圆形，正方形，三角形，每个图形都会有一个draw()方法用于绘图，不看代码先考虑一下如何通过该模式设计完成此功能
 
 ```java
 public interface Shape {
@@ -104,19 +104,19 @@ public class RectShape implements Shape {
 工厂方法
 
 ```java
- public class ShapeFactory {
-          public static final String TAG = "ShapeFactory";
-          public static Shape getShape(String type) {
-              Shape shape = null;
-              if (type.equalsIgnoreCase("circle")) {
-                  shape = new CircleShape();
-              } else if (type.equalsIgnoreCase("rect")) {
-                  shape = new RectShape();
-              }
-              
-              return shape;
-          }
-   }
+public class ShapeFactory {
+    public static final String TAG = "ShapeFactory";
+    
+    public static Shape getShape(String type) {
+        Shape shape = null;
+        if (type.equalsIgnoreCase("circle")) {
+            shape = new CircleShape();
+        } else if (type.equalsIgnoreCase("rect")) {
+            shape = new RectShape();
+        }
+        return shape;
+    }
+}
 ```
 
 客户端使用
@@ -129,7 +129,7 @@ Shape shape= ShapeFactory.getShape("rect");
 shape.draw();
 ```
 
-这样封装的话就比较优雅，而Spring中的工厂方法则是封装的更加的复杂，使用工厂方法的还有一个好处就是，如果要扩展三角形什么的，可以直接的修改工厂方法，而客户端的源码就不需要在更改，编程解耦的思想就是在更改需求的时候，尽量更改最少的代码，维护代码的健壮性。
+这样封装的话就比较优雅，而Spring中的工厂方法则是封装的更加的复杂，使用工厂方法的还有一个好处就是，如果要扩展三角形什么的，可以直接的修改工厂方法，而客户端的源码就不需要在更改，编程解耦的思想就是在更改需求的时候，尽量更改最少的代码，维护代码的健壮性，可以简单的理解为尽量减少直接的使用new关键字，不然在进行维护的时候更改使用类时，需要更改太多的代码，即耦合性很大。
 
 # 建造者模式
 
@@ -163,7 +163,8 @@ public class Student {
         private int num;
 
         private String email;
-
+		
+        // 会先返回一个对象，然后在使用builder 进行构造函数。 其实就是一个public方法，并且返回Builder对象而已。
         public Builder name(String name) {
             this.name = name;
             return this;
@@ -258,16 +259,19 @@ public interface AbstractSubject {
 
 ```java
 public class ConcreteSubject implements AbstractSubject {
-    // 使用一个数组存储所有的观察者。
+    // 使用一个数组存储所有的观察者。 通过接口的动态性实现。 即不一定非要使用接口回调也能实现对应的功能。
     List<AbstractObserver> list = new ArrayList<AbstractObserver>();
+    
     @Override
     public void addObserver(AbstractObserver observer) {
         list.add(observer);
     }
+    
     @Override
     public void removeObserver(AbstractObserver observer) {
         list.remove(observer);
     }
+    
     // 状态改变了，所有观察者更新自己的界面
     @Override
     public void notification() {
@@ -331,9 +335,7 @@ class Client {
 
 **代码实例讲解**
 
-有一个船长，只会使用划艇，不会使用渔船。
-
-首先，我们有接口`RowingBoat`和`FishingBoat`
+有一个船长，只会使用划艇，不会使用渔船。首先，我们有接口`RowingBoat`和`FishingBoat`
 
 ```java
 
@@ -369,8 +371,10 @@ public class Captain implements RowingBoat {
 现在来了一个海盗，并且只有渔船可以使用，我们的船长想要逃避海盗，就只能使用渔船。所以我们需要一个适配器来帮助船长来用他操作划艇的技术来操作渔船。
 
 ```java
+// 相当于定义了代理类，使用代理去调用boat对象的sail方法
 public class FishingBoatAdapter implements RowingBoat {
-
+  
+  // 
   private FishingBoat boat;
 
   public FishingBoatAdapter() {
