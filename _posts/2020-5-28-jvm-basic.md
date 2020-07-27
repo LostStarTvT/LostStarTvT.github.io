@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Java：JVM
+title: JVM：Basic
 tags: java  
 ---
 
