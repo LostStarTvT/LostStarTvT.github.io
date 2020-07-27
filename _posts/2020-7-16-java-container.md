@@ -10,6 +10,8 @@ tags: java
 ##  目录
 * 目录
 {:toc}
+![collection.gif](https://pic.tyzhang.top/images/2020/07/27/collection.gif)
+
 对于很多java中的实现类来说，如果实现了对应Object中的方法，那么就能够直接的调用API，比如说Object提供了一个简单的equal方法，该方法只是单纯的封装了 == 符号，即只有当是同一个对象进行比较的时候才会返回true，即a.equals(a)，但是String中实现了该equals方法，把它改成了是比较内容，并不是比较对象的地址，那么也就说说明如果提供了什么API就需要看它有没有实现该方法，类比于语法糖自动拆箱装箱，Integer类是封装了int关键字，那么他也就重写了eqauls方法，也就代表了比较的是其中的内容而不是地址。也就说说Object是定义了所有类的最通用的属性。
 
 # 一、HashCode方法
@@ -223,7 +225,7 @@ objectList.add(new Object());
 
 Map 是 Key-Value 对映射的抽象接口，该映射不包括重复的键，即一个键对应一个值。HashMap 是 Java Collection Framework 的重要成员，也是Map族(如下图所示)中我们最为常用的一种。简单地说，HashMap 是基于哈希表的 Map 接口的实现，以 Key-Value 的形式存在，即存储的对象是 Entry (同时包含了 Key 和 Value) 。在HashMap中，其会根据hash算法来计算key-value的存储位置并进行快速存取。特别地，HashMap最多只允许一条Entry的键为Null(多条会覆盖)，但允许多条Entry的值为Null。此外，HashMap 是 Map 的一个非同步的实现。
 
-主要需要记住的就是初始容量为16，即只有16个桶可以放数据，并且负载因子为0.75，所以最多只能存储threadhold = 16\*0.75= 12 个元素，当HashMap中存储的元素大于12时，就需要进行扩容，并且默认扩容是按照扩大二倍进行，即16\*2。
+**主要需要记住的就是初始容量为16，即只有16个桶可以放数据，并且负载因子为0.75，所以最多只能存储threadhold = 16\*0.75= 12 个元素，当HashMap中存储的元素大于12时，就需要进行扩容，并且默认扩容是按照扩大二倍进行，即16\*2。**
 
 ![HashMap.png](https://pic.tyzhang.top/images/2020/07/17/HashMap.png)
 
@@ -1940,9 +1942,206 @@ public E remove(int index) {
 
 # 六、Queue
 
+[java中的队列Queue的使用](https://juejin.im/post/5e1d517ef265da3df860faca)
+
 队列就是使用链表或则是数组进行实现。 简单记录下队列的使用方法就行。
 
+## 队列是什么 
 
+队列是一种重要的抽象**数据结构**，可类比于生活中的排队场景Java 语言提供了队列的支持，内置了多种类型的队列供我们使用 队列的特点是**先进先出**。队列的用处很大
+
+## 为什么要使用队列
+
+例如：
+
+**消息队列**是用来解决这样的问题的：将突发的大量请求转换为服务器能够处理的队列请求。eg:在一个秒杀活动中，服务器1秒可以处理100条请求。而在秒杀活动开启时1秒进来1000个请求并且持续10秒。这个时候就需要将这10000个请求放入消息队列里面，后端按照原来的能力处理，用100秒将队列中的请求处理完毕。这样就不会导致宕机
+
+## java中如何使用队列
+
+### 单向队列
+
+单向队列比较简单，只能向**队尾添加元素**，从**队头删除元素**。比如最典型的**排队买票**例子，新来的人只能在队列后面，排到最前边的人才可以买票，买完了以后，离开队伍。这个过程是一个非常典型的队列。
+
+Java 定义了队列的基本操作，接口类型为 java.util.Queue，接口定义如下所示。Queue 定义了两套队列操作方法：
+
+- add、remove、element 操作失败抛出异常；
+- offer 操作失败返回 false 或抛出异常，poll、peek 操作失败返回 null；
+
+```java
+public interface Queue<E> extends Collection<E> {
+    //插入元素，成功返回true，失败抛出异常
+    boolean add(E e);
+
+    //插入元素，成功返回true，失败返回false或抛出异常 
+    boolean offer(E e);
+
+    //取出并移除头部元素，空队列抛出异常 
+    E remove();
+
+    //取出并移除头部元素，空队列返回null 
+    E poll();
+
+    //取出但不移除头部元素，空队列抛出异常 
+    E element();
+
+    //取出但不移除头部元素，空队列返回null 
+    E peek();
+}
+```
+
+### 双向队列
+
+Deque : double ended queue的缩写。
+
+如果一个队列的头和尾都支持元素入队，出队，那么这种队列就称为双向队列，英文是Deque，可以通过java.util.Deque来查看Deque的接口定义，Deque 也同样定义了两套队列操作方法，针对头部操作方法为 xxxFirst、针对尾部操作方法为 xxxLast：
+
+- add、remove、get 操作失败抛出异常；
+- offer 操作失败返回 false 或抛出异常，poll、peek 操作失败返回 null；
+- Deque 另外还有 removeFirstOccurrence、removeLastOccurrence 方法用于删除指定元素，元素存在则删除，不存在则队列不变。
+
+```java
+public interface Deque<E> extends Queue<E> {
+    //插入元素到队列头部，失败抛出异常 
+    void addFirst(E e);
+
+    //插入元素到队列尾部，失败抛出异常  
+    void addLast(E e);
+
+    //插入元素到队列头部，失败返回false或抛出异常 
+    boolean offerFirst(E e);
+
+    //插入元素到队列尾部，失败返回false抛出异常  
+    boolean offerLast(E e);
+
+    //取出并移除头部元素，空队列抛出异常 
+    E removeFirst();
+
+    //取出并移除尾部元素，空队列抛出异常 
+    E removeLast();
+
+    //取出并移除头部元素，空队列返回null
+    E pollFirst();
+
+    //取出并移除尾部元素，空队列返回null
+    E pollLast();
+
+    //取出但不移除头部元素，空队列抛出异常
+    E getFirst();
+
+    //取出但不移除尾部元素，空队列抛出异常
+    E getLast();
+
+    //取出但不移除头部元素，空队列返回null
+    E peekFirst();
+
+    //取出但不移除尾部元素，空队列返回null
+    E peekLast();
+
+    //移除指定头部元素，若不存在队列不变，移除成功返回true 
+    boolean removeFirstOccurrence(Object o);
+
+    //移除指定尾部元素，若不存在队列不变，移除成功返回true 
+    boolean removeLastOccurrence(Object o);
+
+    //单向队列方法，参考Queue   
+    //栈方法，参考栈
+    //集合方法，参考集合定义   
+}
+```
+
+### 队列的具体实现
+
+通常情况下，队列有数组和链表两种实现方式。
+
+1. 采用链表实现的队列，没有个数限制。插入元素时直接接在链表的尾部，取出元素时直接从链表的头部取出即可。
+2. 采用数组实现的队列，通常是循环数组，受限于数组的大小，存在天然的个数上限。插入和取出元素时，必须采用队列头部指针和队列尾部指针进行队列满和队列空的判断。
+
+#### 单向队列
+
+1. **LinkedList**基于链表的实现方式是线程不安全的
+2. **PriorityQueue**无界的优先级队列，保存队列元素的顺序不是按照及加入队列的顺序，而是按照队列元素的大小进行重新排序。因此当调用peek()或pool()方法取出队列中头部的元素时，并不是取出最先进入队列的元素，而是取出队列的**最小**元素。
+
+> 我们刚刚才说到队列的特点是先进先出，为什么这里就按照大小顺序排序了呢？我们还是先看一下它的介绍，直接翻译过来：
+
+换句话说，使用PriorityQueue也就是可以实现大顶堆或者是小顶堆。其中默认情况下PriorityQueue是想的是小顶堆，即第一个元素为最小值。
+
+大顶堆的实现方式如下：
+
+```java
+// 1 2 3 4 5  则小顶堆存放345即存放后半部分数，我们需要的是3  12为大顶堆，因为我们需要的是2，即将数据分为前半部分和后半部分。
+// 小顶堆
+static PriorityQueue<Integer> low = new PriorityQueue<>();
+
+// 大顶对，逆序
+static PriorityQueue<Integer> high = new PriorityQueue<>(new Comparator<Integer>() {
+    @Override
+    public int compare(Integer o1, Integer o2) {
+        return o2.compareTo(o1);
+    }
+});
+```
+
+基于优先级堆的无界的优先级队列。 PriorityQueue的元素根据自然排序进行排序，或者按队列构建时提供的 Comparator进行排序，具体取决于使用的构造方法。 优先队列不允许 null 元素。 通过自然排序的PriorityQueue不允许插入不可比较的对象。 该队列的头是根据指定排序的最小元素。 如果多个元素都是最小值，则头部是其中的一个元素——任意选取一个。 队列检索操作poll、remove、peek和element访问队列头部的元素。 优先队列是无界的，但有一个内部容量，用于管理用于存储队列中元素的数组的大小。 基本上它的大小至少和队列大小一样大。 当元素被添加到优先队列时，它的容量会自动增长。增长策略的细节没有指定。
+
+> 一句话概括，PriorityQueue使用了一个高效的数据结构：堆。底层是使用数组保存数据。还会进行排序，优先将元素的最小值存到队头
+
+PriorityQueue 本质也是一个动态数组，在这一方面与ArrayList是一致的
+
+```java
+public PriorityQueue(int initialCapacity) {
+    this(initialCapacity, null);
+}
+
+public PriorityQueue(Comparator<? super E> comparator) {
+    this(DEFAULT_INITIAL_CAPACITY, comparator);
+}
+
+public PriorityQueue(int initialCapacity,
+                     Comparator<? super E> comparator) {
+    // Note: This restriction of at least one is not actually needed,
+    // but continues for 1.5 compatibility
+    if (initialCapacity < 1)
+        throw new IllegalArgumentException();
+    this.queue = new Object[initialCapacity];
+    this.comparator = comparator;
+}
+```
+
+- PriorityQueue调用默认的构造方法时，使用默认的初始容量（DEFAULT_IITIAL_CAPACITY = 11）创建一个PriorityQueue，并根据其自然顺序来排序其元素（使用加入其中的集合元素实现的Comparable）。
+- 当使用指定容量的构造方法时，使用指定的初始容量创建一个 PriorityQueue，并根据其自然顺序来排序其元素（使用加入其中的集合元素实现的Comparable）
+- 当使用指定的初始容量创建一个 PriorityQueue，并根据指定的比较器comparator来排序其元素。当添加元素到集合时，会先检查数组是否还有余量，有余量则把新元素加入集合，没余量则调用  grow()方法增加容量，然后调用siftUp将新加入的元素排序插入对应位置。  除了这些，还要注意的是：  1.PriorityQueue不是线程安全的。如果多个线程中的任意线程从结构上修改了列表， 则这些线程不应同时访问 PriorityQueue 实例，这时请使用线程安全的PriorityBlockingQueue 类。  2.不允许插入 null 元素。  3.PriorityQueue实现插入方法（offer、poll、remove() 和 add 方法） 的时间复杂度是O(log(n)) ；实现 remove(Object) 和 contains(Object) 方法的时间复杂度是O(n) ；实现检索方法（peek、element 和 size）的时间复杂度是O(1)。所以在遍历时，若不需要删除元素，则以peek的方式遍历每个元素。  4.方法iterator()中提供的迭代器并不保证以有序的方式遍历PriorityQueue中的元素。
+
+1. **ConcurrentLinkedQueue******并发队列是一个基于链表实现的线程安全的无界队列。内部元素按先进先出的顺序排序，最后插入的元素位于队列尾部。ConcurrentLinkedQueue 不允许插入 null。当有多个线程同时访问队列时，此队列是一个比较合适的选择。
+
+Queue 接口的子接口 BlockingQueue 定义了阻塞队列。阻塞队列访问队列元素时，可能会一直阻塞直到操作完成，比如从空队列中取元素、向满队列中插入元素等，主要有延时队列、同步队列、链表阻塞队列、数组阻塞队列、优先级阻塞队列。
+
+#### 双向队列
+
+Deque 接口的实现相对较少，主要有 LinkedList、ArrayDeque、ConcurrentLinkedDeque 和 LinkedBlockingDeque。
 
 # 七、Stack
+
+java中Stacke是基于Vector进行实现的。
+
+```java
+	/**
+	 * Stack类
+	 * 栈：桶型或箱型数据类型，后进先出，相对堆Heap为二叉树类型，可以快速定位并操作
+	 * Stack<E>，支持泛型
+	 * public class Stack<E> extends Vector<E>
+	 * Stack的方法调用的Vector的方法，被synchronized修饰，为线程安全(Vector也是)
+	 * Stack methods：
+	 * push : 把项压入堆栈顶部 ，并作为此函数的值返回该对象
+	 * pop : 移除堆栈顶部的对象，并作为此函数的值返回该对象 
+	 * peek : 查看堆栈顶部的对象，，并作为此函数的值返回该对象，但不从堆栈中移除它
+	 * empty : 测试堆栈是否为空 
+	 * search : 返回对象在堆栈中的位置，以 1 为基数 
+	 * */
+```
+
+但是基于Vector的栈可能效率不是很高，因为Vector是数组的线程安全版，现在建议使用双向Denqu进行实现栈的操作。
+
+[为什么 java.util.Stack不被官方所推荐使用！](https://www.cnblogs.com/cosmos-wong/p/11845934.html)  
+
+> 总结：在java.util.stack中，栈的底层是使用数组来实现的，数组初始大小为10。每当元素个数超出数组容量就扩展为原来的2倍，将原数组中的元素拷贝到新数组中，随着数组元素的增多，这种开销也越大。Java并不推荐使用java.util.stack来进行栈的操作，而是推荐使用一个双端队列“deque ”来代替它。
 
