@@ -374,7 +374,6 @@ public class Captain implements RowingBoat {
 // 相当于定义了代理类，使用代理去调用boat对象的sail方法
 public class FishingBoatAdapter implements RowingBoat {
   
-  // 
   private FishingBoat boat;
 
   public FishingBoatAdapter() {
