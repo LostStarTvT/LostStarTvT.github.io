@@ -22,7 +22,7 @@ tags: java
 
 ## 为什么要有 hashCode
 
-**我们先以“HashSet 如何检查重复”为例子来说明为什么要有 hashCode：** 当你把对象加入 HashSet 时，HashSet 会先计算对象的 hashcode 值来判断对象加入的位置，同时也会与该位置其他已经加入的对象的 hashcode 值作比较，如果没有相同的 hashcode，HashSet 会假设对象没有重复出现。但是如果发现有相同 hashcode 值的对象，这时会调用 `equals()`方法来检查 hashcode 相等的对象是否真的相同。如果两者相同，HashSet 就不会让其加入操作成功。如果不同的话，就会重新散列到其他位置。（摘自我的 Java 启蒙书《Head first java》第二版）。这样我们就大大减少了 equals 的次数，相应就大大提高了执行速度。
+**我们先以“HashSet 如何检查重复”为例子来说明为什么要有 hashCode：** 当你把对象加入HashSet 时，HashSet 会先计算对象的 hashcode 值来判断对象加入的位置，同时也会与该位置其他已经加入的对象的 hashcode 值作比较，如果没有相同的 hashcode，HashSet 会假设对象没有重复出现。但是如果发现有相同 hashcode 值的对象，这时会调用 `equals()`方法来检查 hashcode 相等的对象是否真的相同。如果两者相同，HashSet 就不会让其加入操作成功。如果不同的话，就会重新散列到其他位置。（摘自我的 Java 启蒙书《Head first java》第二版）。这样我们就大大减少了 equals 的次数，相应就大大提高了执行速度。
 
 以上可以看出：`hashCode()` 的作用就是**获取哈希码**，也称为散列码；它实际上是返回一个 int 整数。这个**哈希码的作用**是确定该对象在哈希表中的索引位置。**`hashCode()`在散列表中才有用，在其它情况下没用**。在散列表中 hashCode() 的作用是获取对象的散列码，进而确定该对象在散列表中的位置。
 
@@ -306,7 +306,6 @@ public class HashMap<K,V> extends AbstractMap<K,V> implements Map<K,V>, Cloneabl
     // 桶中结构转化为红黑树对应的table的最小大小
     static final int MIN_TREEIFY_CAPACITY = 64;
     
-    
     /**
      * The table, initialized on first use, and resized as
      * necessary. When allocated, length is always a power of two.
@@ -414,7 +413,7 @@ static final class TreeNode<K,V> extends LinkedHashMap.Entry<K,V> {
 不管增加、删除、查找键值对，定位到哈希桶数组的位置都是很关键的第一步。前面说过HashMap的数据结构是数组和链表的结合，所以我们当然希望这个HashMap里面的元素位置尽量分布均匀些，尽量使得每个位置上的元素数量只有一个，那么当我们用hash算法求得这个位置的时候，马上就可以知道对应位置的元素就是我们要的，不用遍历链表，大大优化了查询的效率。HashMap定位数组索引位置，直接决定了hash方法的离散性能。先看看源码的实现(方法一+方法二):
 
 ```java
-方法一：
+//方法一：
 static final int hash(Object key) {   //jdk1.8 & jdk1.7
      int h;
      // h = key.hashCode() 为第一步 取hashCode值
@@ -422,7 +421,7 @@ static final int hash(Object key) {   //jdk1.8 & jdk1.7
      return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
 }
 
-方法二： 根据hash值找到在table中的位置
+//方法二： 根据hash值找到在table中的位置
 static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个方法，但是实现原理一样的
      return h & (length-1);  //第三步 取模运算
 }
@@ -596,8 +595,8 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
 ```java
 public V put(K key, V value)
     if (table == EMPTY_TABLE) { 
-    inflateTable(threshold); 
-}  
+    	inflateTable(threshold); 
+	}  
     if (key == null)
         return putForNullKey(value);
     int hash = hash(key);
@@ -653,7 +652,7 @@ final Node<K,V> getNode(int hash, Object key) {
 
 ### JDK1.7 resize()方法
 
-上面1.7版本的比较复杂，一般都是使用1.7的来进行说明，实现方法，首先构建一个新的桶，然后将旧桶中的数据遍历，重新计算索引并且使用头插法将所有数据转移到新桶中。
+1.8版本的比较复杂，一般都是使用1.7的来进行说明，实现方法，首先构建一个新的桶，然后将旧桶中的数据遍历，重新计算索引并且使用头插法将所有数据转移到新桶中。
 
 ```java
 void resize(int newCapacity) {   //传入新的容量
@@ -1617,13 +1616,13 @@ public boolean add(E e) {
 
 ```java
 public void add(int index, E element) {
-        checkPositionIndex(index); //检查索引是否处于[0-size]之间
+    checkPositionIndex(index); //检查索引是否处于[0-size]之间
 
-        if (index == size)//添加在链表尾部
-            linkLast(element);
-        else//添加在链表中间
-            linkBefore(element, node(index));
-    }
+    if (index == size)//添加在链表尾部
+        linkLast(element);
+    else//添加在链表中间
+        linkBefore(element, node(index));
+}
 ```
 
 linkBefore方法需要给定两个参数，一个插入节点的值，一个指定的node，所以我们又调用了Node(index)去找到index对应的node
@@ -1632,8 +1631,8 @@ linkBefore方法需要给定两个参数，一个插入节点的值，一个指�
 
 ```java
 public boolean addAll(Collection<? extends E> c) {
-        return addAll(size, c);
-    }
+    return addAll(size, c);
+}
 ```
 
 **addAll(int index, Collection c)：** 将集合从指定位置开始插入
@@ -1789,48 +1788,48 @@ element()方法的内部就是使用getFirst()实现的。它们会在链表为�
 
 ```java
 public int indexOf(Object o) {
-        int index = 0;
-        if (o == null) {
-            //从头遍历
-            for (Node<E> x = first; x != null; x = x.next) {
-                if (x.item == null)
-                    return index;
-                index++;
-            }
-        } else {
-            //从头遍历
-            for (Node<E> x = first; x != null; x = x.next) {
-                if (o.equals(x.item))
-                    return index;
-                index++;
-            }
+    int index = 0;
+    if (o == null) {
+        //从头遍历
+        for (Node<E> x = first; x != null; x = x.next) {
+            if (x.item == null)
+                return index;
+            index++;
         }
-        return -1;
+    } else {
+        //从头遍历
+        for (Node<E> x = first; x != null; x = x.next) {
+            if (o.equals(x.item))
+                return index;
+            index++;
+        }
     }
+    return -1;
+}
 ```
 
 **int lastIndexOf(Object o)：** 从尾遍历找
 
 ```java
 public int lastIndexOf(Object o) {
-        int index = size;
-        if (o == null) {
-            //从尾遍历
-            for (Node<E> x = last; x != null; x = x.prev) {
-                index--;
-                if (x.item == null)
-                    return index;
-            }
-        } else {
-            //从尾遍历
-            for (Node<E> x = last; x != null; x = x.prev) {
-                index--;
-                if (o.equals(x.item))
-                    return index;
-            }
+    int index = size;
+    if (o == null) {
+        //从尾遍历
+        for (Node<E> x = last; x != null; x = x.prev) {
+            index--;
+            if (x.item == null)
+                return index;
         }
-        return -1;
+    } else {
+        //从尾遍历
+        for (Node<E> x = last; x != null; x = x.prev) {
+            index--;
+            if (o.equals(x.item))
+                return index;
+        }
     }
+    return -1;
+}
 ```
 
 ### 检查链表是否包含某对象的方法：

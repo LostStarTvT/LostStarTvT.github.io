@@ -16,7 +16,7 @@ tags: java
 
 # 概述
 
-ThreadLocal是线程同步中的一个工具类，首先，他解决的是在多线程中的资源共享问题，所以不能使用单线程的思想去思考这个东西。**线程同步机制是多个线程共享同一个变量，而ThreadLocal是为每个线程都创建一个单独的变量副本，每个线程都可以改变自己的变量副本而不影响其它线程所对应的副本**。这个副本可以是基本数据类型，也可以是用户自定义的对象。
+ThreadLocal是线程同步中的一个工具类，首先，他解决的是在多线程中的资源共享问题，所以不能使用单线程的思想去思考这个东西。**线程同步机制是多个线程共享同一个变量，而ThreadLocal是为每个线程都创建一个单独的变量副本，每个线程都可以改变自己的变量副本而不影响其它线程所对应的副本**。这个副本可以是基本数据类型，也可以是用户自定义的对象，因为每次调用初始化的时候都是新建一个对象，所以是私有的。
 
 ThreadLocal与像synchronized这样的锁机制是不同的。首先，它们的应用场景与实现思路就不一样，**锁更强调的是如何同步多个线程去正确地共享一个变量，ThreadLocal则是为了解决同一个变量如何不被多个线程共享**。从性能开销的角度上来讲，如果锁机制是用时间换空间的话，那么ThreadLocal就是用空间换时间。  
 
@@ -100,7 +100,7 @@ Thread-0 seqCount:3
 Thread-1 seqCount:3
 ```
 
-通过以上的运行结果可以看出，虽然只是定义了一个变量，但是jvm会自动的新建n个对象供n个线程去操作。这样每个线程进行操作对象的时候都不会互相干扰。因为是泛型，所有对象也是可以存储的，即在set的时候set(new Object)，然后便能够get()获取到的。  
+通过以上的运行结果可以看出，虽然只是定义了一个变量，但是jvm会自动的新建n个对象供n个线程去操作，`initialValue()`提供的机制。这样每个线程进行操作对象的时候都不会互相干扰。因为是泛型，所有对象也是可以存储的，即在set的时候set(new Object)，然后便能够get()获取到的。  
 
 从上面可看出，对于并发来说，为什么会需要锁？ **主要是因为需要对共享变量进行操作，而不是单纯的读取**。而我之前写的代码都是单单的读取，并没有涉及到多线程之间的操作竞争，所以没有考虑到这种情形，思路还是要转变一下。回归到对现场解决的问题，线程的同步的资源的竞争。其一就是控制线程的执行顺序，其二就是解决对于资源的操作（同步），如果是单单的读取的话，就不会涉及到操作，所以final关键字就是一个不会被**操作**只能读取的变量。
 
@@ -114,13 +114,13 @@ Thread-1 seqCount:3
 
 
 
-从上面的类图可以看出，ThreadLocal其实相当于一个工具类，具体的变量值的设置还是通过配置Thread类中的threadLocals变量进行配置，这也就说明了，只有在线程的本地变量中才能实现独享的变量，也就是说每个线程中都会带有ThreadLocal可以进行配置的接口。另外inheritableThreadLocals叫做继承变量，其作用是子线程可以获取到父线程的数据。
+从上面的类图可以看出，ThreadLocal相当于是一个工具类，变量的赋值是由Thread类中的threadLocals变量操作，即只有在线程的本地变量中才能实现独享的变量，也就是说每个线程都会带有ThreadLocal的配置的接口。另外inheritableThreadLocals叫做继承变量，其作用是子线程可以获取父线程的数据。
 
 需要说明的是，Thread、ThreadLocal都是java.lang包下的类，所有说二者是配合使用的。
 
-线程中的所有数据存储的接口都是在ThreadLocalMap中进行实现，其结构为Map形式，**key为ThreadLocal对象的地址**，value则是需要设置的共享变量的地址。
+线程中的所有数据存储的接口都是在ThreadLocalMap中进行实现，其结构为Map形式，**key为ThreadLocal对象的地址**，value则是需要设置的共享变量地址。
 
-另外，ThreadLocal只能自己使用，子类不能使用父类设置的值，从JVM本地变量表的角度可以看出，ThreadLocal相当于存储在本地变量表中，是线程私有的，所有父类与子类线程是不互通的。从Thread类图中可以看出，inheritableThreadLocals名字为继承的，使用这个变量子类可以获取到父类的变量，即使用InheritableThreadLocal类，即可，使用方法：
+另外，ThreadLocal只能自己使用，子类不能使用父类设置的值，从JVM本地变量表的角度可以看出，ThreadLocal相当于存储在本地变量表中，是线程私有的，所有父类与子类线程是不互通的。从Thread类图中可以看出，inheritableThreadLocals名字为继承的，使用这个变量子类可以获取到父类的变量，对应为InheritableThreadLocal类，使用方法：
 
 ```java
 ThreadLocal<String> threadLocal = new InheritableThreadLocal<String>();
@@ -135,17 +135,14 @@ public class InheritableThreadLocal<T> extends ThreadLocal<T> {
         return parentValue;
     }
 
-
     ThreadLocalMap getMap(Thread t) {
        return t.inheritableThreadLocals; // 调用的是继承类的本地变量。
     }
-
 
     void createMap(Thread t, T firstValue) {
         t.inheritableThreadLocals = new ThreadLocalMap(this, firstValue);
     }
 }
-
 ```
 
 即重写了ThreadLocal的getMap和createMap方法。
@@ -154,6 +151,8 @@ public class InheritableThreadLocal<T> extends ThreadLocal<T> {
 
 ![ThreadLocalRef.png](https://pic.tyzhang.top/images/2020/07/06/ThreadLocalRef.png)
 
+调用规则为：首先获取当前线程的保存的ThreadLocal的地址，然后通过Thread中的threadLocals变量获取到绑定在本线程中的Map，通过ThreadLocal变量的地址找到对应的value，总的来说只需要ThreadLocal的地址便可以获取到对应的值，因为Map存储在本线程的内部。
+
 从图中可以看出，对于ThreadLocal来说，其中的Key是ThreadLocal变量的弱引用，即执行ThreadLocal对象的地址，为什么会指向ThreadLocal对象？主要是因为在使用的时候，是通过ThreadLocal对象进行使用的，即
 
 ```java
@@ -161,13 +160,13 @@ ThreadLocal.set(vlaue);
 ThreadLocal.get()
 ```
 
-以上两个接口进行获取或者设置value到每一个Thread中，所以在线程中通过调用ThreadLocal对象便能够获取到共享变量的值， 为什么Thread中的使用Map进行存储？因为一个Thread中可以有多个ThreadLocal变量，即关联多个ThreadLocal变量。
+以上两个接口进行获取或者设置value到每一个Thread中，所以在线程中通过调用ThreadLocal对象便能够获取到共享变量的值， 为什么Thread中的使用Map进行存储？**因为一个Thread中可以有多个ThreadLocal变量，即关联多个ThreadLocal变量。**
 
-虽然ThreadLocal中的数据是用Map中存储，而且key的值也是ThreadLocal对象的地址，而一个ThreadLocal可以由多个Thread进行调用获取，那么会有多个以相同的ThreadLocal地址为key的Map，那么为什么还能取到对应的值呢？主要是因为在调用get方法的时候，首先是获取到每个Thread的threadLocals变量，即每个threadLocals都是对应一个Thread的，虽然Map中的key相同，但是Map是存在不同的线程中的。另外，key value存储的都是地址。
+虽然ThreadLocal中的数据是用Map中存储，而且key的值也是ThreadLocal对象的地址，而一个ThreadLocal可以由多个Thread进行调用获取，那么会有多个以相同的ThreadLocal地址为key的Map，那么为什么还能取到对应的值呢？主要是因为在调用get方法的时候，首先是获取到每个Thread的threadLocals变量，**即每个threadLocals都是对应一个Thread的，虽然Map中的key相同，但是Map是存在不同的线程中的**。另外，**key value存储的都是地址。**
 
 ## 内存泄露问题
 
-每个thread中都存在一个map, map的类型是ThreadLocal.ThreadLocalMap. **Map中的key为一个threadlocal实例**. 这个Map的确使用了弱引用,不过弱引用只是针对key. 每个key都弱引用指向threadlocal. 当把threadlocal实例置为null以后,没有任何强引用指向threadlocal实例,所以threadlocal将会被gc回收. 但是,我们的value却不能回收,因为存在一条从current thread连接过来的强引用. 只有当前thread结束以后, current thread就不会存在栈中,强引用断开, Current Thread, Map, value将全部被GC回收。所以得出一个结论就是只要这个线程对象被gc回收，就不会出现内存泄露，但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。**比如使用线程池的时候，线程结束是不会销毁的，会再次使用的就可能出现内存泄露 。（在web应用中，每次http请求都是一个线程，tomcat容器配置使用线程池时会出现内存泄漏问题）**
+每个thread中都存在一个Map, Map的类型是ThreadLocal.ThreadLocalMap. **Map中的key为一个threadlocal实例**. 这个Map的确使用了弱引用,不过弱引用只是针对key. 每个key都弱引用指向threadlocal. 当把threadlocal实例置为null以后,没有任何强引用指向threadlocal实例,所以threadlocal将会被gc回收. 但是,我们的value却不能回收,因为存在一条从current thread连接过来的强引用. 只有当前thread结束以后, current thread就不会存在栈中,强引用断开, Current Thread, Map, value将全部被GC回收。所以得出一个结论就是**只要这个线程对象被gc回收，就不会出现内存泄露，**但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。**比如使用线程池的时候，线程结束是不会销毁的，会再次使用的就可能出现内存泄露 。（在web应用中，每次http请求都是一个线程，tomcat容器配置使用线程池时会出现内存泄漏问题）**
 [参考链接](https://juejin.im/post/5ba9a6665188255c791b0520) [参考2](https://my.oschina.net/u/3790005/blog/3037839)
 
 所以说，使用完ThreadLocal后，执行remove操作，避免出现内存溢出情况。另外，这个remove方法是针对每一个线程来说。
@@ -329,12 +328,11 @@ private void set(ThreadLocal<?> key, Object value) {
     //ThreadLocal对应的key实例不存在，new一个
     tab[i] = new Entry(key, value);
     int sz = ++size;
-    //清楚陈旧的Entry(key == null的)
+    // 清除陈旧的Entry(key == null的)
     // 如果没有清理陈旧的 Entry 并且数组中的元素大于了阈值，则进行 rehash
     if (!cleanSomeSlots(i, sz) && sz >= threshold)
         rehash();
 }
-
 ```
 
 这个set操作和集合Map解决散列冲突的方法不同，集合Map采用的是链地址法，这里采用的是开放定址法（线性探测）。set()方法中的replaceStaleEntry()和cleanSomeSlots()，这两个方法可以清除掉key ==null的实例，防止内存泄漏。
@@ -352,7 +350,13 @@ private Entry getEntry(ThreadLocal<?> key) {
 }
 ```
 
-由于采用了开放定址法，当前keu的散列值和元素在数组中的索引并不是一一对应的，首先取一个猜测数（key的散列值），如果所对应的key是我们要找的元素，那么直接返回，否则调用getEntryAfterMiss
+由于采用了开放定址法，当前key的散列值和元素在数组中的索引并不是一一对应的，首先取一个猜测数（key的散列值），如果所对应的key是我们要找的元素，那么直接返回，否则调用getEntryAfterMiss
+
+> 开发定址法是解决哈希冲突的解决方案。
+>
+> 开发定址法：线性探测、二次探测，其中线性探测则是如果当前坑被占，那么就选择下一个没有被占用的坑。二次探测为探测的地址下标尝试为 1的平方，-1的平方，2的平方，-2的平方一直往下，这种必线性探测效果更好。
+>
+> 拉链法：也就是如果当前有冲突，那么局直接使用链表进行往下存储，HashMap使用的也是这种方式。
 
 ```java
 private Entry getEntryAfterMiss(ThreadLocal<?> key, int i, Entry e) {
