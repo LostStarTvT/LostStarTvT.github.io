@@ -224,7 +224,6 @@ public class MyContainer {
             }
         },"t2").start();
 
-
         new Thread(()->{
             synchronized (lock){ //也有lock。
                 for (int i = 0; i < 10; i++) {
@@ -250,9 +249,7 @@ public class MyContainer {
     }
 }
 
-
 //然后还有一种简单的实现，countLatch 门闩的机制。
-
 //java 多线程的测试
 //主要实现的功能， 线程一进行添加5个数据，然后线程二进行监听线程1的数据变化，当线程1增加5个元素的时候，需要将线程2停止。
 //使用门闩进行线程之间的锁同步？
@@ -284,25 +281,22 @@ public class MyContainer1 {
             System.out.println("t2 完成");
         },"t2").start();
 
-
         new Thread(()->{
-                for (int i = 0; i < 10; i++) {
-                    myContainer.add(new Object());
-                    System.out.println("add" + i);
-                    if (myContainer.size() == 5){
-                       latch.countDown(); //调用打开门闩，然后程序接着执行。这样就不需要那么多的notifyAll
-                    }
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } 
+            for (int i = 0; i < 10; i++) {
+                myContainer.add(new Object());
+                System.out.println("add" + i);
+                if (myContainer.size() == 5){
+                    latch.countDown(); //调用打开门闩，然后程序接着执行。这样就不需要那么多的notifyAll
                 }
-
+                try {
+                    TimeUnit.SECONDS.sleep(1);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } 
+            }
         },"t1 启动").start();
     }
 }
-
 ```
 
 以上的例子有点像线程之间的通信，但是高并还有一种就是多个引用调用同一个对象的情况。代码如下：
@@ -344,19 +338,17 @@ Lock lock = new ReentractLock();
 lock.lock();
 
 //coding 
-
 lock.unlock; //一定要加解锁。
 
 //2. try lock 
-
 try{
-boolean locked = lock.tryLock(5,TimeUnit.SECONDS) //尝试等待5秒钟去申请锁，locked 返回一个申请成功的布尔值。 
-catch(){}
-finally(){
-	if(locked){
-     lock.unlock()
-    }
-   }  //需要判断一下有没有申请成功，然后在进行解锁与不解锁。
+    boolean locked = lock.tryLock(5,TimeUnit.SECONDS) //尝试等待5秒钟去申请锁，locked 返回一个申请成功的布尔值。 
+    catch(){}
+    finally(){
+        if(locked){
+         	lock.unlock()
+        }
+ }  //需要判断一下有没有申请成功，然后在进行解锁与不解锁。
 
 //3. 可打断的锁  即如果一个线程锁死，另一个线程在申请锁的时候如果发现，则可以自动的跳出不进行死等。
     
@@ -555,8 +547,6 @@ List<String> strSync = Collection.synchronizedList(str)  //返回一个加锁的
 
 对于线程池有两种用法（假设共有5个线程），一种是一个大任务大家一起干，每个线程负责20%，另外一种是同时100个重复任务大家分别处理，每个线程处理20个任务。而服务器一般采用的是第二种，即大量重复的任务分别处理。就像数据库连接池，同时可以进行多个线程来接数据库，效率直接加倍，同时连接的做法就是可以同时可以开启多个本地端口进行操作，同时连接到数据库。
 
-  
-
 对比一个程序来说，就是当有个计算任务进来时，将其切分为5个子任务去执行。
 
 虽然使用for 进行new出来5个线程也可以，但是这样的新建与销毁很容易出现溢出，还有就是新建和关闭的耗费都很大，所以出现了线程池的做法。
@@ -638,7 +628,7 @@ public class ParallelCompute {
 
 2. newCachedThreadPool 这个是弹性的ThreadPool  如果没有则新开一个线程，知道系统不能开， 如果一个线程超过60秒等待没有用，则进行销毁。
 
-3. SingleThreadPool  单例线程池。只有一个线程。
+3. SingleThreadPool  单例线程池，只有一个线程。
 
 4. ScheduledPool  延迟计算的线程池。
 
@@ -711,7 +701,6 @@ public class ParallelStreamAPI {
         for (int i = 0; i < 10000; i++) {
             nums.add(1000000 + random.nextInt(1000000));
         }
-
 
         long start = System.currentTimeMillis();
         nums.forEach(v->isPrime(v));  //挨个轮着计算是否是质数

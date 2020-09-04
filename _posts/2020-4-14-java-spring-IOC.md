@@ -125,7 +125,6 @@ public class BeanFactory {
             //把key 和value 存入容器
             beans.put(key,value);
         }
-       
     }
 
     //根据名称获取单例对象

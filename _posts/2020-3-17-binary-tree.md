@@ -25,14 +25,14 @@ tags: Algorithm
 二叉树数据结构类型:    
 
 ```java
- static class TreeNode{
-        int val;
-        TreeNode left = null;
-        TreeNode right = null;
-        TreeNode(int val){
-            this.val = val;
-        }
-    }
+static class TreeNode{
+    int val;
+    TreeNode left = null;
+    TreeNode right = null;
+    TreeNode(int val){
+        this.val = val;
+    } 
+}
 ```
 
 # 二、二叉树的遍历
@@ -127,7 +127,6 @@ public void postTraverse(TreeNode root){
         }
 
         while (!stack.isEmpty()){
-
             //如果右子树已经输出，或者是右子树为空，则输出此节点。
             //比中序遍历多了一个判断是否右子树已经输出，或者为空。
             if (lastPopNode == stack.peek().right || stack.peek().right == null){
@@ -144,9 +143,7 @@ public void postTraverse(TreeNode root){
 //广度优先遍历  使用队列实现
 public void BroadTraverse(TreeNode root){
     if (root ==null) return;
-
     Queue<TreeNode> queue = new LinkedList<>(); //队列
-
     queue.add(root);
     while (!queue.isEmpty()){
         TreeNode cur  =queue.remove();
@@ -253,11 +250,13 @@ public Boolean judge(TreeNode tree,TreeNode subTree){
 
 ## 3.判断数组是否为二叉搜索树后续遍历
 
-**题目大意**：输入一个整数数组，判断该数组是否为二叉搜索树的后续遍历结果，假设输入数组的任何两个数组都不相同    
+**题目大意**：输入一个整数数组，判断该数组是否为二叉搜索树的后续遍历结果，假设输入数组的任何两个数组都不相同  
 
 [![binaryTree.jpg](https://pic.tyzhang.top/images/2020/03/17/binaryTree.jpg)](https://pic.tyzhang.top/image/XO1)
 
 **解题思路**：对于二叉搜索树来说，其中中序遍历为一个有序数列。但是对于后续遍历来说，其最后一个值总是为根，上图的二叉树后续遍历结果为：  
+
+首先需要知道什么是二叉搜索树，即 对于跟来说，左边的都是小于根，右边的都是大于根，所有就可以利用这个性质进行更新数据。然后进行判断。 又因为最后一个值肯定是根，所以便使用最右边根进行判断数据。
 
 | 0    | 1    | 2    | 3    | 4    | 5    | 6    | 7    |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -310,8 +309,8 @@ public ArrayList<ArrayList<Integer>> FindPath(TreeNode root,int target) {
     list.add(root.val);
     target -= root.val; //先进行减。  进来就进行减，然后进行判断是否满足条件
     if(target == 0 && root.left == null && root.right == null) //这个是判断成功的标志。只是增加数据，不返回
-        result.add(new ArrayList<>(list));//这个增加二维数组的方式要记住，因为list只是一个地址，对象，所以要新建。
-    //先序遍历
+        result.add(new ArrayList<>(list));//这个增加二维数组的方式要记住，因为list只是一个地址，所以要新建生成一个新的对象。
+    // 因为只有两种选择，所以不需要使用for循环。
     FindPath(root.left, target);
     FindPath(root.right, target);
     list.remove(list.size()-1); //这个节点完成使命以后需要将其删除掉。。。

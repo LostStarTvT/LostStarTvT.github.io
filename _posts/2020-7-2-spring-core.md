@@ -283,11 +283,11 @@ public class Y{
 
 ## Spring中的三级缓存
 
-- 一级缓存 singletonObjects. 单例池 已经走完bean声明周期的对象，最后可以用的对象
+- 一级缓存 singletonObjects 单例池： 已经走完bean声明周期的对象，最后可以用的对象
 
-- 二级缓存 singletonfactories 工厂 生成bean对象的工厂。
+- 二级缓存 singletonfactories 工厂： 生成bean对象的工厂。
 
-- 三级缓存 earlySingletonObjects  存储的是尚未走完bean周期的对象。
+- 三级缓存 earlySingletonObjects：  存储的是尚未走完bean周期的对象。
 
 以上三种都是Map类型的数据。即使用HashMap进行缓存的实现。
 
