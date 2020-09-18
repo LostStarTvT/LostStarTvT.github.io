@@ -41,6 +41,70 @@ Executors提供的线程池类型：以下主要是是通过配置Executors参�
 2. `newSingleThreadExecutor() `创建具有一个线程的线程池。
 3. `newCachedThreadPool() `创建一个按需的线程池。
 
+# 线程池参数
+
+```java
+public ThreadPoolExecutor(int corePoolSize,
+                          int maximumPoolSize,
+                          long keepAliveTime,
+                          TimeUnit unit,
+                          BlockingQueue<Runnable> workQueue,
+                          ThreadFactory threadFactory,
+                          RejectedExecutionHandler handler) {
+    if (corePoolSize < 0 || maximumPoolSize <= 0 || maximumPoolSize < corePoolSize || keepAliveTime < 0)
+        throw new IllegalArgumentException();
+    if (workQueue == null || threadFactory == null || handler == null)
+        throw new NullPointerException();
+    this.acc = System.getSecurityManager() == null ? null : AccessController.getContext();
+    this.corePoolSize = corePoolSize;
+    this.maximumPoolSize = maximumPoolSize;
+    this.workQueue = workQueue;
+    this.keepAliveTime = unit.toNanos(keepAliveTime);
+    this.threadFactory = threadFactory;
+    this.handler = handler;
+}
+```
+
+## corePoolSize
+
+线程池核心线程数量，核心线程不会被回收，即使没有任务执行，也会保持空闲状态。如果线程池中的线程少于此数目，则在执行任务时创建。
+
+## maximumPoolSize
+
+池允许最大的线程数，当线程数量达到corePoolSize，且workQueue队列塞满任务了之后，继续创建线程。
+
+## keepAliveTime
+
+超过corePoolSize之后的“临时线程”的存活时间。
+
+## unit
+
+keepAliveTime的单位。
+
+## workQueue
+
+当前线程数超过corePoolSize时，新的任务会处在等待状态，并存在workQueue中，BlockingQueue是一个先进先出的阻塞式队列实现，底层实现会涉及Java并发的AQS机制，有关于AQS的相关知识，我会单独写一篇，敬请期待。
+
+## threadFactory
+
+创建线程的工厂类，通常我们会自定一个threadFactory设置线程的名称，这样我们就可以知道线程是由哪个工厂类创建的，可以快速定位。
+
+## handler
+
+线程池执行拒绝策略，当线数量达到maximumPoolSize大小，并且workQueue也已经塞满了任务的情况下，线程池会调用handler拒绝策略来处理请求。
+
+系统默认的拒绝策略有以下几种：
+
+1. AbortPolicy：为线程池默认的拒绝策略，该策略直接抛异常处理。
+2. DiscardPolicy：直接抛弃不处理。
+3. DiscardOldestPolicy：丢弃队列中最老的任务。
+4. CallerRunsPolicy：将任务分配给当前执行execute方法线程来处理。
+
+我们还可以自定义拒绝策略，只需要实现RejectedExecutionHandler接口即可，友好的拒绝策略实现有如下：
+
+1. 将数据保存到数据，待系统空闲时再进行处理
+2. 将数据用日志进行记录，后由人工处理
+
 # 自定义线程池
 
 在进行自定义线程池的时候需要先明白两件事，就是需要定义一个阻塞队列，因为线程池是解决大量任务，所以需要一个“缓冲区”即阻塞队列来进行接客，即排队等待区，另外还需要定义几个技师来进行处理客人的请求，其中请求也就是用户传进来的实现了Runable接口的类。

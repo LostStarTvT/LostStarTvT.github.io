@@ -1675,6 +1675,28 @@ JDK6,7 中的 ConcurrentHashmap 主要使用 Segment 来实现减小锁粒度，
 4. sizeCtl 的不同值来代表不同含义，起到了控制的作用。
 5. 采用 synchronized 而不是 ReentrantLock
 
+
+
+## [为什么CHM不允许Key和Value为null?](https://mp.weixin.qq.com/s?__biz=MzIxNTQ4MzE1NA==&mid=2247484354&idx=1&sn=80c92881b47a586eba9c633eb78d36f6&chksm=9796d5bfa0e15ca9713ff9dc6e100593e0ef06ed7ea2f60cb984e492c4ed438d2405fbb2c4ff&scene=21#wechat_redirect)
+
+对于HashMap来说，其key和value都是可以存储null。
+
+记住一个异常叫做空指针异常，那么什么叫做空指针异常呢？ 就是一个引用没有指向任何地址，即没有指向任何的对象，那么里面存储的就是NULL这样，在操作该变量时候，因为没有指向任何的对象所以会抛出空指针异常。
+
+对于CHM来说，Key和Value是都不允许存储NULL，对于value来说，主要是因为容易存在二义性，假设允许Value为NULL，那么假设A线程获取到了一个NULL值，那么此时线程A不知道这个NULL值是Map中没有存储返回的NULL还是因为key对应存储的就是NULL，对于HashMap来说，因为常用在单线程模型，那么就可以使用containsKey来判断是Map中是否存储了这个key，但是对于CHM来说，因为是在并发环境下的，那么当A再次去调用containsKey时候，假设此时有B线程添加了一个key NULL的节点，那么此时就出现了二义性。所以都不允许添加为NULL。
+
+Doug给出的建议是：可以试一试在某个地方声明static final Object NULL=new Object()，然后用NULL替换掉所有用null的地方。
+
+ps 在使用switch的时候，一定要注意有没有break。。。 就有毒。但有些业务场景是不需要break的。
+
+> 那不管是HashMap还是ConcurrentHashMap调用map.get(key)的时候，如果返回了null，那么这个null，都有两重含义:
+>
+> **1.这个key从来没有在map中映射过。**
+>
+> **2.这个key的value在设置的时候，就是null。**
+
+
+
 # 五、ArrayList
 
 [本文参考链接](https://github.com/LostStarTvT/JavaGuide/blob/master/docs/java/collection/ArrayList.md)  [Fail-Fast](https://juejin.im/post/5cb683d6518825186d65402c#heading-0) 
