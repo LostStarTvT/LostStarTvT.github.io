@@ -425,7 +425,7 @@ public int TreeDepth2(TreeNode root) {
 
 二者的区别， 有类似于，从上面开始计算，开始从下面开始计算的感觉，就是处理数据在递归开始前，还是在递归开始后。  
 
-## 7. 将二叉搜索树变成双向链表
+## 7.将二叉搜索树变成双向链表
 
 **题目大意**：将一个搜索二叉树变成一个有序的双向链表。left指向前节点，right指向后节点  ，返回头节点
 
@@ -493,7 +493,7 @@ public TreeNode Convert(TreeNode pRootOfTree) { //因为要返回头指针，所
 }
 ```
 
-## 8. 判断二叉树是否为平衡二叉树
+## 8.判断二叉树是否为平衡二叉树
 
 **题目大意**：判断二叉树是否为平衡二叉树
 
@@ -507,7 +507,6 @@ public int TreeDepth(TreeNode root) {
     int right = TreeDepth(root.right);
 
     return Math.max(left,right) + 1;
-
 }
 
 //判断是否是平衡二叉树
@@ -812,7 +811,7 @@ public static TreeNode buildTreeHelper(int [] inorder, int [] postOrder, int ind
 
 **题目大意：** 想象自己站在二叉树的右边，然后输出所有能够看到的节点。
 
-思路有两个，第一个是使用二叉树的层序遍历，每次都是输出右边的第一个节点，还有就是二叉树的深度优先遍历，先遍历右节点，使用depth控制是否加入，即当此时深度和res数组长度一样以后，便开始加入，表示这是第一次到达的第一个右节点。深度首先右节点的代码如下：
+思路有两个，第一个是使用二叉树的层序遍历，每次都是输出右边的第一个节点。 第二是二叉树的深度优先遍历，先遍历右节点，使用depth控制是否加入，即当此时深度和res数组长度一样以后，便开始加入，表示这是第一次到达的第一个右节点。深度首先右节点的代码如下：
 
 ```java
 class Solution {
@@ -861,3 +860,197 @@ public List<Integer> rightSideView(TreeNode root) {
 ```
 
 从上面这道题也就明白了，不能够只是单纯的想递归，需要从已有的方法中找，比如说中序遍历，先序遍历，层序遍历还有就是深度优先遍历，层序遍历等等方法，即先从已有的进行考虑，保证 出口条件，选择条件，还有就是路径。三大条件缺一不可。
+
+## 15.判断二叉树是否是平衡二叉树
+
+**题目大意：** 给定一个二叉树，判断是否是平衡二叉树。
+
+**解题思路：** 首先什么叫做平衡二叉树？平衡二叉树就是左右子树高度差不大于1，并且左右子树也是平衡二叉树。那么既然是高度，就需要利用深度公式来进行计算器高度，首先是判断左右子树的高度差， 然后在分别以左右子树为跟再次判断左右子树是否是平衡二叉树
+
+```java
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+
+        if(root == null) return true; // 出口
+
+        // 为啥还要判断左右子树？ 因为第一次判断只是计算了左右子树的高度差， 然后左右子树也要满足是平衡二叉树。
+        return Math.abs(getHeight(root.left) - getHeight(root.right)) <= 1 && isBalanced(root.left) && isBalanced(root.right);
+    }
+
+    // 获取高度。
+    public int getHeight(TreeNode root){
+
+        if(root == null) return 0;
+
+        int left = getHeight(root.left);
+        int right = getHeight(root.right);
+        return Math.max(right,left) + 1;
+    }
+}
+```
+
+## 16.查找二叉树的两个节点的最近祖先节点
+
+**题目大意：** 这种题被分为两种，一种是寻找二叉搜索树中的最近祖先节点，一种是直接在二叉树中找到最近的祖先节点。这种也有两种解法，一，使用路径搜索算法，即将两个节点的路径分别使用List存储起来，然后进行对比路径是否相同，当碰到不相同的时候，前一个就是最近祖先节点。对于二叉搜索树和二叉树的处理有点不一样。还有就是直接使用递归，利用性质进行操作，二叉搜索树比较好理解，大师二叉树有点不好理解。
+
+路径搜索算法：
+
+二叉树：
+
+```java
+// 双路查找。
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
+    if(root == null) return null;
+    // 双路查找节点，然后保存路径
+    List<TreeNode> path_p = getPath(root,p.val);
+    List<TreeNode> path_q = getPath(root,q.val);
+
+    TreeNode res = null;
+
+    // 因为是公共的祖先，路径肯定是相同的，那么就找到最初的那个节点就好
+    for(int i = 0; i < path_p.size()  && i < path_q.size() ; i++){
+        if(path_q.get(i) == path_p.get(i))
+            res = path_p.get(i);
+        else
+            break;
+    }
+    return res;
+}
+
+public List<TreeNode> getPath(TreeNode root, int target){
+
+    List<TreeNode> res = new ArrayList<>();
+
+    // 先保存，然后在判断，即将自己也保存下来 
+    res.add(root);
+    // 因为二叉搜索树 肯定左节点小于根节点，右节点大于根节点
+    while(root.val != target){
+        if(root.val < target){
+            root = root.right;
+        }else{
+            root = root.left;
+        }
+        res.add(root);
+    }
+    return res;
+}
+```
+
+二叉树：
+
+```java
+// 使用 arrayList 找路径的版本
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+    if(root == null) return null;
+    
+    List<TreeNode> path_p = new ArrayList<>();
+    List<TreeNode> path_q = new ArrayList<>();
+
+    // 使用先序遍历找路的方法进行判断最近公共子节点。
+    getPath(root,p,path_p);
+    getPath(root,q,path_q);
+
+    root = null;
+    for(int i = 0;i < path_p.size() && i < path_q.size(); i++){
+        if(path_p.get(i) == path_q.get(i)) //找到最后一个相同的节点。
+            root = path_p.get(i);
+        else
+            break;
+    }
+    return root;
+}
+
+// 先序遍历找到对应的路径，通过一个不断判断数组中最后一个节点是否为target来判断是否找到，顺便进行剪枝。
+public void getPath(TreeNode root, TreeNode target, List<TreeNode> res){
+    if(root == null) return;
+    res.add(root);
+
+    // 左子树  为什么要用到最后一个节点，因为当下层找到最后一个节点以后，后面也需要用到这个标志，所以需要知道找到。
+    if(res.get(res.size() - 1) != target)
+        getPath(res.get(res.size() - 1).left, target, res);
+    // 右子树
+    if(res.get(res.size() - 1) != target)
+        getPath(res.get(res.size() - 1).right, target, res);
+    // 通过判断最后一个节点，进行剪枝非常的秒啊
+    if(res.get(res.size() - 1)!= target)
+        res.remove(res.size() - 1);
+}
+```
+
+递归的做法：
+
+二叉搜索树：利用性质比较简单。
+
+```java
+// 利用性质进行查找
+public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+
+    if(root == null) return null;
+
+    TreeNode res = root;
+
+    while(true){
+
+        // 利用二叉树的性质进行找到，要么 pq 都小于 根节点， 要么 pq都大于根节点。 如果不是 则就是要找到的节点。
+        if(p.val < res.val && q.val < res.val)
+            res = res.left;
+        else if(p.val > res.val && q.val > res.val)
+            res = res.right;
+        else
+            break;
+    }
+
+    return res;
+}
+```
+
+二叉树：
+
+```java
+// 这个比二叉搜索树更加难一点。
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+
+    if(root == null || root == p || root == q) return root;
+    // 找到左节点
+    TreeNode left = lowestCommonAncestor(root.left, p, q);
+    // 找到右节点
+    TreeNode right = lowestCommonAncestor(root.right, p ,q);
+
+    if(left == null && right == null) return null;
+    if(left == null) return right;
+    if(right == null) return left;
+
+    return root;
+}
+```
+
+主要的思想有点类似左右节点的交换，但是有点没有看明白。
+
+## 17.搜索二叉排序树的第i大的数据
+
+```java
+class Solution {
+    public int kthLargest(TreeNode root, int k) {
+        List<Integer> res = new ArrayList<>();
+        helper(root, res, k);
+        return res.get(res.size() - 1);
+    }
+
+    // 投过 右左中 遍历，中间将数据添加到数组中，通过是否数组长度进行不断的判断是否已经找到最后的数据。
+    public void helper(TreeNode root, List<Integer> res, int k ){
+
+        if(root ==  null) return;
+        if(res.size() < k)
+            helper(root.right,res, k);
+        if(res.size() < k)
+            res.add(root.val);  
+        if(res.size() == k) return;
+
+        if(res.size() < k)
+            helper(root.left, res, k);
+    } 
+}
+```
+
+是要用也是上面搜索的思想，因为数组是不断的变化的，所以需要不断的进行判断。
