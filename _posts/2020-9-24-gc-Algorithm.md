@@ -102,7 +102,7 @@ JVM中，如果**Survivor区**中的**相同年龄**的**所有对象的大小**
 
 # 垃圾回收器总览
 
-![img](file:///C:/Users/Seven/Documents/My Knowledge/temp/343cf0d0-67e0-472b-8c15-5f6c2af1e473/128/index_files/5ca58bae-da38-42cd-a948-51c48bdc8f40.jpg)
+![gcSum.png](https://pic.tyzhang.top/images/2020/09/29/gcSum.png)
 
 # 垃圾回收器
 
