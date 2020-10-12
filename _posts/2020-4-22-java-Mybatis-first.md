@@ -69,7 +69,6 @@ INSERT INTO `user` (`id`, `username`, `birthday`, `sex`, `address`) VALUES
 
 ```xml
 <dependencies>
-    
     <dependency>
         <groupId>org.mybatis</groupId>
         <artifactId>mybatis</artifactId>

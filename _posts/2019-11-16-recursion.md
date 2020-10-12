@@ -103,5 +103,6 @@ public class recursion {
 2. 表示在进行到循环到结束时候进行的操作。
 3. 表示进行一次指针调整，即将指针反转、
 4. 表示在进行3以后的整个链表的状态。其中newNode是一直指向newNode的。而一直进行改变的就是Head  和head->next的指针。一直返回newNode都是指向尾结点。
+5. 找到的newNode一直为最后一个节点，需要返回的节点就是newNode，然后后面的操作是为了连接节点，而与最后一个节点没有关系，因为返回的的是尾结点的指针，并且是逆序的。 所以直接return的必须是最后一个节点不会变。使用head.next 是为了反转，而与newNode没有关系。
 
-![递归图示](/image/listReverse.png)
+![listReverse.png](https://pic.tyzhang.top/images/2020/10/09/listReverse.png)
