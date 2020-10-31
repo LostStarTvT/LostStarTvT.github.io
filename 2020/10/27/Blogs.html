@@ -416,7 +416,7 @@ cnpm <span class="nb">install</span> <span class="nt">-g</span> github-webhook-h
 
 <p>脚本内容如下：</p>
 
-<p>/usr/lib/node_modules/github-webhook-handler/delpoy.js</p>
+<p>/usr/lib/node_modules/github-webhook-handler/deploy.js</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var http <span class="o">=</span> require<span class="o">(</span><span class="s1">'http'</span><span class="o">)</span>
 var createHandler <span class="o">=</span> require<span class="o">(</span><span class="s1">'github-webhook-handler'</span><span class="o">)</span>
@@ -452,16 +452,14 @@ handler.on<span class="o">(</span><span class="s1">'push'</span>, <span class="k
 
 <p>脚本的作业就是启动一个监听端口来接收请求，接收到请求后执行部署脚本，脚本内容的关键点已经标注上注释。</p>
 
-<p>部署博客的脚本如下：depoly.sh</p>
+<p>部署博客的脚本如下：deploy.sh</p>
 
 <p>/usr/local/depoly.sh</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="sb">`</span><span class="nb">date</span><span class="sb">`</span>
-<span class="nb">cd</span> /usr/local/coding/lostStarTvT.github.io 
+<span class="nb">cd</span> /usr/local/nginx/lostStarTvT.github.io 
 <span class="nb">echo </span>start pull from github 
 git pull https://github.com/LostStarTvT/lostStarTvT.github.io.git
-<span class="nb">echo </span>start build..
-jekyll build <span class="nt">--source</span> /usr/local/coding/lostStarTvT.github.io <span class="nt">--destination</span> /usr/local/nginx/html
 </code></pre></div></div>
 
 <p>就是拉取代码，进行部署而已。</p>

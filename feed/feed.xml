@@ -12,7 +12,7 @@
   &lt;p&gt;漫画&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;&lt;a href=&quot;http://diaowenjie.cn/994.pdf&quot;&gt;第944话 别名为大和&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://diaowenjie.cn/onepiece/994.pdf&quot;&gt;第944话 别名为大和&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://diaowenjie.cn/onepiece/993.pdf&quot;&gt;第943话 和之国的梦&lt;/a&gt;&lt;/p&gt;
 
@@ -247,7 +247,7 @@ cnpm &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;
 
 &lt;p&gt;脚本内容如下：&lt;/p&gt;
 
-&lt;p&gt;/usr/lib/node_modules/github-webhook-handler/delpoy.js&lt;/p&gt;
+&lt;p&gt;/usr/lib/node_modules/github-webhook-handler/deploy.js&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;var http &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; require&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 var createHandler &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; require&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'github-webhook-handler'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
@@ -283,16 +283,14 @@ handler.on&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&
 
 &lt;p&gt;脚本的作业就是启动一个监听端口来接收请求，接收到请求后执行部署脚本，脚本内容的关键点已经标注上注释。&lt;/p&gt;
 
-&lt;p&gt;部署博客的脚本如下：depoly.sh&lt;/p&gt;
+&lt;p&gt;部署博客的脚本如下：deploy.sh&lt;/p&gt;
 
 &lt;p&gt;/usr/local/depoly.sh&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
-&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/coding/lostStarTvT.github.io 
+&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/nginx/lostStarTvT.github.io 
 &lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;start pull from github 
 git pull https://github.com/LostStarTvT/lostStarTvT.github.io.git
-&lt;span class=&quot;nb&quot;&gt;echo &lt;/span&gt;start build..
-jekyll build &lt;span class=&quot;nt&quot;&gt;--source&lt;/span&gt; /usr/local/coding/lostStarTvT.github.io &lt;span class=&quot;nt&quot;&gt;--destination&lt;/span&gt; /usr/local/nginx/html
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;就是拉取代码，进行部署而已。&lt;/p&gt;
