@@ -9,7 +9,7 @@
 
     
 
-    <title>转移博客到阿里云</title>
+    <title>Jekyll + Nginx + Webhook实现博客自动部署到阿里云服务器</title>
 
     
       
@@ -164,7 +164,7 @@
     </script>
 
     <section class="page-header">
-      <h1 class="project-name">转移博客到阿里云</h1>
+      <h1 class="project-name">Jekyll + Nginx + Webhook实现博客自动部署到阿里云服务器</h1>
       <h2 class="project-tagline"></h2>
       
         <h2 class="project-date">
@@ -186,7 +186,7 @@
 
   <header class="post-header">
       <link rel="dns-prefetch" href="//cdn.bootcss.com" />
-    <h1 class="post-title" itemprop="name headline">转移博客到阿里云</h1>
+    <h1 class="post-title" itemprop="name headline">Jekyll + Nginx + Webhook实现博客自动部署到阿里云服务器</h1>
     <p class="post-meta">
       <time datetime="2020-10-27T00:00:00+08:00" itemprop="datePublished">
         
@@ -201,26 +201,61 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   
   <div itemprop="articleBody">
     <blockquote>
-  <p>记录将博客从GitPages移植到服务器上。</p>
+  <p>记录博客的移植过程，之前使用GitHub Pages国内访问总是很慢，现在将其移植到阿里云服务器。主要涉及到Jekyll的安装、Nginx的配置和自动部署。</p>
 </blockquote>
 
 <h1 id="目录">目录</h1>
 
 <ul id="markdown-toc">
   <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
-  <li><a href="#jekyll" id="markdown-toc-jekyll">Jekyll</a>    <ul>
-      <li><a href="#安装jekyll" id="markdown-toc-安装jekyll">安装jekyll</a></li>
+  <li><a href="#零说明" id="markdown-toc-零说明">零、说明</a></li>
+  <li><a href="#一jekyll" id="markdown-toc-一jekyll">一、Jekyll</a>    <ul>
+      <li><a href="#windows安装jekyll" id="markdown-toc-windows安装jekyll">Windows安装Jekyll</a></li>
+      <li><a href="#centos安装jekyll" id="markdown-toc-centos安装jekyll">Centos安装jekyll</a>        <ul>
+          <li><a href="#安装jekyll" id="markdown-toc-安装jekyll">安装jekyll</a></li>
+        </ul>
+      </li>
     </ul>
   </li>
-  <li><a href="#nginx" id="markdown-toc-nginx">Nginx</a></li>
-  <li><a href="#编译项目" id="markdown-toc-编译项目">编译项目</a></li>
-  <li><a href="#自动部署" id="markdown-toc-自动部署">自动部署</a>    <ul>
+  <li><a href="#二nginx" id="markdown-toc-二nginx">二、Nginx</a>    <ul>
+      <li><a href="#nginx安装" id="markdown-toc-nginx安装">Nginx安装</a></li>
+      <li><a href="#nginx控制命令" id="markdown-toc-nginx控制命令">Nginx控制命令</a></li>
+      <li><a href="#nginx配置文件" id="markdown-toc-nginx配置文件">Nginx配置文件</a></li>
+    </ul>
+  </li>
+  <li><a href="#三自动部署" id="markdown-toc-三自动部署">三、自动部署</a>    <ul>
       <li><a href="#配置-webhook" id="markdown-toc-配置-webhook">配置 Webhook</a></li>
       <li><a href="#服务器接受推送" id="markdown-toc-服务器接受推送">服务器接受推送</a></li>
+      <li><a href="#查错" id="markdown-toc-查错">查错</a></li>
     </ul>
   </li>
 </ul>
-<h1 id="jekyll">Jekyll</h1>
+<h1 id="零说明">零、说明</h1>
+
+<p>更新博客流程：首先本地使用Jekyll将博客进行编译生成源码，将其编译后的源码上传到GitHub，然后使用WebHook向阿里云服务器发送通知，然后服务器从GitHub上pull下来最新的代码，完成更新。</p>
+
+<p>整个流程包括：</p>
+
+<ul>
+  <li>客户端安装Jekyll</li>
+  <li>服务器端安装Nginx提供服务</li>
+  <li>服务端监听WebHook请求。</li>
+</ul>
+
+<h1 id="一jekyll">一、Jekyll</h1>
+
+<h2 id="windows安装jekyll">Windows安装Jekyll</h2>
+
+<p>参考：<a href="https://segmentfault.com/a/1190000022941843">教程序员使用Jekyll搭建漂亮的个人博客</a></p>
+
+<p>本地编译命令：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll build  <span class="nt">--destination</span> G:<span class="se">\C</span>oding<span class="se">\l</span>ostStarTvT.github.io
+</code></pre></div></div>
+
+<h2 id="centos安装jekyll">Centos安装jekyll</h2>
+
+<p><strong>本来是打算本地保存md源码，然后在服务器上进行编译，发现有点麻烦，最后就直接在本地进行编译，所以这个可以忽略。</strong></p>
 
 <p>使用RVM进行安装Jekyll环境</p>
 
@@ -259,7 +294,7 @@ gem <span class="nt">-v</span>
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem update <span class="nt">--system</span>
 </code></pre></div></div>
 
-<h2 id="安装jekyll">安装jekyll</h2>
+<h3 id="安装jekyll">安装jekyll</h3>
 
 <p>尝试安装 jekyll，大概率会出现找不到库</p>
 
@@ -296,9 +331,9 @@ export PATH=${PATH}:/usr/local/rvm/gems/ruby-2.7.0/bin
   <li><a href="http://elmagnifico.tech/2020/08/06/Jekyll-blog-nginx/">参考 VPS上使用nginx搭建jekyll blog（转移github博客）</a></li>
 </ul>
 
-<h1 id="nginx">Nginx</h1>
+<h1 id="二nginx">二、Nginx</h1>
 
-<p>当安装好jekyll环境以后，就可以正常的编译jekyll项目，然后需要使用nginx服务器将编译完成后的文件发布出去。</p>
+<h2 id="nginx安装">Nginx安装</h2>
 
 <p>nginx需要依赖 openssl、pcre、zlib、gcc-c++，我使用的阿里云服务器已经提前安装好，这四个都可以使用yum命令进行安装。</p>
 
@@ -317,12 +352,14 @@ export PATH=${PATH}:/usr/local/rvm/gems/ruby-2.7.0/bin
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whereis nginx <span class="c"># 找到路径</span>
 </code></pre></div></div>
 
-<p>我的服务器是输出</p>
+<p><strong>nginx家目录</strong></p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/nginx 
 </code></pre></div></div>
 
-<p>根据路径控制nginx</p>
+<p>其目录下的html放置的是静态界面，conf目录下放的是配置文件。</p>
+
+<h2 id="nginx控制命令">Nginx控制命令</h2>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.启动
 /usr/local/nginx/sbin/nginx
@@ -340,38 +377,87 @@ export PATH=${PATH}:/usr/local/rvm/gems/ruby-2.7.0/bin
 vim /usr/local/nginx/conf/nginx.conf
 </code></pre></div></div>
 
-<p>此时便安装好了一个基本的nginx。</p>
+<h2 id="nginx配置文件">Nginx配置文件</h2>
 
-<h1 id="编译项目">编译项目</h1>
+<p>此时便安装好了一个基本的nginx服务器，Nginx配置文件：</p>
 
-<p>首先使用git命令将自己的blog clone下来</p>
+<p>vim /usr/local/nginx/conf/nginx.conf</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/LostStarTvT/lostStarTvT.github.io.git
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#user  nobody;</span>
+worker_processes  1<span class="p">;</span>
+
+<span class="c">#error_log  logs/error.log;</span>
+<span class="c">#error_log  logs/error.log  notice;</span>
+<span class="c">#error_log  logs/error.log  info;</span>
+
+<span class="c">#pid        logs/nginx.pid;</span>
+
+
+events <span class="o">{</span>
+    worker_connections  1024<span class="p">;</span>
+<span class="o">}</span>
+
+
+http <span class="o">{</span>
+    include       mime.types<span class="p">;</span>
+    default_type  application/octet-stream<span class="p">;</span>
+
+    sendfile        on<span class="p">;</span>
+    <span class="c">#tcp_nopush     on;</span>
+
+    <span class="c">#keepalive_timeout  0;</span>
+    keepalive_timeout  65<span class="p">;</span>
+
+    <span class="c">#gzip  on;</span>
+
+    server <span class="o">{</span>
+        listen       80<span class="p">;</span>  <span class="c"># 监听端口</span>
+        server_name  www.diaowenjie.cn<span class="p">;</span> <span class="c"># 域名</span>
+
+        <span class="c">#charset koi8-r;</span>
+        <span class="c">#access_log  logs/host.access.log  main;</span>
+
+        location / <span class="o">{</span>
+            root   lostStarTvT.github.io<span class="p">;</span>  <span class="c"># 更改为源码的路径。</span>
+            index  index.html index.htm<span class="p">;</span>
+        <span class="o">}</span>
+
+        <span class="c">#error_page  404              /404.html;</span>
+
+        <span class="c"># redirect server error pages to the static page /50x.html</span>
+        <span class="c">#</span>
+        error_page   500 502 503 504  /50x.html<span class="p">;</span>
+        location <span class="o">=</span> /50x.html <span class="o">{</span>
+            root   lostStarTvT.github.io<span class="p">;</span>
+        <span class="o">}</span>
+
+        <span class="c"># proxy the PHP scripts to Apache listening on 127.0.0.1:80</span>
+        <span class="c">#</span>
+        location /deploy <span class="o">{</span> <span class="c"># 监听webhook 请求。</span>
+            proxy_pass   http://127.0.0.1:3006/deploy<span class="p">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
 </code></pre></div></div>
 
-<p>使用jekyll进行编译源代码</p>
-
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll build <span class="nt">--source</span> /usr/local/coding/lostStarTvT.github.io <span class="nt">--destination</span> /usr/local/nginx/html
-</code></pre></div></div>
-
-<p>–source 表示源代码的路径， –destination 表示编译的生成的文件存放到哪，现在设置的是直接编译生成到nginx服务器的静态文件目录下。</p>
+<p>主要需要更改/ 下的主目录，可以自定义指定，然后就是监听代理请求。</p>
 
 <ul>
   <li>参考 <a href="https://www.cnblogs.com/taiyonghai/p/6728707.html">nginx linux详细安装部署教程</a></li>
 </ul>
 
-<h1 id="自动部署">自动部署</h1>
+<h1 id="三自动部署">三、自动部署</h1>
 
 <p>虽然手动将源码上传到github，然后手动使git pull 命令下载最新的版本，然后在进行编译生成可以实现更新，但有些麻烦，接下来实现自动化部署。</p>
 
 <p>首先是github的webhook功能，即当github项目更新的时候，可以自动向目标网站发送一个请求。</p>
 
-<h3 id="配置-webhook">配置 Webhook</h3>
+<h2 id="配置-webhook">配置 Webhook</h2>
 
 <p>在 Github 仓库的项目界面，比如本博客项目 <code class="language-plaintext highlighter-rouge">https://github.com/LostStarTvT/lostStarTvT.github.io</code>，点击 Setting-&gt;Webhooks-&gt;Add Webhook，在添加 Webhooks 的配置信息，我的配置信息如下：</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Payload URL: http://www.ityouknow.com/deploy
-Content type: application/json
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Payload URL: http://diaowenjie.com/deploy
+Content <span class="nb">type</span>: application/json
 Secret: 123456
 </code></pre></div></div>
 
@@ -379,11 +465,9 @@ Secret: 123456
 
 <p><img src="http://favorites.ren/assets/images/2018/it/webhook.png" alt="img" /></p>
 
-<h3 id="服务器接受推送">服务器接受推送</h3>
+<h2 id="服务器接受推送">服务器接受推送</h2>
 
-<p>我们需要在博客的服务器上面建立一个服务，来接收 Github 提交代码后的推送，从而来触发部署的脚本。 Github 上有一个开源项目可以做这个事情 <a href="https://github.com/rvagg/github-webhook-handler">github-webhook-handler</a>。</p>
-
-<p>这个开源项目目的很单纯，就是负责接收 Github 推送过来的通知，然后执行部署脚本，不过他是使用 NodeJs 来开发的，所以我们先需要在 Centos 上面按照 Node 环境。</p>
+<p>我们需要在博客的服务器上面建立一个服务，来接收 Github 提交代码后的推送，从而来触发部署的脚本。 Github 上有一个开源项目可以做这个事情 <a href="https://github.com/rvagg/github-webhook-handler">github-webhook-handler</a>。这个开源项目目的很单纯，就是负责接收 Github 推送过来的通知，然后执行部署脚本，不过他是使用 NodeJs 来开发的，所以我们先需要在 Centos 上面按照 Node 环境。</p>
 
 <p>centos7 安装 Node 环境</p>
 
@@ -391,7 +475,7 @@ Secret: 123456
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>rpm <span class="nt">-ivh</span> https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm
 
-//yum安装node.js
+<span class="c"># yum安装node.js</span>
 yum <span class="nb">install</span> <span class="nt">-y</span> nodejs
 </code></pre></div></div>
 
@@ -420,7 +504,7 @@ cnpm <span class="nb">install</span> <span class="nt">-g</span> github-webhook-h
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var http <span class="o">=</span> require<span class="o">(</span><span class="s1">'http'</span><span class="o">)</span>
 var createHandler <span class="o">=</span> require<span class="o">(</span><span class="s1">'github-webhook-handler'</span><span class="o">)</span>
-var handler <span class="o">=</span> createHandler<span class="o">({</span> path: <span class="s1">'/deploy'</span>, secret: <span class="s1">'ityouknow'</span> <span class="o">})</span> //监听请求路径，和Github 配置的密码
+var handler <span class="o">=</span> createHandler<span class="o">({</span> path: <span class="s1">'/deploy'</span>, secret: <span class="s1">'123455'</span> <span class="o">})</span>  <span class="c"># 监听请求路径，和Github配置的密码</span>
  
 <span class="k">function </span>run_cmd<span class="o">(</span>cmd, args, callback<span class="o">)</span> <span class="o">{</span>
   var spawn <span class="o">=</span> require<span class="o">(</span><span class="s1">'child_process'</span><span class="o">)</span>.spawn<span class="p">;</span>
@@ -436,7 +520,7 @@ http.createServer<span class="o">(</span><span class="k">function</span> <span c
     res.statusCode <span class="o">=</span> 404
     res.end<span class="o">(</span><span class="s1">'no such location'</span><span class="o">)</span>
   <span class="o">})</span>
-<span class="o">})</span>.listen<span class="o">(</span>3006<span class="o">)</span>//监听的端口
+<span class="o">})</span>.listen<span class="o">(</span>3006<span class="o">)</span> <span class="c"># 监听的端口</span>
  
 handler.on<span class="o">(</span><span class="s1">'error'</span>, <span class="k">function</span> <span class="o">(</span>err<span class="o">)</span> <span class="o">{</span>
   console.error<span class="o">(</span><span class="s1">'Error:'</span>, err.message<span class="o">)</span>
@@ -446,15 +530,15 @@ handler.on<span class="o">(</span><span class="s1">'push'</span>, <span class="k
   console.log<span class="o">(</span><span class="s1">'Received a push event for %s to %s'</span>,
     event.payload.repository.name,
     event.payload.ref<span class="o">)</span><span class="p">;</span>
-  run_cmd<span class="o">(</span><span class="s1">'sh'</span>, <span class="o">[</span><span class="s1">'/usr/local/depoly.sh'</span><span class="o">]</span>, <span class="k">function</span><span class="o">(</span>text<span class="o">){</span> console.log<span class="o">(</span>text<span class="o">)</span> <span class="o">})</span><span class="p">;</span>//成功后，执行的脚本。
+  run_cmd<span class="o">(</span><span class="s1">'sh'</span>, <span class="o">[</span><span class="s1">'/usr/local/deploy.sh'</span><span class="o">]</span>, <span class="k">function</span><span class="o">(</span>text<span class="o">){</span> console.log<span class="o">(</span>text<span class="o">)</span> <span class="o">})</span><span class="p">;</span> <span class="c"># 成功后，执行的脚本。 注意检查脚本名称和路径，要一致。</span>
 <span class="o">})</span>
 </code></pre></div></div>
 
-<p>脚本的作业就是启动一个监听端口来接收请求，接收到请求后执行部署脚本，脚本内容的关键点已经标注上注释。</p>
+<p>脚本的作用就是启动一个监听端口来接收请求，接收到请求后执行部署脚本，脚本内容的关键点已经标注上注释。</p>
 
-<p>部署博客的脚本如下：deploy.sh</p>
+<p>然后在/usr/local/目录下进行创建deploy.sh脚本。</p>
 
-<p>/usr/local/depoly.sh</p>
+<p>vi /usr/local/depoly.sh</p>
 
 <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="sb">`</span><span class="nb">date</span><span class="sb">`</span>
 <span class="nb">cd</span> /usr/local/nginx/lostStarTvT.github.io 
@@ -462,16 +546,25 @@ handler.on<span class="o">(</span><span class="s1">'push'</span>, <span class="k
 git pull https://github.com/LostStarTvT/lostStarTvT.github.io.git
 </code></pre></div></div>
 
-<p>就是拉取代码，进行部署而已。</p>
+<p>需要说明的是，nginx可能会碰到权限问题，所以如果不能成功的执行，就需要使用chmod命令进行更改文件的权限。</p>
 
-<p>这个脚本的启动需要借助 Node 中的一个管理 forever 。forever 可以看做是一个 nodejs 的守护进程，能够启动，停止，重启我们的 app 应用。</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod </span>delpoy.sh 777
+<span class="nb">chmod </span>deploy.js 777
+</code></pre></div></div>
 
-<p>不过我们的先安装 forever，然后需要使用 forever 来启动 deploy.js 的服务，执行命令如下：</p>
+<p>在创建完成以后，可以先进行执行测试</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>首先进入deploy.js 所在的目录： <span class="nb">cd</span>  /usr/lib/node_modules/github-webhook-handler
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./deploy.sh
+</code></pre></div></div>
 
-npm <span class="nb">install </span>forever <span class="nt">-g</span>   <span class="c">#安装</span>
-<span class="nv">$ </span>forever start deploy.js          <span class="c">#启动</span>
+<p>这个脚本的启动需要借助 Node 中的一个管理 forever ，forever 可以看做是一个 nodejs 的守护进程，能够启动，停止，重启我们的 app 应用。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm <span class="nb">install </span>forever <span class="nt">-g</span>   <span class="c">#安装forever</span>
+</code></pre></div></div>
+
+<p>然后使用forever执行deploy.js脚本，首先进入deploy.js 所在的目录： cd  /usr/lib/node_modules/github-webhook-handler</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>forever start deploy.js          <span class="c">#启动</span>
 <span class="nv">$ </span>forever stop deploy.js           <span class="c">#关闭</span>
 <span class="nv">$ </span>forever start <span class="nt">-l</span> forever.log <span class="nt">-o</span> out.log <span class="nt">-e</span> err.log deploy.js   
 
@@ -489,22 +582,25 @@ npm <span class="nb">install </span>forever <span class="nt">-g</span>   <span c
 <span class="o">}</span>
 </code></pre></div></div>
 
-<p>这样我们整个自动化部署就完了，每次提交代码时，Github 会发送 Webhook 给地址<code class="language-plaintext highlighter-rouge">http://www.ityouknow.com/deploy</code>，Nginx 将 <code class="language-plaintext highlighter-rouge">/deploy</code> 地址转发给 Nodejs 端口为 3306 的服务，最后通过 github-webhook-handler 来执行部署脚本，已到达自动部署的目的。</p>
+<p>这样我们整个自动化部署就完了，每次提交代码时，Github 会发送 Webhook 给地址<code class="language-plaintext highlighter-rouge">http://www.diaowenjie.com/deploy</code>，Nginx 将 <code class="language-plaintext highlighter-rouge">/deploy</code> 地址转发给 Nodejs 端口为 3006的服务，最后通过 github-webhook-handler 来执行部署脚本。</p>
 
 <p>以后只需要我们提交代码到 Github ,就会自动触发博客的自动化部署。</p>
 
 <p>主要也就是有两个文件</p>
 
 <ul>
-  <li>/usr/lib/node_modules/github-webhook-handler/delpoy.js  监听3006端口的nodejs脚本</li>
-  <li>/usr/local/depoly.sh  自动拉起git 然后进行编译的脚本。</li>
+  <li>/usr/lib/node_modules/github-webhook-handler/deploy.js  监听3006端口的nodejs脚本</li>
+  <li>/usr/local/deploy.sh 自动部署脚本</li>
 </ul>
 
-<p>但是因为我还没有备份，所以还不能测试能否争取的实现。 但是想在还没有想好如何实现。</p>
+<h2 id="查错">查错</h2>
 
 <ul>
-  <li>参考： <a href="https://www.cnblogs.com/ityouknow/p/11904647.html">技术人如何利用github+jekyll 搭建一个独立免费的技术博客</a></li>
+  <li>脚本命名错误：需要调用的脚本的路径和名称要写对</li>
+  <li>权限错误，因为一般都是使用root用户去创建脚本文件，就很可能出现在执行shell脚本时候权限不够，另外也可能没有x权限</li>
 </ul>
+
+<p>参考： <a href="https://www.cnblogs.com/ityouknow/p/11904647.html">技术人如何利用github+jekyll 搭建一个独立免费的技术博客</a></p>
 
   </div>
 
@@ -512,7 +608,7 @@ npm <span class="nb">install </span>forever <span class="nt">-g</span>   <span c
 <footer>
     <div style="color: #B0BEC5">标签：
     
-    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#工具使用">#工具使用</a>
     
   </div>
 </footer>
