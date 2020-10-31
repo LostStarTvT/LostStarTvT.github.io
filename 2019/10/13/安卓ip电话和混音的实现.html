@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>安卓ip电话和混音的实现</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2019/10/13/%E5%AE%89%E5%8D%93ip%E7%94%B5%E8%AF%9D%E5%92%8C%E6%B7%B7%E9%9F%B3%E7%9A%84%E5%AE%9E%E7%8E%B0.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">安卓ip电话和混音的实现</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2019-10-13T00:00:00+08:00" itemprop="datePublished">
+          
+          Oct 13, 2019
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">安卓ip电话和混音的实现</h1>
+    <p class="post-meta">
+      <time datetime="2019-10-13T00:00:00+08:00" itemprop="datePublished">
+        
+        Oct 13, 2019
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>此项目为基于netty框架实现的局域网内的ip电话，另外实现了先录音然后进行混音的功能，并且在github上传了demo可以进行测试。</p>
+</blockquote>
+
+<h4 id="目录">目录</h4>
+
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#phonecall" id="markdown-toc-phonecall">PhoneCall</a></li>
+  <li><a href="#项目介绍" id="markdown-toc-项目介绍">项目介绍</a></li>
+  <li><a href="#demo测试" id="markdown-toc-demo测试">demo测试</a></li>
+  <li><a href="#项目实现思路" id="markdown-toc-项目实现思路">项目实现思路</a></li>
+  <li><a href="#界面展示" id="markdown-toc-界面展示">界面展示</a></li>
+  <li><a href="#项目架构" id="markdown-toc-项目架构">项目架构</a></li>
+  <li><a href="#ip电话控制信令的逻辑图" id="markdown-toc-ip电话控制信令的逻辑图">ip电话控制信令的逻辑图</a>    <ul>
+      <li><a href="#1正常通话过程" id="markdown-toc-1正常通话过程">1.正常通话过程</a></li>
+      <li><a href="#1异常通话过程" id="markdown-toc-1异常通话过程">1.异常通话过程</a></li>
+    </ul>
+  </li>
+  <li><a href="#打电话逻辑交互代码" id="markdown-toc-打电话逻辑交互代码">打电话逻辑交互代码</a>    <ul>
+      <li><a href="#51监听端口" id="markdown-toc-51监听端口">5.1监听端口</a></li>
+      <li><a href="#52-数据传输" id="markdown-toc-52-数据传输">5.2 数据传输</a></li>
+      <li><a href="#52-通话信令的控制" id="markdown-toc-52-通话信令的控制">5.2 通话信令的控制</a></li>
+    </ul>
+  </li>
+  <li><a href="#混音实现说明" id="markdown-toc-混音实现说明">混音实现说明</a></li>
+</ul>
+<h4 id="phonecall">PhoneCall</h4>
+
+<h4 id="项目介绍">项目介绍</h4>
+<p>基于netty框架实现的局域网内的ip电话，netty是一个socket框架。通过输入对方ip或者点击从服务器上获取到的ip地址进行语音通话，双方通过交换控制信令实现语音通话的控制，共有四个界面的切换，打电话界面，响铃界面，通话界面，主界面。本来打算做个群组通话，但是只做到了两个录音音频合成的操作，还没有实现群组的数据发送，并没有实现群组通话的功能。<br />
+细节参照github项目<a href="https://github.com/LostStarTvT/PhoneCall">PhoneCall</a><br />
+ps：本项目是在<a href="https://github.com/xmtggh/VideoCalling">VideoCalling</a>上进行改进的，该项目是实现局域网的视频传输，我将其语音传输抽取出来进行更改实现语音通话，感谢作者的无私贡献。</p>
+
+<h4 id="demo测试">demo测试</h4>
+<p>demo文件夹中的apk文件可以直接下载运行，注册界面可以忽略，随意填写，点击P2P电话按钮进入电话测试。在测试时双方需要同时进入P2P电话界面，因为在线用户需要服务器支持，所以不会显示，测试只需要使用输入对方ip即可。正确输入对方ip即可进行语音通话。</p>
+
+<h4 id="项目实现思路">项目实现思路</h4>
+<p>利用安卓里面的AudioRecord录音类进行录音，然后运用speex第三方库进行降噪编码，将编码后的语音流通过socket发送给对方， 对方在收到语音数据时候将进行解码操作，之后使用AudioTrack进行语音的播放。<br />
+对于群组通话，比如说有ABC三人进行通话，通过A开启一个聊天室，然后BC加入聊天室，此时BC只需将自己的语音流发送给A，然后在A进行语音的合成操作，将合成的语音在本地播放和发送给BC即可，但是具体的网络连接并没有实现。</p>
+
+<h4 id="界面展示">界面展示</h4>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3hpYW5keXVuL1Bob25lQ2FsbC9tYXN0ZXIvcGljdHVyZXMvY2FsbC5wbmc?x-oss-process=image/format,png" alt="输入ip" /></p>
+<h4 id="项目架构">项目架构</h4>
+<ul>
+  <li>audio包：进行音频的录制、编码、解码、播放操作</li>
+  <li>net包：网络连接的包
+    <ul>
+      <li>CallSingal:定义电话信令，如拨打电话操作</li>
+      <li>Message: 传输数据，包括字节与音流和文字</li>
+      <li>NettyClient: netty网络连接代理</li>
+      <li>NettyReceiverHandler: 处理发送数据和接受数据，定义接口回调返回语音信息和电话信令信息</li>
+    </ul>
+  </li>
+  <li>provider包: 网络连接提供者，通过这个对象可以实现网络数据的发送与接收，需要定义接口进行接受与音数据</li>
+  <li>users包：获取服务器上在线用户ip的用户对象</li>
+  <li>mixAudioUtils: 混音用的工具类</li>
+  <li>MultiVoIPActivity: 实现混音界面，需要录制两端音频然后点击混音按钮，之后点击输出混音即可播放</li>
+  <li>VoipP2PActivity: ip电话的主要界面，因为需要监听打电话的请求，但是不会写service进行后台监听，所以就在一个activity中写了五个界面进行切换..以后有机会可能会改</li>
+  <li>RegisterActivity：注册界面，原本是可以注册然后进行用户登录显示在线，然后直接点击在线用户就可以拨打电话，不过不进行登录也没有关系</li>
+</ul>
+
+<h4 id="ip电话控制信令的逻辑图">ip电话控制信令的逻辑图</h4>
+<h6 id="1正常通话过程">1.正常通话过程</h6>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3hpYW5keXVuL1Bob25lQ2FsbC9tYXN0ZXIvcGljdHVyZXMvY2FsbHNpZ25hbC5wbmc?x-oss-process=image/format,png" alt="正常通话信令交互" /></p>
+<h6 id="1异常通话过程">1.异常通话过程</h6>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL3hpYW5keXVuL1Bob25lQ2FsbC9tYXN0ZXIvcGljdHVyZXMvZXJyb3JzQ2FsbC5wbmc?x-oss-process=image/format,png" alt="正常通话信令交互" /></p>
+
+<h4 id="打电话逻辑交互代码">打电话逻辑交互代码</h4>
+<h5 id="51监听端口">5.1监听端口</h5>
+
+<p>对于每一个客户端来说，都需要监听打电话的请求，并且获取到请求方的ip，然后进行数据的交互。首先需要监听端口。这里用到了Netty框架中的<code class="language-plaintext highlighter-rouge">Bootstrap</code>这个类。主要是用来设置netty的连接属性以及绑定监听的端口，这样，请求通话信息以及后续的音频数据才能够被接收。代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Bootstrap</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Bootstrap</span><span class="o">();</span>
+<span class="n">group</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NioEventLoopGroup</span><span class="o">();</span>
+ <span class="k">try</span> <span class="o">{</span>
+     <span class="c1">//设置netty的连接属性。</span>
+     <span class="n">b</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">group</span><span class="o">)</span>
+             <span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="nc">NioDatagramChannel</span><span class="o">.</span><span class="na">class</span><span class="o">)</span> <span class="c1">//异步的 UDP 连接</span>
+             <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_BROADCAST</span><span class="o">,</span> <span class="kc">true</span><span class="o">)</span>
+             <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_RCVBUF</span><span class="o">,</span> <span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="o">)</span><span class="c1">//接收区2m缓存</span>
+             <span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">RCVBUF_ALLOCATOR</span><span class="o">,</span> <span class="k">new</span> <span class="nc">FixedRecvByteBufAllocator</span><span class="o">(</span><span class="mi">65535</span><span class="o">))</span><span class="c1">//加上这个，里面是最大接收、发送的长度</span>
+             <span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="n">handler</span><span class="o">);</span> <span class="c1">//设置数据的处理器</span>
+     <span class="n">b</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">localPort</span><span class="o">).</span><span class="na">sync</span><span class="o">().</span><span class="na">channel</span><span class="o">().</span><span class="na">closeFuture</span><span class="o">().</span><span class="na">await</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+     <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+     <span class="n">group</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<h5 id="52-数据传输">5.2 数据传输</h5>
+
+<p>主要包括两种数据：</p>
+
+<ol>
+  <li>文本信令：建立连接过程中的文本数据</li>
+  <li>语音数据：通话中的语音数据</li>
+</ol>
+
+<p>每次传输需要判断需要发送的是什么类型的数据，做相应的处理后装入运输载体Message对象中，最后用<code class="language-plaintext highlighter-rouge">ChannelHandlerContext</code>对象将转换为Json格式的Message对象发送至目标IP地址相应的端口。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//发送数据。</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendData</span><span class="o">(</span><span class="nc">String</span> <span class="n">ip</span><span class="o">,</span> <span class="kt">int</span> <span class="n">port</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">data</span><span class="o">,</span> <span class="nc">String</span> <span class="n">type</span><span class="o">)</span> <span class="o">{</span>
+     <span class="nc">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+     <span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="k">instanceof</span> <span class="kt">byte</span><span class="o">[])</span> <span class="o">{</span>
+         <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Message</span><span class="o">();</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setFrame</span><span class="o">((</span><span class="kt">byte</span><span class="o">[])</span> <span class="n">data</span><span class="o">);</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setMsgtype</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setTimestamp</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+     <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="k">instanceof</span> <span class="nc">String</span><span class="o">){</span>
+         <span class="n">message</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Message</span><span class="o">();</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setMsgBody</span><span class="o">((</span><span class="nc">String</span><span class="o">)</span> <span class="n">data</span><span class="o">);</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setMsgtype</span><span class="o">(</span><span class="n">type</span><span class="o">);</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setTimestamp</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">());</span>
+         <span class="n">message</span><span class="o">.</span><span class="na">setMsgIp</span><span class="o">(</span><span class="no">MLOC</span><span class="o">.</span><span class="na">localIpAddress</span><span class="o">);</span>
+     <span class="o">}</span>
+     <span class="k">if</span> <span class="o">(</span><span class="n">channelHandlerContext</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">channelHandlerContext</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="k">new</span> <span class="nc">DatagramPacket</span><span class="o">(</span>
+                 <span class="nc">Unpooled</span><span class="o">.</span><span class="na">copiedBuffer</span><span class="o">(</span><span class="no">JSON</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">message</span><span class="o">).</span><span class="na">getBytes</span><span class="o">()),</span>
+                 <span class="k">new</span> <span class="nf">InetSocketAddress</span><span class="o">(</span><span class="n">ip</span><span class="o">,</span> <span class="n">port</span><span class="o">)));</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
+</code></pre></div></div>
+
+<p>在进行接收数据的时候也是需要进行相同判断操作，然后进行数据的获取。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//接收数据。</span>
+<span class="c1">//服务器推送对方IP和PORT</span>
+ <span class="nc">ByteBuf</span> <span class="n">buf</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ByteBuf</span><span class="o">)</span> <span class="n">packet</span><span class="o">.</span><span class="na">copy</span><span class="o">().</span><span class="na">content</span><span class="o">();</span> <span class="c1">//字节缓冲区</span>
+ <span class="kt">byte</span><span class="o">[]</span> <span class="n">req</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">buf</span><span class="o">.</span><span class="na">readableBytes</span><span class="o">()];</span>
+ <span class="n">buf</span><span class="o">.</span><span class="na">readBytes</span><span class="o">(</span><span class="n">req</span><span class="o">);</span>
+ <span class="nc">String</span> <span class="n">str</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="s">"UTF-8"</span><span class="o">);</span>
+ <span class="nc">Message</span> <span class="n">message</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">str</span><span class="o">,</span><span class="nc">Message</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+<span class="c1">//Netty框架中有一个类SimpleChannelInboundHandler，主要是对监听的端口传来的数据进行处理的。自定义一个继承自它的类，并重写处理收到数据的方法channelRead0()，将数据写入Message对象。</span>
+
+<span class="c1">//发送文字类型信息回调</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getMsgtype</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">Message</span><span class="o">.</span><span class="na">MES_TYPE_NOMAL</span><span class="o">)){</span>
+     <span class="k">if</span> <span class="o">(</span><span class="n">frameCallback</span> <span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+         <span class="n">frameCallback</span><span class="o">.</span><span class="na">onTextMessage</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getMsgBody</span><span class="o">());</span>
+         <span class="n">frameCallback</span><span class="o">.</span><span class="na">onGetRemoteIP</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getMsgIp</span><span class="o">());</span>
+     <span class="o">}</span>
+ <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getMsgtype</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="nc">Message</span><span class="o">.</span><span class="na">MES_TYPE_AUDIO</span><span class="o">)){</span>
+
+<span class="c1">//发送语音数据接口回调</span>
+     <span class="k">if</span> <span class="o">(</span><span class="n">frameCallback</span> <span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+         <span class="n">frameCallback</span><span class="o">.</span><span class="na">onAudioData</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">getFrame</span><span class="o">());</span>
+     <span class="o">}</span>
+ <span class="o">}</span>
+</code></pre></div></div>
+<h5 id="52-通话信令的控制">5.2 通话信令的控制</h5>
+
+<p>在建立连接的过程中，会记录下对方的IP。在通话过程中，将收到的数据传给解码模块进行处理。
+总共的控制代码有三种，其中收到打电话信令的时候，需要判断此时被呼叫端是否正忙，如果不忙则跳到响铃界面，否则直接丢包。当收到对方接听电话的指令是，则直接显示说话界面，开始录音并且将接电话标示置为true。当收到通话结束的时候，此时需要判断发出此条结束消息的来源是否是正在通话的客户端，防止在第三方进行呼叫是出现错误挂断的情形。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">what</span> <span class="o">==</span> <span class="n">phone_make_call</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//收到打电话的请求。</span>
+       <span class="k">if</span> <span class="o">(!</span><span class="n">isBusy</span><span class="o">){</span> <span class="c1">//如果不忙 则跳转到通话界面。</span>
+              <span class="n">showRingView</span><span class="o">();</span> <span class="c1">//跳转到响铃界面。</span>
+              <span class="n">isBusy</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+           <span class="o">}</span>
+  <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">what</span> <span class="o">==</span> <span class="n">phone_answer_call</span><span class="o">){</span> <span class="c1">//接听电话</span>
+      <span class="n">showTalkingView</span><span class="o">();</span>
+      <span class="n">audioRecorder</span><span class="o">.</span><span class="na">startRecording</span><span class="o">();</span> <span class="c1">//开始语音播放。</span>
+      <span class="n">isAnswer</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">//接通电话为真</span>
+  <span class="o">}</span><span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">msg</span><span class="o">.</span><span class="na">what</span> <span class="o">==</span> <span class="n">phone_call_end</span><span class="o">){</span> <span class="c1">//收到通话结束的信息</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">newEndIp</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="nc">TargetIp</span><span class="o">)){</span> <span class="c1">//验证发送结束指令的来源</span>
+          <span class="n">showBeginView</span><span class="o">();</span>
+          <span class="n">isAnswer</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+          <span class="n">isBusy</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+          <span class="n">audioRecorder</span><span class="o">.</span><span class="na">stopRecording</span><span class="o">();</span> <span class="c1">//关闭录音和发送数据</span>
+          <span class="n">timer</span><span class="o">.</span><span class="na">stop</span><span class="o">();</span>
+       <span class="o">}</span>     
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="混音实现说明">混音实现说明</h4>
+
+<p>混音实现主要运用通过录音路录制两段音频，然后将其保存到文件中，混音时以字节流进行读取录音文件，然后采用平均混音算法进行混音，并保存到文件，通过测试可以成功的实现混音操作。主要涉及到安卓文件的创建和以字节流的方式进行文件的读取，混音算法。</p>
+
+<p>混音算法，使用二维byte数组保存两个音频流，然后进行合并。需要传入保存的文件名称。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">averageMix</span><span class="o">(</span><span class="nc">String</span> <span class="n">file1</span><span class="o">,</span><span class="nc">String</span> <span class="n">file2</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+
+        <span class="kt">byte</span><span class="o">[][]</span> <span class="n">bMulRoadAudioes</span> <span class="o">=</span>  <span class="k">new</span> <span class="kt">byte</span><span class="o">[][]{</span>
+                <span class="nc">FileUtils</span><span class="o">.</span><span class="na">getContent</span><span class="o">(</span><span class="n">file1</span><span class="o">),</span>    <span class="c1">//第一个文件</span>
+                <span class="nc">FileUtils</span><span class="o">.</span><span class="na">getContent</span><span class="o">(</span><span class="n">file2</span><span class="o">)</span>     <span class="c1">//第二个文件</span>
+        <span class="o">};</span>
+
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">realMixAudio</span> <span class="o">=</span> <span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span> <span class="c1">//保存混音之后的数据。</span>
+        <span class="nc">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="s">"ccc"</span><span class="o">,</span> <span class="s">" bMulRoadAudioes length "</span> <span class="o">+</span> <span class="n">bMulRoadAudioes</span><span class="o">.</span><span class="na">length</span><span class="o">);</span> <span class="c1">//2</span>
+        <span class="c1">//判断两个文件的大小是否相同，如果不同进行补齐操作</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">rw</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">rw</span> <span class="o">&lt;</span> <span class="n">bMulRoadAudioes</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="o">++</span><span class="n">rw</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//length一直都是等于2.依次检测file长度和file2长度</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">rw</span><span class="o">].</span><span class="na">length</span> <span class="o">!=</span> <span class="n">realMixAudio</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
+                <span class="nc">Log</span><span class="o">.</span><span class="na">e</span><span class="o">(</span><span class="s">"ccc"</span><span class="o">,</span> <span class="s">"column of the road of audio + "</span> <span class="o">+</span> <span class="n">rw</span> <span class="o">+</span> <span class="s">" is diffrent."</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">rw</span><span class="o">].</span><span class="na">length</span><span class="o">&lt;</span><span class="n">realMixAudio</span><span class="o">.</span><span class="na">length</span><span class="o">){</span>
+                    <span class="n">realMixAudio</span> <span class="o">=</span> <span class="n">subBytes</span><span class="o">(</span><span class="n">realMixAudio</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">rw</span><span class="o">].</span><span class="na">length</span><span class="o">);</span> <span class="c1">//进行数组的扩展</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">rw</span><span class="o">].</span><span class="na">length</span><span class="o">&gt;</span><span class="n">realMixAudio</span><span class="o">.</span><span class="na">length</span><span class="o">){</span>
+                    <span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">rw</span><span class="o">]</span> <span class="o">=</span> <span class="n">subBytes</span><span class="o">(</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">rw</span><span class="o">],</span><span class="mi">0</span><span class="o">,</span><span class="n">realMixAudio</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="kt">int</span> <span class="n">row</span> <span class="o">=</span> <span class="n">bMulRoadAudioes</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>       <span class="c1">//行</span>
+        <span class="kt">int</span> <span class="n">column</span> <span class="o">=</span> <span class="n">realMixAudio</span><span class="o">.</span><span class="na">length</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>   <span class="c1">//列</span>
+        <span class="kt">short</span><span class="o">[][]</span> <span class="n">sMulRoadAudioes</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">short</span><span class="o">[</span><span class="n">row</span><span class="o">][</span><span class="n">column</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">row</span><span class="o">;</span> <span class="o">++</span><span class="n">r</span><span class="o">)</span> <span class="o">{</span>         <span class="c1">//前半部分</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">c</span> <span class="o">&lt;</span> <span class="n">column</span><span class="o">;</span> <span class="o">++</span><span class="n">c</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">sMulRoadAudioes</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">short</span><span class="o">)</span> <span class="o">((</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span> <span class="o">*</span> <span class="mi">2</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="o">)</span> <span class="o">|</span> <span class="o">(</span><span class="n">bMulRoadAudioes</span><span class="o">[</span><span class="n">r</span><span class="o">][</span><span class="n">c</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xff</span><span class="o">)</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="kt">short</span><span class="o">[]</span> <span class="n">sMixAudio</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">short</span><span class="o">[</span><span class="n">column</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">mixVal</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">sr</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">sc</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">sc</span> <span class="o">&lt;</span> <span class="n">column</span><span class="o">;</span> <span class="o">++</span><span class="n">sc</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">mixVal</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+            <span class="n">sr</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+            <span class="k">for</span> <span class="o">(;</span> <span class="n">sr</span> <span class="o">&lt;</span> <span class="n">row</span><span class="o">;</span> <span class="o">++</span><span class="n">sr</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">mixVal</span> <span class="o">+=</span> <span class="n">sMulRoadAudioes</span><span class="o">[</span><span class="n">sr</span><span class="o">][</span><span class="n">sc</span><span class="o">];</span>
+            <span class="o">}</span>
+            <span class="n">sMixAudio</span><span class="o">[</span><span class="n">sc</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">short</span><span class="o">)</span> <span class="o">(</span><span class="n">mixVal</span> <span class="o">/</span> <span class="n">row</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//合成混音保存在realMixAudio</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">sr</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">sr</span> <span class="o">&lt;</span> <span class="n">column</span><span class="o">;</span> <span class="o">++</span><span class="n">sr</span><span class="o">)</span> <span class="o">{</span> <span class="c1">//后半部分</span>
+            <span class="n">realMixAudio</span><span class="o">[</span><span class="n">sr</span> <span class="o">*</span> <span class="mi">2</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)</span> <span class="o">(</span><span class="n">sMixAudio</span><span class="o">[</span><span class="n">sr</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0x00FF</span><span class="o">);</span>
+            <span class="n">realMixAudio</span><span class="o">[</span><span class="n">sr</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="kt">byte</span><span class="o">)</span> <span class="o">((</span><span class="n">sMixAudio</span><span class="o">[</span><span class="n">sr</span><span class="o">]</span> <span class="o">&amp;</span> <span class="mh">0xFF00</span><span class="o">)</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//保存混合之后的pcm</span>
+        <span class="nc">FileOutputStream</span> <span class="n">fos</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="c1">//保存合成之后的文件。</span>
+        <span class="nc">File</span> <span class="n">saveFile</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="nc">FileUtils</span><span class="o">.</span><span class="na">getFileBasePath</span><span class="o">()+</span> <span class="s">"averageMix.pcm"</span> <span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">saveFile</span><span class="o">.</span><span class="na">exists</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">saveFile</span><span class="o">.</span><span class="na">delete</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="n">fos</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileOutputStream</span><span class="o">(</span><span class="n">saveFile</span><span class="o">);</span><span class="c1">// 建立一个可存取字节的文件</span>
+        <span class="n">fos</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">realMixAudio</span><span class="o">);</span>
+        <span class="n">fos</span><span class="o">.</span><span class="na">close</span><span class="o">();</span><span class="c1">// 关闭写入流</span>
+        <span class="k">return</span> <span class="n">realMixAudio</span><span class="o">;</span> <span class="c1">//返回合成的混音。</span>
+    <span class="o">}</span>
+
+    <span class="c1">//合并两个音轨。</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">subBytes</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">src</span><span class="o">,</span> <span class="kt">int</span> <span class="n">begin</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">bs</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">count</span><span class="o">];</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">arraycopy</span><span class="o">(</span><span class="n">src</span><span class="o">,</span> <span class="n">begin</span><span class="o">,</span> <span class="n">bs</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">count</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">bs</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>传入文件名称，返回文件内容的字节流</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1">//将文件流读取到数组中，</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">getContent</span><span class="o">(</span><span class="nc">String</span> <span class="n">filePath</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">File</span> <span class="n">file</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">filePath</span><span class="o">);</span>
+        <span class="kt">long</span> <span class="n">fileSize</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">fileSize</span> <span class="o">&gt;</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">"ccc"</span><span class="o">,</span><span class="s">"file too big..."</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nc">FileInputStream</span> <span class="n">fi</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">FileInputStream</span><span class="o">(</span><span class="n">file</span><span class="o">);</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">buffer</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[(</span><span class="kt">int</span><span class="o">)</span> <span class="n">fileSize</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">offset</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">numRead</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="c1">//while循环会使得read一直进行读取，fi.read()在读取完数据以后会返回-1</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">offset</span> <span class="o">&lt;</span> <span class="n">buffer</span><span class="o">.</span><span class="na">length</span>
+                <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">numRead</span> <span class="o">=</span> <span class="n">fi</span><span class="o">.</span><span class="na">read</span><span class="o">(</span><span class="n">buffer</span><span class="o">,</span> <span class="n">offset</span><span class="o">,</span> <span class="n">buffer</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">offset</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">offset</span> <span class="o">+=</span> <span class="n">numRead</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">//确保所有数据均被读取</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">offset</span> <span class="o">!=</span> <span class="n">buffer</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IOException</span><span class="o">(</span><span class="s">"Could not completely read file "</span>
+                    <span class="o">+</span> <span class="n">file</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="o">}</span>
+        <span class="n">fi</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">buffer</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+<p>具体细节请参照我的github项目<a href="https://github.com/xiandyun/PhoneCall">PhoneCall</a>，千山万水总是情，点个star行不行。
+<em>可以转载，转载请注明出处谢谢~</em></p>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#android">#android</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

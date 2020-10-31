@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Git 使用方法</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/05/10/git.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Git 使用方法</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-05-10T00:00:00+08:00" itemprop="datePublished">
+          
+          May 10, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Git 使用方法</h1>
+    <p class="post-meta">
+      <time datetime="2020-05-10T00:00:00+08:00" itemprop="datePublished">
+        
+        May 10, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录命令行git的使用方法</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#使用git上传项目到码云" id="markdown-toc-使用git上传项目到码云">使用Git上传项目到码云</a>    <ul>
+      <li><a href="#一初始化项目" id="markdown-toc-一初始化项目">一、初始化项目</a>        <ul>
+          <li><a href="#1创建本地仓库文件夹" id="markdown-toc-1创建本地仓库文件夹">1.创建本地仓库文件夹</a></li>
+          <li><a href="#2初始化文件夹" id="markdown-toc-2初始化文件夹">2.初始化文件夹</a></li>
+          <li><a href="#3-选择需要上传的文件" id="markdown-toc-3-选择需要上传的文件">3. 选择需要上传的文件</a></li>
+          <li><a href="#4-确认提交并加入注释" id="markdown-toc-4-确认提交并加入注释">4. 确认提交并加入注释</a></li>
+          <li><a href="#5-提交上去" id="markdown-toc-5-提交上去">5. 提交上去</a></li>
+        </ul>
+      </li>
+      <li><a href="#二上传更改文件" id="markdown-toc-二上传更改文件">二、上传更改文件</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="使用git上传项目到码云">使用Git上传项目到码云</h1>
+
+<p>首先需要在码云上创建一个仓库，因为码云没有本地图形化git工具，所有只能使用命令行进行上传。</p>
+
+<h2 id="一初始化项目">一、初始化项目</h2>
+
+<p>首先需要在码云上创建一个仓库，因为码云没有本地图形化git工具，所有只能使用命令行进行上传。</p>
+
+<p>总共分为五步：</p>
+
+<ol>
+  <li>创建本地文件夹。</li>
+  <li>初始化文件夹，创建.git文件，git init命令。</li>
+  <li>选择需要上传的文件，git add命令。</li>
+  <li>确认选择文件commit，即提交到本地仓库。</li>
+  <li>将文件pull到远端服务器。</li>
+</ol>
+
+<h3 id="1创建本地仓库文件夹">1.创建本地仓库文件夹</h3>
+
+<p>这个文件名称可以随便的起:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>fileName
+<span class="nb">cd </span>fileName
+</code></pre></div></div>
+
+<h3 id="2初始化文件夹">2.初始化文件夹</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git init
+</code></pre></div></div>
+
+<p>此时会生成.git文件</p>
+
+<h3 id="3-选择需要上传的文件">3. 选择需要上传的文件</h3>
+
+<p>将之前写好的项目复制到该文件夹，或者是直接在这个文件夹中进行git init，</p>
+
+<p>此时需要选择需要将哪些文件上传。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="k">*</span> 
+</code></pre></div></div>
+
+<p>其中* 表示通配符，将本地所有的文件都上传，也可以一个一个文件的选择</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add filename
+</code></pre></div></div>
+
+<h3 id="4-确认提交并加入注释">4. 确认提交并加入注释</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit <span class="nt">-m</span> <span class="s2">"first commit"</span>
+</code></pre></div></div>
+
+<h3 id="5-提交上去">5. 提交上去</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code> git push <span class="nt">-u</span> origin master
+</code></pre></div></div>
+
+<h2 id="二上传更改文件">二、上传更改文件</h2>
+
+<p>首先是查看文件有没有更改</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git status
+</code></pre></div></div>
+
+<p>然后选择需要提交的文件，选择所有</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add <span class="k">*</span> 
+</code></pre></div></div>
+
+<p>确认提交</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git commit  <span class="nt">-m</span> <span class="s2">"这里填写提交注释，-m也可以不写，直接用git commit"</span>
+</code></pre></div></div>
+
+<p>提交上去</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git push origin master 
+</code></pre></div></div>
+
+<p>其实是和初始化是一样的。。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#工具使用">#工具使用</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

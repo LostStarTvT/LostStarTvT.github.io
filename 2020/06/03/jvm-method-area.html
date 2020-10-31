@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>JVM：Method Area</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/06/03/jvm-method-area.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">JVM：Method Area</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-06-03T00:00:00+08:00" itemprop="datePublished">
+          
+          Jun 3, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">JVM：Method Area</h1>
+    <p class="post-meta">
+      <time datetime="2020-06-03T00:00:00+08:00" itemprop="datePublished">
+        
+        Jun 3, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>介绍JVM中的方法区基础知识和理解。其实方法区也就是保存class文件，然后指导程序运行。</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#方法区的基本理解" id="markdown-toc-方法区的基本理解">方法区的基本理解</a></li>
+  <li><a href="#方法区在哪里" id="markdown-toc-方法区在哪里">方法区在哪里？</a></li>
+  <li><a href="#方法区的大小设置" id="markdown-toc-方法区的大小设置">方法区的大小设置</a></li>
+  <li><a href="#方法区内部结构" id="markdown-toc-方法区内部结构">方法区内部结构</a></li>
+  <li><a href="#方法区存什么" id="markdown-toc-方法区存什么">方法区存什么</a>    <ul>
+      <li><a href="#类型信息" id="markdown-toc-类型信息">类型信息</a></li>
+      <li><a href="#域field信息" id="markdown-toc-域field信息">域(field)信息</a></li>
+      <li><a href="#方法method信息" id="markdown-toc-方法method信息">方法(Method)信息</a></li>
+    </ul>
+  </li>
+  <li><a href="#方法区中的常量池" id="markdown-toc-方法区中的常量池">方法区中的常量池</a></li>
+  <li><a href="#运行时常量池vs常量池" id="markdown-toc-运行时常量池vs常量池">运行时常量池VS常量池</a>    <ul>
+      <li><a href="#为什么需要常量池" id="markdown-toc-为什么需要常量池">为什么需要常量池？</a></li>
+      <li><a href="#常量池中有什么" id="markdown-toc-常量池中有什么">常量池中有什么？</a></li>
+      <li><a href="#方法区的演进细节" id="markdown-toc-方法区的演进细节">方法区的演进细节</a></li>
+      <li><a href="#为什么永久代会被元空间替换" id="markdown-toc-为什么永久代会被元空间替换">为什么永久代会被元空间替换？</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="方法区的基本理解">方法区的基本理解</h1>
+
+<p>方法区：顾名思义存储方法，通过类加载器把class文件加载到内存，存储的地方就被叫做方法区，它是控制整个程序的运行说明书。与之相对的堆则是存储对象中的数据，地址等信息。Java栈只是存储运行时的数据。现在方法区也叫做元空间（MetaSpace）。一个简单的方法区的例子。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
+</code></pre></div></div>
+
+<p>对于以上代码，可以笼统的认为Person被存储在方法区，person表示地址，被存储在Java栈中，表示的是运行时可以调用的地址，new Person()表示创建一个对象，这个对象就是存储在Java堆中。如下图所示：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/06/03/methodarea.png" alt="methodarea.png" /></p>
+
+<p>方法区的一个简单的理解：</p>
+
+<ol>
+  <li>方法区是与Java堆一样，是各个线程共享的内存区域，因为对象可以有很多，类只需要一个就可。</li>
+  <li>方法区在JVM启动的时候被创建，并且它的实际的物理内存空间中和Java堆区一样都是可以不连续的。</li>
+  <li>方法区的大小，跟堆空间一样，可以选择固定的大小或者是可扩展的。</li>
+  <li>方法区的大小决定了系统可以保存多少类，如果系统定义了太多的类，导致方法区溢出，就会抛OOM异常。</li>
+  <li>关闭JVM就会释放这个区域的内存。</li>
+</ol>
+
+<h1 id="方法区在哪里">方法区在哪里？</h1>
+
+<p>Java虚拟机规范中说明，尽管所有的方法区在逻辑上是属于堆的一部分，但一些简单的实现可能不会选择去进行垃圾收集或者进行压缩。但是对于HotSpot来说，方法区还有一个别名叫做Non-Heap（非堆），目的就是要和堆分开。其实也就是类加载器将类加载到了方法区。即使一个简单的main方法也会将很多的类文件加载到内存中，另外，现在方法区的大小和JVM内存大小没有关系，是直接方法物理内存中， 当成文件一样直接读取到内存中。</p>
+
+<p>另外，在Hotspot中，Java 7及之前的方法区叫做永久代，类比于堆中的老年代和新生代，而到了JDK 8，则改用和JRockit 、J9一样在本地内存总实现元空间(Metaspace)来代替。</p>
+
+<p>方法区演变：</p>
+
+<ol>
+  <li>元空间的本质与永久代类似，都是对JVM规范中方法区的实现，不过元空间与永久代最大的区别在于：元空间不再虚拟机设置的内存中，而是使用本地内存。</li>
+  <li>永久代、元空间二者并不是只是名字改变了，内部结构也调整了。</li>
+</ol>
+
+<h1 id="方法区的大小设置">方法区的大小设置</h1>
+
+<ol>
+  <li>元数据去大小可以使用参数-XX:MetaspaceSize和-XX:MaxMetaspaceSize指定，</li>
+  <li>默认值依赖于平台，windows下，-XX:MetaspaceSize是21M和-XX:MaxMetaspaceSize是-1，表示没有限制。</li>
+  <li>与永久代不同，如果不指定大小，默认情况下，虚拟机会耗尽所有可用的系统内存（即不会触发GC），如果元数据区发生溢出，则会抛出OutOfMemoryError:Metaspace</li>
+  <li>对于-XX:MetaspaceSize的值来说，21M是初始元空间的大小为高水平线，一旦触及到这个高水平线，Full GC便会被触发并卸载没用的类(即这些类对应的类加载器不在存活)，然后这个高水平线便会重置，新的高水平线的值取决于GC后释放了多少元空间，如果释放的控件不足，在不超过MaxMetaspaceSize时，适当提高水平线的值，如果释放过多，则适当降低该值。</li>
+  <li>如果初始化的高水平线设置过低，上述的高水平线调整情况会发生很多次，通过来及回收器的日志可以观察到Full GC多次调用，为了频繁的调用GC，建议一次将XX:MetaspaceSize设置一个相对较高的值。</li>
+</ol>
+
+<h1 id="方法区内部结构">方法区内部结构</h1>
+
+<p><img src="https://pic.tyzhang.top/images/2020/06/03/LoadMethod.png" alt="LoadMethod.png" /></p>
+
+<p>可以看出方法区中也就是将类信息加载到内存中，而堆区也就是将对象加载到内存，所以也就是分开的。因为类只需一个，而对象可以新建很多个。</p>
+
+<h1 id="方法区存什么">方法区存什么</h1>
+
+<p>存储虚拟机加载的类型信息、常量、静态变量、即时编译器编译后的代码缓存等。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/06/03/methodareain.png" alt="methodareain.png" /></p>
+
+<h2 id="类型信息">类型信息</h2>
+
+<p>对每个加载的类型（类class，接口interface，枚举enum，注解，annotation），JVM必须在方法区中存储一下类型信息：</p>
+
+<ol>
+  <li>这个类型的完整有效名称(全名=包名.类名)</li>
+  <li>这个类型直接父类的完整有效名(对于interface或是java.lang.Object，都没有父类)</li>
+  <li>这个类型的修饰符(public，abstract，final的某个子集)</li>
+  <li>这个类型直接接口的一个有序列表</li>
+</ol>
+
+<h2 id="域field信息">域(field)信息</h2>
+
+<ol>
+  <li>JVM必须在方法区中保存类型的所有域的相关信息以及域的声明顺序。</li>
+  <li>域的相关信息包括：域名称、域类型、域修饰符(public，private，protected，static，final，volatile，transient的某个子集)</li>
+</ol>
+
+<h2 id="方法method信息">方法(Method)信息</h2>
+
+<p>JVM必须保存所有方法的一下信息，同域信息一样包括声明顺序</p>
+
+<ol>
+  <li>方法名称</li>
+  <li>方法的返回类型（或void）</li>
+  <li>方法的参数的数量和类型（按顺序）</li>
+  <li>方法的修饰符（public，private，protected，static，final，synchronized，native，abstract的一个子集）</li>
+  <li>方法的字节码（bytecodes）、操作数栈、局部变量表及大小（abstract和native方法除外）</li>
+  <li>异常表（abstract和native方法除外）
+    <ol>
+      <li>每个异常处理的开始位置、结束位置、代码处理在程序计数器中的偏移位置、被捕获的异常类的常量池索引</li>
+    </ol>
+  </li>
+</ol>
+
+<h1 id="方法区中的常量池">方法区中的常量池</h1>
+
+<p>以下为方法区，class文件信息，class文件常量池和运行的常量池的关系图。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/06/03/methodContainer.png" alt="methodContainer.png" /></p>
+
+<p>常量：<strong>被final修饰的变量则为常量</strong>。final能修饰三种变量，静态变量、实体变量和局部变量，分别表示三种类型的常量，另外final也可以修饰对象和方法。</p>
+
+<p>final 修饰引用对象的时候，是指对象的引用不能变， 但是对象还是能变的。但是如果修饰的是基本数据类型，那么其值就不能改变。  另外final修饰的类不能被重写但是可以被重载，其中重载也就是相同的方法名，然后可以更改方法的参数，即扩展方法的适应度。</p>
+
+<p><a href="https://juejin.im/post/5ae9b82c6fb9a07ac3634941#heading-7">真正理解final了吗？</a></p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/06/03/finalVariable.jpg" alt="finalVariable.jpg" /></p>
+
+<h1 id="运行时常量池vs常量池">运行时常量池VS常量池</h1>
+
+<p>class字节码中的常量被类加载器加载到内存后，便成了运行时常量，即保存在运行时常量池中，所以说，要想理解运行时常量池需要知道常量池是什么。</p>
+
+<ol>
+  <li>方法区，内部包含了运行时常量池。</li>
+  <li>字节码文件，内部包含了常量池。</li>
+  <li>要弄清楚方法区，需要理解classFile，因为类加载的信息都是在方法区。</li>
+  <li>要弄清楚方法区的运行时常量池，需要理解清楚ClassFile中的常量池。</li>
+</ol>
+
+<p>一个有效的字节码文件除了包含类的版本信息、字段、方法以及接口等描述信息外，还包含一项信息就是常量池表(Constant Pool Table)，包括各种字面量和类型、域和方法的符号引用。也就是反编译中的<strong>#符号表示的东西</strong>。</p>
+
+<h2 id="为什么需要常量池">为什么需要常量池？</h2>
+
+<p>常量？ 顾名思义 常常使用的量，并且是不变的东西可以共用的变量，因为不变所以不存在线程安全的问题，那么就提取出来大家一起用。不用每个人单独的存储并使用浪费空间。这也就是为啥会有final关键字的原因，那么有多少东西是不变的呢？字符串是final类型。</p>
+
+<p>一个Java源文件中的类、接口、编译后产生一个自己码文件，而Java中的字节码需要数据支持，通常这种数据会很大以至于不能直接存在字节码中，换另外一种方式就是可以存到常量池，也就说导包的字节码表示形式。这个字节码包含了指向常量池的引用， 在动态连接的时候会用到运行时常量池。</p>
+
+<p>相当于在运行的上面的代码需要很多的辅助类来支撑，而常量池就保存了很多基本的东西可以去使用，只需要调用常量池中的东西便可以很方便的实现操作。</p>
+
+<h2 id="常量池中有什么">常量池中有什么？</h2>
+
+<ol>
+  <li>数量值</li>
+  <li>字符串引用</li>
+  <li>类引用</li>
+  <li>字段引用</li>
+  <li>方法引用</li>
+</ol>
+
+<p>即方法常量池可以看成是一张表，虚拟机指令根据这张常量表可以找到要执行的类名、方法名、参数类型、字面量等类型。</p>
+
+<h2 id="方法区的演进细节">方法区的演进细节</h2>
+
+<p>首先需要明确地是，只有HotSpot才有永久代。</p>
+
+<p>BEA、JRockit、IBM J9来说，是不存在永久代的概念的，原则上如何实现方法区属于虚拟机实现细节，不受《Java虚拟机规范》管束，并不要求统一。</p>
+
+<p>HostSpot中方法区的变化：</p>
+
+<ol>
+  <li>jdk1.6及以前：有永久代，静态变量存在永久代上</li>
+  <li>jdk1.7：有永久代，但已经逐步“去永久代”，字符串常量池，静态变量移除，保存在堆中。</li>
+  <li>jdk1.8及以后：无永久代，<strong>类型信息、字段、方法、常量保存在本地内存的元空间，但是字符串常量池、静态变量仍在堆中</strong>。</li>
+</ol>
+
+<h2 id="为什么永久代会被元空间替换">为什么永久代会被元空间替换？</h2>
+
+<ol>
+  <li>随着java8的到来，HostSpot JVM就再也见不到永久代了，但是这并不意味着类的元数据信息也消失了，这些数据被移到一个与堆不相连的本地内存区域，这个区域被叫做元空间（MetaSpace）</li>
+  <li>由于类的元数据分配在本地内存中，元空间的最大可分配空间就是系统可用内存空间。</li>
+  <li>这项改动是很有必要的，原因有：
+    <ol>
+      <li>为永久代设置空间大小是很难确定的。</li>
+      <li>对永久代的调优是很困难的。</li>
+    </ol>
+  </li>
+</ol>
+
+<p>在某些场景下，如果动态加载类过多，容易产生Perm区的OOM，比如某个实际的Web工程中，因为功能点比较多，在运行过程中，需要不断的动态加载很多类，经常出现致命错误：OOM:permGenspace.而元空间和永久代最大的区别就是，元空间不在虚拟机中，而是使用本地内存，因此，默认情况下大小仅受本地内存的限制。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

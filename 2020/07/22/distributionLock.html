@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：分布式锁</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/07/22/distributionLock.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：分布式锁</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-07-22T00:00:00+08:00" itemprop="datePublished">
+          
+          Jul 22, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：分布式锁</h1>
+    <p class="post-meta">
+      <time datetime="2020-07-22T00:00:00+08:00" itemprop="datePublished">
+        
+        Jul 22, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>介绍分布式系统的概念与redis分布式系统的实现方式。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#1关系型数据库理论---acid" id="markdown-toc-1关系型数据库理论---acid">1.关系型数据库理论 - ACID</a>    <ul>
+      <li><a href="#a--atomicity--原子性" id="markdown-toc-a--atomicity--原子性"><strong>A – Atomicity – 原子性</strong></a></li>
+      <li><a href="#c--consistency--一致性" id="markdown-toc-c--consistency--一致性"><strong>C – Consistency – 一致性</strong></a></li>
+      <li><a href="#i--isolation--隔离性" id="markdown-toc-i--isolation--隔离性"><strong>I – Isolation – 隔离性</strong></a></li>
+      <li><a href="#d--durability--持久性" id="markdown-toc-d--durability--持久性"><strong>D – Durability – 持久性</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#2分布式系统理论" id="markdown-toc-2分布式系统理论">2.分布式系统理论</a>    <ul>
+      <li><a href="#c--consistency--一致性与acid的c完全不同" id="markdown-toc-c--consistency--一致性与acid的c完全不同">C – Consistency  一致性（与ACID的C完全不同）</a></li>
+      <li><a href="#a--availability--可用性" id="markdown-toc-a--availability--可用性"><strong>A – Availability  可用性</strong></a></li>
+      <li><a href="#p--partition-tolerance-分区容错性" id="markdown-toc-p--partition-tolerance-分区容错性"><strong>P – Partition tolerance 分区容错性</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#高并发" id="markdown-toc-高并发">高并发</a></li>
+  <li><a href="#分布式锁" id="markdown-toc-分布式锁">分布式锁</a>    <ul>
+      <li><a href="#redis分布式锁" id="markdown-toc-redis分布式锁">redis分布式锁</a></li>
+      <li><a href="#分布式锁的实现" id="markdown-toc-分布式锁的实现">分布式锁的实现</a></li>
+      <li><a href="#普通实现" id="markdown-toc-普通实现">普通实现</a>        <ul>
+          <li><a href="#红锁的实现方式" id="markdown-toc-红锁的实现方式">红锁的实现方式</a>            <ul>
+              <li><a href="#redisson实现简单分布式锁" id="markdown-toc-redisson实现简单分布式锁">Redisson实现简单分布式锁</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#mysql分布式锁" id="markdown-toc-mysql分布式锁">mysql分布式锁</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="1关系型数据库理论---acid">1.关系型数据库理论 - ACID</h1>
+
+<p>传统的数据库理论主要需要解决的四个问题:</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/27/ACID.png" alt="ACID.png" /></p>
+
+<p>ACID，是指数据库管理系统（DBMS）在写入或更新资料的过程中，为保证事务（transaction）是正确可靠的，所必须具备的四个特性：原子性（atomicity，或称不可分割性）、一致性（consistency）、隔离性（isolation，又称独立性）、持久性（durability）。</p>
+
+<h3 id="a--atomicity--原子性"><strong>A – Atomicity – 原子性</strong></h3>
+
+<p>一个事务（transaction）中的所有操作，要么全部完成，要么全部不完成，不会结束在中间某个环节。事务在执行过程中发生错误，会被回滚（Rollback）到事务开始前的状态，就像这个事务从来没有被执行过一样。</p>
+
+<h3 id="c--consistency--一致性"><strong>C – Consistency – 一致性</strong></h3>
+
+<p>在事务开始之前和事务结束以后，数据库的完整性没有被破坏。这表示写入的资料必须完全符合所有的预设规则，这包含资料的精确度、串联性以及后续数据库可以自发性地完成预定的工作。</p>
+
+<p>对于单独的数据来说而已。</p>
+
+<h3 id="i--isolation--隔离性"><strong>I – Isolation – 隔离性</strong></h3>
+
+<p>数据库允许多个并发事务同时对其数据进行读写和修改的能力，隔离性可以防止多个事务并发执行时由于交叉执行而导致数据的不一致。事务隔离分为不同级别，包括读未提交（Read uncommitted）、读提交（read committed）、可重复读（repeatable read）和串行化（Serializable）。</p>
+
+<h3 id="d--durability--持久性"><strong>D – Durability – 持久性</strong></h3>
+
+<p>事务处理结束后，对数据的修改就是永久的，即便系统故障也不会丢失。</p>
+
+<p>关系型数据库严格遵循ACID理论。但当数据库要开始满足横向扩展、高可用、模式自由等需求时，需要对ACID理论进行取舍，不能严格遵循ACID。以CAP理论和BASE理论为基础的NoSQL数据库开始出现。</p>
+
+<h1 id="2分布式系统理论">2.分布式系统理论</h1>
+
+<p>对于分布式锁来说，也就是redis和Zookeeper和MQ这老三样，然后就是为了实现CAP中的原则然后进行加锁啥的。</p>
+
+<p>主要就是为了要实现CAP三条原则， 对于一个分布式系统来说，分区容错是基本需求，否则不能称之为分布式系统。<strong>因此架构师需要在C和A之间寻求平</strong>。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/27/cap.png" alt="cap.png" /></p>
+
+<p>CAP理论告诉我们：一个分布式系统不可能同时满足一致性(C:Consistency)、可用性(A:Availability)、分区容错性(P:Partitiontolerance)这三个基本需求，并且最多只能满足其中的两项。对于一个分布式系统来说，分区容错是基本需求，否则不能称之为分布式系统。因此架构师需要在C和A之间寻求平衡。</p>
+
+<p><strong>这个概念要从分布式的思想去考虑，而不是直接的进行操作。</strong></p>
+
+<h3 id="c--consistency--一致性与acid的c完全不同">C – Consistency  一致性（与ACID的C完全不同）</h3>
+
+<p>一致性是指“all nodes see the same data at the same time”，即更新操作成功并返回客户端完成后，所有节点在同一时间的数据完全一致。 讲究的是分布式的。</p>
+
+<p>对于一致性，可以分为从客户端和服务端两个不同的视角。</p>
+
+<p>从客户端来看，一致性主要指的是多并发访问时更新过的数据如何获取的问题。</p>
+
+<p>从服务端来看，则是更新如何复制分布到整个系统，以保证数据最终一致。一致性是因为有并发读写才有的问题，因此在理解一致性的问题时，一定要注意结合考虑并发读写的场景。</p>
+
+<p>从客户端角度，多进程并发访问时，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。对于关系型数据库，要求更新过的数据能被后续的访问都能看到，这是强一致性。如果能容忍后续的部分或者全部访问不到，则是弱一致性。如果经过一段时间后要求能访问到更新后的数据，则是最终一致性。</p>
+
+<h3 id="a--availability--可用性"><strong>A – Availability  可用性</strong></h3>
+
+<p>可用性是指“Reads and writes always succeed”，即服务一直可用，而且是正常响应时间。</p>
+
+<p>对于一个可用性的分布式系统，每一个非故障的节点必须对每一个请求作出响应。也就是说，该系统使用的任何算法必须最终终止。当同时要求分区容忍性时，这是一个很强的定义：即使是严重的网络错误，每个请求必须完成。</p>
+
+<p>好的可用性主要是指系统能够很好的为用户服务，不出现用户操作失败或者访问超时等用户体验不好的情况。在通常情况下，可用性与分布式数据冗余、负载均衡等有着很大的关联。</p>
+
+<h3 id="p--partition-tolerance-分区容错性"><strong>P – Partition tolerance 分区容错性</strong></h3>
+
+<p>分区容错性是指“the system continues to operate despite arbitrary message loss or failureof part of the system”，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性和可用性的服务。</p>
+
+<p>分区容错性和扩展性紧密相关。在分布式应用中，可能因为一些分布式的原因导致系统无法正常运转。好的分区容错性要求能够使应用虽然是一个分布式系统，但看上去却好像是一个可以运转正常的整体。比如现在的分布式系统中有某一个或者几个机器宕掉了，其它剩下的机器还能够正常运转满足系统需求，或者是机器之间有网络异常，将分布式系统分隔成未独立的几个部分，各个部分还能维持分布式系统的运作，这样就具有好的分区容错性。</p>
+
+<p><strong>CA without P</strong></p>
+
+<p>如果不要求P（不允许分区），则C（强一致性）和A（可用性）是可以保证的。但其实分区不是你想不想的问题，而是始终会存在，因此CA的系统更多的是允许分区后各子系统依然保持CA。</p>
+
+<p><strong>CP without A</strong></p>
+
+<p>如果不要求A（可用），相当于每个请求都需要在Server之间强一致，而P（分区）会导致同步时间无限延长，如此CP也是可以保证的。很多传统的数据库分布式事务都属于这种模式。</p>
+
+<p><strong>AP without C</strong></p>
+
+<p>要高可用并允许分区，则需放弃一致性。一旦分区发生，节点之间可能会失去联系，为了高可用，每个节点只能用本地数据提供服务，而这样会导致全局数据的不一致性。现在众多的NoSQL都属于此类。</p>
+
+<p>CAP理论定义了分布式存储的根本问题，但并没有指出一致性和可用性之间到底应该如何权衡。于是出现了BASE理论，给出了权衡A与C的一种可行方案。</p>
+
+<p><a href="https://www.jianshu.com/p/2d2a951fe0df">参考连接</a></p>
+
+<h1 id="高并发">高并发</h1>
+
+<p>一般来说，应用场景可以分为<strong>CPU密集型</strong>和<strong>IO密集型</strong>，大型网站架构索要解决的就是IO密集型问题。</p>
+
+<p><a href="https://xiaomi-info.github.io/2019/06/21/concurrency/">当我们在谈论高并发的时候究竟在谈什么?</a></p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">高并发</code>的基本表现为单位时间内系统能够同时处理的请求数,
+<code class="language-plaintext highlighter-rouge">高并发</code>的核心是对CPU资源的<strong>有效压榨</strong>。</p>
+</blockquote>
+
+<h1 id="分布式锁">分布式锁</h1>
+
+<p>主要分为redis和zookeeper分布式锁。基于zookeeper的已经懂得了一些，而基于redis的分布式锁还是不是太懂。</p>
+
+<h2 id="redis分布式锁">redis分布式锁</h2>
+
+<p>其实对于锁来说，主要也就是信号量的设置，并且涉及到异常的处理，比如说客户端或者服务器端的宕机，如果是一个理想的模型那么就不需要这么多复杂的算法来处理异常，分布式锁主要处理的就是异常情况下怎么保证正常的处理流程，</p>
+
+<blockquote>
+  <p>黄金定则，事先预想的异常总会发生。</p>
+</blockquote>
+
+<p>同样redis上的分布式锁也涉及到信号量的设置与删除，如果已经有了信号量则表示申请成功，在使用完成以后还需要将其删除掉，但是就是在使用的过程中容易出现异常：</p>
+
+<ol>
+  <li>生成成功以后再没有来得及释放锁之前客户端宕机</li>
+  <li>在申请成功以后master服务器宕机，并且没有来得及想slave服务器同步，并且在slave故障恢复为master以后，又被别的客户机申请成功。此时理论上有两个客户端持有相同的锁。</li>
+</ol>
+
+<p>对于故障1，可以使用超时机制，如果客户机在一定的时间内失去联系并且没有释放锁，则服务器自动的释放锁。</p>
+
+<p>对于故障2，可以使用全局唯一的UUID限制锁的序号，即在进行操作和释放锁的时候，需要验证客户端进行锁操作的编号，匹配成功才可以。</p>
+
+<p>这种的处理方式其实有点想zookeeper中的事务编号和选举周期，只有满足条件的才能被处理，也就是异常的处理。</p>
+
+<h2 id="分布式锁的实现">分布式锁的实现</h2>
+
+<p>对于锁的实现，最重要的就是使用原子性性执行操作，并且加上超时释放的操作，其中就有个Lua脚本，可以实现两个操作的原子性操作，需要注意的是，如果两个原子操作是割裂的，并不能组成一个原子性操作，也会出现异常，比如说查询并设置，如果查询是原子性操作，设置是原子性操作，但是查询并设置连接在一起使用就不是一个原子性操作，在并发的情况下就会出现错误。</p>
+
+<blockquote>
+  <p>以下内容参考 <a href="https://juejin.im/post/6844903830442737671">基于Redis的分布式锁实现</a></p>
+</blockquote>
+
+<h2 id="普通实现">普通实现</h2>
+
+<p>说道Redis分布式锁大部分人都会想到：<code class="language-plaintext highlighter-rouge">setnx+lua</code>(不安全)或者知道<code class="language-plaintext highlighter-rouge">set key value px milliseconds nx</code>。<strong>set指令更好</strong>。后一种方式的核心实现命令如下：</p>
+
+<div class="language-lua highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">-</span> <span class="err">获取锁（</span><span class="n">unique_value</span><span class="err">可以是</span><span class="n">UUID</span><span class="err">等）</span>
+<span class="n">SET</span> <span class="n">resource_name</span> <span class="n">unique_value</span> <span class="n">NX</span> <span class="n">PX</span> <span class="mi">30000</span>
+
+<span class="o">-</span> <span class="err">释放锁（</span><span class="n">lua</span><span class="err">脚本中，一定要比较</span><span class="n">value</span><span class="err">，防止误解锁）</span>
+<span class="k">if</span> <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"get"</span><span class="p">,</span><span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">==</span> <span class="n">ARGV</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">then</span>
+    <span class="k">return</span> <span class="n">redis</span><span class="p">.</span><span class="n">call</span><span class="p">(</span><span class="s2">"del"</span><span class="p">,</span><span class="n">KEYS</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">else</span>
+    <span class="k">return</span> <span class="mi">0</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">SET</span> <span class="n">key</span> <span class="n">value</span><span class="o">[</span><span class="no">EX</span> <span class="n">seconds</span><span class="o">][</span><span class="no">PX</span> <span class="n">milliseconds</span><span class="o">][</span><span class="no">NX</span><span class="o">|</span><span class="no">XX</span><span class="o">]</span> 
+<span class="o">-</span> <span class="no">EX</span> <span class="nl">seconds:</span> <span class="n">设定过期时间</span><span class="err">，</span><span class="n">单位为秒</span>
+<span class="o">-</span> <span class="no">PX</span> <span class="nl">milliseconds:</span> <span class="n">设定过期时间</span><span class="err">，</span><span class="n">单位为毫秒</span>
+<span class="o">-</span> <span class="nl">NX:</span> <span class="n">仅当key不存在时设置值</span>
+<span class="o">-</span> <span class="nl">XX:</span> <span class="n">仅当key存在时设置值</span>
+</code></pre></div></div>
+
+<p>这种实现方式有3大要点（也是面试概率非常高的地方）：</p>
+
+<ol>
+  <li>set命令要用<code class="language-plaintext highlighter-rouge">set key value px milliseconds nx</code>；</li>
+  <li>value要具有唯一性；</li>
+  <li>释放锁时要验证value值，不能误解锁；</li>
+</ol>
+
+<p>value必须要具有唯一性，以用UUID来做，设置随机字符串保证唯一性，至于为什么要保证唯一性？假如value不是随机字符串，而是一个固定值，那么就可能存在下面的问题：</p>
+
+<ul>
+  <li>1.客户端1获取锁成功</li>
+  <li>2.客户端1在某个操作上阻塞了太长时间</li>
+  <li>3.设置的key过期了，锁自动释放了</li>
+  <li>4.客户端2获取到了对应同一个资源的锁</li>
+  <li>5.客户端1从阻塞中恢复过来，因为value值一样，所以执行释放锁操作时就会释放掉客户端2持有的锁，这样就会造成问题。</li>
+</ul>
+
+<p>所以通常来说，在释放锁时，我们需要对value进行验证。</p>
+
+<p>事实上这类琐最大的缺点就是它加锁时只作用在一个Redis节点上，即使Redis通过sentinel保证高可用，如果这个master节点由于某些原因发生了主从切换，那么就会出现锁丢失的情况：</p>
+
+<ol>
+  <li>在Redis的master节点上拿到了锁；</li>
+  <li>但是这个加锁的key还没有同步到slave节点；</li>
+  <li>master故障，发生故障转移，slave节点升级为master节点；</li>
+  <li>导致锁丢失。</li>
+</ol>
+
+<p>正因为如此，Redis作者antirez基于分布式环境下提出了一种更高级的分布式锁的实现方式：<strong>Redlock</strong>。</p>
+
+<h3 id="红锁的实现方式">红锁的实现方式</h3>
+
+<p>在Redis的分布式环境中，我们假设有N个Redis master。这些节点<strong>完全互相独立，不存在主从复制或者其他集群协调机制</strong>。我们确保将在N个实例上使用与在Redis单实例下相同方法获取和释放锁。现在我们假设有5个Redis master节点，同时我们需要在5台服务器上面运行这些Redis实例，这样保证他们不会同时都宕掉。</p>
+
+<p>为了取到锁，客户端应该执行以下操作:</p>
+
+<ul>
+  <li>获取当前Unix时间，以毫秒为单位。</li>
+  <li>依次尝试从5个实例，使用相同的key和<strong>具有唯一性的value</strong>（例如UUID）获取锁。当向Redis请求获取锁时，客户端应该设置一个网络连接和响应超时时间，这个超时时间应该小于锁的失效时间。例如你的锁自动失效时间为10秒，则超时时间应该在5-50毫秒之间。这样可以避免服务器端Redis已经挂掉的情况下，客户端还在死死地等待响应结果。如果服务器端没有在规定时间内响应，客户端应该尽快尝试去另外一个Redis实例请求获取锁。</li>
+  <li>客户端使用当前时间减去开始获取锁时间（步骤1记录的时间）就得到获取锁使用的时间。<strong>当且仅当从大多数</strong>（N/2+1，这里是3个节点）<strong>的Redis节点都取到锁，并且使用的时间小于锁失效时间时，锁才算获取成功</strong>。</li>
+  <li>如果取到了锁，key的真正有效时间等于有效时间减去获取锁所使用的时间（步骤3计算的结果）。</li>
+  <li>如果因为某些原因，获取锁失败（没有在至少N/2+1个Redis实例取到锁或者取锁时间已经超过了有效时间），客户端应该在<strong>所有的Redis实例上进行解锁</strong>（即便某些Redis实例根本就没有加锁成功，防止某些节点获取到锁但是客户端没有得到响应而导致接下来的一段时间不能被重新获取锁）。</li>
+</ul>
+
+<p>简单的流程为：</p>
+
+<ul>
+  <li><strong>顺序向五个节点请求加锁</strong></li>
+  <li><strong>根据一定的超时时间来推断是不是跳过该节点</strong></li>
+  <li><strong>三个节点加锁成功并且花费时间小于锁的有效期</strong></li>
+  <li><strong>认定加锁成功</strong></li>
+</ul>
+
+<h4 id="redisson实现简单分布式锁">Redisson实现简单分布式锁</h4>
+
+<p>对于Java用户而言，我们经常使用Jedis，Jedis是Redis的Java客户端，除了Jedis之外，Redisson也是Java的客户端，Jedis是阻塞式I/O，而Redisson底层使用Netty可以实现非阻塞I/O，该客户端封装了锁的，继承了J.U.C的Lock接口，所以我们可以像使用ReentrantLock一样使用Redisson，具体使用过程如下。</p>
+
+<ol>
+  <li>首先加入POM依赖</li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.redisson<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>redisson<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.10.6<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<ol>
+  <li>使用Redisson，代码如下(与使用ReentrantLock类似）</li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 1. 配置文件</span>
+<span class="nc">Config</span> <span class="n">config</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Config</span><span class="o">();</span>
+<span class="n">config</span><span class="o">.</span><span class="na">useSingleServer</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">setAddress</span><span class="o">(</span><span class="s">"redis://127.0.0.1:6379"</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="nc">RedisConfig</span><span class="o">.</span><span class="na">PASSWORD</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">setDatabase</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+<span class="c1">//2. 构造RedissonClient</span>
+<span class="nc">RedissonClient</span> <span class="n">redissonClient</span> <span class="o">=</span> <span class="nc">Redisson</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">config</span><span class="o">);</span>
+
+<span class="c1">//3. 设置锁定资源名称</span>
+<span class="nc">RLock</span> <span class="n">lock</span> <span class="o">=</span> <span class="n">redissonClient</span><span class="o">.</span><span class="na">getLock</span><span class="o">(</span><span class="s">"redlock"</span><span class="o">);</span>
+<span class="n">lock</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+<span class="k">try</span> <span class="o">{</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"获取锁成功，实现业务逻辑"</span><span class="o">);</span>
+    <span class="nc">Thread</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="mi">10000</span><span class="o">);</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+    <span class="n">lock</span><span class="o">.</span><span class="na">unlock</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="mysql分布式锁">mysql分布式锁</h2>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

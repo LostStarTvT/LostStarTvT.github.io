@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Spring：AOP</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/04/20/java-spring-aop.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Spring：AOP</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-04-20T00:00:00+08:00" itemprop="datePublished">
+          
+          Apr 20, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Spring：AOP</h1>
+    <p class="post-meta">
+      <time datetime="2020-04-20T00:00:00+08:00" itemprop="datePublished">
+        
+        Apr 20, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录spring AOP 的知识，配以简单的例子进行说明。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#1-数据库操作事务分析" id="markdown-toc-1-数据库操作事务分析">1. 数据库操作事务分析</a></li>
+  <li><a href="#2动态代理" id="markdown-toc-2动态代理">2.动态代理</a>    <ul>
+      <li><a href="#21基于接口的动态代理实现方法" id="markdown-toc-21基于接口的动态代理实现方法">2.1基于接口的动态代理实现方法</a></li>
+      <li><a href="#22-基于类的动态代理" id="markdown-toc-22-基于类的动态代理">2.2 基于类的动态代理</a></li>
+    </ul>
+  </li>
+  <li><a href="#3基于动态代理实现事务原子性" id="markdown-toc-3基于动态代理实现事务原子性">3.基于动态代理实现事务原子性</a></li>
+  <li><a href="#4aop的相关概念" id="markdown-toc-4aop的相关概念">4.AOP的相关概念</a>    <ul>
+      <li><a href="#41-aop相关术语" id="markdown-toc-41-aop相关术语">4.1 aop相关术语</a></li>
+      <li><a href="#42-实现aop的一个例子" id="markdown-toc-42-实现aop的一个例子">4.2 实现AOP的一个例子</a></li>
+      <li><a href="#43-aop的其他配置" id="markdown-toc-43-aop的其他配置">4.3 AOP的其他配置</a></li>
+    </ul>
+  </li>
+  <li><a href="#5基于注解版的aop" id="markdown-toc-5基于注解版的aop">5.基于注解版的AOP</a></li>
+</ul>
+<h2 id="1-数据库操作事务分析">1. 数据库操作事务分析</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">transfer</span><span class="o">(</span><span class="nc">String</span> <span class="n">sourceName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">targetName</span><span class="o">,</span> <span class="nc">Float</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//1.根据名称查询转出账户</span>
+    <span class="nc">Account</span> <span class="n">source</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">sourceName</span><span class="o">);</span>
+    <span class="c1">//2.根据名称查询注入账户</span>
+    <span class="nc">Account</span> <span class="n">target</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">targetName</span><span class="o">);</span>
+    <span class="c1">//3.转出账户减钱</span>
+    <span class="n">source</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">source</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">-</span> <span class="n">money</span><span class="o">);</span>
+    <span class="c1">//4.转入账户加钱</span>
+    <span class="n">target</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">+</span> <span class="n">money</span><span class="o">);</span>
+    <span class="c1">//5.更新转出账户</span>
+    <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">source</span><span class="o">);</span>
+    <span class="c1">//6.更新转入账户</span>
+    <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对于以上的一个转钱操作，如果是正常情况下，一步步的走是完全没有问题的，但是如果在第5步以后出现异常比如加上<code class="language-plaintext highlighter-rouge">int i=1/0;</code>，那么就会出现钱已经扣掉但是对方账户没有收到钱的情形。出现的原因就是，所有的操作是没有关系的，每个都是单独操作而不是一个整体，我们需要的就是把他们变成一个整体。</p>
+
+<p>解决方案：</p>
+
+<p>所以需要<code class="language-plaintext highlighter-rouge">TheadLocal</code>对象，把<code class="language-plaintext highlighter-rouge">Connection</code>和当前线程绑定，从而使得一个线程中只有一个能够控制事务的对象。</p>
+
+<p><strong>主要就是借助java的事务管理，将多个事务整合成一个原子性操作。</strong></p>
+
+<p>需要借助两个工具类<code class="language-plaintext highlighter-rouge">ConnectionUtils.class</code>和<code class="language-plaintext highlighter-rouge">TransactionManager.class</code>定义事务操作。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Describe: 连接的工具类，从数据源汇总获取一个连接，并且实现和线程的绑定。 使用的是jdbc事务概念，即通过事务将多个操作
+ * 绑定在一起，实现原子性操作。
+ *
+ * @author Seven on 2020/4/20
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ConnectionUtils</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">Connection</span><span class="o">&gt;</span> <span class="n">t1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">Connection</span><span class="o">&gt;();</span>
+
+    <span class="kd">private</span> <span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDataSource</span><span class="o">(</span><span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dataSource</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="cm">/**
+     * 获取当前线程的连接
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="nc">Connection</span> <span class="nf">getThreadConnection</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//1.先从ThreadLocal上获取， get的话都是与当前线程绑定的东西，所以如果没有就会重新索取一个连接实例。。</span>
+            <span class="nc">Connection</span> <span class="n">conn</span> <span class="o">=</span> <span class="n">t1</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+            <span class="c1">//2.判断当前线程是否有连接  因为get的</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">conn</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+                <span class="c1">//3.从数据源中获取一个连接，并且存入到ThreadLocal中。</span>
+                <span class="n">conn</span> <span class="o">=</span> <span class="n">dataSource</span><span class="o">.</span><span class="na">getConnection</span><span class="o">();</span>
+                <span class="n">t1</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">conn</span><span class="o">);</span>
+                <span class="c1">//4. 返回当前线程上的连接</span>
+            <span class="o">}</span>
+            <span class="k">return</span> <span class="n">conn</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">throwables</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">throwables</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span>  <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 把连接和线程解绑
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">removeConnection</span><span class="o">(){</span>
+        <span class="n">t1</span><span class="o">.</span><span class="na">remove</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Describe: 和事务管理的工具类，包含开启事务，提交事务，回滚事务和释放连接。
+ *
+ * @author Seven on 2020/4/20
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TransactionManager</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">ConnectionUtils</span> <span class="n">connectionUtils</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setConnectionUtils</span><span class="o">(</span><span class="nc">ConnectionUtils</span> <span class="n">connectionUtils</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">connectionUtils</span> <span class="o">=</span> <span class="n">connectionUtils</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 开启事务
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">beginTransaction</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//关闭自动事务提交</span>
+            <span class="n">connectionUtils</span><span class="o">.</span><span class="na">getThreadConnection</span><span class="o">().</span><span class="na">setAutoCommit</span><span class="o">(</span><span class="kc">false</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">throwables</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">throwables</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 提交事务
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">commit</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">connectionUtils</span><span class="o">.</span><span class="na">getThreadConnection</span><span class="o">().</span><span class="na">commit</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">throwables</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">throwables</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 回滚事务
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">rollback</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">connectionUtils</span><span class="o">.</span><span class="na">getThreadConnection</span><span class="o">().</span><span class="na">rollback</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">throwables</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">throwables</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 释放连接
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">release</span><span class="o">(){</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">connectionUtils</span><span class="o">.</span><span class="na">getThreadConnection</span><span class="o">().</span><span class="na">close</span><span class="o">();</span> <span class="c1">//还回了连接池中</span>
+            <span class="n">connectionUtils</span><span class="o">.</span><span class="na">removeConnection</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">throwables</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">throwables</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以改造交易事务为例：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Describe: 账户的业务层实现类
+ *
+ * @author Seven on 2020/4/14
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="nc">IAccountService</span> <span class="o">{</span>
+	<span class="c1">//使用spring注入。</span>
+    <span class="kd">private</span> <span class="nc">IAccountDao</span> <span class="n">iAccountDao</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setiAccountDao</span><span class="o">(</span><span class="nc">IAccountDao</span> <span class="n">iAccountDao</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">iAccountDao</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="nc">TransactionManager</span> <span class="n">txManager</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTxManager</span><span class="o">(</span><span class="nc">TransactionManager</span> <span class="n">txManager</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">txManager</span> <span class="o">=</span> <span class="n">txManager</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 转账操作
+     * @param sourceName 源账户
+     * @param targetName 目的账户
+     * @param money 转账金额
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">transfer</span><span class="o">(</span><span class="nc">String</span> <span class="n">sourceName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">targetName</span><span class="o">,</span> <span class="nc">Float</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//1.开启事务</span>
+            <span class="n">txManager</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+            <span class="c1">//2.执行操作</span>
+                <span class="c1">//1.根据名称查询转出账户</span>
+                <span class="nc">Account</span> <span class="n">source</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">sourceName</span><span class="o">);</span>
+                <span class="c1">//2.根据名称查询注入账户</span>
+                <span class="nc">Account</span> <span class="n">target</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">targetName</span><span class="o">);</span>
+                <span class="c1">//3.转出账户减钱</span>
+                <span class="n">source</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">source</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">-</span> <span class="n">money</span><span class="o">);</span>
+                <span class="c1">//4.转入账户加钱</span>
+                <span class="n">target</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">+</span> <span class="n">money</span><span class="o">);</span>
+                <span class="c1">//5.更新转出账户</span>
+                <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">source</span><span class="o">);</span>
+                <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">;</span>
+                <span class="c1">//6.更新转入账户</span>
+                <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+            <span class="c1">//3.提交事务</span>
+            <span class="n">txManager</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">){</span>
+            <span class="c1">//4.回滚操作</span>
+            <span class="n">txManager</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+            <span class="c1">//5.释放连接</span>
+            <span class="n">txManager</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对应的dao操作也需要进行改造，主要是要在sql中加上<code class="language-plaintext highlighter-rouge">connectionUtils.getThreadConnection()</code>将多个操作绑定成同一个事务，实现同步同步操作。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Describe: 账户的持久层实现类</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountDaoImpl</span> <span class="kd">implements</span> <span class="nc">IAccountDao</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">QueryRunner</span> <span class="n">runner</span><span class="o">;</span>
+   	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setRunner</span><span class="o">(</span><span class="nc">QueryRunner</span> <span class="n">runner</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">runner</span> <span class="o">=</span> <span class="n">runner</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//需要使用连接工具类。</span>
+    <span class="kd">private</span> <span class="nc">ConnectionUtils</span> <span class="n">connectionUtils</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setConnectionUtils</span><span class="o">(</span><span class="nc">ConnectionUtils</span> <span class="n">connectionUtils</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">connectionUtils</span> <span class="o">=</span> <span class="n">connectionUtils</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountById</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">accountId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">//必须加上connectionUtils.getThreadConnection()，将其绑定在一起</span>
+            <span class="k">return</span> <span class="n">runner</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">connectionUtils</span><span class="o">.</span><span class="na">getThreadConnection</span><span class="o">(),</span><span class="s">"select * from account where id = ?"</span><span class="o">,</span><span class="k">new</span> <span class="nc">BeanHandler</span><span class="o">&lt;</span><span class="nc">Account</span><span class="o">&gt;(</span><span class="nc">Account</span><span class="o">.</span><span class="na">class</span><span class="o">),</span><span class="n">accountId</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">SQLException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>spring配置，将需要的bean注入进去。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--配置service--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountService"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.service.impl.AccountServiceImpl"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--注入runner--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"iAccountDao"</span> <span class="na">ref=</span><span class="s">"accountDao"</span><span class="nt">&gt;&lt;/property&gt;</span>
+        <span class="c">&lt;!--注入事务管理器--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"txManager"</span> <span class="na">ref=</span><span class="s">"txManager"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="c">&lt;!--配置dao对象--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountDao"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.dao.impl.AccountDaoImpl"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"runner"</span> <span class="na">ref=</span><span class="s">"runner"</span><span class="nt">&gt;&lt;/property&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"connectionUtils"</span> <span class="na">ref=</span><span class="s">"connectionUtils"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="c">&lt;!--配置connectionUtil 工具类--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"connectionUtils"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.utils.ConnectionUtils"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+    
+	<span class="c">&lt;!--runner 和 DataSource 省略不表 主要就是配置数据库连接，在ioc文章中有说。--&gt;</span>
+    <span class="c">&lt;!--配置事务管理器--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"txManager"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.utils.TransactionManager"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"connectionUtils"</span> <span class="na">ref=</span><span class="s">"connectionUtils"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>经过以上的配置便能够实现事务的原子性操作。</p>
+
+<h2 id="2动态代理">2.动态代理</h2>
+
+<h3 id="21基于接口的动态代理实现方法">2.1基于接口的动态代理实现方法</h3>
+
+<p>特点：字节码随用随创建，随用随加载</p>
+
+<p>作用: 不修改源码的基础上对方法增强，例如增加log，其实最主要的思想就是抽取公共代码，让代码更加的简洁容易维护。</p>
+
+<ol>
+  <li>分类:
+    <ol>
+      <li>基于接口的动态代理</li>
+      <li>基于子类的动态代理</li>
+    </ol>
+  </li>
+  <li>基于接口的动态代理：
+    <ol>
+      <li>涉及的类：proxy</li>
+      <li>提供者；JDK</li>
+    </ol>
+  </li>
+  <li>如何创建代理对象：使用proxy类中的<code class="language-plaintext highlighter-rouge">newProxyInstance</code>方法</li>
+  <li>创建代理对象的要求：<strong>被代理类最少要实现一个接口，如果没有则不能使用</strong></li>
+  <li><code class="language-plaintext highlighter-rouge">newProxyInstance</code>方法的参数：
+    <ol>
+      <li><code class="language-plaintext highlighter-rouge">ClassLoader</code>:类加载器，他是用于加载代理对象字节码的，和被代理对象使用相同的类加载器，固定写</li>
+      <li>Class[ ]:自己码数组，他是用于让代理对象和被代理对象有相同的方法，固定写法</li>
+      <li><code class="language-plaintext highlighter-rouge">InvocationHandler</code>:用于提供增强的代码，让是让我们写如何代理，我们一般都是写一个该接口的实现类，通常情况下都是匿名类，但是不是必须的。此接口的实现类都是谁用谁写。</li>
+    </ol>
+  </li>
+</ol>
+
+<p>基于生产者的代理实现，总共有三个类，一个生产者类进行生产产品，一个经销商接口，一个用户类。</p>
+
+<p>1.Producer.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Producer</span> <span class="kd">implements</span> <span class="nc">IProducer</span><span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span>  <span class="nf">saleProduct</span><span class="o">(</span><span class="kt">float</span> <span class="n">money</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"销售产品"</span> <span class="o">+</span> <span class="n">money</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterService</span><span class="o">(</span><span class="kt">float</span> <span class="n">money</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"提供售后"</span> <span class="o">+</span> <span class="n">money</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>2.IProducer.class 经销商</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IProducer</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span>  <span class="nf">saleProduct</span><span class="o">(</span><span class="kt">float</span> <span class="n">money</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterService</span><span class="o">(</span><span class="kt">float</span> <span class="n">money</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>用户测试类。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Describe: 使用接口代理类进行增强方法。
+ *
+ * @author Seven on 2020/4/20
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="kd">final</span> <span class="nc">Producer</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Producer</span><span class="o">();</span>
+
+        <span class="c1">//基于接口实现的动态代理。 可以实现增强接口方法。类似于经销商半路拦截下20%的钱，</span>
+        <span class="nc">IProducer</span> <span class="n">proxyInstance</span> <span class="o">=</span> <span class="o">(</span><span class="nc">IProducer</span><span class="o">)</span> <span class="nc">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">producer</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span>
+                <span class="n">producer</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span>
+                <span class="k">new</span> <span class="nf">InvocationHandler</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="cm">/**
+                     *  作用：被执行代理对象的任何接口方法都会讲过该方法
+                     * @param proxy   代理对象的引用
+                     * @param method  当前执行方法
+                     * @param args    当前执行方法所需的参数
+                     * @return        和被代理对象方法有相同的返回值
+                     * @throws Throwable
+                     */</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="nc">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="nc">Method</span> <span class="n">method</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+                        <span class="c1">//提供增强的代码,即在原来的代码基础上 增强代码</span>
+                        <span class="nc">Object</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+                        <span class="c1">//1.获取方法执行的参数</span>
+                        <span class="nc">Float</span> <span class="n">money</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Float</span><span class="o">)</span> <span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span> <span class="c1">//因为方法参数只有一个</span>
+                        <span class="c1">//2.判断当前方法是不是销售</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="s">"saleProduct"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">())){</span>
+                            <span class="nc">Object</span><span class="o">[]</span> <span class="n">args1</span><span class="o">;</span>
+                            <span class="n">returnValue</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">producer</span><span class="o">,</span> <span class="mf">0.8f</span> <span class="o">*</span> <span class="n">money</span><span class="o">);</span>
+                        <span class="o">}</span>
+                        <span class="k">return</span> <span class="n">returnValue</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">}</span>
+        <span class="o">);</span>
+
+        <span class="n">proxyInstance</span><span class="o">.</span><span class="na">saleProduct</span><span class="o">(</span><span class="mi">1000</span><span class="n">f</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>运行结果：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>销售产品800
+</code></pre></div></div>
+
+<p>即相当于经销商代理半路抽取了20%的手续费。即对方法实现再包装。</p>
+
+<h3 id="22-基于类的动态代理">2.2 基于类的动态代理</h3>
+
+<p>这个就需要借助第三方的jar包来实现。总体的实现方法与基于接口的实现类似。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>cglib<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>cglib<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>3.3.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>特点：字节码随用随创建，随用随加载</p>
+
+<p>作用: 不修改源码的基础上对方法增强</p>
+
+<ol>
+  <li>分类；
+    <ol>
+      <li>基于接口的动态代理</li>
+      <li>基于子类的动态代理</li>
+    </ol>
+  </li>
+  <li>基于接口的动态代理：
+    <ol>
+      <li>涉及的类：Enhancer</li>
+      <li>涉及的类：Enhancer</li>
+    </ol>
+  </li>
+  <li>如何创建代理对象：使用Enhancer类中的create方法</li>
+  <li>创建代理对象的要求：被代理类不能是最终类。</li>
+  <li>Create方法的参数：
+    <ol>
+      <li>Class字节码，他是用于指定被被代理对象的字节码</li>
+      <li>CallBack:用于提供增强的代码。他是让是让我们写如何代理，我们一般都是写一个该接口的实现类，通常情况下都是匿名类，但是不是必须的。此接口的实现类都是谁用谁写。我们一般写的都是该接口的子接口实现类：<code class="language-plaintext highlighter-rouge">MethodInterceptor</code></li>
+    </ol>
+  </li>
+</ol>
+
+<p>具体的例子。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//此时Producer不需要实现接口。</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Client</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="kd">final</span> <span class="nc">Producer</span> <span class="n">producer</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Producer</span><span class="o">();</span>
+        <span class="c1">//基于接口实现的动态代理。 可以实现增强接口方法。</span>
+        <span class="nc">Producer</span> <span class="n">cglibProducer</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Producer</span><span class="o">)</span> <span class="nc">Enhancer</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">producer</span><span class="o">.</span><span class="na">getClass</span><span class="o">(),</span> <span class="k">new</span> <span class="nc">MethodInterceptor</span><span class="o">()</span> <span class="o">{</span>
+            <span class="cm">/**
+             * 执行被代理对象的任何方法都会经过该方法。
+             * @param o 代理对象的引用
+             * @param method
+             * @param objects
+             *   以上三个参数和基于接口的动态代理中invoke方法的参数是一样的
+             * @param methodProxy 当前执行方法的代理对象
+             * @return
+             * @throws Throwable
+             */</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">intercept</span><span class="o">(</span><span class="nc">Object</span> <span class="n">o</span><span class="o">,</span> <span class="nc">Method</span> <span class="n">method</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">objects</span><span class="o">,</span> <span class="nc">MethodProxy</span> <span class="n">methodProxy</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+                <span class="c1">//提供增强的代码,即在原来的代码基础上 增强代码</span>
+                <span class="nc">Object</span> <span class="n">returnValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="c1">//1.获取方法执行的参数</span>
+                <span class="nc">Float</span> <span class="n">money</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Float</span><span class="o">)</span> <span class="n">objects</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span> <span class="c1">//因为方法参数只有一个</span>
+                <span class="c1">//2.判断当前方法是不是销售</span>
+                <span class="k">if</span> <span class="o">(</span><span class="s">"saleProduct"</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">()))</span> <span class="o">{</span>
+                    <span class="n">returnValue</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">producer</span><span class="o">,</span> <span class="mf">0.8f</span> <span class="o">*</span> <span class="n">money</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="k">return</span> <span class="n">returnValue</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+        <span class="n">cglibProducer</span><span class="o">.</span><span class="na">saleProduct</span><span class="o">(</span><span class="mi">1000</span><span class="n">f</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>主要就是写增强方法。运行结果也是经销商抽取了20%的手续费。</p>
+
+<h2 id="3基于动态代理实现事务原子性">3.基于动态代理实现事务原子性</h2>
+
+<p>使用动态代理技术实现标题1中的事务，即抽取事务绑定代码，然后使用动态代理为每个方法加上事务。</p>
+
+<p><code class="language-plaintext highlighter-rouge">BeanFactory.class</code>对比于事务分析中的原子性操作，使用以下方法进行为service层中每一个方法加上事务。因为是调用类中的方法， 所以当直接给一个类进行增加事务操作时，也相当于为类中每一个方法加上事务？相当于代理商为每个数据库操作加了一个保险。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">BeanFactory</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">IAccountService</span> <span class="n">accountService</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kd">final</span> <span class="kt">void</span> <span class="nf">setAccountService</span><span class="o">(</span><span class="nc">IAccountService</span> <span class="n">accountService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">accountService</span> <span class="o">=</span> <span class="n">accountService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">TransactionManager</span> <span class="n">txManager</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTxManager</span><span class="o">(</span><span class="nc">TransactionManager</span> <span class="n">txManager</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">txManager</span> <span class="o">=</span> <span class="n">txManager</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     *  获取service的代理类,已经增加上了事务处理
+     * @return
+     */</span>
+    <span class="kd">public</span> <span class="nc">IAccountService</span> <span class="nf">getAccountService</span><span class="o">(){</span>
+
+        <span class="k">return</span> <span class="o">(</span><span class="nc">IAccountService</span><span class="o">)</span> <span class="nc">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span><span class="n">accountService</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getClassLoader</span><span class="o">(),</span>
+                <span class="n">accountService</span><span class="o">.</span><span class="na">getClass</span><span class="o">().</span><span class="na">getInterfaces</span><span class="o">(),</span>
+                <span class="k">new</span> <span class="nf">InvocationHandler</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="cm">/**
+                     * 添加事务的支持。
+                     * @param proxy
+                     * @param method
+                     * @param args
+                     * @return
+                     * @throws Throwable
+                     */</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="nc">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="nc">Method</span> <span class="n">method</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+
+                        <span class="nc">Object</span> <span class="n">rtValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                        <span class="k">try</span> <span class="o">{</span>
+                            <span class="c1">//1.开启事务</span>
+                            <span class="n">txManager</span><span class="o">.</span><span class="na">beginTransaction</span><span class="o">();</span>
+                            <span class="c1">//2.执行操作</span>
+                            <span class="n">rtValue</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">accountService</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+                            <span class="c1">//3.提交事务</span>
+                            <span class="n">txManager</span><span class="o">.</span><span class="na">commit</span><span class="o">();</span>
+                            <span class="c1">//4.返回结果</span>
+                            <span class="k">return</span> <span class="n">rtValue</span><span class="o">;</span>
+                        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="c1">//5.回滚操作</span>
+                            <span class="n">txManager</span><span class="o">.</span><span class="na">rollback</span><span class="o">();</span>
+                        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+                            <span class="c1">//6.释放连接</span>
+                            <span class="n">txManager</span><span class="o">.</span><span class="na">release</span><span class="o">();</span>
+                        <span class="o">}</span>
+                        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="o">}</span>
+                <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>此时也需要更改xml中的配置，需要将工厂类增加到容器中去，并且为工厂类注入需要改造的正常service，工厂类返回改造后的增强proxyAccountService</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 配置beanFactory--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"beanFactory"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.factory.BeanFactory"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"txManager"</span> <span class="na">ref=</span><span class="s">"txManager"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--注入service 需要将正常的service注入到工厂类去改造。--&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"accountService"</span> <span class="na">ref=</span><span class="s">"accountService"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!-- 配置工厂类service 此service为增强后的service--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"proxyAccountService"</span> <span class="na">factory-bean=</span><span class="s">"beanFactory"</span> <span class="na">factory-method=</span><span class="s">"getAccountService"</span><span class="nt">/&gt;</span>
+<span class="c">&lt;!--因为有两个所有在测试类中就需要进行更改。--&gt;</span>
+
+<span class="c">&lt;!--配置service--&gt;</span>
+<span class="c">&lt;!--这个service是正常的service--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountService"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.service.impl.AccountServiceImpl"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--注入runner--&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"iAccountDao"</span> <span class="na">ref=</span><span class="s">"accountDao"</span><span class="nt">&gt;&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+<span class="c">&lt;!-- 配置Dao不在赘述--&gt;</span>
+</code></pre></div></div>
+
+<p>此时测试方法中也需要更改对应的方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringJUnit4ClassRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@ContextConfiguration</span><span class="o">(</span><span class="n">locations</span> <span class="o">=</span> <span class="s">"classpath:bean.xml"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceTest</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span> 
+    <span class="nd">@Qualifier</span><span class="o">(</span><span class="s">"proxyAccountService"</span><span class="o">)</span> <span class="c1">//因为有两个service类，所以需要指定。 指定调用增强后的service对象，</span>
+    <span class="kd">private</span> <span class="nc">IAccountService</span> <span class="n">accountService</span><span class="o">;</span>
+
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testTransFer</span><span class="o">(){</span>
+        <span class="n">accountService</span><span class="o">.</span><span class="na">transfer</span><span class="o">(</span><span class="s">"aaa"</span><span class="o">,</span><span class="s">"bbb"</span><span class="o">,</span><span class="mi">200</span><span class="n">f</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对应的，因为采用了动态代理的形式所以第一部分中的事务处理代码也要删除，不表。</p>
+
+<p><a href="https://www.jianshu.com/p/cbd58642fc08">深入理解动态代理</a>  其实也就是为类进行增强方法， 通过调用代理类，代理类为目标类进行修饰，代理类就是在调用目标类之前将目标类进行了修饰。</p>
+
+<h2 id="4aop的相关概念">4.AOP的相关概念</h2>
+
+<p>AOP：Aspect oriented progarmming：即面向切面编程。</p>
+
+<p>简单的说它就是把我们程序中重复的代码抽取出来，在需要执行的时候，使用动态代理技术，在不修改源码的基础上，对我们的已有方法进行增强。</p>
+
+<p>作用：在程序运行期间，不修改源码对已有的方法进行增强。</p>
+
+<p>其实aop也就是通过注解的方法实现前面所说的动态代理，来实现简化操作，即通过aop实现上一节的操作。</p>
+
+<p><strong>基于子类的动态代理要求被代理类不能是<code class="language-plaintext highlighter-rouge">final</code>修饰的。</strong></p>
+
+<h3 id="41-aop相关术语">4.1 aop相关术语</h3>
+
+<p><strong>Jointpoint(连接点)：</strong>所谓连接点就是指那些被拦截到的点，在spring中这些点指的就是方法，因为spring只支持方法类型的连接点。所有的方法都是连接点，但不一定都是切入点。</p>
+
+<p><strong>Pointcut(切入点)：</strong>所谓切入点就指我们要对哪些Jointpoint进行拦截的定义。并不是类中所有的方法都要进行增强，需要增强的方法就是切入点。</p>
+
+<p><strong>Advice(通知/增强)：</strong>所谓通知就是指拦截到Jointpoint之后要做的事情就是通知。通知的类型：前置通知，后置通知，异常通知，最终通知，环绕通知。(根据切入点方法前后进行区分)。</p>
+
+<p><strong>Introduction(引介)：</strong>引介是一种特殊的通知在不修改类代码的前提下，introducton可以运行期为类动态的增加一些方法或field。</p>
+
+<p><strong>Target(目标对象)：</strong>代理的目标对象。</p>
+
+<p><strong>weaving(织入)：</strong>是指把增强应用到目标对象来创建新的代理对象的过程。  spring采用动态代理织入，而AspectJ采用编译期织入和类装载期织入。</p>
+
+<p><strong>Proxy(代理)：</strong>一个类被aop织入增强后，就产生一个结果代理类。</p>
+
+<p><strong>Aspect(切面):</strong>是切入点和通知(引介)的结合。</p>
+
+<h3 id="42-实现aop的一个例子">4.2 实现AOP的一个例子</h3>
+
+<p>该例子通过配置AOP然后实现在运行目标函数方法之前，增加上日志功能。为什么总是引用日志的功能？因为日志的功能是最容易说明的。</p>
+
+<p>引用依赖：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>spring-context<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>5.1.9.RELEASE<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.aspectj<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>aspectjweaver<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.8.7<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>service实现类测试方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="nc">IAccountService</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveAccount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行保存"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateAccount</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行更新"</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">deleteAccount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行删除"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>logger工具类 ，需要增强的方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Logger</span> <span class="o">{</span>
+    <span class="cm">/**
+     *用于打印日志，计划让其在切入点方法执行之前执行，(切入点方法就是业务层方法)
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">printLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>目标就是在通过配置xml实现在调用<code class="language-plaintext highlighter-rouge">AccountServiceImpl</code>类中的方式时，会先调用<code class="language-plaintext highlighter-rouge">printLog</code>方法。</p>
+
+<p><strong>Spring中基于xml的配置aop说明</strong></p>
+
+<ol>
+  <li>把通知<code class="language-plaintext highlighter-rouge">bean</code>也交给spring来管理</li>
+  <li>使用<code class="language-plaintext highlighter-rouge">aop:config</code>标签表明开始aop配置</li>
+  <li>使用<code class="language-plaintext highlighter-rouge">aop：aspect</code>标签表明配置切面
+    <ol>
+      <li>id属性：是给切面提供一个唯一标识</li>
+      <li>ref属性:是指定通知类bean的id</li>
+    </ol>
+  </li>
+  <li>在<code class="language-plaintext highlighter-rouge">aop:aspect</code>标签的内部使用对应标签来配置通知的类型
+    <ol>
+      <li>
+        <p>我们现在实例是让<code class="language-plaintext highlighter-rouge">printLog</code>方法在切入点方法发执行之前执行，所以是前置通知。</p>
+      </li>
+      <li><code class="language-plaintext highlighter-rouge">aop:before </code>表示配置前置通知。</li>
+      <li><code class="language-plaintext highlighter-rouge"> method：before</code> 表示配置前置通知</li>
+      <li><code class="language-plaintext highlighter-rouge"> method</code>属性：用于指定logger类中哪个方法是前置通知</li>
+      <li><code class="language-plaintext highlighter-rouge">pointcut</code>属性：用于指定切入点表达式，该表达式的含义指的是对业务层中哪些方法增强，</li>
+    </ol>
+  </li>
+  <li>切入点表达式的写法：
+    <ol>
+      <li>
+        <p>关键字:<code class="language-plaintext highlighter-rouge"> execution</code>(表达式)</p>
+      </li>
+      <li>表达式:访问修饰符 <code class="language-plaintext highlighter-rouge">返回值 包名.包名.包名...类名.方法名(参数列表)</code></li>
+      <li>标准的表达式写法：<code class="language-plaintext highlighter-rouge"> public void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()</code></li>
+      <li>访问修饰符(public)可以省略：<code class="language-plaintext highlighter-rouge">void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()</code></li>
+      <li>返回值可以使用通配符*，表示任意返回值：<code class="language-plaintext highlighter-rouge">* com.diaowenjie.service.impl.AccountServiceImpl.saveAccount()</code></li>
+      <li>包名可以使用通配符，表示任意包，但是有几级包，就需要写几个<code class="language-plaintext highlighter-rouge">*. </code> ：<code class="language-plaintext highlighter-rouge">* *.*.*.*.AccountServiceImpl.saveAccount()</code></li>
+      <li>包名可以使用..表示当前包及其子包：<code class="language-plaintext highlighter-rouge">* *..AccountServiceImpl.saveAccount()</code></li>
+      <li>类名和方法名都可以使用*来进行通配：<code class="language-plaintext highlighter-rouge">* *..*.*()</code>但是()表示无参。</li>
+      <li>参数列表：
+        <ol>
+          <li>可以直接写数据类型：
+            <ol>
+              <li>基本类型直接写名称 : e.g.  <code class="language-plaintext highlighter-rouge">int</code></li>
+              <li>引用类型写包名.类名的方式 ` java.lang.String`</li>
+            </ol>
+          </li>
+          <li>可以使用通配符表示任意类型，但是必须有参数(*)</li>
+          <li>可以使用..表示有无参数均可，有参数可以是任意类型。</li>
+        </ol>
+      </li>
+      <li>全通配写法：<code class="language-plaintext highlighter-rouge">* *..*.*(..)</code>所有的都会被匹配。尽量不要写。</li>
+      <li>实际开发中切入点表达式的通常写法：切到业务层实现类下的所有方法，<code class="language-plaintext highlighter-rouge">* com.diaowenjie.service.impl.*.*(..)</code></li>
+    </ol>
+  </li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="c">&lt;!--aop的命名约束--&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- 配置spring的 ioc 吧service对象配置进来。 --&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountService"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.service.impl.AccountServiceImpl"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+	<span class="c">&lt;!--配置Logger类--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"logger"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.utils.Logger"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+
+	<span class="c">&lt;!--配置aop  --&gt;</span>
+    <span class="nt">&lt;aop:config&gt;</span>
+		<span class="c">&lt;!--配置切面--&gt;</span>
+        <span class="nt">&lt;aop:aspect</span> <span class="na">id =</span> <span class="s">"logAdvice"</span> <span class="na">ref=</span><span class="s">"logger"</span><span class="nt">&gt;</span>
+			<span class="c">&lt;!--配置通知的类型，并且建立通知方法和切入点方法的关联--&gt;</span>
+            <span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"printLog"</span> <span class="na">pointcut=</span><span class="s">"execution(public void com.diaowenjie.service.impl.AccountServiceImpl.saveAccount())"</span><span class="nt">&gt;</span>	<span class="nt">&lt;/aop:before&gt;</span>
+        <span class="nt">&lt;/aop:aspect&gt;</span>
+    <span class="nt">&lt;/aop:config&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>测试方法类</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">ApplicationContext</span> <span class="n">ac</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"bean.xml"</span><span class="o">);</span>
+    <span class="nc">IAccountService</span> <span class="n">as</span> <span class="o">=</span> <span class="o">(</span><span class="nc">IAccountService</span><span class="o">)</span> <span class="n">ac</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"accountService"</span><span class="o">);</span>
+    <span class="n">as</span><span class="o">.</span><span class="na">saveAccount</span><span class="o">();</span>
+    <span class="n">as</span><span class="o">.</span><span class="na">deleteAccount</span><span class="o">();</span>
+    <span class="n">as</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="mi">6</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>通过运行改方法系统便会输出：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Logger类中的方法printLog开始记录日志
+执行保存
+执行删除
+执行更新6
+</code></pre></div></div>
+
+<p>一般建议写法为通配符的写法增强所有的方法,如下所示。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;aop:aspect</span> <span class="na">id =</span> <span class="s">"logAdvice"</span> <span class="na">ref=</span><span class="s">"logger"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--配置通知的类型，并且建立通知方法和切入点方法的关联--&gt;</span>
+    <span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"printLog"</span> <span class="na">pointcut=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">&gt;&lt;/aop:before&gt;</span>
+<span class="nt">&lt;/aop:aspect&gt;</span>
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Logger类中的方法printLog开始记录日志
+执行保存
+Logger类中的方法printLog开始记录日志
+执行删除
+Logger类中的方法printLog开始记录日志
+执行更新6
+</code></pre></div></div>
+
+<h3 id="43-aop的其他配置">4.3 AOP的其他配置</h3>
+
+<p>配置前置、后置、异常、最终通知。首先在logger中写出对应的方法</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Logger</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     *前置通知
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">BeforePrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前置通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     *后置通知
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">AfterReturnPrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后置通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     *异常通知
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">AfterThrowingPrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"异常通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     *最终通知
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">AfterPrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"最终通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对应的xml中的配置。主要是aop中的变化。其他部分不变。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--配置aop  --&gt;</span>
+<span class="nt">&lt;aop:config&gt;</span>
+    <span class="c">&lt;!--配置切面--&gt;</span>
+    <span class="nt">&lt;aop:aspect</span> <span class="na">id =</span> <span class="s">"logAdvice"</span> <span class="na">ref=</span><span class="s">"logger"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--前置通知： --&gt;</span>
+        <span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"BeforePrintLog"</span> <span class="na">pointcut=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">&gt;&lt;/aop:before&gt;</span>
+        <span class="c">&lt;!--后置通知--&gt;</span>
+        <span class="nt">&lt;aop:after-returning</span> <span class="na">method=</span><span class="s">"AfterReturnPrintLog"</span> <span class="na">pointcut=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">&gt;&lt;/aop:after-returning&gt;</span>
+        <span class="c">&lt;!--异常通知--&gt;</span>
+        <span class="nt">&lt;aop:after-throwing</span> <span class="na">method=</span><span class="s">"AfterThrowingPrintLog"</span> <span class="na">pointcut=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">&gt;&lt;/aop:after-throwing&gt;</span>
+        <span class="c">&lt;!--最终通知--&gt;</span>
+        <span class="nt">&lt;aop:after</span> <span class="na">method=</span><span class="s">"AfterPrintLog"</span> <span class="na">pointcut=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">&gt;&lt;/aop:after&gt;</span>
+    <span class="nt">&lt;/aop:aspect&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></div></div>
+
+<p>调用测试类方法以后运行结果；</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>前置通知Logger类中的方法printLog开始记录日志
+执行保存
+后置通知Logger类中的方法printLog开始记录日志
+最终通知Logger类中的方法printLog开始记录日志
+</code></pre></div></div>
+
+<p>如果有异常，则会调用异常通知，并且后置通知不会执行，因为程序异常退出。但是最终通知会进行执行。</p>
+
+<p>对于以上的配置可以发现，其表达式是一样的，因此可以使用<code class="language-plaintext highlighter-rouge">&lt;aop:pointcut&gt;</code>标签进行替换。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;aop:aspect</span> <span class="na">id =</span> <span class="s">"logAdvice"</span> <span class="na">ref=</span><span class="s">"logger"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--前置通知--&gt;</span>
+    <span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"BeforePrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:before&gt;</span>
+    <span class="c">&lt;!--后置通知--&gt;</span>
+    <span class="nt">&lt;aop:after-returning</span> <span class="na">method=</span><span class="s">"AfterReturnPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:after-returning&gt;</span>
+    <span class="c">&lt;!--异常通知--&gt;</span>
+    <span class="nt">&lt;aop:after-throwing</span> <span class="na">method=</span><span class="s">"AfterThrowingPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:after-throwing&gt;</span>
+    <span class="c">&lt;!--最终通知--&gt;</span>
+    <span class="nt">&lt;aop:after</span> <span class="na">method=</span><span class="s">"AfterPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:after&gt;</span>
+
+    <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">"pt1"</span> <span class="na">expression=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/aop:aspect&gt;</span>
+</code></pre></div></div>
+
+<p>但是对于配置在<code class="language-plaintext highlighter-rouge">&lt;/aop:aspect&gt;</code>标签内部的只能本标签中使用，要想全局使用，需要将其配置在<code class="language-plaintext highlighter-rouge">&lt;aop:config&gt;</code>标签下。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--配置aop  --&gt;</span>
+<span class="nt">&lt;aop:config&gt;</span>
+     <span class="c">&lt;!--需要配置在前面才能正常使用。--&gt;</span>
+    <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">"pt1"</span> <span class="na">expression=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--配置切面--&gt;</span>
+    <span class="nt">&lt;aop:aspect</span> <span class="na">id =</span> <span class="s">"logAdvice"</span> <span class="na">ref=</span><span class="s">"logger"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--前置通知--&gt;</span>
+        <span class="nt">&lt;aop:before</span> <span class="na">method=</span><span class="s">"BeforePrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:before&gt;</span>
+        <span class="c">&lt;!--后置通知--&gt;</span>
+        <span class="nt">&lt;aop:after-returning</span> <span class="na">method=</span><span class="s">"AfterReturnPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:after-returning&gt;</span>
+        <span class="c">&lt;!--异常通知--&gt;</span>
+        <span class="nt">&lt;aop:after-throwing</span> <span class="na">method=</span><span class="s">"AfterThrowingPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:after-throwing&gt;</span>
+        <span class="c">&lt;!--最终通知--&gt;</span>
+        <span class="nt">&lt;aop:after</span> <span class="na">method=</span><span class="s">"AfterPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:after&gt;</span>
+    <span class="nt">&lt;/aop:aspect&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></div></div>
+
+<p><strong>spring中的环绕通知</strong><br />
+<strong>问题：</strong> 当我们配置了环绕通知以后，切入点方法没有执行，而通知方法执行了<br />
+<strong>分析：</strong> 通过对比动态代理中的环绕通知代码，发现动态代理的环绕通知有明确的切入点方法调用，而我们的代码没有。<br />
+<strong>解决：</strong> Spring框架为我们提供了一个接口，<code class="language-plaintext highlighter-rouge">ProceedingJoinPoint</code> 该接口有一个方法<code class="language-plaintext highlighter-rouge">proceed()</code>此方法就相当于明确调用切入点。该接口可以作为环绕通知的方法参数，当程序执行时，spring框架会为我们提供该接口的实现类供我们使用。<br />
+spring中的环绕通知：它是spring框架为我们提供的一种可以在代码中手动控制增强方法何时执行的方式。</p>
+
+<p>首先是xml中的配置:</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;aop:config&gt;</span>
+    <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">"pt1"</span> <span class="na">expression=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--配置切面--&gt;</span>
+    <span class="nt">&lt;aop:aspect</span> <span class="na">id =</span> <span class="s">"logAdvice"</span> <span class="na">ref=</span><span class="s">"logger"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--配置环绕配置 --&gt;</span>
+        <span class="nt">&lt;aop:around</span> <span class="na">method=</span><span class="s">"aroundPrintLog"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/aop:aspect&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">Object</span> <span class="nf">aroundPrintLog</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">pjp</span><span class="o">){</span>
+    <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span> <span class="o">=</span> <span class="n">pjp</span><span class="o">.</span><span class="na">getArgs</span><span class="o">();</span>
+    <span class="nc">Object</span> <span class="n">rtValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...前置"</span><span class="o">);</span>
+        
+        <span class="n">rtValue</span><span class="o">=</span> <span class="n">pjp</span><span class="o">.</span><span class="na">proceed</span><span class="o">(</span><span class="n">args</span><span class="o">);</span> <span class="c1">//目标调用方法。</span>
+        
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...后置"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">rtValue</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Throwable</span> <span class="n">throwable</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...异常"</span><span class="o">);</span>
+        <span class="n">throwable</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...最终"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>通过一个环绕配置，可以实现之前所有的配置。相当于代码基本的实现。也即是可以通过代码进行直接的控制，而不是通过配置版进行控制。</p>
+
+<h2 id="5基于注解版的aop">5.基于注解版的AOP</h2>
+
+<p>配置spring创建时扫描的包</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--配置spring创建时要扫描的包--&gt;</span>
+    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"com.diaowenjie"</span><span class="nt">&gt;&lt;/context:component-scan&gt;</span>
+    <span class="c">&lt;!--配置Spring开启注解AOP的支持--&gt;</span>
+    <span class="nt">&lt;aop:aspectj-autoproxy&gt;&lt;/aop:aspectj-autoproxy&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>在Service类中加上注解：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span><span class="o">(</span><span class="s">"accountService"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="nc">IAccountService</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveAccount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行保存"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateAccount</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行更新"</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">deleteAccount</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行删除"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Logger类上加上注解</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span><span class="o">(</span><span class="s">"logger"</span><span class="o">)</span>
+<span class="nd">@Aspect</span> <span class="c1">//表示当前类是个切面</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Logger</span> <span class="o">{</span>
+
+    <span class="nd">@Pointcut</span><span class="o">(</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">pt1</span><span class="o">(){}</span>
+    <span class="cm">/**
+     *前置通知
+     */</span>
+    <span class="nd">@Before</span><span class="o">(</span><span class="s">"pt1()"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">BeforePrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"前置通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     *后置通知
+     */</span>
+    <span class="nd">@AfterReturning</span><span class="o">(</span><span class="s">"pt1()"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">AfterReturnPrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"后置通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     *异常通知
+     */</span>
+    <span class="nd">@AfterThrowing</span><span class="o">(</span><span class="s">"pt1()"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">AfterThrowingPrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"异常通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     *最终通知
+     */</span>
+    <span class="nd">@After</span><span class="o">(</span><span class="s">"pt1()"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">AfterPrintLog</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"最终通知Logger类中的方法printLog开始记录日志"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 环绕通知
+     */</span>
+<span class="c1">//    @Around("pt1()")  //因为不能同时存在。</span>
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">aroundPrintLog</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">pjp</span><span class="o">){</span>
+        <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span> <span class="o">=</span> <span class="n">pjp</span><span class="o">.</span><span class="na">getArgs</span><span class="o">();</span>
+        <span class="nc">Object</span> <span class="n">rtValue</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...前置"</span><span class="o">);</span>
+            <span class="n">rtValue</span><span class="o">=</span> <span class="n">pjp</span><span class="o">.</span><span class="na">proceed</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...后置"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">rtValue</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Throwable</span> <span class="n">throwable</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...异常"</span><span class="o">);</span>
+            <span class="n">throwable</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span><span class="k">finally</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Logger类中的方法printLog开始记录日志...最终"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>一个小问题，对于使用注解版的aop调用的方法上有点小问题：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>前置通知Logger类中的方法printLog开始记录日志
+执行保存
+最终通知Logger类中的方法printLog开始记录日志
+后置通知Logger类中的方法printLog开始记录日志
+</code></pre></div></div>
+
+<p>由以上可以看出，最终与后置的执行顺序是错的，这种是更改不了的，如果要想按照正常的顺序，建议使用环绕注解。基于代码的控制可以完整地控制其切面。</p>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Docker部署项目</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/05/15/docker-package.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Docker部署项目</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-05-15T00:00:00+08:00" itemprop="datePublished">
+          
+          May 15, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Docker部署项目</h1>
+    <p class="post-meta">
+      <time datetime="2020-05-15T00:00:00+08:00" itemprop="datePublished">
+        
+        May 15, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录在springBoot项目中使用maven将项目打包并且部署到docker服务器上。 需要注意的是在部署的时候一定要考虑安全问题，否则的话容易服务器被别人利用，被黑客攻击。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#一docker-registry" id="markdown-toc-一docker-registry">一、Docker Registry</a>    <ul>
+      <li><a href="#docker-registry-20搭建" id="markdown-toc-docker-registry-20搭建">Docker Registry 2.0搭建</a></li>
+      <li><a href="#docker开启远程api" id="markdown-toc-docker开启远程api">Docker开启远程API</a>        <ul>
+          <li><a href="#用vim编辑器修改dockerservice文件" id="markdown-toc-用vim编辑器修改dockerservice文件">用vim编辑器修改docker.service文件</a></li>
+          <li><a href="#让docker支持http上传镜像" id="markdown-toc-让docker支持http上传镜像">让Docker支持http上传镜像</a></li>
+          <li><a href="#修改配置后需要使用如下命令使配置生效" id="markdown-toc-修改配置后需要使用如下命令使配置生效">修改配置后需要使用如下命令使配置生效</a></li>
+          <li><a href="#重新启动docker服务" id="markdown-toc-重新启动docker服务">重新启动Docker服务</a></li>
+          <li><a href="#开启防火墙的docker构建端口" id="markdown-toc-开启防火墙的docker构建端口">开启防火墙的Docker构建端口</a></li>
+        </ul>
+      </li>
+      <li><a href="#使用maven构建docker镜像" id="markdown-toc-使用maven构建docker镜像">使用Maven构建Docker镜像</a>        <ul>
+          <li><a href="#在应用的pomxml文件中添加docker-maven-plugin的依赖" id="markdown-toc-在应用的pomxml文件中添加docker-maven-plugin的依赖">在应用的pom.xml文件中添加docker-maven-plugin的依赖</a></li>
+          <li><a href="#修改applicationyml将localhost改为db" id="markdown-toc-修改applicationyml将localhost改为db">修改application.yml，将localhost改为db</a></li>
+          <li><a href="#使用idea打包项目并构建镜像" id="markdown-toc-使用idea打包项目并构建镜像">使用IDEA打包项目并构建镜像</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#二运行项目" id="markdown-toc-二运行项目">二、运行项目</a></li>
+</ul>
+<p><a href="http://www.macrozheng.com/#/reference/docker_maven">参考链接</a></p>
+
+<p>此方法会默认监听所有的请求，也就是说所有人都可以上传docker镜像到这个服务器，安全性为0。虽然可以指定固定的ip才能上传成功，但是因为在学校没有自己的ip所以便不能够实现。但在内网测试的时候还是可以，如果放到公网上就需要仔细考虑安全问题。一个暴力的办法就是部署成功以后关闭2375端口。或者换一个方法实现。</p>
+
+<h1 id="一docker-registry">一、Docker Registry</h1>
+
+<h2 id="docker-registry-20搭建">Docker Registry 2.0搭建</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-d</span> <span class="nt">-p</span> 5000:5000 <span class="nt">--restart</span><span class="o">=</span>always <span class="nt">--name</span> registry2 registry:2
+</code></pre></div></div>
+
+<p>如果遇到镜像下载不下来的情况，需要修改 /etc/docker/daemon.json 文件并添加上 registry-mirrors 键值，然后重启docker服务：</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"registry-mirrors"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://registry.docker-cn.com"</span><span class="p">]</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="docker开启远程api">Docker开启远程API</h2>
+
+<h3 id="用vim编辑器修改dockerservice文件">用vim编辑器修改docker.service文件</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>vi /usr/lib/systemd/system/docker.service
+</code></pre></div></div>
+
+<p>需要修改的部分：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/dockerd <span class="nt">-H</span> fd:// <span class="nt">--containerd</span><span class="o">=</span>/run/containerd/containerd.sock
+</code></pre></div></div>
+
+<p>修改后的部分：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/dockerd <span class="nt">-H</span> tcp://0.0.0.0:2375 <span class="nt">-H</span> unix://var/run/docker.sock
+</code></pre></div></div>
+
+<p>如果是阿里云的docker则是如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">ExecStart</span><span class="o">=</span>/usr/bin/dockerd-current <span class="se">\ </span>     
+          
+          <span class="nt">-H</span> tcp://0.0.0.0:2375 <span class="nt">-H</span> unix://var/run/docker.sock <span class="se">\</span>
+          <span class="nt">--add-runtime</span> docker-runc<span class="o">=</span>/usr/libexec/docker/docker-runc-current <span class="se">\</span>
+          <span class="nt">--default-runtime</span><span class="o">=</span>docker-runc <span class="se">\</span>
+          <span class="nt">--exec-opt</span> native.cgroupdriver<span class="o">=</span>systemd <span class="se">\</span>
+          <span class="nt">--userland-proxy-path</span><span class="o">=</span>/usr/libexec/docker/docker-proxy-current <span class="se">\</span>
+          <span class="nt">--init-path</span><span class="o">=</span>/usr/libexec/docker/docker-init-current <span class="se">\</span>
+          <span class="nt">--seccomp-profile</span><span class="o">=</span>/etc/docker/seccomp.json <span class="se">\</span>
+          <span class="nv">$OPTIONS</span> <span class="se">\</span>
+          <span class="nv">$DOCKER_STORAGE_OPTIONS</span> <span class="se">\</span>
+          <span class="nv">$DOCKER_NETWORK_OPTIONS</span> <span class="se">\</span>
+          <span class="nv">$ADD_REGISTRY</span> <span class="se">\</span>
+          <span class="nv">$BLOCK_REGISTRY</span> <span class="se">\</span>
+          <span class="nv">$INSECURE_REGISTRY</span> <span class="se">\</span>
+          <span class="nv">$REGISTRIES</span>
+</code></pre></div></div>
+
+<p>但是最好不要这样写，因为<code class="language-plaintext highlighter-rouge"> -H tcp://0.0.0.0:2375 -H unix://var/run/docker.sock \</code>表示任何的ip都能访问这个docker服务器，然后我的就被种上挖矿病毒。。 但是在本地进行的时候还是可以的，所以在实际的生产环境中还是用多加注意。。<strong>不要轻易使用这个方法。</strong>或者就是自己使用完以后就关闭端口。防止别人使用。</p>
+
+<h3 id="让docker支持http上传镜像">让Docker支持http上传镜像</h3>
+
+<p>其中地址就是直接写服务器自己的地址。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'{ "insecure-registries":["192.168.3.130:5000"] }'</span> <span class="o">&gt;</span> /etc/docker/daemon.json
+</code></pre></div></div>
+
+<h3 id="修改配置后需要使用如下命令使配置生效">修改配置后需要使用如下命令使配置生效</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl daemon-reload
+</code></pre></div></div>
+
+<h3 id="重新启动docker服务">重新启动Docker服务</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop docker
+systemctl start docker
+</code></pre></div></div>
+
+<h3 id="开启防火墙的docker构建端口">开启防火墙的Docker构建端口</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>firewall-cmd <span class="nt">--zone</span><span class="o">=</span>public <span class="nt">--add-port</span><span class="o">=</span>2375/tcp <span class="nt">--permanent</span>
+firewall-cmd <span class="nt">--reload</span>
+</code></pre></div></div>
+
+<h2 id="使用maven构建docker镜像">使用Maven构建Docker镜像</h2>
+
+<blockquote>
+  <p>该代码是在mall-tiny-02的基础上修改的。</p>
+</blockquote>
+
+<h3 id="在应用的pomxml文件中添加docker-maven-plugin的依赖">在应用的pom.xml文件中添加docker-maven-plugin的依赖</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+         <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+    <span class="nt">&lt;parent&gt;</span>
+        <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+        <span class="nt">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="nt">&lt;/artifactId&gt;</span>
+        <span class="nt">&lt;version&gt;</span>2.2.7.RELEASE<span class="nt">&lt;/version&gt;</span>
+        <span class="nt">&lt;relativePath/&gt;</span> <span class="c">&lt;!-- lookup parent from repository --&gt;</span>
+    <span class="nt">&lt;/parent&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.macro.mall.tiny<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mall_study<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="c">&lt;!--这里配置docker里面具体的安装images名称--&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.0.2-SNAPSHOT<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;name&gt;</span>mall_study<span class="nt">&lt;/name&gt;</span>
+    <span class="nt">&lt;description&gt;</span>Demo project for Spring Boot<span class="nt">&lt;/description&gt;</span>
+	
+
+    <span class="nt">&lt;build&gt;</span>
+        <span class="nt">&lt;plugins&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>org.springframework.boot<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+            <span class="c">&lt;!--需要加的插件在这里，也就是将项目build 然后上传到服务器。--&gt;</span>
+            <span class="nt">&lt;plugin&gt;</span>
+                <span class="nt">&lt;groupId&gt;</span>com.spotify<span class="nt">&lt;/groupId&gt;</span>
+                <span class="nt">&lt;artifactId&gt;</span>docker-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+                <span class="nt">&lt;version&gt;</span>1.1.0<span class="nt">&lt;/version&gt;</span>
+                <span class="nt">&lt;executions&gt;</span>
+                    <span class="nt">&lt;execution&gt;</span>
+                        <span class="nt">&lt;id&gt;</span>build-image<span class="nt">&lt;/id&gt;</span>
+                        <span class="nt">&lt;phase&gt;</span>package<span class="nt">&lt;/phase&gt;</span>
+                        <span class="nt">&lt;goals&gt;</span>
+                            <span class="nt">&lt;goal&gt;</span>build<span class="nt">&lt;/goal&gt;</span>
+                        <span class="nt">&lt;/goals&gt;</span>
+                    <span class="nt">&lt;/execution&gt;</span>
+                <span class="nt">&lt;/executions&gt;</span>
+                <span class="nt">&lt;configuration&gt;</span>
+                    <span class="nt">&lt;imageName&gt;</span>mall-tiny/${project.artifactId}:${project.version}<span class="nt">&lt;/imageName&gt;</span>
+                    <span class="c">&lt;!--配置服务器ip地址--&gt;</span>
+                    <span class="nt">&lt;dockerHost&gt;</span>http://192.168.60.130:2375<span class="nt">&lt;/dockerHost&gt;</span>
+                    <span class="nt">&lt;baseImage&gt;</span>java:8<span class="nt">&lt;/baseImage&gt;</span>
+                    <span class="nt">&lt;entryPoint&gt;</span>["java", "-jar","/${project.build.finalName}.jar"]
+                    <span class="nt">&lt;/entryPoint&gt;</span>
+                    <span class="nt">&lt;resources&gt;</span>
+                        <span class="nt">&lt;resource&gt;</span>
+                            <span class="nt">&lt;targetPath&gt;</span>/<span class="nt">&lt;/targetPath&gt;</span>
+                            <span class="nt">&lt;directory&gt;</span>${project.build.directory}<span class="nt">&lt;/directory&gt;</span>
+                            <span class="nt">&lt;include&gt;</span>${project.build.finalName}.jar<span class="nt">&lt;/include&gt;</span>
+                        <span class="nt">&lt;/resource&gt;</span>
+                    <span class="nt">&lt;/resources&gt;</span>
+                <span class="nt">&lt;/configuration&gt;</span>
+            <span class="nt">&lt;/plugin&gt;</span>
+        <span class="nt">&lt;/plugins&gt;</span>
+    <span class="nt">&lt;/build&gt;</span>
+
+<span class="nt">&lt;/project&gt;</span>
+
+</code></pre></div></div>
+
+<p>相关配置说明：</p>
+
+<ul>
+  <li>executions.execution.phase:此处配置了在maven打包应用时构建docker镜像；</li>
+  <li>imageName：用于指定镜像名称，mall-tiny是仓库名称，<code class="language-plaintext highlighter-rouge">${project.artifactId}</code>为镜像名称，<code class="language-plaintext highlighter-rouge">${project.version}</code>为仓库名称；</li>
+  <li>dockerHost：打包后上传到的docker服务器地址；</li>
+  <li>baseImage：该应用所依赖的基础镜像，此处为java；</li>
+  <li>entryPoint：docker容器启动时执行的命令；</li>
+  <li>resources.resource.targetPath：将打包后的资源文件复制到该目录；</li>
+  <li>resources.resource.directory：需要复制的文件所在目录，maven打包的应用jar包保存在target目录下面；</li>
+  <li>resources.resource.include：需要复制的文件，打包好的应用jar包。</li>
+</ul>
+
+<h3 id="修改applicationyml将localhost改为db">修改application.yml，将localhost改为db</h3>
+
+<blockquote>
+  <p>可以把docker中的容器看作独立的虚拟机，mall-tiny-docker访问localhost自然会访问不到mysql，docker容器之间可以通过指定好的服务名称db进行访问，至于db这个名称可以在运行mall-tiny-docker容器的时候指定。</p>
+</blockquote>
+
+<div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">spring</span><span class="pi">:</span>
+  <span class="na">datasource</span><span class="pi">:</span>
+    <span class="na">url</span><span class="pi">:</span> <span class="s">jdbc:mysql://db:3306/mall?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span>
+    <span class="na">username</span><span class="pi">:</span> <span class="s">root</span>
+    <span class="na">password</span><span class="pi">:</span> <span class="s">root</span>
+</code></pre></div></div>
+
+<h3 id="使用idea打包项目并构建镜像">使用IDEA打包项目并构建镜像</h3>
+
+<p>直接双击maven中的package按钮便可以直接的进行打包，如果是第一次打包需要等待一段时间，因为要下载对应的依赖，最终的结果出现如下：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/05/15/dockerSuccess.png" alt="dockerSuccess.png" /></p>
+
+<p>此时在docker服务器上，输入docker images便可以发现已经上传了：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/05/15/docker-image.png" alt="docker-image.png" /></p>
+
+<h1 id="二运行项目">二、运行项目</h1>
+
+<p>等到上传到docker服务器以后，便可以通过配置进行上传和运行项目：</p>
+
+<ul>
+  <li>使用docker命令启动（–link表示应用可以用db这个域名访问mysql服务）：</li>
+</ul>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-p</span> 8080:8080 <span class="nt">--name</span> mall-tiny-docker <span class="se">\</span>
+<span class="nt">--link</span> mysql:db <span class="se">\</span>
+<span class="nt">-v</span> /etc/localtime:/etc/localtime <span class="se">\</span>
+<span class="nt">-v</span> /mydata/app/mall-tiny-docker/logs:/var/logs <span class="se">\</span>
+<span class="nt">-d</span> mall-tiny/mall-study:0.0.2-SNAPSHOT
+</code></pre></div></div>
+
+<p>其中-d即为上图中的image的名称， –link表示引用本地的mysql数据，且别名为db。对应与上面的<strong>修改application.yml，将localhost改为db</strong> 此时便可以直接的访问项目，进行上线。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

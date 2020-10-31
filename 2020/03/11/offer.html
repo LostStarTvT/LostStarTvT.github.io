@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Algorithm：剑指offer解题</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/03/11/offer.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Algorithm：剑指offer解题</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-03-11T00:00:00+08:00" itemprop="datePublished">
+          
+          Mar 11, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Algorithm：剑指offer解题</h1>
+    <p class="post-meta">
+      <time datetime="2020-03-11T00:00:00+08:00" itemprop="datePublished">
+        
+        Mar 11, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录剑指offer上面各种比较杂的解题过程。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#1-复杂链表的处理" id="markdown-toc-1-复杂链表的处理">1. 复杂链表的处理</a></li>
+  <li><a href="#2查找数组中的某值" id="markdown-toc-2查找数组中的某值">2.查找数组中的某值</a></li>
+  <li><a href="#3查找数组中前k小的数据" id="markdown-toc-3查找数组中前k小的数据">3.查找数组中前k小的数据</a></li>
+  <li><a href="#4计算整数中出现1的次数" id="markdown-toc-4计算整数中出现1的次数">4.计算整数中出现1的次数</a></li>
+  <li><a href="#5把数组排成最小数" id="markdown-toc-5把数组排成最小数">5.把数组排成最小数</a></li>
+  <li><a href="#6-连续子数组的最大和" id="markdown-toc-6-连续子数组的最大和">6. 连续子数组的最大和</a></li>
+  <li><a href="#7找出从小到大的第n个丑数" id="markdown-toc-7找出从小到大的第n个丑数">7.找出从小到大的第n个丑数</a></li>
+</ul>
+<h1 id="1-复杂链表的处理">1. 复杂链表的处理</h1>
+
+<p><strong>题目描述</strong>：输入一个复杂链表，（每个节点有结点值和两个指针，其中一个指向下一个，另外一个指向一个任意结点），返回复制后复杂链表的头指针，返回的结果中不能包含原链表的元素，即复制之后的元素都是新new的。</p>
+
+<p><strong>解题思路</strong>：刚开始其实没有真正的理解题目的意思，首先，一个链表肯定是连续的，所以通过next指针就能完全的遍历完链表，虽有有random指针，但也不能只有random能访问到而next指针不能访问到，所以现在问题就比较好理解了，通过next复制完全部的结点，然后在将所有的random指针指向对应的结点。实现的步骤包括三步：</p>
+
+<ol>
+  <li>通过next复制所有结点，将新建结点插入到每个节点后面，</li>
+  <li>通过遍历将random指向复制</li>
+  <li>拆分链表，</li>
+</ol>
+
+<p><a href="https://pic.tyzhang.top/image/FbH"><img src="https://pic.tyzhang.top/images/2020/03/17/complexLinkList.md.jpg" alt="complexLinkList.md.jpg" /></a></p>
+
+<p><strong>具体的代码</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">RandomListNode</span> <span class="nf">CloneNew</span><span class="o">(</span><span class="nc">RandomListNode</span> <span class="n">pHead</span><span class="o">)</span>
+    <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">pHead</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="nc">RandomListNode</span> <span class="n">cur</span> <span class="o">=</span> <span class="n">pHead</span><span class="o">;</span>
+
+        <span class="nc">RandomListNode</span> <span class="n">pre</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">cur</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="nc">RandomListNode</span> <span class="n">newNode</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RandomListNode</span><span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">label</span><span class="o">);</span>
+            <span class="c1">//将其插入到链表中。</span>
+            <span class="n">pre</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+            <span class="n">cur</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">newNode</span><span class="o">;</span>
+            <span class="n">newNode</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">pre</span><span class="o">;</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">pre</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">//复制随机链表</span>
+        <span class="c1">//</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">pHead</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">cur</span><span class="o">!=</span><span class="kc">null</span> <span class="o">){</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">cur</span><span class="o">.</span><span class="na">random</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span> <span class="c1">//如果不为null</span>
+                <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">random</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">random</span><span class="o">.</span><span class="na">next</span><span class="o">;</span> <span class="c1">//因为相同的链表就是后面的那个。 cur.random 为原始的数据 .next 就是新建的那个。</span>
+            <span class="o">}</span>
+           <span class="n">cur</span> <span class="o">=</span>  <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="c1">//拆分链表</span>
+        <span class="n">cur</span> <span class="o">=</span> <span class="n">pHead</span><span class="o">;</span>
+        <span class="n">pre</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="nc">RandomListNode</span> <span class="n">head</span> <span class="o">=</span> <span class="n">pre</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">cur</span><span class="o">!=</span><span class="kc">null</span><span class="o">){</span>
+            <span class="n">cur</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">pre</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">pre</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">cur</span> <span class="o">==</span><span class="kc">null</span><span class="o">){</span>
+                <span class="k">break</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="n">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+            <span class="n">pre</span> <span class="o">=</span> <span class="n">cur</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">head</span><span class="o">;</span>
+    <span class="o">}</span>
+
+
+<span class="kd">class</span> <span class="nc">RandomListNode</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">label</span><span class="o">;</span>
+    <span class="nc">RandomListNode</span> <span class="n">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="nc">RandomListNode</span> <span class="n">random</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+    <span class="nc">RandomListNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">label</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">label</span> <span class="o">=</span> <span class="n">label</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="2查找数组中的某值">2.查找数组中的某值</h1>
+
+<p><strong>题目大意</strong>：给定一个数组，找出该数组中存在超过该数组长度一般的数字，例如{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。</p>
+
+<p><strong>解题思路</strong>：最直观的想法就是调用排序接口，然后相等的数据就会出现在一起，然后使用循环进行遍历，但是这样的话就会非常的简单就解决。另外一种解法就是，利用满足条件的数组性质进行解题，即通过依次遍历，最后得到的数据一定的超过一般的值。</p>
+
+<p>排序解法：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">public</span> <span class="kt">int</span> <span class="nf">MoreThanHalfNum_Solution</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">array</span><span class="o">);</span>
+
+        <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span><span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">halfLength</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">temp</span> <span class="o">==</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]){</span>
+                <span class="n">count</span> <span class="o">++;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">&gt;</span> <span class="n">halfLength</span><span class="o">)</span>
+                    <span class="k">return</span> <span class="n">temp</span><span class="o">;</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>大佬利用性质解法:同归于尽解法，通过对比相邻数字是否相同，一趟遍历最后一定是改数字。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">int</span> <span class="nf">MoreThanHalfNum_SolutionNew</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">preNum</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">preNum</span> <span class="o">==</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]){</span> <span class="c1">//如果相同 则记录下来</span>
+                <span class="n">count</span> <span class="o">++;</span>
+            <span class="o">}</span><span class="k">else</span> <span class="o">{</span>
+                <span class="n">count</span> <span class="o">--</span> <span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="o">){</span> <span class="c1">//如果为空了。则是该数字</span>
+                    <span class="n">preNum</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+                    <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="c1">//找到最多的数字，然后进行统计其出现的次数。</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">preNum</span> <span class="o">==</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">])</span>
+                <span class="n">count</span><span class="o">++;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">/</span><span class="mi">2</span><span class="o">?</span> <span class="nl">preNum:</span><span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="3查找数组中前k小的数据">3.查找数组中前k小的数据</h1>
+
+<p><strong>题目大意</strong>：对于给定的数组，输出其中前k小的数据，例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4。</p>
+
+<p><strong>算法思想</strong>：刚开始想的也是直接利用排序算法进行输出.. 然后别人思路也是，但是不是调用系统的api，而是使用自己写的堆排序，通过计算小堆然后实现输出前k小的值。</p>
+
+<p>排序输出：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">public</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">GetLeastNumbers_Solution</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">input</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">&lt;</span> <span class="n">k</span><span class="o">)</span> <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">input</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">k</span> <span class="o">;</span><span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">arrayList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">input</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>堆排序输出前k个最小值：</p>
+
+<p>主要是利用堆的性质，因为每次堆的头部都是该数组中的最小值，所以通过依次获取到最小值，便得到前k最小的值，具体堆的思路可以参考排序算法帖子。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">public</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="nf">GetLeastNumbers_Solution</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">input</span><span class="o">,</span> <span class="kt">int</span> <span class="n">k</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">arrayList</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+        <span class="k">if</span> <span class="o">(</span><span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">k</span> <span class="o">&gt;</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span><span class="o">)</span> <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
+        <span class="c1">//构建堆</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">/</span> <span class="mi">2</span>  <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span>
+            <span class="n">adjustDown</span><span class="o">(</span><span class="n">input</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="n">input</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">//进行输出排序。输出堆顶</span>
+        <span class="c1">//输出k个值 因为每次是将堆头部的值记录，而且头部值是从结尾处复制过来，所以每次调整堆也需要将长度减i，</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">k</span> <span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">arrayList</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">input</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span> <span class="c1">//每次都将头部添加进去。</span>
+            <span class="n">input</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="n">input</span><span class="o">[</span><span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span><span class="n">i</span><span class="o">];</span> <span class="c1">//将最后一个值添加到数组头部。</span>
+            <span class="n">adjustDown</span><span class="o">(</span><span class="n">input</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">input</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">arrayList</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//使用堆排序进行下调</span>
+    <span class="kt">void</span> <span class="nf">adjustDown</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">array</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">n</span><span class="o">){</span>
+        <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span><span class="c1">//获取左子树</span>
+        <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="c1">//需要插入的值</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="o">){</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="c1">//找到小值</span>
+                <span class="n">j</span><span class="o">++;</span>
+
+            <span class="k">if</span> <span class="o">(</span><span class="n">tmp</span> <span class="o">&lt;=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">])</span><span class="c1">//已经是最小值</span>
+                <span class="k">break</span><span class="o">;</span>
+
+            <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+            <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span> <span class="c1">//将数值交换。</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span> <span class="c1">//记录节点转移到下一个节点</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="4计算整数中出现1的次数">4.计算整数中出现1的次数</h1>
+
+<p><strong>题目大意</strong>：给定数字n，求出1-n中所有数字出现1的次数，例如1-13，总共有1、10、11、12、13故1总共出现了6次。</p>
+
+<p><strong>解题思路</strong>：对于这种题型最直观的解法就是暴力遍历求解，虽然能够很好的解决但是效率太低.. 看到别人的解法发现这种是分布是有规律的，可以归纳总结出来，但是没有看懂..有机会在再看看</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">//求出任意非负证书区间中1出现的次数。从1到n</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">NumberOf1Between1AndN_Solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">n</span> <span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">result</span> <span class="o">+=</span><span class="n">getNumber</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">getNumber</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">){</span> <span class="c1">//求出数字n中的1的个数</span>
+        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">n</span><span class="o">!=</span><span class="mi">0</span><span class="o">){</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span><span class="mi">10</span><span class="o">;</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
+                <span class="n">count</span><span class="o">++;</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">/</span><span class="mi">10</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">count</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="5把数组排成最小数">5.把数组排成最小数</h1>
+
+<p><strong>题目大意</strong>：输入一个整数数组，然后将数组中的所有数据拼接排成一个数，打印能够拼接处的所有数字中的最小一个，例如输入数组{3,32,321}，打印输出这三个数字排成的最小数字321323.</p>
+
+<p><strong>解题思路</strong>：刚开始其实没有想好怎么做，在以为要暴力破解，想太多，在参考大佬的做法以后，只能大概了解，主要的做法就是使用String类型的排序，然后进行升序排序，运用的到接口为Collections.sort() 方法里面的compareTo()接口。</p>
+
+<p><strong>排序API介绍</strong>：</p>
+
+<p>compareTo方法，能够对int型排序，也能对对象排序，其对象包括String等内置类和自定义类，只需要实现Comparator&lt;&gt;()接口即可。使用方法如下，对于compareTo（）方法来说，s1.comparaTo(s2)代表含义为s1-s2，此时表示的为升序，也可以自动的指定。 若改成s2.compareTo(s1) 则表示 为降序，</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Comparator</span><span class="o">&lt;&gt;(){</span>
+            <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">str1</span><span class="o">,</span><span class="nc">Integer</span> <span class="n">str2</span><span class="o">){</span>
+                <span class="k">return</span> <span class="n">s1</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+</code></pre></div></div>
+
+<p>解题代码：</p>
+
+<p>通过利用compareTo接口进行比较操作，进行升序排序，即先后组合组合找到较小值进行升序排序。。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="kd">public</span> <span class="nc">String</span> <span class="nf">PrintMinNumber</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">numbers</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">n</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">s</span><span class="o">=</span><span class="s">""</span><span class="o">;</span>
+        <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+        <span class="n">n</span><span class="o">=</span><span class="n">numbers</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
+            <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">numbers</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+
+        <span class="o">}</span>
+        <span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">list</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Comparator</span><span class="o">&lt;&gt;(){</span>
+
+            <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">str1</span><span class="o">,</span><span class="nc">Integer</span> <span class="n">str2</span><span class="o">){</span>
+                <span class="nc">String</span> <span class="n">s1</span><span class="o">=</span><span class="n">str1</span><span class="o">+</span><span class="s">""</span><span class="o">+</span><span class="n">str2</span><span class="o">;</span><span class="c1">// 返回string类型的比较。</span>
+                <span class="nc">String</span> <span class="n">s2</span><span class="o">=</span><span class="n">str2</span><span class="o">+</span><span class="s">""</span><span class="o">+</span><span class="n">str1</span><span class="o">;</span>
+                <span class="k">return</span> <span class="n">s1</span><span class="o">.</span><span class="na">compareTo</span><span class="o">(</span><span class="n">s2</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="nl">j:</span><span class="n">list</span><span class="o">){</span>
+            <span class="n">s</span><span class="o">+=</span><span class="n">j</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
+
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="6-连续子数组的最大和">6. 连续子数组的最大和</h1>
+
+<p><strong>题目大意</strong>：给定一个数组，找出其中最大的连续子数组的和，例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。</p>
+
+<p><strong>解题思路</strong>：动态规划基本问题，动态规划的思想就是：通过比对之前值与加当前元素的最大值来确定时候是否加上当前值。其中res为记录最大的子序列的值，max表示相邻两数之间的关系，即子序列的值，也就是更新的值。</p>
+
+<p>F（i）：以array[i]为末尾元素的子数组的和的最大值，子数组的元素的相对位置不变</p>
+
+<p>F（i）=max(F(i-1) + array[i] ， array[i] ）</p>
+
+<p><strong>res：所有子数组的和的最大值 （最终返回的值）</strong></p>
+
+<p>res=max（res，F（i））</p>
+
+<p>直接遍历完全即可找到最大值。其中res一直表示其中的最大值。</p>
+
+<p>初始状态：</p>
+
+<p>F（0）=6</p>
+
+<p>res=6</p>
+
+<p>i=1：</p>
+
+<p>​     F（1）=max（F（0）-3，-3）=max（6-3，3）=3</p>
+
+<p>​     res=max（F（1），res）=max（3，6）=6</p>
+
+<p>i=2：</p>
+
+<p>​     F（2）=max（F（1）-2，-2）=max（3-2，-2）=1</p>
+
+<p>​     res=max（F（2），res）=max（1，6）=6</p>
+
+<p>i=3：</p>
+
+<p>​     F（3）=max（F（2）+7，7）=max（1+7，7）=8</p>
+
+<p>​     res=max（F（2），res）=max（8，6）=8</p>
+
+<p>i=4：</p>
+
+<p>​     F（4）=max（F（3）-15，-15）=max（8-15，-15）=-7</p>
+
+<p>​     res=max（F（4），res）=max（-7，8）=8</p>
+
+<p>以此类推，最终res的值为8</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">FindGreatestSumOfSubArray</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">array</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">array</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">max</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">+</span> <span class="n">max</span> <span class="o">,</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nc">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">max</span><span class="o">,</span><span class="n">res</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="o">{</span><span class="mi">6</span><span class="o">,-</span><span class="mi">3</span><span class="o">,-</span><span class="mi">2</span><span class="o">,</span><span class="mi">7</span><span class="o">,-</span><span class="mi">15</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">2</span><span class="o">};</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">FindGreatestSumOfSubArray</span><span class="o">(</span><span class="n">array</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="7找出从小到大的第n个丑数">7.找出从小到大的第n个丑数</h1>
+
+<p><strong>题目大意</strong>：把只包含质因子2、3和5的数称作丑数（Ugly Number），找出从小到大的丑数， 那么对于丑数p=2^x * 3^y * 5^z ;</p>
+
+<p><strong>解题思路</strong>：对于一个丑数来说，肯定是可以通过另一个丑数乘以2、3、5得到，但是因为又要有序，所有需要每次乘的时候进行判断</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">GetUglyNumber_Solution2</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">n</span><span class="o">&lt;=</span><span class="mi">0</span><span class="o">)</span><span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list</span><span class="o">=</span><span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;();</span>
+    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">i2</span><span class="o">=</span><span class="mi">0</span><span class="o">,</span><span class="n">i3</span><span class="o">=</span><span class="mi">0</span><span class="o">,</span><span class="n">i5</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="c1">//作为每个需要乘的下标。。</span>
+    <span class="k">while</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">()&lt;</span><span class="n">n</span><span class="o">)</span><span class="c1">//循环的条件</span>
+    <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">m2</span><span class="o">=</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i2</span><span class="o">)</span> <span class="o">*</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">m3</span><span class="o">=</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i3</span><span class="o">)</span> <span class="o">*</span> <span class="mi">3</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">m5</span><span class="o">=</span><span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i5</span><span class="o">)</span> <span class="o">*</span> <span class="mi">5</span><span class="o">;</span>
+        <span class="kt">int</span> <span class="n">min</span><span class="o">=</span><span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">m2</span><span class="o">,</span><span class="nc">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">m3</span><span class="o">,</span><span class="n">m5</span><span class="o">));</span>
+        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">min</span><span class="o">);</span>
+        <span class="c1">//每次找到最小值 然后进行记录，找到以后就相当于这个数据值用过了，然后就必须 记性累加判断下一个。</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">min</span><span class="o">==</span><span class="n">m2</span><span class="o">)</span><span class="n">i2</span><span class="o">++;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">min</span><span class="o">==</span><span class="n">m3</span><span class="o">)</span><span class="n">i3</span><span class="o">++;</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">min</span><span class="o">==</span><span class="n">m5</span><span class="o">)</span><span class="n">i5</span><span class="o">++;</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">list</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">list</span><span class="o">.</span><span class="na">size</span><span class="o">()-</span><span class="mi">1</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>主要的思路就是每次都用最小值去乘 2 3 5 ，然后从乘的结果中找出最小值加进去。 用过的自然要加一 用下一个值。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#Algorithm">#Algorithm</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

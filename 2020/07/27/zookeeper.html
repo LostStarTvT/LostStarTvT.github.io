@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：Zookeeper</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/07/27/zookeeper.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：Zookeeper</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-07-27T00:00:00+08:00" itemprop="datePublished">
+          
+          Jul 27, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：Zookeeper</h1>
+    <p class="post-meta">
+      <time datetime="2020-07-27T00:00:00+08:00" itemprop="datePublished">
+        
+        Jul 27, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>zookeeper学习总结。</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#背景" id="markdown-toc-背景">背景</a></li>
+  <li><a href="#一致性协议" id="markdown-toc-一致性协议">一致性协议</a>    <ul>
+      <li><a href="#2pc" id="markdown-toc-2pc">2PC</a></li>
+      <li><a href="#3pc" id="markdown-toc-3pc">3PC</a></li>
+      <li><a href="#paxos" id="markdown-toc-paxos">Paxos</a></li>
+      <li><a href="#zab协议" id="markdown-toc-zab协议">ZAB协议</a>        <ul>
+          <li><a href="#消息广播" id="markdown-toc-消息广播">消息广播</a></li>
+          <li><a href="#崩溃恢复" id="markdown-toc-崩溃恢复">崩溃恢复</a></li>
+          <li><a href="#数据同步" id="markdown-toc-数据同步">数据同步</a></li>
+          <li><a href="#zook中的三种角色" id="markdown-toc-zook中的三种角色">zook中的三种角色</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#zookeeper" id="markdown-toc-zookeeper">Zookeeper</a>    <ul>
+      <li><a href="#数据结构" id="markdown-toc-数据结构">数据结构</a></li>
+    </ul>
+  </li>
+  <li><a href="#基于zookeeper的分布式锁" id="markdown-toc-基于zookeeper的分布式锁">基于zookeeper的分布式锁</a>    <ul>
+      <li><a href="#排他锁" id="markdown-toc-排他锁">排他锁</a>        <ul>
+          <li><a href="#定义锁" id="markdown-toc-定义锁">定义锁</a></li>
+          <li><a href="#获取锁" id="markdown-toc-获取锁">获取锁</a></li>
+          <li><a href="#释放锁" id="markdown-toc-释放锁">释放锁</a></li>
+        </ul>
+      </li>
+      <li><a href="#共享锁" id="markdown-toc-共享锁">共享锁</a>        <ul>
+          <li><a href="#定义锁-1" id="markdown-toc-定义锁-1">定义锁</a></li>
+          <li><a href="#获取锁-1" id="markdown-toc-获取锁-1">获取锁</a></li>
+          <li><a href="#判断读写顺序" id="markdown-toc-判断读写顺序">判断读写顺序</a></li>
+          <li><a href="#释放锁-1" id="markdown-toc-释放锁-1">释放锁</a></li>
+        </ul>
+      </li>
+      <li><a href="#共享锁的缺陷" id="markdown-toc-共享锁的缺陷">共享锁的缺陷</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="背景">背景</h1>
+
+<blockquote>
+  <p>分布式系统是一个硬件或软件组件分布在不同的网络计算机上，彼此之间仅仅通过消息传递进行通信和协调的系统。其特点如下：</p>
+
+  <ul>
+    <li>分布性</li>
+    <li>对等性</li>
+    <li>并发性</li>
+    <li>缺乏全局时钟</li>
+    <li>故障总会发生 任何在设计阶段考虑到的异常情况，一定会在系统实际运行中发生。</li>
+  </ul>
+</blockquote>
+
+<p>为什么需要分布式计算呢？ 主要是为了解决单点故障的问题和降低成本，大型机器虽然性能强劲但是造价高且出问题的话直接服务不可用。什么叫做单点故障？ 即传统的计算机架构都是在一台机器上运行，性能很好正常情况下是没有问题的，但是如果一天它挂了，那么就不能再向外部提供服务，但是如果是有两台机器的话，一台挂掉，那么另外一台还能用，这样就解决了单点故障的问题。那么既然增加一台会好一点，那么增加到一个集群不就更好？多台机器还能进行负载均衡，保证全天24小时能够稳定的提供服务，这也就是分布式集群产生的背景。</p>
+
+<p>但是因为用户是不知道服务的背后是一个计算机集群，他们要的是能够提供服务就行，即把集群当成一台永不宕机的机器，对于集群问题来说首先要考虑的就是数据同步的问题，其实也就是事务处理的问题，如果数据不更改那么就不会出现数据的不一致问题，如果更改了那么所有机器上的数据都要进行更改。</p>
+
+<p>对于传统的数据库来说，因为是单台机器所以事务机制比较好处理，对应的理论为ACID:</p>
+
+<ul>
+  <li>Atomicity 原子性</li>
+  <li>Consistency 一致性</li>
+  <li>Isolation 隔离性</li>
+  <li>Durability 持久性</li>
+</ul>
+
+<p>但当到了分布式集群中时进行处理事务的时候，对应的指导理论为CAP：</p>
+
+<ul>
+  <li><strong>Consistency 一致性</strong> 当一个系统在数据一致的状态下执行更新操作后，应该保证系统数据仍然是一致的。</li>
+  <li><strong>Availability 可用性</strong>  集群服务一直可用</li>
+  <li><strong>Partition Tolerance 分区容错</strong>  分布式系统在遇到任何网络分布故障的时候，仍然要能够保证对外提供满足一致性和可用性的服务，除非是整个网络都发生了故障。</li>
+</ul>
+
+<p>一般来说，一个分布式系统同时只能满足CAP中的两个原则，即只能在CA之间进行权衡，因为是分布式分区容错是必须的。</p>
+
+<p>基于以上的分析，又有人提出了BASE理论：</p>
+
+<ul>
+  <li><strong>Basically Available  基本可用</strong>   当有故障的时候，可以进行服务降级而不是直接停止服务</li>
+  <li><strong>Soft State 软状态</strong>  即允许系统中存在数据的中间状态，即允许副本同步时候有延迟</li>
+  <li><strong>Eventually consistent 最终一致</strong> 并不需要实时同步，即过了一段时间在进行同步，但最终是要一致。</li>
+</ul>
+
+<h1 id="一致性协议">一致性协议</h1>
+
+<p>一致性协议按照发展有三种，2PC，3PC，Paxos算法。(Two-Phase Commit 二阶段提交)，对于这些一致性协议来说，很重要的一点就是需要选择出来一个Leader来领导这些集群服务器，以此来完成事务的处理，是一种中心化的解决方案。</p>
+
+<p><a href="https://blog.csdn.net/qq_42253147/article/details/94868436">2PC、3PC算法</a> 其实也就是事务的同步问题，</p>
+
+<h2 id="2pc">2PC</h2>
+
+<p>2PC就是一个事务发起者向所有的分布式机器先发布一条消息说我要进行数据更新了，然后所有的机器发送一条ACK并且锁定数据等待事务操作，等到所有的机器准备好以后，然后事务发起者在发送一条确认消息，所有的机器同时执行事务操作，事务执行成功。理想情况下这是没有问题的，但是因为是分布式集群，容易出现一台机器的掉线或者是网络的波动等问题，当有问题的时候，便会出现各种不可控的情况。如下所示，<strong>左边为准备提交事务的正常流程</strong>，<strong>右边为提交过程中出现中断的情况</strong>。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/31/2pcnormal.png" alt="2pcnormal.png" /></p>
+
+<p>缺陷：</p>
+
+<p>1、同步阻塞：最大的问题即同步阻塞，即：所有参与事务的逻辑均处于阻塞状态。
+2、单点：协调者存在单点问题，如果协调者出现故障，参与者将一直处于锁定状态。
+3、脑裂：在阶段2中，如果只有部分参与者接收并执行了Commit请求，会导致节点数据不一致。</p>
+
+<h2 id="3pc">3PC</h2>
+
+<p>3PC，三阶段提交协议，是2PC的改进版本，即将事务的提交过程分为CanCommit、PreCommit、do Commit三个阶段来进行处理。事务的发起者称协调者，事务的执行者称参与者。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/31/3pc.png" alt="3pc.png" /></p>
+
+<p>优点：降低了阻塞范围，在等待超时后协调者或参与者会中断事务。避免了协调者单点问题，阶段3中协调者出现问题时，参与者会继续提交事务。</p>
+
+<p>缺陷：脑裂问题依然存在，即在参与者收到PreCommit请求后等待最终指令，如果此时协调者无法与参与者正常通信，会导致参与者继续提交事务，造成数据不一致。</p>
+
+<p>可以发现，不管是2PC还是3PC，都没有说明和规定leader怎么选择，Leader奔溃了怎么办等异常，只是设想了一种在理想情况下的方案，在实际生产环境中总会出现各种各样的异常，那么出现异常怎么解决呢？ 用到的就是ZK协议</p>
+
+<h2 id="paxos">Paxos</h2>
+
+<p>具体参考：<a href="https://www.zhihu.com/question/19787937">如何浅显易懂的说明paxos算法？</a> Paxos算法是一种基于传输且具有高度容错特征的一致性算法，是目前公认的解决分布式一致性最有效的算法之一。</p>
+
+<blockquote>
+  <p>Paxos算法解决的就是如何在一个<strong>可能发生宕机或网络异常的分布式系统中</strong>，快速且正确的在集群中对某个数据的值达成一致。并且保证不论发生以上任何异常都不会破坏整个系统的一致性。</p>
+</blockquote>
+
+<p>其实做的事有三件</p>
+
+<ol>
+  <li>使用投票协议选出一个Leader，半数服务器同意则Leader产生</li>
+  <li>Leader使用投票协议发布一个事务的提交，如果半数以上的机器同意，则该事务会被提交</li>
+  <li>如果Leader挂掉，快速重新选出一个Leader，并且进行事务的恢复。</li>
+</ol>
+
+<p>如果说与3PC的区别，就是这里面加了一个过半就表示该提议必须要接受 ，相当于投票少数服从多数，还有就是提议的序号是递增的，如果当前协议为n，则表示0-n-1的协议都已经被接受。</p>
+
+<p>Paxos算法的一个重要的实现就是Chubby，他是一个面向松耦合分布式系统的锁服务，通常用于为一个由大量小型计算机构成的松耦合分布式系统提供高分布式锁服务。它与zookeeper一样，也是有Master的选取。</p>
+
+<h2 id="zab协议">ZAB协议</h2>
+
+<p>ZAB协议(Zookeeper Automic Broadcast)，Zookeeper原子消息广播协议，他是作为zookeeper服务器集群中保持数据一致性的核心算法。其思想不完全是Paxos算法，但是也比较相似。ZAB协议中，将服务器分为Leader 和Follower，新版本还加上了Observer。</p>
+
+<blockquote>
+  <p>ZAB协议并不像Paxos算法那样，是一种通用的分布式一致性算法，他是一种特别为Zookeeper设计的崩溃可恢复的原子消息广播算法。Zookeeper实现了一种主备模式的系统架构来保持集群中各副本之间数据一致性。</p>
+</blockquote>
+
+<p>其实上面也就是说明了，zookeeper只是保持了自己集群中的数据一致性，算是Paxos算法的具体的应用，他们之间的区别在于：两者的设计目标不太一样，ZAB协议主要用于构建一个高可用的分布式数据主备系统，例如zookeeper，而Paxos算法则是用于构建一个分布式一致性状态机系统。</p>
+
+<p>以上也就说明了，zookeeper并不是在保持一个机房中所有机器的数据一致性，而只是保证zookeeper集群中主机上的数据一致性，即通过这个一致性的集群为其他机房提供服务，解决的是保证一个单一应用的服务器集群中的数据一致性。</p>
+
+<p>zookeeper的事务处理方式：</p>
+
+<blockquote>
+  <p>所有的事务请求都必须有一个全局唯一的服务器来进行协调处理器，这样的服务器被称为Leader服务器，而余下的其他服务器则成为Follower服务器。Leader服务器负责将一个<strong>客户端事务请求</strong>转化成一个事务Proposal（提议），并将该Proposal分发给集群中所有的Follower服务器，之后Leader服务器需要等待所有Follower服务器的反馈，一旦超过半数的Follower服务器进行了正确的反馈后，那么Leader就会再次向所有的Follower服务器分发commit消息，要求其将前一个Proposal提交。</p>
+</blockquote>
+
+<p>以上就是一个事务的的处理逻辑，需要注意的是，这是客户端请求更改zookeeper服务器上的数据，那么在更改成功以后，zookeeper集群中所有的主机上的数据都要进行更改一致，达到一致性的要求。</p>
+
+<p>可能觉得上面的逻辑也很简单，主要这是理想情况下的处理逻辑，但是在生产环境中异常往往是不能避免的，所有就需要ZAB这种协议去处理异常，比如说Leader主机突然重启，或者是直接宕机，那么此时在处理的事务就需要能够有效的恢复并且满足BASE原则。</p>
+
+<h3 id="消息广播">消息广播</h3>
+
+<p>Zookeeper的消息广播类似于2PC提交的过程，即Leader发送一个Proposal向其他所有服务器，当其他服务器收到时便会将其以事务的形式写进日志，然后反馈给Leader服务器一个ACK，当Leader已经收到半数Follow的ACK后，便会广播Commit消息给所有的Follower进行事务的提交，服务器本身也会进行事务的提交。此时便完成了事务。</p>
+
+<p>另外，ZAB协议的事务具有FIFO的特征，并且事务的ID(ZID)是一个具有全局单调递增的ID，所以可以保证事务的顺序性，另外这个ZID也是进行Leader选举的重要参考标准，即谁的最大谁就是Leader，从而减少事务的损失。</p>
+
+<h3 id="崩溃恢复">崩溃恢复</h3>
+
+<p>当Leader服务器出现崩溃，或者是由于网络原因导致Leader与过半Follower失去联系，这时候就会进入到崩溃恢复模式。恢复模式结束后便会选出一个新的Leader，并让所有的集群都知道已经产生新的Leader。在进行Leader的重新选举过程中，首先会判断当前选举的轮次epoh，即选取周期，避免在崩溃恢复的时候新加入的一台机器进入选举，具有最大的且相同周期的才能进入选取，然后会对比每台机器的ZID，即找到具有最大的ZID的服务器，即表明该服务器提交的事务是最新的，日志里面包含了最完善的事务处理信息，如果ZID相等，那么就比较主机的编号，最大的胜任，比如有五台zookeeper服务器，那么就每台主机的编号变为1,2,3,4,5。</p>
+
+<p>总的来说就是，zookeeper先确认选取周期是否是一致并且是最大的，然后找到具有最大的ZID，如果ZID相同，那么就找到具有最大的服务器编号的服务器，作为新的Leader，也就是用最简单的协议尽快的选出Leader。（新形成的集群的Leader选取方式也是如此）</p>
+
+<h3 id="数据同步">数据同步</h3>
+
+<p>当产生新的Leader以后，服务器便根据自己的日志为每一个Follower准备一个队列，将已经提交的事务正确的同步到每一个Follower的内存中。具体的，Leader在发送Proposal的以后会接着发送一个commit表示该事务已经被提交。</p>
+
+<p>此时如果崩溃的Leader重新加入集群，那么在选举的时候epoh已经不对，所以已经无法参与选举，所以当其重新加入的时候，会根据新Leader的Proposal将自己的事务回退，从而保持数据的一致。</p>
+
+<h3 id="zook中的三种角色">zook中的三种角色</h3>
+
+<p>Leader和Follower和Observer，其中Observer和Follower功能差不多只是Observer不参与Leader的选举。</p>
+
+<h1 id="zookeeper">Zookeeper</h1>
+
+<p>zookeeper是一个典型的分布式数据一致性的解决方案，其解决的问题为： 在zookeeper集群中所有主机的数据都是一致的，</p>
+
+<blockquote>
+  <p>zookeeper 是一个典型的分布式数据一致性的解决方案。分布式应用程序可以基于它实现注入数据发布、订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master选举、分布式锁和分布式队列等功能。</p>
+</blockquote>
+
+<p>zookeeper 致力于提供一个高性能、高可用，且具有严格的顺序访问控制能力（主要是写操作的严格顺序性）的分布式协调服务。</p>
+
+<h2 id="数据结构">数据结构</h2>
+
+<p>zookeeper数据结构是一种类似于<strong>树形</strong>的结构，另外基于zookeeper也可以实现分布式锁，因为他的事务请求是具有严格的顺序的，所以可以形成一种公平锁的情况，即先来先服务器，具体的做法就是使用临时递增节点，然后使用Watcher时间进行监听，实现资源的的顺序执行。</p>
+
+<ol>
+  <li>持久性节点</li>
+  <li>临时性节点</li>
+</ol>
+
+<h1 id="基于zookeeper的分布式锁">基于zookeeper的分布式锁</h1>
+
+<p>分布式锁是一种概念，对应的就是Java中的锁的概念，但是因为是基于网络的传输，所有会更大概率出现异常，因为网络的不可靠和延时的特点，即传输的数据丢失或者是延时过大，这样就需要处理更多的异常。</p>
+
+<p>基于zookeeper具有临时性节点和注册监听器的特点，基于zookeeper的分布式锁可以很容易实现，对于锁的概念来说，核心思想在于信号量的竞争、线程的唤醒和执行顺序的控制，而zookeeper中临时节点具有严格的递增顺序，并且在客户端断开连接以后自动的删除，同时也会向所有注册了监听器的客户端发通知，整个逻辑便完成了一次信号量的竞争、释放与线程的唤醒。</p>
+
+<h2 id="排他锁">排他锁</h2>
+
+<p>Exclusive Locks简称X锁，又被称为写锁或者独占锁，如果事务T1对数据对象O加上了排他锁，那么在整个的加锁期间，只允许事务T1对O进行读取和更新操作，其他事物都不能在对这个数据对象进行任何类型的操作，直到T1释放了排他锁。</p>
+
+<h3 id="定义锁">定义锁</h3>
+
+<p>在使用的时候，可以通过一个定义一个数据节点表示一个排他锁，例如，/exclusive_lock/lock。</p>
+
+<h3 id="获取锁">获取锁</h3>
+
+<p>所有客户端想要申请锁的都要去尝试去创建这个节点，但是zookeeper会保证只有一个客户端创建成功，这样就实现了锁的竞争，然后创建成功的表示获取到了锁，其他没有获取到锁客户端会在该节点上注册一个watcher事件，以便实时监听节点的变化。</p>
+
+<h3 id="释放锁">释放锁</h3>
+
+<p>由于lock被定义为临时节点，所以释放锁的情况分为了两种</p>
+
+<ol>
+  <li>当前获取锁的客户端发生宕机，那么zookeeper上这个临时节点会被自动的删除</li>
+  <li>处理完正常的逻辑以后，客户端主动的删除掉自己创建的临时节点。</li>
+</ol>
+
+<p>只要临时节点被删除掉，那么zookeeper就会通知该节点的所有监听器，Watcher 然后便开始新一轮的锁竞争。</p>
+
+<h2 id="共享锁">共享锁</h2>
+
+<p>Shared Locks，简称S锁，又被称之为读锁，如果事务T1对数据对象O1加上了共享锁，那么当前事务只能对O1进行读取操作，其他事务也只能对这个事务对象进行读取操作，其他事务也就只能对这个数据对象加上共享锁，直到该数据对象上的所有共享锁都被释放。</p>
+
+<p>共享锁与排他锁最根本的区别在于，加上排他锁后，数据对象只对一个事务可见，而加上共享锁后，数据对所有事务都可见。</p>
+
+<h3 id="定义锁-1">定义锁</h3>
+
+<p>使用的是递增的临时节点，e.g. <em>/shared_lock/[Hostname]-请求类型-编号</em>的临时节点。</p>
+
+<h3 id="获取锁-1">获取锁</h3>
+
+<p>在需要获取共享锁的时候，所有的客户端都会去/shared_lock/这个节点下去注册，另外，共享锁可以有读锁和写锁，读锁就加上R标记，而写锁就加上W标记。e.g. <em>/shared_lock/192.168.0.1-R-0000001</em> 读锁   <em>/shared_lock/192.168.0.1-W-0000001</em> 写锁</p>
+
+<h3 id="判断读写顺序">判断读写顺序</h3>
+
+<p>因为共享锁即可以加读锁也可以加写锁，所以在进行判断读写顺序的会后就需要获取所有的锁列表，分为4个步骤</p>
+
+<ol>
+  <li>创建完节点以后，获取<em>/shared_locks</em>节点下的所有子节点，并且该节点注册子节点变化更新的watcher监听。</li>
+  <li>确定自己的节点序号在所有子节点的顺序。</li>
+  <li>对于读请求：
+    <ol>
+      <li>如果没有比自己序号更小的节点，或者所有比自己小的节点都是读请求，则成功获取共享锁，开始进行读。</li>
+      <li>如果有比自己序号小的写请求，则阻塞</li>
+    </ol>
+  </li>
+  <li>对于写请求：
+    <ol>
+      <li>如果自己不是最小的序号，则进入等待</li>
+    </ol>
+  </li>
+  <li>收到Watcher以后，重复1。</li>
+</ol>
+
+<h3 id="释放锁-1">释放锁</h3>
+
+<p>与独享锁释放锁逻辑一致。</p>
+
+<h2 id="共享锁的缺陷">共享锁的缺陷</h2>
+
+<p>对于共享锁来说，因为监听的是 <em>/shared_lock/</em> 子节点的变化，也就是监听所有节点的变化，这种就监听的太泛，每次有一个锁的释放都会向所有的申请锁的客户端发送通知，然后每个客户端都会开始判断自己是否已经到达，但是如果很多客户端注册的话，每次其实只能有一个客户端被唤醒，但向所有的客户端都发送到了通知，这样便会浪费大量的带宽和性能，并且会出现羊群效应，即大量的Watcher一起发送，比如同时多个节点的事务完成，就会同时发送大量的通知。</p>
+
+<p>解决这个思路就可以将监听的离自己最近的那个节点而不是监听所有<em>/shared_locks</em>子节点的变化，即先通过exist()进行判断，然后向该子节点注册监听。</p>
+
+<ol>
+  <li>读请求：向比自己序号小的最后一个写请求节点注册Watcher监听。</li>
+  <li>写请求：比自己序号小的最后一个节点注册watcher监听。</li>
+</ol>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

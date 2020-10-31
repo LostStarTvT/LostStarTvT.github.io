@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：接口回调</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/06/19/interface.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：接口回调</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-06-19T00:00:00+08:00" itemprop="datePublished">
+          
+          Jun 19, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：接口回调</h1>
+    <p class="post-meta">
+      <time datetime="2020-06-19T00:00:00+08:00" itemprop="datePublished">
+        
+        Jun 19, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>在nio网络模型中大量使用异步模式进行编程，其实使用的也就是接口回调的技术，接口回调即实现两个对象之间的通信。以下为在安卓中实现的接口回调实例。</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#什么叫做接口回调-" id="markdown-toc-什么叫做接口回调-">什么叫做接口回调 ？</a></li>
+  <li><a href="#接口回调的作用-" id="markdown-toc-接口回调的作用-">接口回调的作用 ？</a></li>
+  <li><a href="#实现的方法" id="markdown-toc-实现的方法">实现的方法</a></li>
+</ul>
+<h1 id="什么叫做接口回调-">什么叫做接口回调 ？</h1>
+
+<p>核心思想就是利用java的动态绑定，利用多态的特性去调用接口的实现方法。 使用用法：在A类中定义接口方法， 在B类中实现A中的接口方法，然后将自己的实现方法注册到A类中，这样在A类中调用自己的接口就相当与调用B类中定义的方法，这样便能够实现AB类中的数据交互，因为方法是在B类中进行实现的，也相当于把A类接口中的参数传递给B类，这样B类便可以进行处理A中的参数，并且还能将处理后的参数传递给A类。实现双向的数据交互。</p>
+
+<h1 id="接口回调的作用-">接口回调的作用 ？</h1>
+
+<p>可以简单的理解为，两个类之间进行数据的传输，就是相当于一个类调用另外一个类的方法，同时实现数据的传递。最常用的方法就是安卓中按钮点击事件的触发，异步的网路事件的调用。比如说netty如何实现nio。</p>
+
+<h1 id="实现的方法">实现的方法</h1>
+
+<p>例子：安卓上自定义键盘。通过回调函数获取用户每次按压的按键是哪个，并且调用相应的处理函数。</p>
+
+<p>NumberKeyboardView.java 中接口的定义。 接口获取到的数据。</p>
+
+<p>1.在A类中定义接口和接口注册函数。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NumberKeyboardView</span> <span class="o">{</span>
+    <span class="c1">//1 定义接口类。</span>
+    <span class="kd">private</span> <span class="nc">OnNumberClickListener</span> <span class="n">onNumberClickListener</span><span class="o">;</span> 
+
+    <span class="c1">//2 实现接口的注册方法，相当于进行绑定。</span>
+    <span class="kd">public</span> <span class="kt">void</span>  <span class="nf">setOnNumberClickListener</span><span class="o">(</span><span class="nc">OnNumberClickListener</span> <span class="n">onNumberClickListener</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">onNumberClickListener</span> <span class="o">=</span> <span class="n">onNumberClickListener</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 3 调用接口中的方法。</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">onNumberClickListener</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">number</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">onNumberClickListener</span><span class="o">.</span><span class="na">getUserPressure</span><span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getPressure</span><span class="o">());</span> <span class="c1">//就是说在这个类中会自动的调用这个接口，自己没有实现内容，但是继承的类会实现，之后调用实例化中的代码即可。</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">number</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"delete"</span><span class="o">))</span> <span class="o">{</span>
+                <span class="n">onNumberClickListener</span><span class="o">.</span><span class="na">onNumberDelete</span><span class="o">();</span> <span class="c1">//相同的调用这个接口。</span>
+
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="n">onNumberClickListener</span><span class="o">.</span><span class="na">onNumberReturn</span><span class="o">(</span><span class="n">number</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span> 
+
+    <span class="c1">// 定义接口对象。</span>
+    <span class="kd">public</span> <span class="kd">interface</span> <span class="nc">OnNumberClickListener</span> <span class="o">{</span>
+            <span class="c1">//回调点击的数字</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNumberReturn</span><span class="o">(</span><span class="nc">String</span> <span class="n">number</span><span class="o">);</span>
+
+            <span class="c1">//删除键的回调</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNumberDelete</span><span class="o">();</span>
+
+            <span class="c1">//获取按键压力的回调</span>
+            <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getUserPressure</span><span class="o">(</span><span class="kt">float</span> <span class="n">pre</span><span class="o">);</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>2.在B类中继承并且实现接口，并获取父类对象实例进行注册接口。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//1 首先是继承接口。</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MainActivity</span> <span class="kd">extends</span> <span class="nc">Activity</span> <span class="kd">implements</span> <span class="nc">NumberKeyboardView</span><span class="o">.</span><span class="na">OnNumberClickListener</span> <span class="o">{</span>
+	
+    <span class="c1">// 获取A类实例。</span>
+    <span class="kd">private</span> <span class="nc">NumberKeyboardView</span> <span class="n">mNkvKeyboard</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nc">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">initView</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">initView</span><span class="o">()</span> <span class="o">{</span>
+        
+        <span class="c1">// 调用A类中的注册函数</span>
+        <span class="n">mNkvKeyboard</span><span class="o">.</span><span class="na">setOnNumberClickListener</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+ 
+	<span class="c1">// 2 实现的接口。</span>
+    <span class="nd">@Override</span>   <span class="c1">//接口文件</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNumberReturn</span><span class="o">(</span><span class="nc">String</span> <span class="n">number</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">str</span> <span class="o">+=</span> <span class="n">number</span><span class="o">;</span>
+        <span class="n">setTextContent</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>  <span class="c1">//接口文件</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onNumberDelete</span><span class="o">()</span> <span class="o">{</span>  <span class="c1">//这个就是自定义的代码会自动的绑定在 NumberKeyboardView 这个类中。在这个进行调用。</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">str</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">str</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">setTextContent</span><span class="o">(</span><span class="n">str</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>  <span class="c1">//接口文件</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getUserPressure</span><span class="o">(</span><span class="kt">float</span> <span class="n">pre</span><span class="o">)</span> <span class="o">{</span>  <span class="c1">//pre 是接口传递出来的数据， 之后自己进行操作即可。</span>
+        <span class="n">preStr</span> <span class="o">=</span> <span class="n">pre</span> <span class="o">+</span> <span class="s">""</span><span class="o">;</span>
+        <span class="n">mPressure</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">preStr</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">setTextContent</span><span class="o">(</span><span class="nc">String</span> <span class="n">content</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">mTvText</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="n">content</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>通过以上的方式便能实现在A类中进行调用接口方法的时候其实是调用的B类中的函数，实现数据的传输。这样其实也算是一种异步的数据传输，不需要B类去一直检查A类有没有数据需要传输。</p>
+
+<p>从以上的例子可以看出来，在使用netty的异步方法时候，例如Future，也是使用的相同的思想去实现，即Channel中处理还数据以后就会调用Future函数。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

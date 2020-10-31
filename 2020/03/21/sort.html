@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Algorithm：排序算法</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/03/21/sort.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Algorithm：排序算法</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-03-21T00:00:00+08:00" itemprop="datePublished">
+          
+          Mar 21, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Algorithm：排序算法</h1>
+    <p class="post-meta">
+      <time datetime="2020-03-21T00:00:00+08:00" itemprop="datePublished">
+        
+        Mar 21, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录总结算法中常用的排序代码，以备不时之需，</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#排序算法综述" id="markdown-toc-排序算法综述">排序算法综述</a></li>
+  <li><a href="#0前提说明" id="markdown-toc-0前提说明">0.前提说明</a></li>
+  <li><a href="#1-快速排序" id="markdown-toc-1-快速排序">1. 快速排序</a></li>
+  <li><a href="#2堆排序" id="markdown-toc-2堆排序">2.堆排序</a>    <ul>
+      <li><a href="#21-堆的上调" id="markdown-toc-21-堆的上调">2.1 堆的上调</a></li>
+      <li><a href="#22-堆的数据插入上调实现" id="markdown-toc-22-堆的数据插入上调实现">2.2 堆的数据插入，上调实现</a></li>
+      <li><a href="#23-堆的下调" id="markdown-toc-23-堆的下调">2.3 堆的下调</a></li>
+      <li><a href="#24-堆节点的删除-下调删除" id="markdown-toc-24-堆节点的删除-下调删除">2.4 堆节点的删除 下调删除</a></li>
+      <li><a href="#25-使用下调进行构建堆数组" id="markdown-toc-25-使用下调进行构建堆数组">2.5 使用下调进行构建堆数组</a></li>
+      <li><a href="#26-堆排序" id="markdown-toc-26-堆排序">2.6 堆排序</a></li>
+    </ul>
+  </li>
+  <li><a href="#3冒泡排序" id="markdown-toc-3冒泡排序">3.冒泡排序</a></li>
+  <li><a href="#4选择排序" id="markdown-toc-4选择排序">4.选择排序</a></li>
+  <li><a href="#5插入排序" id="markdown-toc-5插入排序">5.插入排序</a></li>
+  <li><a href="#6归并排序" id="markdown-toc-6归并排序">6.归并排序</a></li>
+</ul>
+<h1 id="排序算法综述">排序算法综述</h1>
+
+<ol>
+  <li>快速排序</li>
+  <li>堆排序</li>
+  <li>冒泡排序</li>
+  <li>选择排序</li>
+  <li>插入排序</li>
+  <li>归并排序</li>
+  <li>等等</li>
+</ol>
+
+<h1 id="0前提说明">0.前提说明</h1>
+
+<p>一下代码使用的交换函数如下所示，直接进行交换</p>
+
+<p>交换函数：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">swap</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">arrays</span><span class="o">,</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span><span class="kt">int</span> <span class="n">j</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">tmp</span><span class="o">;</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">arrays</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="n">arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">arrays</span><span class="o">[</span><span class="n">j</span><span class="o">];</span>
+    <span class="n">arrays</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>测试代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Solution</span> <span class="n">solution</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Solution</span><span class="o">();</span>
+    <span class="kt">int</span> <span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="o">{</span><span class="mi">2</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">5</span><span class="o">,</span><span class="mi">9</span><span class="o">,</span><span class="mi">11</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">15</span><span class="o">,</span><span class="mi">14</span><span class="o">,</span><span class="mi">22</span><span class="o">};</span>
+    <span class="n">solution</span><span class="o">.</span><span class="na">quickSort</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">a</span><span class="o">));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><strong>ps:java中自带的排序API</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.Arrays</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.Collections</span><span class="o">;</span>
+<span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">arrays</span><span class="o">);</span>
+<span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Intger</span><span class="o">&gt;</span> <span class="n">arrays</span><span class="o">);</span>
+</code></pre></div></div>
+
+<h1 id="1-快速排序">1. 快速排序</h1>
+
+<p><strong>算法思想</strong>：主要就是通过分治思想实现快速排序，即找到一个参考数据（一般采取数组中第一个数据)然后进行分段排序，有点多线程的感觉。    刚开始竟然快排都想不起来。。</p>
+
+<p><strong>注意事项</strong>：</p>
+
+<ol>
+  <li>数据越界的异常情况，</li>
+  <li>什么时候进行交换，</li>
+  <li>对于升序来说，需要先进行判断大于基准的右边的大值，然后判断左边的值，</li>
+  <li>在进行一趟遍历完全以后，需要将基准插入到对应的位置，</li>
+  <li>最后left ==right 所以用哪个划分都可以，</li>
+</ol>
+
+<p><strong>具体的代码</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//快速排序</span>
+<span class="kd">private</span> <span class="kt">int</span> <span class="o">[]</span> <span class="n">quickSort</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">array</span><span class="o">){</span>
+    <span class="nc">Participate</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="mi">0</span><span class="o">,</span><span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">array</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">//通过选择开始的节点 为参数，然后进行划分，知道left &gt; right</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">Participate</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">array</span><span class="o">,</span> <span class="kt">int</span> <span class="n">left</span><span class="o">,</span> <span class="kt">int</span> <span class="n">right</span><span class="o">){</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">left</span> <span class="o">&gt;</span> <span class="n">right</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">l</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">r</span> <span class="o">=</span> <span class="n">right</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">left</span><span class="o">];</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">left</span><span class="o">&lt;</span> <span class="n">right</span><span class="o">){</span>
+
+        <span class="c1">//需要先从比基准大的地方开始计算。  快排需要先右排。。</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">right</span> <span class="o">&amp;&amp;</span> <span class="n">array</span><span class="o">[</span><span class="n">right</span><span class="o">]</span> <span class="o">&gt;</span><span class="n">tmp</span><span class="o">){</span>
+            <span class="n">right</span> <span class="o">--;</span>  
+        <span class="o">}</span>
+        <span class="c1">//先执行的会直接因为right不满足条件而跳出循环，即right会跳转到一个不满足小于基准条件的值，然后left == right，左边也跳出循环</span>
+        <span class="k">while</span> <span class="o">(</span><span class="n">left</span><span class="o">&lt;</span><span class="n">right</span> <span class="o">&amp;&amp;</span> <span class="n">array</span><span class="o">[</span><span class="n">left</span><span class="o">]</span> <span class="o">&lt;=</span> <span class="n">tmp</span><span class="o">){</span> <span class="c1">//这里相等就会在右移一位相等。</span>
+            <span class="n">left</span> <span class="o">++;</span> 
+        <span class="o">}</span>
+        <span class="c1">//进行交换。</span>
+        <span class="n">swap</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="n">left</span><span class="o">,</span><span class="n">right</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">//最后left和right的值会相等。然后跳出循环。 而且指向的值是小于tmp的。</span>
+
+    <span class="c1">//最后要将最左边的和left交换。即将参考数据归位。  其中l为最左边即最初始的位置。</span>
+    <span class="n">swap</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="n">right</span><span class="o">,</span><span class="n">l</span><span class="o">);</span>
+    <span class="c1">// 这时候需要right这个位置已经是确定好的数据，即左边都是小于自己的，右边都是大于自己的。</span>
+    <span class="nc">Participate</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="n">l</span><span class="o">,</span><span class="n">right</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="nc">Participate</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="n">right</span> <span class="o">+</span> <span class="mi">1</span><span class="o">,</span><span class="n">r</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="2堆排序">2.堆排序</h1>
+
+<p><strong>算法思想</strong>：堆排序也就是利用二叉树性质进行判断，并且用数组实现二叉树数据格式，另外堆是一个完全二叉树。另外堆又分为<strong>大堆</strong>和<strong>小堆</strong>，大堆即为根节点为最大值，小堆与之相反。 <strong>以下所说都是小堆为例</strong>。</p>
+
+<p><a href="https://blog.csdn.net/MoreWindows/article/details/6709644">参考链接</a></p>
+
+<p><strong>二叉堆的性质</strong>：</p>
+
+<ol>
+  <li>父节点的键值总是大于或等于（小于等于）任何一个子节点的键值</li>
+  <li>每个节点的左子树和右子树都是一个二叉堆（都是最大对或者最小堆）</li>
+  <li>二叉堆一般都是用数组进行存储，存储结构见下图。</li>
+  <li>根节点的索引为i,则<strong>左子树节点为2*i+1</strong>,<strong>右子树节点为2*i+2</strong>,其表示结果如下图所示，表示一个小堆。</li>
+  <li>叶子结点为i,则<strong>父节点为(i-1)/2</strong>。</li>
+</ol>
+
+<p>一般来说堆都是用数组来进行操作，一个二叉堆表示例子：</p>
+
+<p><a href="https://pic.tyzhang.top/image/aU8"><img src="https://pic.tyzhang.top/images/2020/03/24/heapSort.png" alt="heapSort.png" /></a></p>
+
+<p>对于大顶堆来说：即表示根结点大于左右结点</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">arr</span><span class="o">[</span><span class="mi">2</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">arr</span><span class="o">[</span><span class="mi">2</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="o">]</span>  
+</code></pre></div></div>
+
+<p>小顶堆：  根结点小于左右结点</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;=</span> <span class="n">arr</span><span class="o">[</span><span class="mi">2</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="n">arr</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&lt;=</span> <span class="n">arr</span><span class="o">[</span><span class="mi">2</span><span class="n">i</span><span class="o">+</span><span class="mi">2</span><span class="o">]</span>  
+</code></pre></div></div>
+
+<h2 id="21-堆的上调">2.1 堆的上调</h2>
+
+<p>将一个索引为i的叶子节点上调到合适的地方：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1">// 对于i结点  其父结点为(i - 1) / 2 将其上调到合适的位置。</span>
+<span class="c1">// 堆的上调</span>
+<span class="kt">void</span> <span class="nf">MinHeapFixup</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">)/</span><span class="mi">2</span><span class="o">;</span> <span class="c1">//父亲节点</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">j</span><span class="o">&gt;</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">i</span><span class="o">!=</span><span class="mi">0</span><span class="o">){</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> <span class="c1">//如果根节点小于叶子节点 则满足条件退出循环</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="n">swap</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="n">j</span><span class="o">);</span> <span class="c1">//将 i j的值进行交换。</span>
+        <span class="c1">//然后判断下一个节点</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">)/</span><span class="mi">2</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="22-堆的数据插入上调实现">2.2 堆的数据插入，上调实现</h2>
+
+<p>每次堆进行插入数据的时候都是放在数组的最后，即新建一个节点进行插入，即将数据插入到有序数组中。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//通过上调进行掺入数据。需要注意插入到尾部，数据长度加一。</span>
+<span class="kt">void</span> <span class="nf">MinHeapAddNumber</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="o">,</span> <span class="kt">int</span> <span class="n">nNum</span><span class="o">)</span>
+<span class="o">{</span>
+	<span class="n">a</span><span class="o">[</span><span class="n">n</span><span class="o">]</span> <span class="o">=</span> <span class="n">nNum</span><span class="o">;</span>
+	<span class="nc">MinHeapFixup</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">n</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="23-堆的下调">2.3 堆的下调</h2>
+
+<p>即将一个新复制到头结点的数值下调到合适的位置。与上调相比，下调主要涉及到与叶子节点相比较，且需要比较左右两点节点，另外，左右结点相邻，即左节点为i,右节点为i+1。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//  从i节点开始调整,n为节点总数 从0开始计算 i节点的子节点为 2*i+1, 2*i+2</span>
+ <span class="c1">//i 表示根节点  j 表示叶子节点。 n表示总的节点数。 即数组的长度，但是索引只到0 - n-1</span>
+<span class="kt">void</span> <span class="nf">MinHeapFixdown</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="c1">//获取左叶子节点</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="o">){</span>
+		<span class="c1">//构建小堆 首选找到叶子节点的小值，如果叶子叶子节点大于根节点则表示找到。</span>
+        <span class="c1">//通过对比 叶子节点的值，找到小值的坐标，</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">n</span> <span class="o">&amp;&amp;</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">])</span>
+            <span class="n">j</span><span class="o">++;</span>
+        <span class="c1">//对比叶子节点与根节点的值，当叶子节点大于根节点时 表示已经形成数据。</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">a</span><span class="o">[</span><span class="n">i</span><span class="o">])</span> 
+            <span class="k">break</span><span class="o">;</span>
+        
+        <span class="c1">//构建大堆  首先找到最大值，如果叶子小于根节点则退出循环，表示找到</span>
+         <span class="c1">//if(j+1&lt;n &amp;&amp; a[j+1] &gt; a[j])</span>
+         <span class="c1">//		j++;</span>
+         <span class="c1">//对比叶子节点与根节点的值，小于则交换否则结束。</span>
+         <span class="c1">//if (a[j] &lt;= a[i])</span>
+         <span class="c1">// 	break;</span>
+        
+        <span class="n">swap</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="n">j</span><span class="o">);</span>
+        <span class="c1">//判断下一个节点</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="24-堆节点的删除-下调删除">2.4 堆节点的删除 下调删除</h2>
+
+<p>节点的删除与插入刚好相反，每次只能删除堆的第0个元素，即根节点，然后将数组中最后一个节点复制第0个元素，然后使用下调将数据放在合适的位置。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//使用下调进行数据的删除，需要注意数组长度需要减1.</span>
+<span class="kt">void</span> <span class="nf">MinHeapDeleteNumber</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+<span class="o">{</span>
+	<span class="nc">Swap</span><span class="o">(</span><span class="n">a</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="n">a</span><span class="o">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]);</span>
+	<span class="nc">MinHeapFixdown</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="25-使用下调进行构建堆数组">2.5 使用下调进行构建堆数组</h2>
+
+<p>只需要处理非叶子节点即可，对于叶子节点不需要操作，第一个非叶子节点为arr.length/2 -1。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//构建堆</span>
+<span class="kt">void</span> <span class="nf">MakeMinHeap</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="c1">//只需要从半路开始，因为</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span>
+        <span class="c1">// i为堆顶元素， n 为数组长度</span>
+        <span class="nc">MinHeapFixDown</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">n</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="26-堆排序">2.6 堆排序</h2>
+
+<p>在进行堆排序之前，需要进行构建堆，然后依次将堆顶的元素转移到数组后面，然后依次调整，因为每次堆顶都是子结构中的最大值或者是最小值，所以输出的也为有序队列，需要说明的是，因为是转移堆顶元素到后面，所以小堆为逆序，大堆为升序。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//堆排序 需要先构建堆 然后进行依次将堆顶的值移动到最后面。</span>
+<span class="kt">void</span> <span class="nf">MinHeapSortToDescendArray</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">n</span><span class="o">)</span>
+<span class="o">{</span>
+    <span class="c1">//首先构建小堆。</span>
+    <span class="nc">MakeMinHeap</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">n</span><span class="o">);</span>
+    <span class="c1">//使用下调法进行排序</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span>
+    <span class="o">{</span>
+        <span class="c1">//依次将后面的值移动到根节点，因为是小堆，所有根节点为最小值， 这样排出来的就是一个降序，</span>
+        <span class="n">swap</span><span class="o">(</span><span class="n">a</span><span class="o">,</span><span class="n">i</span><span class="o">,</span><span class="mi">0</span><span class="o">);</span>
+        <span class="nc">MinHeapFixDown</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="3冒泡排序">3.冒泡排序</h1>
+
+<p><strong>算法思想</strong>：冒泡排序即像bubble一样一直往上面走，逐个将最大值转移到头部，具体思路，从左往右<strong>不断交换相邻逆序元素</strong>，直到结尾，此时便将最大的元素排序到末尾。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//冒泡排序</span>
+<span class="kt">void</span> <span class="nf">bubbleSort</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span><span class="n">array</span><span class="o">){</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span><span class="mi">1</span> <span class="o">;</span> <span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">--)</span> <span class="o">{</span> <span class="c1">//需要将i值减一。 因为下面有j+1.</span>
+        <span class="kt">boolean</span> <span class="n">isSort</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">]){</span> <span class="c1">//相邻交换</span>
+                <span class="n">swap</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="n">j</span><span class="o">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+                <span class="n">isSort</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">isSort</span><span class="o">)</span> <span class="k">break</span><span class="o">;</span> <span class="c1">//如果本此都没有交换，则退出循环，表示已经有序。</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="4选择排序">4.选择排序</h1>
+
+<p><strong>算法思想</strong>：从一行数据中找到一个最小值，然后将其选择出来与数组中的第一个数据进行交换，然后从剩下的数组中找到一个最小值与第二个数据进行交换，依次类推。</p>
+
+<p><strong>具体代码</strong></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">//选择排序</span>
+<span class="kt">void</span> <span class="nf">selectSort</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">array</span><span class="o">){</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">min</span> <span class="o">=</span>  <span class="n">i</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span><span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">min</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">]){</span> <span class="c1">//找到最小值。</span>
+                <span class="n">min</span> <span class="o">=</span> <span class="n">j</span><span class="o">;</span> 
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="n">swap</span><span class="o">(</span><span class="n">array</span><span class="o">,</span><span class="n">min</span><span class="o">,</span><span class="n">i</span><span class="o">);</span><span class="c1">//然后进行交换</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="5插入排序">5.插入排序</h1>
+
+<p><strong>算法思想</strong>：主要的思想就是将一个无序的数字插入到有序的列表中，始终保持前面的序列有序，然后将无序的值插入到有序的值内，直到结束。主要的思想如下图所示。</p>
+
+<p><a href="https://pic.tyzhang.top/image/QdZ"><img src="https://pic.tyzhang.top/images/2020/03/23/insertSort.png" alt="insertSort.png" /></a></p>
+
+<p>对于上面的数组来说，本次操作需要将3插入到4前面这个位置，所以第一步就是将3保存下来，然后将5移动到3的位置，依次移动直到找到4那个位置，即3&gt;1，然后插入数据，进行下一轮循环，即为3后面的数据找到合适的位置。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//插入排序</span>
+<span class="kt">void</span> <span class="nf">insertSort</span><span class="o">(</span><span class="kt">int</span> <span class="o">[]</span> <span class="n">array</span><span class="o">){</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">array</span><span class="o">.</span><span class="na">length</span> <span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+		<span class="kt">int</span> <span class="n">j</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="n">j</span> <span class="o">&gt;=</span><span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">temp</span> <span class="o">&lt;</span><span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">];</span> <span class="n">j</span><span class="o">--)</span> <span class="o">{</span> 
+            <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">];</span><span class="c1">//依次进行移动，图片下面的箭头</span>
+        <span class="o">}</span>
+        <span class="n">array</span><span class="o">[</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span><span class="o">;</span> <span class="c1">//最后将数据归位</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h1 id="6归并排序">6.归并排序</h1>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#Algorithm">#Algorithm</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

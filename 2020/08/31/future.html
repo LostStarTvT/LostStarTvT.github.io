@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：Future使用</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/08/31/future.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：Future使用</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-08-31T00:00:00+08:00" itemprop="datePublished">
+          
+          Aug 31, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：Future使用</h1>
+    <p class="post-meta">
+      <time datetime="2020-08-31T00:00:00+08:00" itemprop="datePublished">
+        
+        Aug 31, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>总结并记录Future类的使用</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#使用方法" id="markdown-toc-使用方法">使用方法</a></li>
+  <li><a href="#源码分析" id="markdown-toc-源码分析">源码分析</a>    <ul>
+      <li><a href="#callable接口" id="markdown-toc-callable接口">Callable接口</a></li>
+      <li><a href="#future" id="markdown-toc-future">Future</a></li>
+      <li><a href="#futuretask" id="markdown-toc-futuretask">FutureTask</a>        <ul>
+          <li><a href="#核心属性" id="markdown-toc-核心属性">核心属性</a></li>
+          <li><a href="#核心方法" id="markdown-toc-核心方法">核心方法</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#completablefuture" id="markdown-toc-completablefuture">CompletableFuture</a></li>
+</ul>
+<h1 id="使用方法">使用方法</h1>
+
+<p>一个简单的Future的使用例子：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FutureTest</span><span class="o">{</span>
+	
+    <span class="c1">// 定义为String类型的返回值</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="kd">implements</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"execute!!!"</span><span class="o">);</span>
+            <span class="k">return</span> <span class="s">"complete"</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span><span class="o">,</span><span class="nc">ExecutionException</span> <span class="o">{</span>
+        <span class="c1">// 接受返回结果。</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Future</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="n">results</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Future</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;();</span>
+        <span class="nc">ExecutorService</span> <span class="n">executorService</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="c1">// 提交线程池进行运行。</span>
+            <span class="n">results</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">executorService</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="nc">Task</span><span class="o">()));</span>
+        <span class="o">}</span>
+        
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Future</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">future</span> <span class="o">:</span> <span class="n">results</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 调用get接口获取返回值。</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">future</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+        <span class="o">}</span>
+
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Main complete"</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">executorService</span><span class="o">.</span><span class="na">isShutdown</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">executorService</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>一个简单的Runable()线程的使用例子：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Run</span><span class="o">{</span>
+ 
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Task</span> <span class="kd">implements</span> <span class="nc">Runnable</span> <span class="o">{</span>
+		<span class="nd">@Override</span>
+		<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+			<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"execute!!!"</span><span class="o">);</span>
+		<span class="o">}</span>
+	<span class="o">}</span>
+ 
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+ 
+		<span class="nc">ExecutorService</span> <span class="n">executorService</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newCachedThreadPool</span><span class="o">();</span>
+         <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+			<span class="n">executorService</span><span class="o">.</span><span class="na">submit</span><span class="o">(</span><span class="k">new</span> <span class="nc">Task</span><span class="o">());</span>
+		<span class="o">}</span>
+ 
+        <span class="k">if</span> <span class="o">(!</span><span class="n">executorService</span><span class="o">.</span><span class="na">isShutdown</span><span class="o">())</span> 
+        	<span class="n">executorService</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
+       <span class="err"> </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对比来看，Future类解决的是获取线程返回值的问题，在线程执行完以后便会将结果返回，而Runable则是没有任何的返回值，执行完便结束。可以做压力测试。</p>
+
+<p>深度学习<a href="https://www.jianshu.com/p/3aa308a5f182">JavaFuture</a></p>
+
+<h1 id="源码分析">源码分析</h1>
+
+<h2 id="callable接口">Callable接口</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * Computes a result, or throws an exception if unable to do so.
+     *
+     * @return computed result
+     * @throws Exception if unable to compute a result
+     */</span>
+    <span class="no">V</span> <span class="nf">call</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>首先在使用Future时候，首先需要传递一个实现了Callable接口的对象，其中只有一个call()方法， 他是带有返回值的，类比于Runable接口，run()方法没有返回值。</p>
+
+<h2 id="future">Future</h2>
+
+<p>Future 是一个接口，主要用于接收带有返回值的Callable线程任务，也是使用泛型进行区别数据。其API如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Future</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="o">{</span>
+
+	<span class="c1">// 停止线程。</span>
+    <span class="kt">boolean</span> <span class="nf">cancel</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">mayInterruptIfRunning</span><span class="o">);</span>
+
+	<span class="c1">// 是否已经停止。</span>
+    <span class="kt">boolean</span> <span class="nf">isCancelled</span><span class="o">();</span>
+
+	<span class="c1">// 是否已经完成  可以通过这个方法实现同步非阻塞的通信模式，即隔断时间获取任务有没有完成。</span>
+    <span class="kt">boolean</span> <span class="nf">isDone</span><span class="o">();</span>
+
+	<span class="c1">// 主要方法，获取线程执行的结果，如果还没有完成则进行阻塞当前获取线程。</span>
+    <span class="no">V</span> <span class="nf">get</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span><span class="o">,</span> <span class="nc">ExecutionException</span><span class="o">;</span>
+
+	<span class="c1">// 带有超时的get方法</span>
+    <span class="no">V</span> <span class="nf">get</span><span class="o">(</span><span class="kt">long</span> <span class="n">timeout</span><span class="o">,</span> <span class="nc">TimeUnit</span> <span class="n">unit</span><span class="o">)</span>
+        <span class="kd">throws</span> <span class="nc">InterruptedException</span><span class="o">,</span> <span class="nc">ExecutionException</span><span class="o">,</span> <span class="nc">TimeoutException</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>可以看出它只是简单的实现了一个API，一个重要的实现类叫做FutureTask，另外通过线程池的submit()接口提交到线程池任务，底层也是使用的FutureTask实现类进行承载。</p>
+
+<h2 id="futuretask">FutureTask</h2>
+
+<p>对于FutureTask来说，虽然只是提交了一个任务，但是有可能有多个线程想要去获取任务结果，所以会里面设置了一个等待队列，当任务执行完以后，便会唤醒等待队列中的所有线程。</p>
+
+<p>需要说明的是，FutureTask只是一个future接口的实现类，该类能够将Call方法封装成run方法，所有还是需要一个Thread线程去承载，也就是也需要提交到线程池中。</p>
+
+<h3 id="核心属性">核心属性</h3>
+
+<p>首先在FutureTask中有个state作为标示量，表示当前任务已经执行到什么程度了。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">volatile</span> <span class="kt">int</span> <span class="n">state</span><span class="o">;</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">NEW</span>          <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="c1">// 刚获取任务</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">COMPLETING</span>   <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="c1">// 任务完成，但是返回结果还没有赋值</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">NORMAL</span>       <span class="o">=</span> <span class="mi">2</span><span class="o">;</span> <span class="c1">// 表示完成了结果赋值</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">EXCEPTIONAL</span>  <span class="o">=</span> <span class="mi">3</span><span class="o">;</span> <span class="c1">// 出现异常</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">CANCELLED</span>    <span class="o">=</span> <span class="mi">4</span><span class="o">;</span> <span class="c1">// 任务被取消</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">INTERRUPTING</span> <span class="o">=</span> <span class="mi">5</span><span class="o">;</span> <span class="c1">// 任务有异常。</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">INTERRUPTED</span>  <span class="o">=</span> <span class="mi">6</span><span class="o">;</span> <span class="c1">// 任务被中断。</span>
+
+<span class="kd">private</span> <span class="nc">Callable</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">;</span>  <span class="c1">//  当前的执行任务</span>
+
+<span class="kd">private</span> <span class="nc">Object</span> <span class="n">outcome</span><span class="o">;</span> <span class="c1">// 最终的执行结果</span>
+
+<span class="kd">private</span> <span class="kd">volatile</span> <span class="nc">Thread</span> <span class="n">runner</span><span class="o">;</span> <span class="c1">// 当前的运行线程</span>
+
+<span class="kd">private</span> <span class="kd">volatile</span> <span class="nc">WaitNode</span> <span class="n">waiters</span><span class="o">;</span> <span class="c1">// 等待获取结果的等待队列。</span>
+</code></pre></div></div>
+
+<p>还有一点就是FutureTask中会维护一个等待队列，应该是考虑如果有多个线程获取该任务的结果会同时被阻塞。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">WaitNode</span> <span class="o">{</span>
+    <span class="kd">volatile</span> <span class="nc">Thread</span> <span class="n">thread</span><span class="o">;</span> <span class="c1">// 通过volatile 进行即使的更新。</span>
+    <span class="kd">volatile</span> <span class="nc">WaitNode</span> <span class="n">next</span><span class="o">;</span>
+    <span class="nc">WaitNode</span><span class="o">()</span> <span class="o">{</span> <span class="n">thread</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span> <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="核心方法">核心方法</h3>
+
+<p>FutureTask总共分为两个过程：</p>
+
+<ul>
+  <li>执行任务，即运行Callable方法</li>
+  <li>获取任务的返回结果，调用get()方法</li>
+</ul>
+
+<p>构造方法：需要传进来一个Callable接口，然后将当前state变成New状态。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nf">FutureTask</span><span class="o">(</span><span class="nc">Callable</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="n">callable</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">callable</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">NullPointerException</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">callable</span> <span class="o">=</span> <span class="n">callable</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="no">NEW</span><span class="o">;</span>       <span class="c1">// ensure visibility of callable</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>当通过构造方法获取到需要执行的任务时候，整个的处理流程如下：</p>
+
+<p>首先是在run方法中调用Callable中的call方法，而线程的启动是调用start()方法开启运行，可以看出Callable()方法的执行也是依赖于run方法进行实现的，为什么会电邮返回值？ 首先是Callable()接口中，用户定义了返回值，那么我在调用这个方法的时候，也会有返回值，其实run本质上也就是一个方法，既然是方法那么就可以嵌套调用其他的方法，比如说用户自己写的call方法，但是call方法有一个返回值，那么在线程中我是通过一个属性获取到这个返回值，使用set方法进行赋值，然后在外部的在想要获取内部类的属性时，就可以使用get方法进行获取到类的内部属性，也就是callable中进行执行的方法的返回值。另外，因为FutureTask也是基于run()接口实现的，所以在线程池中也就是直接的调用Future中的run方法，这也就是为什么线程池可以用一个execute(Runable task)方法执行Callable和Runable方法的原因，即Callable接口底层也是使用Run方法实现的，相当于是重载。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// FutureTask类继承了这个</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">RunnableFuture</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">Runnable</span><span class="o">,</span> <span class="nc">Future</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="cm">/**
+     * Sets this Future to the result of its computation
+     * unless it has been cancelled.
+     */</span>
+    <span class="kt">void</span> <span class="nf">run</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">state</span> <span class="o">!=</span> <span class="no">NEW</span> <span class="o">||</span>
+        <span class="o">!</span><span class="no">UNSAFE</span><span class="o">.</span><span class="na">compareAndSwapObject</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">runnerOffset</span><span class="o">,</span>
+                                     <span class="kc">null</span><span class="o">,</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">()))</span>
+        <span class="k">return</span><span class="o">;</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="c1">// 获取到当前任务</span>
+        <span class="nc">Callable</span><span class="o">&lt;</span><span class="no">V</span><span class="o">&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="n">callable</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">c</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">state</span> <span class="o">==</span> <span class="no">NEW</span><span class="o">)</span> <span class="o">{</span>
+            <span class="no">V</span> <span class="n">result</span><span class="o">;</span>
+            <span class="kt">boolean</span> <span class="n">ran</span><span class="o">;</span>
+            <span class="k">try</span> <span class="o">{</span>
+                <span class="c1">// 执行任务。</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="na">call</span><span class="o">();</span>
+                <span class="n">ran</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Throwable</span> <span class="n">ex</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                <span class="n">ran</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+                <span class="n">setException</span><span class="o">(</span><span class="n">ex</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">ran</span><span class="o">)</span> <span class="c1">// 当任务执行完，则设置result 返回结果值</span>
+                <span class="n">set</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+        <span class="c1">// runner must be non-null until state is settled to</span>
+        <span class="c1">// prevent concurrent calls to run()</span>
+        <span class="n">runner</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="c1">// state must be re-read after nulling runner to prevent</span>
+        <span class="c1">// leaked interrupts</span>
+        <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="no">INTERRUPTING</span><span class="o">)</span>
+            <span class="n">handlePossibleCancellationInterrupt</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>当任务执行完以后，便会调用set(result)方法将结果复制给outcome属性，如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="no">V</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 通过CAS的方式</span>
+    <span class="k">if</span> <span class="o">(</span><span class="no">UNSAFE</span><span class="o">.</span><span class="na">compareAndSwapInt</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">stateOffset</span><span class="o">,</span> <span class="no">NEW</span><span class="o">,</span> <span class="no">COMPLETING</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">outcome</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span> <span class="c1">// 将结果赋值给outcome</span>
+        <span class="no">UNSAFE</span><span class="o">.</span><span class="na">putOrderedInt</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">stateOffset</span><span class="o">,</span> <span class="no">NORMAL</span><span class="o">);</span> <span class="c1">// final state</span>
+        <span class="n">finishCompletion</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后处理完成后的数据：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">void</span> <span class="nf">finishCompletion</span><span class="o">()</span> <span class="o">{</span>
+    <span class="c1">// assert state &gt; COMPLETING;</span>
+    <span class="c1">// 唤醒等待队列中的所有线程。</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">WaitNode</span> <span class="n">q</span><span class="o">;</span> <span class="o">(</span><span class="n">q</span> <span class="o">=</span> <span class="n">waiters</span><span class="o">)</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="no">UNSAFE</span><span class="o">.</span><span class="na">compareAndSwapObject</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">waitersOffset</span><span class="o">,</span> <span class="n">q</span><span class="o">,</span> <span class="kc">null</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+                <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="na">thread</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">t</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">q</span><span class="o">.</span><span class="na">thread</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+                    <span class="nc">LockSupport</span><span class="o">.</span><span class="na">unpark</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="nc">WaitNode</span> <span class="n">next</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">next</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="n">q</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span> <span class="c1">// unlink to help gc</span>
+                <span class="n">q</span> <span class="o">=</span> <span class="n">next</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="n">done</span><span class="o">();</span> <span class="c1">// 可以扩展的接口。</span>
+
+    <span class="n">callable</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>        <span class="c1">// to reduce footprint</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以上是整个任务自动执行的逻辑，然后是获取结果的逻辑。</p>
+
+<p>get方法，获取结果总是从这个方法入口，在进行获取之前会先检测任务完成的状态，如果没有完成则进行等待。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="no">V</span> <span class="nf">get</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">InterruptedException</span><span class="o">,</span> <span class="nc">ExecutionException</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+    
+    <span class="c1">// 如果还没有完成，则进行等待。</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="no">COMPLETING</span><span class="o">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">awaitDone</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="mi">0L</span><span class="o">);</span>
+    <span class="k">return</span> <span class="nf">report</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>其中awaitDone方法，其中有个很主要的思想就是，会检任务是否超时，当超时以后救护直接的唤醒自己，然后返回异常。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">int</span> <span class="nf">awaitDone</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">timed</span><span class="o">,</span> <span class="kt">long</span> <span class="n">nanos</span><span class="o">)</span>
+    <span class="kd">throws</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+    <span class="kd">final</span> <span class="kt">long</span> <span class="n">deadline</span> <span class="o">=</span> <span class="n">timed</span> <span class="o">?</span> <span class="nc">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">()</span> <span class="o">+</span> <span class="n">nanos</span> <span class="o">:</span> <span class="mi">0L</span><span class="o">;</span>
+    <span class="c1">// 定义一个等待队列。</span>
+    <span class="nc">WaitNode</span> <span class="n">q</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kt">boolean</span> <span class="n">queued</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="c1">// 进行自旋将自己加入等待队列中，当加入成功以后，便将自己阻塞。</span>
+    <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>
+        <span class="c1">// 如果当前线程被打断了，则将线程移出等待队列。</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">Thread</span><span class="o">.</span><span class="na">interrupted</span><span class="o">())</span> <span class="o">{</span>
+            <span class="n">removeWaiter</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">InterruptedException</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+        <span class="c1">// 任务执行出现了异常，则直接将等待队列变为null，并且返回当前状态的值。</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">s</span> <span class="o">&gt;</span> <span class="no">COMPLETING</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">q</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+                <span class="n">q</span><span class="o">.</span><span class="na">thread</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">s</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">s</span> <span class="o">==</span> <span class="no">COMPLETING</span><span class="o">)</span> <span class="c1">// 只是任务刚完成，但是还没有完成返回值的赋值，所有需要让出cpu 让线程等一会。</span>
+            <span class="nc">Thread</span><span class="o">.</span><span class="na">yield</span><span class="o">();</span> 
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">q</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="n">q</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WaitNode</span><span class="o">();</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(!</span><span class="n">queued</span><span class="o">)</span>
+            <span class="c1">// 尝试将自己加入到等待队列。</span>
+            <span class="n">queued</span> <span class="o">=</span> <span class="no">UNSAFE</span><span class="o">.</span><span class="na">compareAndSwapObject</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">waitersOffset</span><span class="o">,</span>
+                                                 <span class="n">q</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">waiters</span><span class="o">,</span> <span class="n">q</span><span class="o">);</span>
+        <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">timed</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// 如果在加入过程中已经超时，则将自己从等待队列中移除。</span>
+            <span class="n">nanos</span> <span class="o">=</span> <span class="n">deadline</span> <span class="o">-</span> <span class="nc">System</span><span class="o">.</span><span class="na">nanoTime</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">nanos</span> <span class="o">&lt;=</span> <span class="mi">0L</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">removeWaiter</span><span class="o">(</span><span class="n">q</span><span class="o">);</span>
+                <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="nc">LockSupport</span><span class="o">.</span><span class="na">parkNanos</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">nanos</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span>
+            <span class="c1">// 进行阻塞该线程。</span>
+            <span class="nc">LockSupport</span><span class="o">.</span><span class="na">park</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>需要说明的是，调用get方法被阻塞的线程会被在finishCompletion()中从等待队列中唤醒。</p>
+
+<p>其中report()函数：根据状态值进行返回结果或者是抛出异常。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="no">V</span> <span class="nf">report</span><span class="o">(</span><span class="kt">int</span> <span class="n">s</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">ExecutionException</span> <span class="o">{</span>
+    <span class="nc">Object</span> <span class="n">x</span> <span class="o">=</span> <span class="n">outcome</span><span class="o">;</span> <span class="c1">//获取到返回的结果</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">s</span> <span class="o">==</span> <span class="no">NORMAL</span><span class="o">)</span> <span class="c1">// 如果当前状态正常，则直接的返回结果。</span>
+        <span class="k">return</span> <span class="o">(</span><span class="no">V</span><span class="o">)</span><span class="n">x</span><span class="o">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">s</span> <span class="o">&gt;=</span> <span class="no">CANCELLED</span><span class="o">)</span> <span class="c1">//如果出现异常，则将异常抛出经由上层处理。</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">CancellationException</span><span class="o">();</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nf">ExecutionException</span><span class="o">((</span><span class="nc">Throwable</span><span class="o">)</span><span class="n">x</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>通过自旋将自己从等待队列中移除：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">void</span> <span class="nf">removeWaiter</span><span class="o">(</span><span class="nc">WaitNode</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">node</span><span class="o">.</span><span class="na">thread</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="nl">retry:</span>
+        <span class="k">for</span> <span class="o">(;;)</span> <span class="o">{</span>          <span class="c1">// restart on removeWaiter race</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">WaitNode</span> <span class="n">pred</span> <span class="o">=</span> <span class="kc">null</span><span class="o">,</span> <span class="n">q</span> <span class="o">=</span> <span class="n">waiters</span><span class="o">,</span> <span class="n">s</span><span class="o">;</span> <span class="n">q</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">q</span> <span class="o">=</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">s</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">q</span><span class="o">.</span><span class="na">thread</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+                    <span class="n">pred</span> <span class="o">=</span> <span class="n">q</span><span class="o">;</span>
+                <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">pred</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">pred</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="n">pred</span><span class="o">.</span><span class="na">thread</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="c1">// check for race</span>
+                        <span class="k">continue</span> <span class="n">retry</span><span class="o">;</span>
+                <span class="o">}</span>
+                <span class="k">else</span> <span class="nf">if</span> <span class="o">(!</span><span class="no">UNSAFE</span><span class="o">.</span><span class="na">compareAndSwapObject</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">waitersOffset</span><span class="o">,</span> <span class="n">q</span><span class="o">,</span> <span class="n">s</span><span class="o">))</span>
+                    <span class="k">continue</span> <span class="n">retry</span><span class="o">;</span>
+            <span class="o">}</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>从上面可以看出来，对于FutureTask来说，里面的自旋思想主要是运用在了等待队列的增加与移除，因为里面的竞争就只有等待队列的添加。</p>
+
+<h1 id="completablefuture">CompletableFuture</h1>
+
+<p>类似于Netty中的ChannelFuture，可以实现真正的异步回调，也就是基于观察者模式实现的接口回调方法，另外有些异步的任务也是有依赖，比如说Task2 依赖于Task1，这种异步任务FutureTask不能很好地处理，而对于CompletableFuture来说就可以实现以上的功能。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 提交有返回值的任务</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">U</span><span class="o">&gt;</span> <span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="no">U</span><span class="o">&gt;</span> <span class="nf">supplyAsync</span><span class="o">(</span><span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">U</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">){..}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">U</span><span class="o">&gt;</span> <span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="no">U</span><span class="o">&gt;</span> <span class="nf">supplyAsync</span><span class="o">(</span><span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">U</span><span class="o">&gt;</span> <span class="n">supplier</span><span class="o">,</span><span class="nc">Executor</span> <span class="n">executor</span><span class="o">){..}</span>
+
+<span class="c1">// 提交没有返回值的任务</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">runAsync</span><span class="o">(</span><span class="nc">Runnable</span> <span class="n">runnable</span><span class="o">){..}</span>
+
+<span class="kd">public</span> <span class="kd">static</span> <span class="nc">CompletableFuture</span><span class="o">&lt;</span><span class="nc">Void</span><span class="o">&gt;</span> <span class="nf">runAsync</span><span class="o">(</span><span class="nc">Runnable</span> <span class="n">runnable</span><span class="o">,</span> <span class="nc">Executor</span> <span class="n">executor</span><span class="o">){..}</span>
+</code></pre></div></div>
+
+<p>https://www.cnblogs.com/fingerboy/p/9948736.html 参考这篇文章。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

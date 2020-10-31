@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Spring：IOC &amp; AOP</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2019/10/15/Spring%E5%85%A5%E9%97%A8.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Spring：IOC &amp; AOP</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2019-10-15T00:00:00+08:00" itemprop="datePublished">
+          
+          Oct 15, 2019
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Spring：IOC &amp; AOP</h1>
+    <p class="post-meta">
+      <time datetime="2019-10-15T00:00:00+08:00" itemprop="datePublished">
+        
+        Oct 15, 2019
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>本篇文章主要介绍是IOC和DI，介绍其注解的方式实现，并设置一个例子进行说明</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#零为什么需要spring" id="markdown-toc-零为什么需要spring">零、为什么需要Spring？</a></li>
+  <li><a href="#一spring基础知识ioc和aop" id="markdown-toc-一spring基础知识ioc和aop">一、Spring基础知识IOC和AOP</a>    <ul>
+      <li><a href="#ioc控制反转" id="markdown-toc-ioc控制反转">IOC（控制反转）</a>        <ul>
+          <li><a href="#ioc和di的区别" id="markdown-toc-ioc和di的区别">IOC和DI的区别</a></li>
+        </ul>
+      </li>
+      <li><a href="#aop面向切面" id="markdown-toc-aop面向切面">AOP（面向切面）</a></li>
+    </ul>
+  </li>
+  <li><a href="#二ioc的实现方式" id="markdown-toc-二ioc的实现方式">二、IOC的实现方式</a>    <ul>
+      <li><a href="#使用配置的方式进行注入" id="markdown-toc-使用配置的方式进行注入">使用配置的方式进行注入</a></li>
+      <li><a href="#常用的注解" id="markdown-toc-常用的注解">常用的注解</a>        <ul>
+          <li><a href="#在类上使用的注解表示这个类由spring进行构建" id="markdown-toc-在类上使用的注解表示这个类由spring进行构建">在类上使用的注解，表示这个类由spring进行构建</a></li>
+          <li><a href="#进行注入的注解" id="markdown-toc-进行注入的注解">进行注入的注解</a></li>
+        </ul>
+      </li>
+      <li><a href="#例子测试" id="markdown-toc-例子测试">例子测试</a></li>
+    </ul>
+  </li>
+</ul>
+<h2 id="零为什么需要spring">零、为什么需要Spring？</h2>
+
+<p>spring两大核心IOC(inversion of control，控制反转)和DI(dependency injection, 依赖注入),其中，IOC是一种设计思想，DI可以说是一种实现方案。</p>
+
+<p><strong>ioc的思想最核心的地方在于，资源不由使用资源的双方管理，而由不使用资源的第三方管理，这可以带来很多好处。第一，资源集中管理，实现资源的可配置和易管理。第二，降低了使用资源双方的依赖程度，也就是我们说的耦合度。</strong></p>
+
+<p>也就是说，甲方要达成某种目的不需要直接依赖乙方，它只需要达到的目的告诉第三方机构就可以了，比如甲方需要一双袜子，而乙方它卖一双袜子，它要把袜子卖出去，并不需要自己去直接找到一个卖家来完成袜子的卖出。它也只需要找第三方，告诉别人我要卖一双袜子。这下好了，甲乙双方进行交易活动，都不需要自己直接去找卖家，相当于程序内部开放接口，卖家由第三方作为参数传入。甲乙互相不依赖，而且只有在进行交易活动的时候，甲才和乙产生联系。反之亦然。这样做什么好处呢，甲乙可以在对方不真实存在的情况下独立存在，而且保证不交易时候无联系，想交易的时候可以很容易的产生联系。甲乙交易活动不需要双方见面，避免了双方的互不信任造成交易失败的问题。因为交易由第三方来负责联系，而且甲乙都认为第三方可靠。那么交易就能很可靠很灵活的产生和进行了。</p>
+
+<p>什么叫做依赖？依赖的意思可以理解为，我要干什么事，需要依赖于什么东西，比如学生的生活依赖于父母，表现在代码上就是在新建学生对象的时候，必须新建父母对象，然后构成依赖关系。例如：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//用户DAO</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserDAO</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">database</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">UserDAO</span><span class="o">(</span><span class="nc">String</span> <span class="n">dataBase</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">database</span> <span class="o">=</span> <span class="n">dataBase</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doSomething</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"保存用户！"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="c1">//用户service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserService</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">UserDAO</span> <span class="n">dao</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">UserService</span><span class="o">(</span><span class="nc">UserDAO</span> <span class="n">dao</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dao</span> <span class="o">=</span> <span class="n">dao</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doSomething</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">dao</span><span class="o">.</span><span class="na">doSomething</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">//用户controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Controller</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="nc">UserService</span> <span class="n">service</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Controller</span><span class="o">(</span><span class="nc">UserService</span> <span class="n">userService</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">service</span> <span class="o">=</span> <span class="n">userService</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doSomething</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">service</span><span class="o">.</span><span class="na">doSomething</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+
+<span class="c1">//使用的情况</span>
+<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+
+    <span class="nc">UserDAO</span> <span class="n">dao</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserDAO</span><span class="o">(</span><span class="s">"mysql"</span><span class="o">);</span>
+    <span class="nc">UserService</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">UserService</span><span class="o">(</span><span class="n">dao</span><span class="o">);</span>
+    <span class="nc">Controller</span> <span class="n">controller</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Controller</span><span class="o">(</span><span class="n">service</span><span class="o">);</span>
+
+    <span class="n">controller</span><span class="o">.</span><span class="na">doSomething</span><span class="o">();</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>从上面的例子可以看出，最后controller的使用必须依赖UserDao和UserService对象。在这里其实就出现一个问题，如果某个对象任意一个构造方法出现了改变，或则是换了一个类进行实现功能， 那么所有的对象构建都要重写，new 之后的构造方法也要重写，需要传递的变量也要修改，另外，如果构造方法参数改变，则也需要大规模的更改，这样的话在一个大型项目中修改的成本是不可估量的。</p>
+
+<p>而spring的话就是将构造对象的交给spring去维护，程序员只需要向spring 申请对象即可，程序员不需要使用new关键字，只需要进行配置xml文件即可。</p>
+
+<p>主要思想也就是将对象之间进行解耦，一个对象的更改不会影响另外一个对象的使用，相当于spring提供一个第三方的功能，我需要的东西不需要我自己去找，交给spring帮我办理即可。相当于淘宝系统，买家和卖家不需要认识，直接交给淘宝处理即可。我想用的对象直接申请就行。相当于我只要服务而不需要服务是怎么提供的，接口回调的思想。</p>
+
+<p><a href="https://www.zhihu.com/question/23277575">知乎上一个例子</a>：另，<a href="https://juejin.im/post/5d78a9f1e51d453b1f37ebb6">掘金上的例子</a></p>
+
+<p>手动的创建一个Car实例，需要轮子，底盘，框架，最后返回一个新的Car对象</p>
+
+<p><a href="https://pic.tyzhang.top/image/r5E"><img src="https://pic.tyzhang.top/images/2020/03/31/springDemo1.jpg" alt="springDemo1.jpg" /></a></p>
+
+<p>然后使用spring进行依赖注入进行构建Car对象。</p>
+
+<p><a href="https://pic.tyzhang.top/image/svx"><img src="https://pic.tyzhang.top/images/2020/03/31/springDemo2.jpg" alt="springDemo2.jpg" /></a></p>
+
+<p><a href="https://pic.tyzhang.top/image/WIj"><img src="https://pic.tyzhang.top/images/2020/03/31/springDemo3.jpg" alt="springDemo3.jpg" /></a></p>
+
+<p>上图就说明了，借助于spring可以不需要知道内部的实现细节，这样的好处对于协作开发和项目的维护有很多大的帮助，其他程序员只需要使用接口即可，不需要知道内部的细节，对于 后来的维护也是很方便，核心代码可以一直稳定的运行，即依赖关系不会有大的变动，细节可以随意更改，而DI就是解决内部的依赖问题，需要有程序员去指定。</p>
+
+<h2 id="一spring基础知识ioc和aop">一、Spring基础知识IOC和AOP</h2>
+
+<h3 id="ioc控制反转">IOC（控制反转）</h3>
+<p>中文名叫做控制反转，主要就是实现动态代理这个的东西，<strong>为的就是将创建对象交给spring</strong>，即代替程序员使用new关键字进行新建对象，然后使用工厂的模式和动态代理的方式进行创建对象。</p>
+
+<p>总共有两种方式进行实现，<strong>配置方式</strong>和<strong>注解方式</strong> （主要的使用方式）</p>
+
+<p>在进行ioc的时候，免不得出现需要属性注入的操作，也就是怎么讲变量的值或者是一个对象传递过去，这种操作较<strong>DI</strong>也即是依赖注入。 主要也就是对象的注入，因为这样的话就是可以实现两个对象之间的耦合，实现数据的传输。</p>
+
+<h4 id="ioc和di的区别">IOC和DI的区别</h4>
+
+<ul>
+  <li>IOC：控制反转，把对象创建交给spring进行配置</li>
+  <li>DI：依赖注入，向对象里面的属性进行设置值</li>
+  <li>关系：依赖注入不能够单独的存在，需要在ioc的基础上完成操作。</li>
+</ul>
+
+<h3 id="aop面向切面">AOP（面向切面）</h3>
+<p>主要的作用是为了实现（目前的认知）：就是记录某个方法的运行状态，或者是增强某个方法。但是这个的方式现在还是不是很熟悉。</p>
+
+<p>aop常用的是在数据库编程中，也就是事务的编写，主要解决的问题就是当一个请求需要多个部门进行审核的时候，请求在某个部分不被通过，那么就直接被驳回？ 但是这个aop又有什么关系？</p>
+
+<p>aop的意思，有点像是可以实现程序在运行的过程中，通过设置切点可以直接获取此时程序进行运行的转态，或者是进行动态的添加代码进行运行，这样就可以在不进行更改代码的情况下实现代码的功能的扩展。其中，进行记录日志就是最典型的例子。即在程序在进行运行的时候，扩展记录操作。</p>
+
+<h2 id="二ioc的实现方式">二、IOC的实现方式</h2>
+
+<h3 id="使用配置的方式进行注入">使用配置的方式进行注入</h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- ioc 入门配置--&gt;</span>
+<span class="c">&lt;!-- 其中id就是新建的用户名， class 就是类的绝对路径 scope="prototype" 这个表示新建的实例是多实例，不加的话默认是单实例，即每次调用的都是同一个对象--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id =</span> <span class="s">"book"</span> <span class="na">class=</span><span class="s">"ioc.Book"</span><span class="nt">&gt;&lt;/bean&gt;</span>
+<span class="c">&lt;!--测试注入的方法  都必须定义属性然后设置set方法。--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"user"</span> <span class="na">class=</span><span class="s">"ioc.User"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--1 进行属性的注入 --&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"userName"</span> <span class="na">value=</span><span class="s">"小红"</span> <span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="c">&lt;!--2 进行对象的注入 --&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"book"</span> <span class="na">ref=</span><span class="s">"book"</span><span class="nt">&gt;&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></div></div>
+
+<p>首先bean标签表示新建一个对象， property标签表示调用的set方法进行的属性的注入。这种方式就是表示，所有的类都是可以通过这种方式进行进行对象的创建。包括jar包中的类。</p>
+
+<h3 id="常用的注解">常用的注解</h3>
+
+<h4 id="在类上使用的注解表示这个类由spring进行构建">在类上使用的注解，表示这个类由spring进行构建</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@Component</code>  最基础的</li>
+  <li><code class="language-plaintext highlighter-rouge">@Controller</code>  WEB层</li>
+  <li><code class="language-plaintext highlighter-rouge">@Service</code> 业务层</li>
+  <li><code class="language-plaintext highlighter-rouge">@Repository</code> 持久层</li>
+</ul>
+
+<p>以上四个注解都是表示将类交给spring进行 处理，虽然名称不一致，但是作用是一致的，不同的名字表示这个对象是用在哪一个层，是的对象更好的分类</p>
+
+<h4 id="进行注入的注解">进行注入的注解</h4>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">@Autowired</code> 表示自动的注入</li>
+</ul>
+
+<h3 id="例子测试">例子测试</h3>
+
+<p>以下为注解的方式进行测试spring代码。测试平台为idea，新建spring项目即可。</p>
+
+<p>测试的主要目的就是通过autowired的方法进行依赖注入，即在user中实现注入book对象， 并且调用book对象的方法，实现具体的操作，这个简单的列子也就是说明，在controller中使用自动注入的方进行掉用调用service层的对象。</p>
+
+<p>总共有四个文件 user.java  book.java  bean.xml  test.java，其中user对象中进行注入book对象。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">User</span><span class="o">.</span><span class="na">java</span>
+<span class="nd">@Component</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"user"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="o">{</span>
+
+    <span class="c1">//自动注入 只需要将对象创建好就行。</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">public</span> <span class="nc">Book</span> <span class="n">book</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">add</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"add....."</span><span class="o">);</span>
+        <span class="n">book</span><span class="o">.</span><span class="na">add</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nc">Book</span><span class="o">.</span><span class="na">java</span>
+<span class="nd">@Component</span><span class="o">(</span><span class="s">"book"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Book</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span>  <span class="nf">add</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"book add..."</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 这个主要需要注意的就是依赖的引用。即bean依赖和context依赖。
+<span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="c">&lt;!--schema 约束--&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+
+       http://www.springframework.org/schema/context      
+       http://www.springframework.org/schema/context/spring-context.xsd "</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- ioc 入门配置--&gt;</span>
+    <span class="c">&lt;!--实现注释的方式进行spring配置--&gt;</span>
+    <span class="c">&lt;!--开启扫描 base 表示扫描iocContext 包--&gt;</span>
+    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"iocContext"</span><span class="nt">&gt;&lt;/context:component-scan&gt;</span>
+
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>最后是测试Test.java的。需要做的主要有加载xml文件获取spring构建的对象。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">iocContext</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.ApplicationContext</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.context.support.ClassPathXmlApplicationContext</span><span class="o">;</span>
+
+<span class="cm">/**
+ * @author Seven
+ * @description 进行测试用户的案例
+ * @create 2019-10-13 19:04
+ **/</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TestContext</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">Test</span><span class="o">(){</span>
+
+        <span class="c1">// 1 加载spring配置文件，根据其创建对象</span>
+        <span class="nc">ApplicationContext</span> <span class="n">context</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"beanContext.xml"</span><span class="o">);</span>
+
+        <span class="c1">// 2 得到配置创建的对象  不需要使用new关键字</span>
+        <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="nc">User</span><span class="o">)</span> <span class="n">context</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"user"</span><span class="o">);</span>
+
+        <span class="c1">// 3 调用spring 自动生成的对象，然后进行调用。</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+        <span class="n">user</span><span class="o">.</span><span class="na">add</span><span class="o">();</span>
+ 
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>最后可以很好的输出结果。即不需要进行new，即可以实现调用需要对象的方法，即将对象统一交给spring进行管理。</p>
+
+<p><img src="/image/spring_run_result.png" alt="" /></p>
+
+<p>以上会有一个小问题，就是在spring项目中，这个项目的入口在哪里？就是最初的调用时在哪里实现的？需要对autoConfig类进行仔细的查看。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

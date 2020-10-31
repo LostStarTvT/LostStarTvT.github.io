@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Algorithm：海量数据处理算法</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/09/20/bigData-algorithm.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Algorithm：海量数据处理算法</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-09-20T00:00:00+08:00" itemprop="datePublished">
+          
+          Sep 20, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Algorithm：海量数据处理算法</h1>
+    <p class="post-meta">
+      <time datetime="2020-09-20T00:00:00+08:00" itemprop="datePublished">
+        
+        Sep 20, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录常见的海量数据问题以及处理方法。</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+
+<p>通过hash加取模的操作能够将数据很好的归一并且进行调整。</p>
+
+<h2 id="微博热搜是怎么实现的">微博热搜是怎么实现的？</h2>
+
+<p>微博的热搜问题可以简化为：1亿数据中有三百万不重复的数据，然后按照搜索的频率找到前top100的搜索的词频。那么如何实现呢？</p>
+
+<p>首先需要知道，排序需要有一个依据，那么微博热搜排序的依据是什么呢？ 就是搜索的文本的次数，那么怎么统计本文的次数呢？ 如果仅仅单纯的比较文本对于很大的文本来说效率非常的低，现今大部分都是基于Hash函数进行去重，相当于一个数组&lt;文本，出现的频率&gt;，那么排序的依据就是出现的频率，越高的越靠前。于是，问题可以简化为统计和排序。</p>
+
+<p>1.WordCount</p>
+
+<p>因为微博搜索的数据都是文本，对于文本的次数排序，就需要使用到hash函数，即首先使用hash函数进行取模并进行存储，key为文本的hash值，然后value为数据出现的次数。这时候便实现了第一步的去重和统计。</p>
+
+<p>2.TopN：</p>
+
+<p>因为内存有限，所有可以使用堆排序算法，即首先将前100个数据进行建堆，然后依次将后面的数据入堆，当遍历完所有的数据以后，便能够找到前topk的数据，在入堆之前，首先将数据与堆顶数据比较，如果小于的话则直接下一个，如果大于的话，则入堆，重新建堆。</p>
+
+<p>另外，当碰到海量数据的时候，也需要进行数据的切分，将数据分成两份使用两台机器进行统计，然后进行合并。换句话说，使用硬件换取排序的速度。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/09/29/topN.png" alt="topN.png" /></p>
+
+<h2 id="少量内存统计词频">少量内存统计词频</h2>
+
+<p><strong>3、有一个1G大小的一个文件，里面每一行是一个词，词的大小不超过16字节，内存限制大小是1M。返回频数最高的100个词。</strong></p>
+
+<p>堆排序+分治，比如说统计一个1000个词的频率，那么就将词分成10个100份的小文件，然后分别找出其中10的最小值，然后再将这些数据形成一个100个数据，找出其中最大的10个值，</p>
+
+<p>方案：顺序读文件中，对于每个词x，取hash(x)%5000，然后按照该值存到5000个小文件（记为x0,x1,…x4999）中。这样每个文件大概是200k左右。</p>
+
+<p>如果其中的有的文件超过了1M大小，还可以按照类似的方法继续往下分，直到分解得到的小文件的大小都不超过1M。
+对每个小文件，统计每个文件中出现的词以及相应的频率（可以采用trie树/hash_map等），并取出出现频率最大的100个词（可以用含100个结点的最小堆），并把100个词及相应的频率存入文件，这样又得到了5000个文件。下一步就是把这5000个文件进行归并（类似与归并排序）的过程了。</p>
+
+<h2 id="海量数据是否存在某个数">海量数据是否存在某个数</h2>
+
+<p>给40亿个不重复的unsigned的整数，没有排过序，再给一个数据，如何快速判断这个数是否在这个10亿个数据中？</p>
+
+<p>首先可以使用快速排序，然后使用二分查找，这样以后便可以进行对应的查找。</p>
+
+<p>还有一种操作，就是将按照比特位将数据进行切分，因为无符号数据工作30位，将这些数据分为</p>
+
+<ol>
+  <li>最高位0</li>
+  <li>最高位1</li>
+</ol>
+
+<p>分完以后，然后在将数据分为</p>
+
+<ol>
+  <li>次高位为0</li>
+  <li>次高位为1</li>
+</ol>
+
+<p>这样在进行查找的时候只需要o(logn)便能够进行查找到。</p>
+
+<h2 id="海量数据找出出现频率最高的值">海量数据找出出现频率最高的值</h2>
+
+<p>归结为TOP 1 问题。参考TOP的解法。</p>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

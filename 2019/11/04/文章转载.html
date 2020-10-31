@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>转：从MVC到前后端分离</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2019/11/04/%E6%96%87%E7%AB%A0%E8%BD%AC%E8%BD%BD.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">转：从MVC到前后端分离</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2019-11-04T00:00:00+08:00" itemprop="datePublished">
+          
+          Nov 4, 2019
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">转：从MVC到前后端分离</h1>
+    <p class="post-meta">
+      <time datetime="2019-11-04T00:00:00+08:00" itemprop="datePublished">
+        
+        Nov 4, 2019
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>转载一篇介绍传统的MVC架构和前后端分离架构之间的区别，个人来说还是更加喜欢前后端分离的开发，后台只需要提供数据接口即可，前后端分离，即传入ajax请求，返回json数据。对于前端来说只需要专注于ui即可。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#从-mvc-到前后端分离" id="markdown-toc-从-mvc-到前后端分离">从 MVC 到前后端分离</a></li>
+  <li><a href="#1-理解-mvc" id="markdown-toc-1-理解-mvc">1 理解 MVC</a></li>
+  <li><a href="#2-mvc-模式的优点与不足" id="markdown-toc-2-mvc-模式的优点与不足">2 MVC 模式的优点与不足</a></li>
+  <li><a href="#3-认识-rest" id="markdown-toc-3-认识-rest">3 认识 REST</a></li>
+  <li><a href="#4-实现-rest-框架" id="markdown-toc-4-实现-rest-框架">4 实现 REST 框架</a>    <ul>
+      <li><a href="#41-统一响应结构" id="markdown-toc-41-统一响应结构">4.1 统一响应结构</a></li>
+      <li><a href="#42-实现对象序列化" id="markdown-toc-42-实现对象序列化">4.2 实现对象序列化</a></li>
+      <li><a href="#43-处理异常行为" id="markdown-toc-43-处理异常行为">4.3 处理异常行为</a></li>
+      <li><a href="#44-支持参数验证" id="markdown-toc-44-支持参数验证">4.4 支持参数验证</a></li>
+      <li><a href="#45-解决跨域问题" id="markdown-toc-45-解决跨域问题">4.5 解决跨域问题</a></li>
+      <li><a href="#46-提供安全机制" id="markdown-toc-46-提供安全机制">4.6 提供安全机制</a></li>
+    </ul>
+  </li>
+  <li><a href="#5-总结" id="markdown-toc-5-总结">5 总结</a></li>
+</ul>
+<h2 id="从-mvc-到前后端分离">从 MVC 到前后端分离</h2>
+
+<h2 id="1-理解-mvc">1 理解 MVC</h2>
+
+<p>MVC 是一种经典的设计模式，全名为 <code class="language-plaintext highlighter-rouge">Model-View-Controller</code>，即 <code class="language-plaintext highlighter-rouge">模型-视图-控制器</code>。</p>
+
+<p>其中，<code class="language-plaintext highlighter-rouge">模型</code> 是用于封装数据的载体，例如，在 Java 中一般通过一个简单的 <code class="language-plaintext highlighter-rouge">POJO</code>（Plain Ordinary Java Object）来表示，其本质是一个普通的 Java Bean，包含一系列的成员变量及其 getter/setter 方法。对于 <code class="language-plaintext highlighter-rouge">视图</code> 而言，它更加偏重于展现，也就是说，视图决定了界面到底长什么样子，在 Java 中可通过 JSP 来充当视图，或者通过纯 HTML 的方式进行展现，而后者才是目前的主流。模型和视图需要通过 <code class="language-plaintext highlighter-rouge">控制器</code> 来进行粘合，例如，用户发送一个 HTTP 请求，此时该请求首先会进入控制器，然后控制器去获取数据并将其封装为模型，最后将模型传递到视图中进行展现。</p>
+
+<p>综上所述，MVC 的交互过程如下图所示：</p>
+
+<p><img src="http://i.imgur.com/iU2XJLa.png" alt="图1 - 经典 MVC 模式" /></p>
+
+<h2 id="2-mvc-模式的优点与不足">2 MVC 模式的优点与不足</h2>
+
+<p>MVC 模式早在上个世纪 70 年代就诞生了，直到今天它依然存在，可见生命力相当之强。MVC 模式最早用于 Smalltalk 语言中，最后在其它许多开发语言中都得到了很好的应用，例如，Java 中的 Struts、Spring MVC 等框架。正是因为这些 MVC 框架的出现，才让 MVC 模式真正落地，让开发更加高效，让代码耦合度尽量减小，让应用程序各部分的职责更加清晰。</p>
+
+<p>既然 MVC 模式这么好，难道它就没有不足的地方吗？我认为 MVC 至少有以下三点不足：</p>
+
+<ol>
+  <li>每次请求必须经过“控制器-&gt;模型-&gt;视图”这个流程，用户才能看到最终的展现的界面，这个过程似乎有些复杂。</li>
+  <li>实际上视图是依赖于模型的，换句话说，如果没有模型，视图也无法呈现出最终的效果。</li>
+  <li>渲染视图的过程是在服务端来完成的，最终呈现给浏览器的是带有模型的视图页面，性能无法得到很好的优化。</li>
+</ol>
+
+<p>为了使数据展现过程更加直接，并且提供更好的用户体验，我们有必要对 MVC 模式进行改进。不妨这样来尝试，首先从浏览器发送 AJAX 请求，然后服务端接受该请求并返回 JSON 数据返回给浏览器，<strong>最后在浏览器中进行界面渲染</strong>。使用浏览器来分担渲染的工作。</p>
+
+<p>改进后的 MVC 模式如下图所示：</p>
+
+<p><img src="http://i.imgur.com/QnrL8i1.png" alt="图2 - 改进后的 MVC 模式" /></p>
+
+<p>也就是说，我们输入的是 AJAX 请求，输出的是 JSON 数据，市面上有这样的技术来实现这个功能吗？答案是 REST。</p>
+
+<blockquote>
+  <p>REST 全称是 Representational State Transfer（表述性状态转移），它是 Roy Fielding 博士在 2000 年写的一篇关于软件架构风格的论文，此文一出，威震四方！国内外许多知名互联网公司纷纷开始采用这种轻量级的 Web 服务，大家习惯将其称为 RESTful Web Services，或简称 REST 服务。</p>
+</blockquote>
+
+<p>如果将浏览器这一端视为前端，而服务器那一端视为后端的话，可以将以上改进后的 MVC 模式简化为以下前后端分离模式：</p>
+
+<p><img src="http://i.imgur.com/qu5dZn1.png" alt="图3 - 前后端分离" /></p>
+
+<p>可见，有了 REST 服务，前端关注界面展现，后端关注业务逻辑，分工明确，职责清晰。那么，如何使用 REST 服务将应用程序进行前后端分离呢？我们接下来继续探讨，首先我们需要认识 REST。</p>
+
+<h2 id="3-认识-rest">3 认识 REST</h2>
+
+<p>REST 本质上是使用 URL 来访问资源种方式。众所周知，URL 就是我们平常使用的请求地址了，其中包括两部分：<code class="language-plaintext highlighter-rouge">请求方式</code> 与 <code class="language-plaintext highlighter-rouge">请求路径</code>，比较常见的请求方式是 GET 与 POST，但在 REST 中又提出了几种其它类型的请求方式，汇总起来有六种：<strong>GET、POST、PUT、DELETE、HEAD、OPTIONS</strong>。尤其是前四种，正好与 <code class="language-plaintext highlighter-rouge">CRUD</code>（Create-Retrieve查-Update-Delete，增删改查）四种操作相对应，例如，GET（查）、POST（增）、PUT（改）、DELETE（删），这正是 REST 与 CRUD 的异曲同工之妙！需要强调的是，REST 是“面向资源”的，这里提到的资源，实际上就是我们常说的领域对象，在系统设计过程中，我们经常通过领域对象来进行数据建模。</p>
+
+<p>REST 是一个“无状态”的架构模式，因为在任何时候都可以由客户端发出请求到服务端，最终返回自己想要的数据，当前请求不会受到上次请求的影响。也就是说，服务端将内部资源发布 REST 服务，客户端通过 URL 来访问这些资源，这不就是 SOA 所提倡的“面向服务”的思想吗？所以，REST 也被人们看做是一种“轻量级”的 SOA 实现技术，因此在企业级应用与互联网应用中都得到了广泛应用。</p>
+
+<p>下面我们举几个例子对 REST 请求进行简单描述：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>REST 请求</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET:/advertisers</td>
+      <td>获取所有的广告主</td>
+    </tr>
+    <tr>
+      <td>GET:/advertiser/1</td>
+      <td>获取 ID 为 1 的广告主</td>
+    </tr>
+    <tr>
+      <td>PUT:/advertiser/1</td>
+      <td>更新 ID 为 1 的广告主</td>
+    </tr>
+    <tr>
+      <td>DELETE:/advertiser/1</td>
+      <td>删除 ID 为 1 的广告主</td>
+    </tr>
+    <tr>
+      <td>POST:/advertiser</td>
+      <td>创建广告主</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>可见，请求路径相同，但请求方式不同，所代表的业务操作也不同，例如，/advertiser/1 这个请求，带有 GET、PUT、DELETE 三种不同的请求方式，对应三种不同的业务操作。</p>
+
+<p>虽然 REST 看起来还是很简单的，实际上我们往往需要提供一个 REST 框架，让其实现前后端分离架构，让开发人员将精力集中在业务上，而并非那些具体的技术细节。下面我们将使用 Java 技术来实现这个 REST 框架，整体框架会基于 Spring 进行开发。</p>
+
+<h2 id="4-实现-rest-框架">4 实现 REST 框架</h2>
+
+<h3 id="41-统一响应结构">4.1 统一响应结构</h3>
+
+<p>使用 REST 框架实现前后端分离架构，我们需要首先确定返回的 JSON 响应结构是统一的，也就是说，每个 REST 请求将返回相同结构的 JSON 响应结构。不妨定义一个相对通用的 JSON 响应结构，其中包含两部分：<code class="language-plaintext highlighter-rouge">元数据</code> 与 <code class="language-plaintext highlighter-rouge">返回值</code>，其中，元数据表示操作是否成功与返回值消息等，返回值对应服务端方法所返回的数据。该 JSON 响应结构如下：</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+	</span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+		</span><span class="nl">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+		</span><span class="nl">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ok"</span><span class="w">
+	</span><span class="p">},</span><span class="w">
+	</span><span class="nl">"data"</span><span class="p">:</span><span class="w"> </span><span class="err">...</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>为了在框架中映射以上 JSON 响应结构，我们需要编写一个 <code class="language-plaintext highlighter-rouge">Response</code> 类与其对应：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Response</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">OK</span> <span class="o">=</span> <span class="s">"ok"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">ERROR</span> <span class="o">=</span> <span class="s">"error"</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nc">Meta</span> <span class="n">meta</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Object</span> <span class="n">data</span><span class="o">;</span>
+	
+    <span class="c1">// 空data返回</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">success</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">meta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Meta</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="no">OK</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+	
+    <span class="c1">// 带有返回值data的返回</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">success</span><span class="o">(</span><span class="nc">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">meta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Meta</span><span class="o">(</span><span class="kc">true</span><span class="o">,</span> <span class="no">OK</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">failure</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">meta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Meta</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="no">ERROR</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">failure</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">meta</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Meta</span><span class="o">(</span><span class="kc">false</span><span class="o">,</span> <span class="n">message</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">Meta</span> <span class="nf">getMeta</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">meta</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">getData</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">Meta</span> <span class="o">{</span>
+
+        <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">success</span><span class="o">;</span>
+        <span class="kd">private</span> <span class="nc">String</span> <span class="n">message</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Meta</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">success</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">success</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="nf">Meta</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">success</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">success</span> <span class="o">=</span> <span class="n">success</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">message</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isSuccess</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">success</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getMessage</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">message</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以上 Response 类包括两类通用返回值消息：ok 与 error，还包括两个常用的操作方法：success() 与 failure()，通过一个内部类来展现元数据结构，我们在下文中多次会使用该 Response 类。</p>
+
+<p>实现该 REST 框架需要考虑许多问题，首当其冲的就是对象序列化问题。</p>
+
+<h3 id="42-实现对象序列化">4.2 实现对象序列化</h3>
+
+<p>想要解释什么是 <code class="language-plaintext highlighter-rouge">对象序列化</code>？不妨通过一些例子进行说明。比如，在服务端从数据库中获取了数据，此时该数据是一个普通的 Java 对象，然后需要将这个 Java 对象转换为 JSON 字符串，并将其返回到浏览器中进行渲染，这个转换过程称为 <code class="language-plaintext highlighter-rouge">序列化</code>；再比如，通过浏览器发送了一个普通的 HTTP 请求，该请求携带了一个 JSON 格式的参数，在服务端需要将该 JSON 参数转换为普通的 Java 对象，这个转换过程称为 <code class="language-plaintext highlighter-rouge">反序列化</code>。不管是序列化还是反序列化，我们一般都称为序列化。</p>
+
+<p>实际上，Spring MVC 已经为我们提供了这类序列化特性，只需在 Controller 的方法参数中使用 <code class="language-plaintext highlighter-rouge">@RequestBody</code> 注解定义需要反序列化的参数即可，如以下代码片段：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/advertiser"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">createAdvertiser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">AdvertiserParam</span> <span class="n">advertiserParam</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>若需要对 Controller 的方法返回值进行序列化，则需要在该返回值上使用 <code class="language-plaintext highlighter-rouge">@ResponseBody</code> 注解来定义，如以下代码片段：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/advertiser/{id}"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nd">@ResponseBody</span> <span class="nc">Response</span> <span class="nf">getAdvertiser</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">advertiserId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>当然，@ResponseBody 注解也可以定义在类上，这样所有的方法都继承了该特性。由于经常会使用到 @ResponseBody 注解，所以 Spring 提供了一个名为 <code class="language-plaintext highlighter-rouge">@RestController</code> 的注解来取代以上的 @Controller 注解，这样我们就可以省略返回值前面的 @ResponseBody 注解了，但参数前面的 @RequestBody 注解是无法省略的。实际上，看看 Spring 中对应 @RestController 注解的源码便可知晓：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Target</span><span class="o">({</span><span class="nc">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">})</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="nc">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Documented</span>
+<span class="nd">@Controller</span>
+<span class="nd">@ResponseBody</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">RestController</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="nf">value</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>可见，@RestController 注解已经被 @Controller 与 @ResponseBody 注解定义过了，Spring 框架会识别这类注解。需要注意的是，该特性在 Spring 4.0 中才引入。</p>
+
+<p>因此，我们可将以上代码进行如下改写：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/advertiser"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">createAdvertiser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">AdvertiserParam</span> <span class="n">advertiserParam</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/advertiser/{id}"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">getAdvertiser</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span><span class="s">"id"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">advertiserId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>除了使用注解来定义序列化行为以外，我们还需要使用 Jackson 来提供 JSON 的序列化操作，在 Spring 配置文件中只需添加以下配置即可：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nl">mvc:</span><span class="n">annotation</span><span class="o">-</span><span class="n">driven</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nl">mvc:</span><span class="n">message</span><span class="o">-</span><span class="n">converters</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">bean</span> <span class="kd">class</span><span class="err">="</span><span class="nc">org</span><span class="o">.</span><span class="na">springframework</span><span class="o">.</span><span class="na">http</span><span class="o">.</span><span class="na">converter</span><span class="o">.</span><span class="na">json</span><span class="o">.</span><span class="na">MappingJackson2HttpMessageConverter</span><span class="err">"</span><span class="o">/&gt;</span>
+    <span class="o">&lt;/</span><span class="nl">mvc:</span><span class="n">message</span><span class="o">-</span><span class="n">converters</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="nl">mvc:</span><span class="n">annotation</span><span class="o">-</span><span class="n">driven</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>若需要对 Jackson 的序列化行为进行定制，比如，排除值为空属性、进行缩进输出、将驼峰转为下划线、进行日期格式化等，这又如何实现呢？</p>
+
+<p>首先，我们需要扩展 Jackson 提供的 <code class="language-plaintext highlighter-rouge">ObjectMapper</code> 类，代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomObjectMapper</span> <span class="kd">extends</span> <span class="nc">ObjectMapper</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">camelCaseToLowerCaseWithUnderscores</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">dateFormatPattern</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setCamelCaseToLowerCaseWithUnderscores</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">camelCaseToLowerCaseWithUnderscores</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">camelCaseToLowerCaseWithUnderscores</span> <span class="o">=</span> <span class="n">camelCaseToLowerCaseWithUnderscores</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDateFormatPattern</span><span class="o">(</span><span class="nc">String</span> <span class="n">dateFormatPattern</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">dateFormatPattern</span> <span class="o">=</span> <span class="n">dateFormatPattern</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 排除值为空属性</span>
+        <span class="n">setSerializationInclusion</span><span class="o">(</span><span class="nc">JsonInclude</span><span class="o">.</span><span class="na">Include</span><span class="o">.</span><span class="na">NON_NULL</span><span class="o">);</span>
+        <span class="c1">// 进行缩进输出</span>
+        <span class="n">configure</span><span class="o">(</span><span class="nc">SerializationFeature</span><span class="o">.</span><span class="na">INDENT_OUTPUT</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+        <span class="c1">// 将驼峰转为下划线</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">camelCaseToLowerCaseWithUnderscores</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">setPropertyNamingStrategy</span><span class="o">(</span><span class="nc">PropertyNamingStrategy</span><span class="o">.</span><span class="na">CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 进行日期格式化</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">dateFormatPattern</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">DateFormat</span> <span class="n">dateFormat</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SimpleDateFormat</span><span class="o">(</span><span class="n">dateFormatPattern</span><span class="o">);</span>
+            <span class="n">setDateFormat</span><span class="o">(</span><span class="n">dateFormat</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后，将 CustomObjectMapper 注入到 MappingJackson2HttpMessageConverter 中，Spring 配置如下：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"objectMapper"</span> <span class="na">class=</span><span class="s">"com.xxx.api.json.CustomObjectMapper"</span> <span class="na">init-method=</span><span class="s">"init"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"camelCaseToLowerCaseWithUnderscores"</span> <span class="na">value=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dateFormatPattern"</span> <span class="na">value=</span><span class="s">"yyyy-MM-dd HH:mm:ss"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;mvc:annotation-driven&gt;</span>
+    <span class="nt">&lt;mvc:message-converters&gt;</span>
+        <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"objectMapper"</span> <span class="na">ref=</span><span class="s">"objectMapper"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/bean&gt;</span>
+    <span class="nt">&lt;/mvc:message-converters&gt;</span>
+<span class="nt">&lt;/mvc:annotation-driven&gt;</span>
+</code></pre></div></div>
+
+<p>通过以上过程，我们已经完成了一个基于 Spring MVC 的 REST 框架，只不过该框架还非常单薄，还缺乏很多关键性特性，尤其是异常处理。</p>
+
+<h3 id="43-处理异常行为">4.3 处理异常行为</h3>
+
+<p>在 Spring MVC 中，我们可以使用 AOP 技术，编写一个全局的异常处理切面类，用它来统一处理所有的异常行为，在 Spring 3.2 中才开始提供。使用法很简单，只需定义一个类，并通过 <code class="language-plaintext highlighter-rouge">@ControllerAdvice</code> 注解将其标注即可，同时需要使用 <code class="language-plaintext highlighter-rouge">@ResponseBody</code> 注解表示返回值可序列化为 JSON 字符串。代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ControllerAdvice</span>
+<span class="nd">@ResponseBody</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExceptionAdvice</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * 400 - Bad Request
+     */</span>
+    <span class="nd">@ResponseStatus</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">BAD_REQUEST</span><span class="o">)</span>
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">HttpMessageNotReadableException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">handleHttpMessageNotReadableException</span><span class="o">(</span><span class="nc">HttpMessageNotReadableException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"参数解析失败"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Response</span><span class="o">().</span><span class="na">failure</span><span class="o">(</span><span class="s">"could_not_read_json"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 405 - Method Not Allowed
+     */</span>
+    <span class="nd">@ResponseStatus</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">METHOD_NOT_ALLOWED</span><span class="o">)</span>
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">HttpRequestMethodNotSupportedException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">handleHttpRequestMethodNotSupportedException</span><span class="o">(</span><span class="nc">HttpRequestMethodNotSupportedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"不支持当前请求方法"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Response</span><span class="o">().</span><span class="na">failure</span><span class="o">(</span><span class="s">"request_method_not_supported"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 415 - Unsupported Media Type
+     */</span>
+    <span class="nd">@ResponseStatus</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">UNSUPPORTED_MEDIA_TYPE</span><span class="o">)</span>
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">HttpMediaTypeNotSupportedException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">handleHttpMediaTypeNotSupportedException</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"不支持当前媒体类型"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Response</span><span class="o">().</span><span class="na">failure</span><span class="o">(</span><span class="s">"content_type_not_supported"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 500 - Internal Server Error
+     */</span>
+    <span class="nd">@ResponseStatus</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">INTERNAL_SERVER_ERROR</span><span class="o">)</span>
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">Exception</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">handleException</span><span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"服务运行异常"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Response</span><span class="o">().</span><span class="na">failure</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>可见，在 ExceptionAdvice 类中包含一系列的异常处理方法，每个方法都通过 <code class="language-plaintext highlighter-rouge">@ResponseStatus</code> 注解定义了响应状态码，此外还通过 <code class="language-plaintext highlighter-rouge">@ExceptionHandler</code> 注解指定了具体需要拦截的异常类。以上过程只是包含了一部分的异常情况，若需处理其它异常，可添加方法具体的方法。需要注意的是，在运行时从上往下依次调用每个异常处理方法，匹配当前异常类型是否与 @ExceptionHandler 注解所定义的异常相匹配，若匹配，则执行该方法，同时忽略后续所有的异常处理方法，最终会返回经 JSON 序列化后的 Response 对象。</p>
+
+<h3 id="44-支持参数验证">4.4 支持参数验证</h3>
+
+<p>我们回到上文所提到的示例，这里处理一个普通的 POST 请求，代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/advertiser"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">createAdvertiser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nc">AdvertiserParam</span> <span class="n">advertiserParam</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>其中，AdvertiserParam 参数包含若干属性，通过以下类结构可见，它是一个传统的 POJO：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserParam</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">advertiserName</span><span class="o">;</span>
+    
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">description</span><span class="o">;</span>
+
+    <span class="c1">// 省略 getter/setter 方法</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>如果业务上需要确保 AdvertiserParam 对象的 advertiserName 属性必填，如何实现呢？</p>
+
+<p>若将这类参数验证的代码写死在 Controller 中，势必会与正常的业务逻辑搅在一起，导致责任不够单一，违背于“单一责任原则”。建议将其参数验证行为从 Controller 中剥离出来，放到另外的类中，这里仅提供一个 <code class="language-plaintext highlighter-rouge">@Valid</code> 注解来定义 AdvertiserParam 参数，并在 AdvertiserParam 类中通过 <code class="language-plaintext highlighter-rouge">@NotEmpty</code> 注解来定义 advertiserName 属性，就像下面这样：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RestController</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserController</span> <span class="o">{</span>
+
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"/advertiser"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">createAdvertiser</span><span class="o">(</span><span class="nd">@RequestBody</span> <span class="nd">@Valid</span> <span class="nc">AdvertiserParam</span> <span class="n">advertiserParam</span><span class="o">)</span> <span class="o">{</span>
+        <span class="o">...</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AdvertiserParam</span> <span class="o">{</span>
+
+    <span class="nd">@NotEmpty</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">advertiserName</span><span class="o">;</span>
+    
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">description</span><span class="o">;</span>
+
+    <span class="c1">// 省略 getter/setter 方法</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>这里的 @Valid 注解实际上是 <code class="language-plaintext highlighter-rouge">Validation Bean</code> 规范提供的注解，该规范已由 <code class="language-plaintext highlighter-rouge">Hibernate Validator</code> 框架实现，因此需要添加以下Maven 依赖到 pom.xml 文件中：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.hibernate<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>hibernate-validator<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>${hibernate-validator.version}<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>需要注意的是，Hibernate Validator 与 Hibernate 没有任何依赖关系，唯一有联系的只是都属于 JBoss 公司的开源项目而已。</p>
+
+<p>要实现 @NotEmpty 注解的功能，我们需要做以下几件事情。</p>
+
+<p>首先，定义一个 @NotEmpty 注解类，代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Documented</span>
+<span class="nd">@Target</span><span class="o">({</span><span class="nc">ElementType</span><span class="o">.</span><span class="na">FIELD</span><span class="o">,</span> <span class="nc">ElementType</span><span class="o">.</span><span class="na">PARAMETER</span><span class="o">})</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="nc">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Constraint</span><span class="o">(</span><span class="n">validatedBy</span> <span class="o">=</span> <span class="nc">NotEmptyValidator</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">NotEmpty</span> <span class="o">{</span>
+
+    <span class="nc">String</span> <span class="nf">message</span><span class="o">()</span> <span class="k">default</span> <span class="s">"not_empty"</span><span class="o">;</span>
+
+    <span class="nc">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">groups</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+
+    <span class="nc">Class</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">Payload</span><span class="o">&gt;[]</span> <span class="nf">payload</span><span class="o">()</span> <span class="k">default</span> <span class="o">{};</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以上注解类必须包含 message、groups、payload 三个属性，因为这是规范所要求的，此外，需要通过 @Constraint 注解指定一个验证器类，这里对应的是 NotEmptyValidator，其代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">NotEmptyValidator</span> <span class="kd">implements</span> <span class="nc">ConstraintValidator</span><span class="o">&lt;</span><span class="nc">NotEmpty</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initialize</span><span class="o">(</span><span class="nc">NotEmpty</span> <span class="n">constraintAnnotation</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isValid</span><span class="o">(</span><span class="nc">String</span> <span class="n">value</span><span class="o">,</span> <span class="nc">ConstraintValidatorContext</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以上验证器类实现了 ConstraintValidator 接口，并在该接口的 isValid( ) 方法中完成了具体的参数验证逻辑。需要注意的是，实现接口时需要指定泛型，第一个参数表示验证注解类型（NotEmpty），第二个参数表示需要验证的参数类型（String）。</p>
+
+<p>然后，我们需要在 Spring 配置文件中开启该特性，需添加如下配置：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.springframework.validation.beanvalidation.MethodValidationPostProcessor"</span><span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>最后，需要在全局异常处理类中添加参数验证处理方法，代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@ControllerAdvice</span>
+<span class="nd">@ResponseBody</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExceptionAdvice</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * 400 - Bad Request
+     */</span>
+    <span class="nd">@ResponseStatus</span><span class="o">(</span><span class="nc">HttpStatus</span><span class="o">.</span><span class="na">BAD_REQUEST</span><span class="o">)</span>
+    <span class="nd">@ExceptionHandler</span><span class="o">(</span><span class="nc">ValidationException</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Response</span> <span class="nf">handleValidationException</span><span class="o">(</span><span class="nc">ValidationException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">logger</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"参数验证失败"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Response</span><span class="o">().</span><span class="na">failure</span><span class="o">(</span><span class="s">"validation_exception"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>至此，REST 框架已集成了 Bean Validation 特性，我们可以使用各种注解来完成所需的参数验证行为了。</p>
+
+<p>看似该框架可以在本地成功跑起来，整个架构包含两个应用，前端应用提供纯静态的 HTML 页面，后端应用发布 REST API，前端需要通过 AJAX 调用后端发布的 REST API，然而 AJAX 是不支持跨域访问的，也就是说，前后端两个应用必须在同一个域名下才能访问。这是非常严重的技术障碍，一定需要找到解决方案。</p>
+
+<h3 id="45-解决跨域问题">4.5 解决跨域问题</h3>
+
+<p>比如，前端应用为静态站点且部署在 <a href="http://web.xxx.com/">http://web.xxx.com</a> 域下，后端应用发布 REST API 并部署在 <a href="http://api.xxx.com/">http://api.xxx.com</a> 域下，如何使前端应用通过 AJAX 跨域访问后端应用呢？这需要使用到 <code class="language-plaintext highlighter-rouge">CORS</code> 技术来实现，这也是目前最好的解决方案了。</p>
+
+<blockquote>
+  <p>CORS 全称为 Cross Origin Resource Sharing（跨域资源共享），服务端只需添加相关响应头信息，即可实现客户端发出 AJAX 跨域请求。</p>
+</blockquote>
+
+<p>CORS 技术非常简单，易于实现，目前绝大多数浏览器均已支持该技术（IE8 浏览器也支持了），服务端可通过任何编程语言来实现，只要能将 CORS 响应头写入 response 对象中即可。</p>
+
+<p>下面我们继续扩展 REST 框架，通过 CORS 技术实现 AJAX 跨域访问。</p>
+
+<p>首先，我们需要编写一个 Filter，用于过滤所有的 HTTP 请求，并将 CORS 响应头写入 response 对象中，代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CorsFilter</span> <span class="kd">implements</span> <span class="nc">Filter</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">allowOrigin</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">allowMethods</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">allowCredentials</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">allowHeaders</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">exposeHeaders</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">init</span><span class="o">(</span><span class="nc">FilterConfig</span> <span class="n">filterConfig</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">ServletException</span> <span class="o">{</span>
+        <span class="n">allowOrigin</span> <span class="o">=</span> <span class="n">filterConfig</span><span class="o">.</span><span class="na">getInitParameter</span><span class="o">(</span><span class="s">"allowOrigin"</span><span class="o">);</span>
+        <span class="n">allowMethods</span> <span class="o">=</span> <span class="n">filterConfig</span><span class="o">.</span><span class="na">getInitParameter</span><span class="o">(</span><span class="s">"allowMethods"</span><span class="o">);</span>
+        <span class="n">allowCredentials</span> <span class="o">=</span> <span class="n">filterConfig</span><span class="o">.</span><span class="na">getInitParameter</span><span class="o">(</span><span class="s">"allowCredentials"</span><span class="o">);</span>
+        <span class="n">allowHeaders</span> <span class="o">=</span> <span class="n">filterConfig</span><span class="o">.</span><span class="na">getInitParameter</span><span class="o">(</span><span class="s">"allowHeaders"</span><span class="o">);</span>
+        <span class="n">exposeHeaders</span> <span class="o">=</span> <span class="n">filterConfig</span><span class="o">.</span><span class="na">getInitParameter</span><span class="o">(</span><span class="s">"exposeHeaders"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doFilter</span><span class="o">(</span><span class="nc">ServletRequest</span> <span class="n">req</span><span class="o">,</span> <span class="nc">ServletResponse</span> <span class="n">res</span><span class="o">,</span> <span class="nc">FilterChain</span> <span class="n">chain</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
+        <span class="nc">HttpServletRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpServletRequest</span><span class="o">)</span> <span class="n">req</span><span class="o">;</span>
+        <span class="nc">HttpServletResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="o">(</span><span class="nc">HttpServletResponse</span><span class="o">)</span> <span class="n">res</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">allowOrigin</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">allowOriginList</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">allowOrigin</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s">","</span><span class="o">));</span>
+            <span class="k">if</span> <span class="o">(</span><span class="nc">CollectionUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">allowOriginList</span><span class="o">))</span> <span class="o">{</span>
+                <span class="nc">String</span> <span class="n">currentOrigin</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getHeader</span><span class="o">(</span><span class="s">"Origin"</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">allowOriginList</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">currentOrigin</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Access-Control-Allow-Origin"</span><span class="o">,</span> <span class="n">currentOrigin</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">allowMethods</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Access-Control-Allow-Methods"</span><span class="o">,</span> <span class="n">allowMethods</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">allowCredentials</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Access-Control-Allow-Credentials"</span><span class="o">,</span> <span class="n">allowCredentials</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">allowHeaders</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Access-Control-Allow-Headers"</span><span class="o">,</span> <span class="n">allowHeaders</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">exposeHeaders</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">"Access-Control-Expose-Headers"</span><span class="o">,</span> <span class="n">exposeHeaders</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">chain</span><span class="o">.</span><span class="na">doFilter</span><span class="o">(</span><span class="n">req</span><span class="o">,</span> <span class="n">res</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">destroy</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以上 CorsFilter 将从 web.xml 中读取相关 Filter 初始化参数，并将在处理 HTTP 请求时将这些参数写入对应的 CORS 响应头中，下面大致描述一下这些 CORS 响应头的意义：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">Access-Control-Allow-Origin</code>：允许访问的客户端域名，例如：<a href="http://web.xxx.xn--com%2C-yh5fq30z/">http://web.xxx.com，若为</a> *，则表示从任意域都能访问，即不做任何限制。</li>
+  <li><code class="language-plaintext highlighter-rouge">Access-Control-Allow-Methods</code>：允许访问的方法名，多个方法名用逗号分割，例如：GET,POST,PUT,DELETE,OPTIONS。</li>
+  <li><code class="language-plaintext highlighter-rouge">Access-Control-Allow-Credentials</code>：是否允许请求带有验证信息，若要获取客户端域下的 cookie 时，需要将其设置为 true。</li>
+  <li><code class="language-plaintext highlighter-rouge">Access-Control-Allow-Headers</code>：允许服务端访问的客户端请求头，多个请求头用逗号分割，例如：Content-Type。</li>
+  <li><code class="language-plaintext highlighter-rouge">Access-Control-Expose-Headers</code>：允许客户端访问的服务端响应头，多个响应头用逗号分割。</li>
+</ul>
+
+<p>需要注意的是，CORS 规范中定义 Access-Control-Allow-Origin 只允许两种取值，要么为 *，要么为具体的域名，也就是说，不支持同时配置多个域名。为了解决跨多个域的问题，需要在代码中做一些处理，这里将 Filter 初始化参数作为一个域名的集合（用逗号分隔），只需从当前请求中获取 Origin 请求头，就知道是从哪个域中发出的请求，若该请求在以上允许的域名集合中，则将其放入 Access-Control-Allow-Origin 响应头，这样跨多个域的问题就轻松解决了。</p>
+
+<p>以下是 web.xml 中配置 CorsFilter 的方法：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;filter&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>corsFilter<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;filter-class&gt;</span>com.xxx.api.cors.CorsFilter<span class="nt">&lt;/filter-class&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+        <span class="nt">&lt;param-name&gt;</span>allowOrigin<span class="nt">&lt;/param-name&gt;</span>
+        <span class="nt">&lt;param-value&gt;</span>http://web.xxx.com<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+        <span class="nt">&lt;param-name&gt;</span>allowMethods<span class="nt">&lt;/param-name&gt;</span>
+        <span class="nt">&lt;param-value&gt;</span>GET,POST,PUT,DELETE,OPTIONS<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+        <span class="nt">&lt;param-name&gt;</span>allowCredentials<span class="nt">&lt;/param-name&gt;</span>
+        <span class="nt">&lt;param-value&gt;</span>true<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+    <span class="nt">&lt;init-param&gt;</span>
+        <span class="nt">&lt;param-name&gt;</span>allowHeaders<span class="nt">&lt;/param-name&gt;</span>
+        <span class="nt">&lt;param-value&gt;</span>Content-Type<span class="nt">&lt;/param-value&gt;</span>
+    <span class="nt">&lt;/init-param&gt;</span>
+<span class="nt">&lt;/filter&gt;</span>
+<span class="nt">&lt;filter-mapping&gt;</span>
+    <span class="nt">&lt;filter-name&gt;</span>corsFilter<span class="nt">&lt;/filter-name&gt;</span>
+    <span class="nt">&lt;url-pattern&gt;</span>/*<span class="nt">&lt;/url-pattern&gt;</span>
+<span class="nt">&lt;/filter-mapping&gt;</span>
+</code></pre></div></div>
+
+<p>完成以上过程即可实现 AJAX 跨域功能了，但似乎还存在另外一个问题，由于 REST 是无状态的，后端应用发布的 REST API 可在用户未登录的情况下被任意调用，这显然是不安全的，如何解决这个问题呢？我们需要为 REST 请求提供安全机制。</p>
+
+<h3 id="46-提供安全机制">4.6 提供安全机制</h3>
+
+<p>解决 REST 安全调用问题，可以做得很复杂，也可以做得特简单，可按照以下过程提供 REST 安全机制：</p>
+
+<ol>
+  <li>当用户登录成功后，在服务端生成一个 token，并将其放入内存中（可放入 JVM 或 Redis 中），同时将该 token 返回到客户端。</li>
+  <li>在客户端中将返回的 token 写入 cookie 中，并且每次请求时都将 token 随请求头一起发送到服务端。</li>
+  <li>提供一个 AOP 切面，用于拦截所有的 Controller 方法，在切面中判断 token 的有效性。</li>
+  <li>当登出时，只需清理掉 cookie 中的 token 即可，服务端 token 可设置过期时间，使其自行移除。</li>
+</ol>
+
+<p>首先，我们需要定义一个用于管理 token 的接口，包括创建 token 与检查 token 有效性的功能。代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TokenManager</span> <span class="o">{</span>
+
+    <span class="nc">String</span> <span class="nf">createToken</span><span class="o">(</span><span class="nc">String</span> <span class="n">username</span><span class="o">);</span>
+
+    <span class="kt">boolean</span> <span class="nf">checkToken</span><span class="o">(</span><span class="nc">String</span> <span class="n">token</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后，我们可提供一个简单的 TokenManager 实现类，将 token 存储到 JVM 内存中。代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DefaultTokenManager</span> <span class="kd">implements</span> <span class="nc">TokenManager</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">tokenMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ConcurrentHashMap</span><span class="o">&lt;&gt;();</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">createToken</span><span class="o">(</span><span class="nc">String</span> <span class="n">username</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">token</span> <span class="o">=</span> <span class="nc">CodecUtil</span><span class="o">.</span><span class="na">createUUID</span><span class="o">();</span>
+        <span class="n">tokenMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">token</span><span class="o">,</span> <span class="n">username</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">token</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">checkToken</span><span class="o">(</span><span class="nc">String</span> <span class="n">token</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">!</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">token</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">tokenMap</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">token</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>需要注意的是，如果需要做到分布式集群，建议基于 Redis 提供一个实现类，将 token 存储到 Redis 中，并利用 Redis 与生俱来的特性，做到 token 的分布式一致性。</p>
+
+<p>然后，我们可以基于 Spring AOP 写一个切面类，用于拦截 Controller 类的方法，并从请求头中获取 token，最后对 token 有效性进行判断。代码如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SecurityAspect</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">DEFAULT_TOKEN_NAME</span> <span class="o">=</span> <span class="s">"X-Token"</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nc">TokenManager</span> <span class="n">tokenManager</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">tokenName</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTokenManager</span><span class="o">(</span><span class="nc">TokenManager</span> <span class="n">tokenManager</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tokenManager</span> <span class="o">=</span> <span class="n">tokenManager</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setTokenName</span><span class="o">(</span><span class="nc">String</span> <span class="n">tokenName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">tokenName</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">tokenName</span> <span class="o">=</span> <span class="no">DEFAULT_TOKEN_NAME</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">tokenName</span> <span class="o">=</span> <span class="n">tokenName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">execute</span><span class="o">(</span><span class="nc">ProceedingJoinPoint</span> <span class="n">pjp</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="c1">// 从切点上获取目标方法</span>
+        <span class="nc">MethodSignature</span> <span class="n">methodSignature</span> <span class="o">=</span> <span class="o">(</span><span class="nc">MethodSignature</span><span class="o">)</span> <span class="n">pjp</span><span class="o">.</span><span class="na">getSignature</span><span class="o">();</span>
+        <span class="nc">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">methodSignature</span><span class="o">.</span><span class="na">getMethod</span><span class="o">();</span>
+        <span class="c1">// 若目标方法忽略了安全性检查，则直接调用目标方法</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">isAnnotationPresent</span><span class="o">(</span><span class="nc">IgnoreSecurity</span><span class="o">.</span><span class="na">class</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">pjp</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="c1">// 从 request header 中获取当前 token</span>
+        <span class="nc">String</span> <span class="n">token</span> <span class="o">=</span> <span class="nc">WebContext</span><span class="o">.</span><span class="na">getRequest</span><span class="o">().</span><span class="na">getHeader</span><span class="o">(</span><span class="n">tokenName</span><span class="o">);</span>
+        <span class="c1">// 检查 token 有效性</span>
+        <span class="k">if</span> <span class="o">(!</span><span class="n">tokenManager</span><span class="o">.</span><span class="na">checkToken</span><span class="o">(</span><span class="n">token</span><span class="o">))</span> <span class="o">{</span>
+            <span class="nc">String</span> <span class="n">message</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"token [%s] is invalid"</span><span class="o">,</span> <span class="n">token</span><span class="o">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">TokenException</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 调用目标方法</span>
+        <span class="k">return</span> <span class="n">pjp</span><span class="o">.</span><span class="na">proceed</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>若要使 SecurityAspect 生效，则需要添加如下 Spring 配置：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"securityAspect"</span> <span class="na">class=</span><span class="s">"com.xxx.api.security.SecurityAspect"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"tokenManager"</span> <span class="na">ref=</span><span class="s">"tokenManager"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"tokenName"</span> <span class="na">value=</span><span class="s">"X-Token"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="nt">&lt;aop:config&gt;</span>
+    <span class="nt">&lt;aop:aspect</span> <span class="na">ref=</span><span class="s">"securityAspect"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;aop:around</span> <span class="na">method=</span><span class="s">"execute"</span> <span class="na">pointcut=</span><span class="s">"@annotation(org.springframework.web.bind.annotation.RequestMapping)"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/aop:aspect&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></div></div>
+
+<p>最后，别忘了在 web.xml 中添加允许的 X-Token 响应头，配置如下：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;init-param&gt;</span>
+    <span class="nt">&lt;param-name&gt;</span>allowHeaders<span class="nt">&lt;/param-name&gt;</span>
+    <span class="nt">&lt;param-value&gt;</span>Content-Type,X-Token<span class="nt">&lt;/param-value&gt;</span>
+<span class="nt">&lt;/init-param&gt;</span>
+</code></pre></div></div>
+
+<h2 id="5-总结">5 总结</h2>
+
+<p>本文从经典的 MVC 模式开始，对 MVC 模式是什么以及该模式存在的不足进行了简述。然后引出了如何对 MVC 模式的改良，让其转变为前后端分离架构，以及解释了为何要进行前后端分离。最后通过 REST 服务将前后端进行解耦，并提供了一款基于 Java 的 REST 框架的主要实现过程，尤其是需要注意的核心技术问题及其解决方案。希望本文对正在探索前后端分离的读者们有所帮助，期待与大家共同探讨。</p>
+
+<blockquote>
+  <p>源码地址：http://git.oschina.net/huangyong/api</p>
+</blockquote>
+
+<p><a href="https://my.oschina.net/huangyong/blog/521891">原文链接</a></p>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

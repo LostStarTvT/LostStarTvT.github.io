@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>安卓实现仿知乎左右滑动布局</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/03/12/android-viewpager.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">安卓实现仿知乎左右滑动布局</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-03-12T00:00:00+08:00" itemprop="datePublished">
+          
+          Mar 12, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">安卓实现仿知乎左右滑动布局</h1>
+    <p class="post-meta">
+      <time datetime="2020-03-12T00:00:00+08:00" itemprop="datePublished">
+        
+        Mar 12, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>仿知乎布局，实现左右滑动进行切换界面，其中界面是使用Fragement，界面滑动使用ViewPager进行实现</p>
+</blockquote>
+
+<h1 id="安卓实现仿知乎左右滑动布局">安卓实现仿知乎左右滑动布局</h1>
+<p><a href="https://github.com/LostStarTvT/FragmentAndViewPager">github项目地址</a></p>
+
+<h3 id="实现效果">实现效果</h3>
+
+<p>demo中实现了三个界面进行切换，上面有个导航栏可以很好的标注出来在哪个界面。<br />
+<img src="https://s2.ax1x.com/2020/02/27/308CIH.gif" alt="308CIH.gif" /></p>
+
+<h3 id="实现方式">实现方式</h3>
+<p>总共有<a href="https://github.com/Devlight/NavigationTabStrip">导航栏</a>和一个<a href="https://github.com/danilao/fragments-viewpager-example">viewPager</a>，将两个项目进行结合形成以上的效果。 感谢贡献~</p>
+<h3 id="实现代码">实现代码</h3>
+<ul>
+  <li>MainActivity代码</li>
+</ul>
+
+<p>需要一个activity作为容器进行承载三个fragment界面，然后使用viewPager这个类进行界面的切换，首先是activity代码： 将fragment和viewPager绑定。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 	<span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">NUM_ITEMS</span> <span class="o">=</span> <span class="mi">3</span><span class="o">;</span>
+
+    <span class="nc">ViewPager</span> <span class="n">mPager</span><span class="o">;</span>
+    <span class="nc">SlidePagerAdapter</span> <span class="n">mPagerAdapter</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="nc">NavigationTabStrip</span> <span class="n">mCenterNavigationTabStrip</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="nc">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+        <span class="n">setContentView</span><span class="o">(</span><span class="no">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">activity_main</span><span class="o">);</span>
+
+        <span class="c1">//找到可以自动切换的承载器。</span>
+        <span class="n">mPager</span> <span class="o">=</span> <span class="o">(</span><span class="nc">ViewPager</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="no">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">pager</span><span class="o">);</span>
+
+        <span class="n">mPagerAdapter</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SlidePagerAdapter</span><span class="o">(</span><span class="n">getSupportFragmentManager</span><span class="o">());</span>
+        <span class="n">mPager</span><span class="o">.</span><span class="na">setAdapter</span><span class="o">(</span><span class="n">mPagerAdapter</span><span class="o">);</span>
+
+        <span class="n">mCenterNavigationTabStrip</span> <span class="o">=</span> <span class="o">(</span><span class="nc">NavigationTabStrip</span><span class="o">)</span> <span class="n">findViewById</span><span class="o">(</span><span class="no">R</span><span class="o">.</span><span class="na">id</span><span class="o">.</span><span class="na">nts_center</span><span class="o">);</span>
+        <span class="c1">//将导航栏与pager 绑定，并设置第几个界面，</span>
+        <span class="n">mCenterNavigationTabStrip</span><span class="o">.</span><span class="na">setViewPager</span><span class="o">(</span><span class="n">mPager</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+
+    <span class="o">}</span>
+
+    <span class="cm">/* PagerAdapter class */</span>
+    <span class="kd">public</span> <span class="kd">class</span> <span class="nc">SlidePagerAdapter</span> <span class="kd">extends</span> <span class="nc">FragmentPagerAdapter</span> <span class="o">{</span>
+        <span class="nc">SlidePagerAdapter</span><span class="o">(</span><span class="nc">FragmentManager</span> <span class="n">fm</span><span class="o">)</span> <span class="o">{</span>
+            <span class="kd">super</span><span class="o">(</span><span class="n">fm</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="nc">Fragment</span> <span class="nf">getItem</span><span class="o">(</span><span class="kt">int</span> <span class="n">position</span><span class="o">)</span> <span class="o">{</span>
+
+            <span class="c1">//进行选择1 2 3</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">position</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">FirstFragment</span><span class="o">();</span>
+            <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">position</span> <span class="o">==</span><span class="mi">1</span><span class="o">)</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">SecondFragment</span><span class="o">();</span>
+            <span class="k">else</span>
+                <span class="k">return</span> <span class="k">new</span> <span class="nf">ThirdFragment</span><span class="o">();</span>
+        <span class="o">}</span>
+
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getCount</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="no">NUM_ITEMS</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>MainActivity界面代码</li>
+</ul>
+
+<p>整个界面包括两层结构<strong>导航栏</strong>和<strong>显示界面</strong>，这两个被一个大的<LinearLayout> 包含，然后这个大的<LinearLout>标签中又分别含有两个<FrameLayout>标签，分别包括导航栏和viewPager容器，形成真个布局。 mainActivity 容器将代二者进行连接，形成同步滑动切换界面。</FrameLayout></LinearLout></LinearLayout></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span>
+<span class="nt">&lt;android.support.constraint.ConstraintLayout</span> <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+    <span class="na">xmlns:app=</span><span class="s">"http://schemas.android.com/apk/res-auto"</span>
+    <span class="na">xmlns:tools=</span><span class="s">"http://schemas.android.com/tools"</span>
+    <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+    <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+    <span class="na">tools:context=</span><span class="s">"com.proposeme.fragmentandviewpager.MainActivity"</span><span class="nt">&gt;</span>
+
+
+    <span class="nt">&lt;LinearLayout</span>
+        <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+        <span class="na">android:layout_height=</span><span class="s">"match_parent"</span>
+        <span class="na">android:orientation=</span><span class="s">"vertical"</span><span class="nt">&gt;</span>
+
+        <span class="nt">&lt;FrameLayout</span>
+            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:background=</span><span class="s">"#ff252e39"</span><span class="nt">&gt;</span>
+
+            <span class="nt">&lt;View</span>
+                <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+                <span class="na">android:layout_height=</span><span class="s">"4dp"</span>
+                <span class="na">android:layout_gravity=</span><span class="s">"center"</span>
+                <span class="na">android:layout_marginTop=</span><span class="s">"18dp"</span>
+                <span class="na">android:background=</span><span class="s">"#182128"</span><span class="nt">/&gt;</span>
+
+            <span class="nt">&lt;com.gigamole.navigationtabstrip.NavigationTabStrip</span>
+                <span class="na">android:id=</span><span class="s">"@+id/nts_center"</span>
+                <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+                <span class="na">android:layout_height=</span><span class="s">"42dp"</span>
+                <span class="na">android:layout_gravity=</span><span class="s">"center"</span>
+                <span class="na">android:layout_marginEnd=</span><span class="s">"30dp"</span>
+                <span class="na">android:layout_marginLeft=</span><span class="s">"30dp"</span>
+                <span class="na">android:layout_marginRight=</span><span class="s">"30dp"</span>
+                <span class="na">android:layout_marginStart=</span><span class="s">"30dp"</span>
+                <span class="na">app:nts_active_color=</span><span class="s">"#fff"</span>
+                <span class="na">app:nts_color=</span><span class="s">"#3cdedd"</span>
+                <span class="na">app:nts_corners_radius=</span><span class="s">"3.5dp"</span>
+                <span class="na">app:nts_factor=</span><span class="s">"0.8"</span>
+                <span class="na">app:nts_gravity=</span><span class="s">"bottom"</span>
+                <span class="na">app:nts_inactive_color=</span><span class="s">"#81ffffff"</span>
+                <span class="na">app:nts_titles=</span><span class="s">"@array/titles"</span>
+                <span class="na">app:nts_type=</span><span class="s">"point"</span>
+                <span class="na">app:nts_typeface=</span><span class="s">"fonts/moon.otf"</span>
+                <span class="na">app:nts_weight=</span><span class="s">"7dp"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;/com.gigamole.navigationtabstrip.NavigationTabStrip&gt;</span>
+
+
+        <span class="nt">&lt;/FrameLayout&gt;</span>
+
+        <span class="nt">&lt;FrameLayout</span>
+            <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+            <span class="na">android:layout_height=</span><span class="s">"wrap_content"</span>
+            <span class="na">android:background=</span><span class="s">"#ff252e39"</span><span class="nt">&gt;</span>
+
+            <span class="nt">&lt;android.support.v4.view.ViewPager</span>
+                <span class="na">xmlns:android=</span><span class="s">"http://schemas.android.com/apk/res/android"</span>
+                <span class="na">android:id=</span><span class="s">"@+id/pager"</span>
+                <span class="na">android:layout_width=</span><span class="s">"match_parent"</span>
+                <span class="na">android:layout_height=</span><span class="s">"match_parent"</span> <span class="nt">/&gt;</span>
+
+        <span class="nt">&lt;/FrameLayout&gt;</span>
+
+    <span class="nt">&lt;/LinearLayout&gt;</span>
+
+
+<span class="nt">&lt;/android.support.constraint.ConstraintLayout&gt;</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Fragment界面</li>
+</ul>
+
+<p>定义了三个fragment空白界面进行展示界面切换的效果，代码如下，其中有一点就是需要区别fragment和activity中对于界面的操作和声明周期。 xml布局文件不再赘述。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FirstFragment</span> <span class="kd">extends</span> <span class="nc">Fragment</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">TAG</span> <span class="o">=</span> <span class="s">"FirstFragment"</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">View</span> <span class="nf">onCreateView</span><span class="o">(</span><span class="nc">LayoutInflater</span> <span class="n">inflater</span><span class="o">,</span> <span class="nc">ViewGroup</span> <span class="n">container</span><span class="o">,</span>
+                             <span class="nc">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// Inflate the layout for this fragment</span>
+        <span class="nc">View</span> <span class="n">view</span> <span class="o">=</span> <span class="n">inflater</span><span class="o">.</span><span class="na">inflate</span><span class="o">(</span><span class="no">R</span><span class="o">.</span><span class="na">layout</span><span class="o">.</span><span class="na">fragment_first</span><span class="o">,</span> <span class="n">container</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+
+        <span class="k">return</span> <span class="n">view</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>万水千山总是情，点个star行不行~</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#android">#android</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

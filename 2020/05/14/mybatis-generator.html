@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Mybatis generator &amp; Swagger 文档使用教程</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/05/14/mybatis-generator.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Mybatis generator &amp; Swagger 文档使用教程</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-05-14T00:00:00+08:00" itemprop="datePublished">
+          
+          May 14, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Mybatis generator &amp; Swagger 文档使用教程</h1>
+    <p class="post-meta">
+      <time datetime="2020-05-14T00:00:00+08:00" itemprop="datePublished">
+        
+        May 14, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录在springBoot项目中使用mybatis generator生成实体类代码，并且使用Swagger 进行测试后台接口。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#1简介" id="markdown-toc-1简介">1.简介</a></li>
+  <li><a href="#2使用generator" id="markdown-toc-2使用generator">2.使用generator</a>    <ul>
+      <li><a href="#21添加pom依赖" id="markdown-toc-21添加pom依赖">2.1添加pom依赖</a></li>
+      <li><a href="#22-构建generator生成类" id="markdown-toc-22-构建generator生成类">2.2 构建generator生成类。</a></li>
+      <li><a href="#23-配置generatorxml文件" id="markdown-toc-23-配置generatorxml文件">2.3 配置generator.xml文件</a></li>
+      <li><a href="#24-运行程序" id="markdown-toc-24-运行程序">2.4 运行程序</a></li>
+    </ul>
+  </li>
+  <li><a href="#3使用swagger" id="markdown-toc-3使用swagger">3.使用swagger</a>    <ul>
+      <li><a href="#31-添加swagger依赖" id="markdown-toc-31-添加swagger依赖">3.1 添加swagger依赖</a></li>
+      <li><a href="#32-添加配置类" id="markdown-toc-32-添加配置类">3.2 添加配置类</a></li>
+      <li><a href="#32-为需要的类添加注释" id="markdown-toc-32-为需要的类添加注释">3.2 为需要的类添加注释</a></li>
+      <li><a href="#33-结果展示" id="markdown-toc-33-结果展示">3.3 结果展示</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="1简介">1.简介</h1>
+
+<p>mybatis-generator 是一款 mybatis 自动代码生成工具，可以通过配置，快速生成 mapper接口、对应的xml和数据库对应表的实体类。但是只能构建单纯的增删改查。</p>
+
+<p>Swagger 是一套基于 OpenAPI 规范构建的开源工具，可以帮助我们设计、构建、记录以及使用 Rest API。Swagger 主要包含了以下三个部分：</p>
+
+<ol>
+  <li>Swagger Editor：基于浏览器的编辑器，我们可以使用它编写我们 OpenAPI 规范。</li>
+  <li>Swagger UI：它会将我们编写的 OpenAPI 规范呈现为交互式的 API 文档，后文我将使用浏览器来查看并且操作我们的 Rest API。</li>
+  <li>Swagger Codegen：它可以通过为 OpenAPI（以前称为 Swagger）规范定义的任何 API 生成服务器存根和客户端 SDK 来简化构建过程。</li>
+</ol>
+
+<p><a href="https://blog.csdn.net/qq_40147863/article/details/85886166">mybatis-geneator参考链接</a> <a href="https://www.ibm.com/developerworks/cn/java/j-using-swagger-in-a-spring-boot-project/index.html">swagger参考链接</a></p>
+
+<p>在这里就可以使用generator生成对应的mapper 和model，编写对应的controller使用swagger进行测试api接口。</p>
+
+<p>具体的测试项目参考的是 <a href="http://www.macrozheng.com/#/architect/mall_arch_01">mall项目学习</a></p>
+
+<h1 id="2使用generator">2.使用generator</h1>
+
+<p>首先需要使用mysql版本为5.7以上，并且创建好对应的表。</p>
+
+<h2 id="21添加pom依赖">2.1添加pom依赖</h2>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- MyBatis 生成器 --&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>org.mybatis.generator<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>mybatis-generator-core<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.3.7<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h2 id="22-构建generator生成类">2.2 构建generator生成类。</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * 用于生产MBG的代码
+ * Created by macro on 2018/4/26.
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Generator</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="c1">//MBG 执行过程中的警告信息</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">warnings</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+        <span class="c1">//当生成的代码重复时，覆盖原代码</span>
+        <span class="kt">boolean</span> <span class="n">overwrite</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+        <span class="c1">//读取我们的 MBG 配置文件</span>
+        <span class="nc">InputStream</span> <span class="n">is</span> <span class="o">=</span> <span class="nc">Generator</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getResourceAsStream</span><span class="o">(</span><span class="s">"/generatorConfig.xml"</span><span class="o">);</span>
+        <span class="nc">ConfigurationParser</span> <span class="n">cp</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ConfigurationParser</span><span class="o">(</span><span class="n">warnings</span><span class="o">);</span>
+        <span class="nc">Configuration</span> <span class="n">config</span> <span class="o">=</span> <span class="n">cp</span><span class="o">.</span><span class="na">parseConfiguration</span><span class="o">(</span><span class="n">is</span><span class="o">);</span>
+        <span class="n">is</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+
+        <span class="nc">DefaultShellCallback</span> <span class="n">callback</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DefaultShellCallback</span><span class="o">(</span><span class="n">overwrite</span><span class="o">);</span>
+        <span class="c1">//创建 MBG</span>
+        <span class="nc">MyBatisGenerator</span> <span class="n">myBatisGenerator</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">MyBatisGenerator</span><span class="o">(</span><span class="n">config</span><span class="o">,</span> <span class="n">callback</span><span class="o">,</span> <span class="n">warnings</span><span class="o">);</span>
+        <span class="c1">//执行生成代码</span>
+        <span class="n">myBatisGenerator</span><span class="o">.</span><span class="na">generate</span><span class="o">(</span><span class="kc">null</span><span class="o">);</span>
+        <span class="c1">//输出警告信息</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">warning</span> <span class="o">:</span> <span class="n">warnings</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">warning</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>另外也可以对生成的类进行注释的配置。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * 自定义注释生成器
+ * Created by macro on 2018/4/26.
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CommentGenerator</span> <span class="kd">extends</span> <span class="nc">DefaultCommentGenerator</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">API_MODEL_PROPERTY_FULL_CLASS_NAME</span> <span class="o">=</span> <span class="s">"io.swagger.annotations.ApiModelProperty"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">CharSequence</span> <span class="no">EXAMPLE_SUFFIX</span> <span class="o">=</span> <span class="s">"example"</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">addRemarkComments</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * 设置用户配置的参数
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addConfigurationProperties</span><span class="o">(</span><span class="nc">Properties</span> <span class="n">properties</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">addConfigurationProperties</span><span class="o">(</span><span class="n">properties</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">addRemarkComments</span> <span class="o">=</span> <span class="nc">StringUtility</span><span class="o">.</span><span class="na">isTrue</span><span class="o">(</span><span class="n">properties</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"addRemarkComments"</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 给字段添加注释
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addFieldComment</span><span class="o">(</span><span class="nc">Field</span> <span class="n">field</span><span class="o">,</span> <span class="nc">IntrospectedTable</span> <span class="n">introspectedTable</span><span class="o">,</span>
+                                <span class="nc">IntrospectedColumn</span> <span class="n">introspectedColumn</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">remarks</span> <span class="o">=</span> <span class="n">introspectedColumn</span><span class="o">.</span><span class="na">getRemarks</span><span class="o">();</span>
+        <span class="c1">//根据参数和备注信息判断是否添加备注信息</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">addRemarkComments</span> <span class="o">&amp;&amp;</span> <span class="nc">StringUtility</span><span class="o">.</span><span class="na">stringHasValue</span><span class="o">(</span><span class="n">remarks</span><span class="o">))</span> <span class="o">{</span>
+<span class="c1">//            addFieldJavaDoc(field, remarks);</span>
+            <span class="c1">//数据库中特殊字符需要转义</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">remarks</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"\""</span><span class="o">)){</span>
+                <span class="n">remarks</span> <span class="o">=</span> <span class="n">remarks</span><span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s">"\""</span><span class="o">,</span><span class="s">"'"</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="c1">//给model的字段添加swagger注解</span>
+            <span class="n">field</span><span class="o">.</span><span class="na">addJavaDocLine</span><span class="o">(</span><span class="s">"@ApiModelProperty(value = \""</span><span class="o">+</span><span class="n">remarks</span><span class="o">+</span><span class="s">"\")"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 给model的字段添加注释
+     */</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">addFieldJavaDoc</span><span class="o">(</span><span class="nc">Field</span> <span class="n">field</span><span class="o">,</span> <span class="nc">String</span> <span class="n">remarks</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//文档注释开始</span>
+        <span class="n">field</span><span class="o">.</span><span class="na">addJavaDocLine</span><span class="o">(</span><span class="s">"/**"</span><span class="o">);</span>
+        <span class="c1">//获取数据库字段的备注信息</span>
+        <span class="nc">String</span><span class="o">[]</span> <span class="n">remarkLines</span> <span class="o">=</span> <span class="n">remarks</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">getProperty</span><span class="o">(</span><span class="s">"line.separator"</span><span class="o">));</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">remarkLine</span> <span class="o">:</span> <span class="n">remarkLines</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">field</span><span class="o">.</span><span class="na">addJavaDocLine</span><span class="o">(</span><span class="s">" * "</span> <span class="o">+</span> <span class="n">remarkLine</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">addJavadocTag</span><span class="o">(</span><span class="n">field</span><span class="o">,</span> <span class="kc">false</span><span class="o">);</span>
+        <span class="n">field</span><span class="o">.</span><span class="na">addJavaDocLine</span><span class="o">(</span><span class="s">" */"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addJavaFileComment</span><span class="o">(</span><span class="nc">CompilationUnit</span> <span class="n">compilationUnit</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">addJavaFileComment</span><span class="o">(</span><span class="n">compilationUnit</span><span class="o">);</span>
+        <span class="c1">//只在model中添加swagger注解类的导入</span>
+        <span class="k">if</span><span class="o">(!</span><span class="n">compilationUnit</span><span class="o">.</span><span class="na">isJavaInterface</span><span class="o">()&amp;&amp;!</span><span class="n">compilationUnit</span><span class="o">.</span><span class="na">getType</span><span class="o">().</span><span class="na">getFullyQualifiedName</span><span class="o">().</span><span class="na">contains</span><span class="o">(</span><span class="no">EXAMPLE_SUFFIX</span><span class="o">)){</span>
+            <span class="n">compilationUnit</span><span class="o">.</span><span class="na">addImportedType</span><span class="o">(</span><span class="k">new</span> <span class="nc">FullyQualifiedJavaType</span><span class="o">(</span><span class="no">API_MODEL_PROPERTY_FULL_CLASS_NAME</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<h2 id="23-配置generatorxml文件">2.3 配置generator.xml文件</h2>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="cp">&lt;!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"&gt;</span>
+<span class="nt">&lt;generatorConfiguration&gt;</span>
+    <span class="nt">&lt;properties</span> <span class="na">resource=</span><span class="s">"generator.properties"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;context</span> <span class="na">id=</span><span class="s">"MySqlContext"</span> <span class="na">targetRuntime=</span><span class="s">"MyBatis3"</span> <span class="na">defaultModelType=</span><span class="s">"flat"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"beginningDelimiter"</span> <span class="na">value=</span><span class="s">"`"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"endingDelimiter"</span> <span class="na">value=</span><span class="s">"`"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"javaFileEncoding"</span> <span class="na">value=</span><span class="s">"UTF-8"</span><span class="nt">/&gt;</span>
+        
+        <span class="c">&lt;!-- 更改generate xml为重写而不是追加。--&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">type=</span><span class="s">"org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"</span> <span class="nt">/&gt;</span>
+        
+        <span class="c">&lt;!-- 为模型生成序列化方法--&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">type=</span><span class="s">"org.mybatis.generator.plugins.SerializablePlugin"</span><span class="nt">/&gt;</span>
+        
+        <span class="c">&lt;!-- 为生成的Java模型创建一个toString方法 --&gt;</span>
+        <span class="nt">&lt;plugin</span> <span class="na">type=</span><span class="s">"org.mybatis.generator.plugins.ToStringPlugin"</span><span class="nt">/&gt;</span>
+        
+        <span class="c">&lt;!--可以自定义生成model的代码注释--&gt;</span>
+        <span class="nt">&lt;commentGenerator</span> <span class="na">type=</span><span class="s">"com.macro.mall.tiny.mbg.CommentGenerator"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!-- 是否去除自动生成的注释 true：是 ： false:否 --&gt;</span>
+            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"suppressAllComments"</span> <span class="na">value=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"suppressDate"</span> <span class="na">value=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"addRemarkComments"</span> <span class="na">value=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/commentGenerator&gt;</span>
+        <span class="c">&lt;!--配置数据库连接--&gt;</span>
+        <span class="nt">&lt;jdbcConnection</span> <span class="na">driverClass=</span><span class="s">"${jdbc.driverClass}"</span>
+                        <span class="na">connectionURL=</span><span class="s">"${jdbc.connectionURL}"</span>
+                        <span class="na">userId=</span><span class="s">"${jdbc.userId}"</span>
+                        <span class="na">password=</span><span class="s">"${jdbc.password}"</span><span class="nt">&gt;</span>
+            <span class="c">&lt;!--解决mysql驱动升级到8.0后不生成指定数据库代码的问题--&gt;</span>
+            <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"nullCatalogMeansCurrent"</span> <span class="na">value=</span><span class="s">"true"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/jdbcConnection&gt;</span>
+        <span class="c">&lt;!--指定生成model的路径--&gt;</span>
+        <span class="nt">&lt;javaModelGenerator</span> <span class="na">targetPackage=</span><span class="s">"com.macro.mall.tiny.mbg.model"</span> <span class="na">targetProject=</span><span class="s">"src\main\java"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!--指定生成mapper.xml的路径--&gt;</span>
+        <span class="nt">&lt;sqlMapGenerator</span> <span class="na">targetPackage=</span><span class="s">"com.macro.mall.tiny.mbg.mapper"</span> <span class="na">targetProject=</span><span class="s">"src\main\resources"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!--指定生成mapper接口的的路径--&gt;</span>
+        <span class="nt">&lt;javaClientGenerator</span> <span class="na">type=</span><span class="s">"XMLMAPPER"</span> <span class="na">targetPackage=</span><span class="s">"com.macro.mall.tiny.mbg.mapper"</span>
+                             <span class="na">targetProject=</span><span class="s">"src\main\java"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!--生成全部表tableName设为%--&gt;</span>
+        <span class="nt">&lt;table</span> <span class="na">tableName=</span><span class="s">"pms_brand"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;generatedKey</span> <span class="na">column=</span><span class="s">"id"</span> <span class="na">sqlStatement=</span><span class="s">"MySql"</span> <span class="na">identity=</span><span class="s">"true"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/table&gt;</span>
+    <span class="nt">&lt;/context&gt;</span>
+<span class="nt">&lt;/generatorConfiguration&gt;</span>
+</code></pre></div></div>
+
+<p>对应的数据库连接配置：</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">jdbc.driverClass</span><span class="p">=</span><span class="s">com.mysql.cj.jdbc.Driver</span>
+<span class="py">jdbc.connectionURL</span><span class="p">=</span><span class="s">jdbc:mysql://192.168.60.130:3306/mall?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai</span>
+<span class="py">jdbc.userId</span><span class="p">=</span><span class="s">root</span>
+<span class="py">jdbc.password</span><span class="p">=</span><span class="s">root</span>
+</code></pre></div></div>
+
+<h2 id="24-运行程序">2.4 运行程序</h2>
+
+<p>此时进行运行generator.java中的方法便能够生对应的mapper接口 + model 实体类 + mapper配置文件。如下所示：</p>
+
+<p><a href="https://pic.tyzhang.top/image/dqBM"><img src="https://pic.tyzhang.top/images/2020/05/14/generator.png" alt="generator.png" /></a></p>
+
+<p>其中红线中是标记的生成的代码和类，另外在测试中有个bug，就是使用generator  1.3.3 版本的时候，使用代码生成的mapper xml配置文件是追加的方式，所以需要在进行重新生成代码的时候，需要先将之前生成的xml文件进行删除，否则会运行失败，但是如果更新为1.3.7版本的话就能够解决这个问题，但是需要添加一个插件。上面写的东西是1,3,3版本的。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--生成mapper.xml时覆盖原文件--&gt;</span>
+<span class="nt">&lt;plugin</span> <span class="na">type=</span><span class="s">"org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>使用以上的话就再次生成的xml文件的话就是采用替代的方法而不是追加的方式。</p>
+
+<h1 id="3使用swagger">3.使用swagger</h1>
+
+<p>使用swagger进行api测试。</p>
+
+<h2 id="31-添加swagger依赖">3.1 添加swagger依赖</h2>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--Swagger-UI API文档生产工具--&gt;</span>
+<span class="c">&lt;!--Swagger核心依赖--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>springfox-swagger2<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.7.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="c">&lt;!--Swagger生成UI工具--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>io.springfox<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>springfox-swagger-ui<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>2.7.0<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<h2 id="32-添加配置类">3.2 添加配置类</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Describe: Swagger2API文档的配置
+ *
+ * @author Seven on 2020/5/14
+ */</span>
+<span class="nd">@Configuration</span>
+<span class="nd">@EnableSwagger2</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Swagger2Config</span> <span class="o">{</span>
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">Docket</span> <span class="nf">createRestApi</span><span class="o">(){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Docket</span><span class="o">(</span><span class="nc">DocumentationType</span><span class="o">.</span><span class="na">SWAGGER_2</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">apiInfo</span><span class="o">(</span><span class="n">apiInfo</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">select</span><span class="o">()</span>
+                <span class="c1">//为当前包下controller生成API文档</span>
+                <span class="o">.</span><span class="na">apis</span><span class="o">(</span><span class="nc">RequestHandlerSelectors</span><span class="o">.</span><span class="na">basePackage</span><span class="o">(</span><span class="s">"com.macro.mall.tiny.controller"</span><span class="o">))</span>
+                <span class="c1">//为有@Api注解的Controller生成API文档</span>
+<span class="c1">//                .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))</span>
+                <span class="c1">//为有@ApiOperation注解的方法生成API文档</span>
+<span class="c1">//                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))</span>
+                <span class="o">.</span><span class="na">paths</span><span class="o">(</span><span class="nc">PathSelectors</span><span class="o">.</span><span class="na">any</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">ApiInfo</span> <span class="nf">apiInfo</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">ApiInfoBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">title</span><span class="o">(</span><span class="s">"SwaggerUI演示"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">description</span><span class="o">(</span><span class="s">"mall-tiny"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">contact</span><span class="o">(</span><span class="s">"macro"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">version</span><span class="o">(</span><span class="s">"1.0"</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="32-为需要的类添加注释">3.2 为需要的类添加注释</h2>
+
+<p>首先需要在类头上添加<code class="language-plaintext highlighter-rouge">@Api()</code>注解,表示一个主类，然后使用<code class="language-plaintext highlighter-rouge"> @ApiOperation("获取所有品牌列表")</code>注解进行为每个api方法添加注解，这样便能够在前面进行看到。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * 品牌管理Controller
+ * Created by macro on 2019/4/19.
+ */</span>
+<span class="nd">@Api</span><span class="o">(</span><span class="n">tags</span> <span class="o">=</span> <span class="s">"PmsBrandController"</span><span class="o">,</span> <span class="n">description</span> <span class="o">=</span> <span class="s">"商品品牌管理"</span><span class="o">)</span>
+<span class="nd">@Controller</span>
+<span class="nd">@RequestMapping</span><span class="o">(</span><span class="s">"/brand"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PmsBrandController</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">PmsBrandService</span> <span class="n">brandService</span><span class="o">;</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Logger</span> <span class="no">LOGGER</span> <span class="o">=</span> <span class="nc">LoggerFactory</span><span class="o">.</span><span class="na">getLogger</span><span class="o">(</span><span class="nc">PmsBrandController</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+
+    <span class="nd">@ApiOperation</span><span class="o">(</span><span class="s">"获取所有品牌列表"</span><span class="o">)</span>
+    <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="s">"listAll"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span><span class="o">)</span>
+    <span class="nd">@ResponseBody</span>
+    <span class="kd">public</span> <span class="nc">CommonResult</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">PmsBrand</span><span class="o">&gt;&gt;</span> <span class="nf">getBrandList</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">CommonResult</span><span class="o">.</span><span class="na">success</span><span class="o">(</span><span class="n">brandService</span><span class="o">.</span><span class="na">listAllBrand</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="33-结果展示">3.3 结果展示</h2>
+
+<p>上面操作完成以后，便可以访问本地接口http://localhost:8080/swagger-ui.html 进行测试接口。显示如下：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/05/14/swagger.png" alt="swagger.png" /></p>
+
+<p>在这里可以很方便的测试对应的接口，不需要开发前端就行，这样便可以专注于开发后端服务器api接口。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

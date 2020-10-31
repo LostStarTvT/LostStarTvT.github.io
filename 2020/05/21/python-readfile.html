@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Python 匹配不定文件名</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/05/21/python-readfile.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Python 匹配不定文件名</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-05-21T00:00:00+08:00" itemprop="datePublished">
+          
+          May 21, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Python 匹配不定文件名</h1>
+    <p class="post-meta">
+      <time datetime="2020-05-21T00:00:00+08:00" itemprop="datePublished">
+        
+        May 21, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>在进行数据处理的时候，可能会有数据文件名称不一致的问题，本文使用 fnmatch 进行匹配文件名称然后进行批量读取文件。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#一使用场景" id="markdown-toc-一使用场景">一、使用场景</a></li>
+  <li><a href="#二读取结果" id="markdown-toc-二读取结果">二、读取结果</a></li>
+  <li><a href="#三实现代码" id="markdown-toc-三实现代码">三、实现代码</a></li>
+</ul>
+<h1 id="一使用场景">一、使用场景</h1>
+
+<p>在处理数据的时候，总会出现很多不同的文件需要一一读取，但是因为有些命名不规范导致读取很麻烦，比如说下如下所示：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/05/23/example99c2a4d0a4c971b3.png" alt="example99c2a4d0a4c971b3.png" /></p>
+
+<p>需要读取每个文件夹中的HandPhone_keyboard的数据，但是因为命名的不规范，后缀为HTC与Sam，使得读取文件很复杂。python中的<code class="language-plaintext highlighter-rouge">fnmatch</code>插件可以很好的解决这种文件读取，采用的方法为先将文件夹中的所有的文件名称读取进来，然后使用<code class="language-plaintext highlighter-rouge">fnmatch</code>进行匹配需要的文件夹名称。</p>
+
+<h1 id="二读取结果">二、读取结果</h1>
+
+<p>最终读取的结果如下，可以发现，前面是比较有规律的，但是后面的可能是(Samsung_S6)，或者是(HTC_One)，那么就需要进行匹配然后读取出来文件。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./data/1/1_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/2/2_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/3/3_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/4/4_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/5/5_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/6/6_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/7/7_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/8/8_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/9/9_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+./data/10/10_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/11/11_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/12/12_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+./data/13/13_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/14/14_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+./data/15/15_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+./data/16/16_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/17/17_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+./data/18/18_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+./data/19/19_HandPhone_Keyboard_<span class="o">(</span>Samsung_S6<span class="o">)</span>.csv
+./data/20/20_HandPhone_Keyboard_<span class="o">(</span>HTC_One<span class="o">)</span>.csv
+</code></pre></div></div>
+
+<h1 id="三实现代码">三、实现代码</h1>
+
+<p>代码中主要的就是使用字符串进行拼接出来路径，然后进行读取文件。对于<code class="language-plaintext highlighter-rouge">fnmatch</code>，实现的方法为首先目录中的所有文件名使用<code class="language-plaintext highlighter-rouge">os.listdir</code>读取进来，然后使用<code class="language-plaintext highlighter-rouge">fnmatch.fnmatchcase</code>方法进行匹配，如果匹配成功则输出。其中<code class="language-plaintext highlighter-rouge">pattern = str(i) + '_HandPhone_Keyboard_*.csv'</code>是进行匹配的规则，其中*表示后面的所有字符都进行匹配。</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python 
+# -*- coding:utf-8 -*-
+# author: Seven time: 2020/5/15 
+# Describe : 进行读取数据。
+</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">fnmatch</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">base_path</span> <span class="o">=</span> <span class="s">"./data/"</span>  <span class="c1"># 设置文件路径。
+</span>    <span class="n">person_number</span> <span class="o">=</span> <span class="mi">20</span>  <span class="c1"># 保存有多少用户
+</span>	
+    <span class="c1"># 最终路径 ./data/20/20_HandPhone_Keyboard_(HTC_One).csv
+</span>    <span class="c1"># 获取本地路径 ，使用fnmatchcase方法读取出来所有的需要路径。
+</span>    <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">person_number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># 获取文件夹中所有的文件目录
+</span>        <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">base_path</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+        <span class="c1"># 设置过滤条件，进行匹配需要的数据，* 表示任意匹配
+</span>        <span class="n">pattern</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">'_HandPhone_Keyboard_*.csv'</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
+            <span class="c1"># 因为有很多的路径，所以需要读取到的本地路径与 pattern有没有匹配，匹配成功的是需要的
+</span>            <span class="k">if</span> <span class="n">fnmatch</span><span class="p">.</span><span class="n">fnmatchcase</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
+                <span class="c1"># 获取到需要的数据。
+</span>                <span class="n">path</span> <span class="o">=</span> <span class="n">base_path</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">name</span>
+                <span class="c1"># 存储数据
+</span>                <span class="n">paths</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+                <span class="k">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+	
+    <span class="c1"># 进行读取数据。
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">person_number</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="c1"># 拼接成需要的数据。
+</span>        <span class="n">path</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># 读取数据
+</span>        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+            <span class="k">print</span><span class="p">(</span><span class="s">"第"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">"个数据长度"</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">user</span><span class="p">)))</span>
+        <span class="k">except</span> <span class="nb">FileNotFoundError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+</code></pre></div></div>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#python">#python</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

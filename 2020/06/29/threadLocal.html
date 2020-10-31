@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：理解ThreadLocal</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/06/29/threadLocal.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：理解ThreadLocal</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-06-29T00:00:00+08:00" itemprop="datePublished">
+          
+          Jun 29, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：理解ThreadLocal</h1>
+    <p class="post-meta">
+      <time datetime="2020-06-29T00:00:00+08:00" itemprop="datePublished">
+        
+        Jun 29, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>对于ThreadLocal还是不是很理解，在此做个总结</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#参考" id="markdown-toc-参考">参考</a></li>
+  <li><a href="#概述" id="markdown-toc-概述">概述</a></li>
+  <li><a href="#实例" id="markdown-toc-实例">实例</a></li>
+  <li><a href="#源码分析" id="markdown-toc-源码分析">源码分析</a>    <ul>
+      <li><a href="#类图调用关系" id="markdown-toc-类图调用关系">类图调用关系</a></li>
+      <li><a href="#实例调用关系" id="markdown-toc-实例调用关系">实例调用关系</a></li>
+      <li><a href="#内存泄露问题" id="markdown-toc-内存泄露问题">内存泄露问题</a></li>
+      <li><a href="#常用api" id="markdown-toc-常用api">常用api：</a></li>
+      <li><a href="#get" id="markdown-toc-get">get()</a></li>
+      <li><a href="#sett-value" id="markdown-toc-sett-value">set(T value)</a></li>
+      <li><a href="#threadlocalmap内部类" id="markdown-toc-threadlocalmap内部类">ThreadLocalMap内部类</a>        <ul>
+          <li><a href="#setthreadlocal-key-object-value" id="markdown-toc-setthreadlocal-key-object-value">set(ThreadLocal key, Object value)</a></li>
+          <li><a href="#getentry" id="markdown-toc-getentry">getEntry()</a></li>
+        </ul>
+      </li>
+      <li><a href="#总结" id="markdown-toc-总结">总结</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="参考">参考</h1>
+
+<p><a href="https://sylvanassun.github.io/2017/11/06/2017-11-06-spring_and_thread-safe/">聊聊spring中的线程安全性</a>  <a href="https://juejin.im/post/5d427f306fb9a06b122f1b94">面试再问ThreadLocal，别说你不会</a></p>
+
+<h1 id="概述">概述</h1>
+
+<p>ThreadLocal是线程同步中的一个工具类，首先，他解决的是在多线程中的资源共享问题，所以不能使用单线程的思想去思考这个东西。<strong>线程同步机制是多个线程共享同一个变量，而ThreadLocal是为每个线程都创建一个单独的变量副本，每个线程都可以改变自己的变量副本而不影响其它线程所对应的副本</strong>。这个副本可以是基本数据类型，也可以是用户自定义的对象，因为每次调用初始化的时候都是新建一个对象，所以是私有的。</p>
+
+<p>ThreadLocal与像synchronized这样的锁机制是不同的。首先，它们的应用场景与实现思路就不一样，<strong>锁更强调的是如何同步多个线程去正确地共享一个变量，ThreadLocal则是为了解决同一个变量如何不被多个线程共享</strong>。从性能开销的角度上来讲，如果锁机制是用时间换空间的话，那么ThreadLocal就是用空间换时间。</p>
+
+<p>其应用场景在多线程中，比如说，在一个多线程的类中进行统计每个线程的调用次数，此时如果只是在线程中定义一个变量，是完成不了相应的功能，因为所有的线程都会去竞争去操作这个变量，然后去自加。这时候就需要使用ThreadLocal，为每一个线程都复制一份需要的变量去进行统计。</p>
+
+<h1 id="实例">实例</h1>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SeqCount</span> <span class="o">{</span>
+
+    <span class="c1">//虽然是个外部变量，但是每个线程在使用的时候都会将该值放在自己的局部变量中，各自更改互不干扰。</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">seqCount</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
+        <span class="c1">// 进行初始化数据。 自动封箱为Integer对象，相当于 new Interger(0); 即共享的也是一个对象。几个线程就会new几个对象。</span>
+        <span class="c1">// 达到通过内存换取性能的结果。</span>
+        <span class="nd">@Override</span>
+        <span class="kd">protected</span> <span class="nc">Integer</span> <span class="nf">initialValue</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">nextSeq</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// 调用get方法进行增加值  seqCount.get() 如果没有设置set()方法直接进行get()则会调用initialValue（）方法进行初始化。</span>
+        <span class="c1">// get会调用每个线程的绑定对应的threadLocals变量。所以每个线程初始化都会调用initialValue()方法进行初始化。</span>
+        <span class="c1">// 也就是做到了一一对应。</span>
+        <span class="n">seqCount</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">seqCount</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+        <span class="c1">// 调用get方法获取自己的值。</span>
+        <span class="k">return</span> <span class="n">seqCount</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">SeqThread</span> <span class="kd">extends</span> <span class="nc">Thread</span> <span class="o">{</span>
+
+        <span class="c1">// 获取到定义的ThreadLocal变量。</span>
+        <span class="kd">private</span> <span class="nc">SeqCount</span> <span class="n">seqCount</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">SeqThread</span><span class="o">(</span><span class="nc">SeqCount</span> <span class="n">seqCount</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">seqCount</span> <span class="o">=</span> <span class="n">seqCount</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+            <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">().</span><span class="na">getName</span><span class="o">()+</span><span class="s">" seqCount:"</span><span class="o">+</span><span class="n">seqCount</span><span class="o">.</span><span class="na">nextSeq</span><span class="o">());</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span> <span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SeqCount</span> <span class="n">seqCount</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SeqCount</span><span class="o">();</span>
+
+        <span class="c1">// 开启四个线程，然后进行统计，但是调用的是外部类的变量。</span>
+        <span class="nc">SeqThread</span> <span class="n">seqThread1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SeqThread</span><span class="o">(</span><span class="n">seqCount</span><span class="o">);</span>
+        <span class="nc">SeqThread</span> <span class="n">seqThread2</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SeqThread</span><span class="o">(</span><span class="n">seqCount</span><span class="o">);</span>
+        <span class="nc">SeqThread</span> <span class="n">seqThread3</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SeqThread</span><span class="o">(</span><span class="n">seqCount</span><span class="o">);</span>
+        <span class="nc">SeqThread</span> <span class="n">seqThread4</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SeqThread</span><span class="o">(</span><span class="n">seqCount</span><span class="o">);</span>
+
+        <span class="n">seqThread1</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">seqThread2</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">seqThread3</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+        <span class="n">seqThread4</span><span class="o">.</span><span class="na">start</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>运行结果：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Thread-0 seqCount:1
+Thread-3 seqCount:1
+Thread-2 seqCount:1
+Thread-1 seqCount:1
+Thread-2 seqCount:2
+Thread-3 seqCount:2
+Thread-3 seqCount:3
+Thread-0 seqCount:2
+Thread-2 seqCount:3
+Thread-1 seqCount:2
+Thread-0 seqCount:3
+Thread-1 seqCount:3
+</code></pre></div></div>
+
+<p>通过以上的运行结果可以看出，虽然只是定义了一个变量，但是jvm会自动的新建n个对象供n个线程去操作，<code class="language-plaintext highlighter-rouge">initialValue()</code>提供的机制。这样每个线程进行操作对象的时候都不会互相干扰。因为是泛型，所有对象也是可以存储的，即在set的时候set(new Object)，然后便能够get()获取到的。</p>
+
+<p>从上面可看出，对于并发来说，为什么会需要锁？ <strong>主要是因为需要对共享变量进行操作，而不是单纯的读取</strong>。而我之前写的代码都是单单的读取，并没有涉及到多线程之间的操作竞争，所以没有考虑到这种情形，思路还是要转变一下。回归到对现场解决的问题，线程的同步的资源的竞争。其一就是控制线程的执行顺序，其二就是解决对于资源的操作（同步），如果是单单的读取的话，就不会涉及到操作，所以final关键字就是一个不会被<strong>操作</strong>只能读取的变量。</p>
+
+<p><a href="http://www.diaowenjie.cn/2020/04/20/java-spring-aop.html">aop实例</a> 在这里面也用到了Threadlocal，其中在进行get的时候，因为是从与之绑定的线程中的Map中获取，所以对于一个新来的连接来说（新线程）就会从连接池中获取一个新的连接，避免了并发对于连接的竞争，但是为了避免内存的溢出，连接完成后需要手动的释放变量。即调用remove。</p>
+
+<h1 id="源码分析">源码分析</h1>
+
+<h2 id="类图调用关系">类图调用关系</h2>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/06/ThreadLocal.png" alt="ThreadLocal.png" /></p>
+
+<p>从上面的类图可以看出，ThreadLocal相当于是一个工具类，变量的赋值是由Thread类中的threadLocals变量操作，即只有在线程的本地变量中才能实现独享的变量，也就是说每个线程都会带有ThreadLocal的配置的接口。另外inheritableThreadLocals叫做继承变量，其作用是子线程可以获取父线程的数据。</p>
+
+<p>需要说明的是，Thread、ThreadLocal都是java.lang包下的类，所有说二者是配合使用的。</p>
+
+<p>线程中的所有数据存储的接口都是在ThreadLocalMap中进行实现，其结构为Map形式，<strong>key为ThreadLocal对象的地址</strong>，value则是需要设置的共享变量地址。</p>
+
+<p>另外，ThreadLocal只能自己使用，子类不能使用父类设置的值，从JVM本地变量表的角度可以看出，ThreadLocal相当于存储在本地变量表中，是线程私有的，所有父类与子类线程是不互通的。从Thread类图中可以看出，inheritableThreadLocals名字为继承的，使用这个变量子类可以获取到父类的变量，对应为InheritableThreadLocal类，使用方法：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">threadLocal</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">InheritableThreadLocal</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+</code></pre></div></div>
+
+<p>其源码为：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">InheritableThreadLocal</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="kd">extends</span> <span class="nc">ThreadLocal</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="kd">protected</span> <span class="no">T</span> <span class="nf">childValue</span><span class="o">(</span><span class="no">T</span> <span class="n">parentValue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">parentValue</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nc">ThreadLocalMap</span> <span class="nf">getMap</span><span class="o">(</span><span class="nc">Thread</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+       <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="na">inheritableThreadLocals</span><span class="o">;</span> <span class="c1">// 调用的是继承类的本地变量。</span>
+    <span class="o">}</span>
+
+    <span class="kt">void</span> <span class="nf">createMap</span><span class="o">(</span><span class="nc">Thread</span> <span class="n">t</span><span class="o">,</span> <span class="no">T</span> <span class="n">firstValue</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">t</span><span class="o">.</span><span class="na">inheritableThreadLocals</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ThreadLocalMap</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">firstValue</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>即重写了ThreadLocal的getMap和createMap方法。</p>
+
+<h2 id="实例调用关系">实例调用关系</h2>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/06/ThreadLocalRef.png" alt="ThreadLocalRef.png" /></p>
+
+<p>调用规则为：首先获取当前线程的保存的ThreadLocal的地址，然后通过Thread中的threadLocals变量获取到绑定在本线程中的Map，通过ThreadLocal变量的地址找到对应的value，总的来说只需要ThreadLocal的地址便可以获取到对应的值，因为Map存储在本线程的内部。</p>
+
+<p>从图中可以看出，对于ThreadLocal来说，其中的Key是ThreadLocal变量的弱引用，即执行ThreadLocal对象的地址，为什么会指向ThreadLocal对象？主要是因为在使用的时候，是通过ThreadLocal对象进行使用的，即</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ThreadLocal</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="n">vlaue</span><span class="o">);</span>
+<span class="nc">ThreadLocal</span><span class="o">.</span><span class="na">get</span><span class="o">()</span>
+</code></pre></div></div>
+
+<p>以上两个接口进行获取或者设置value到每一个Thread中，所以在线程中通过调用ThreadLocal对象便能够获取到共享变量的值， 为什么Thread中的使用Map进行存储？<strong>因为一个Thread中可以有多个ThreadLocal变量，即关联多个ThreadLocal变量。</strong></p>
+
+<p>虽然ThreadLocal中的数据是用Map中存储，而且key的值也是ThreadLocal对象的地址，而一个ThreadLocal可以由多个Thread进行调用获取，那么会有多个以相同的ThreadLocal地址为key的Map，那么为什么还能取到对应的值呢？主要是因为在调用get方法的时候，首先是获取到每个Thread的threadLocals变量，<strong>即每个threadLocals都是对应一个Thread的，虽然Map中的key相同，但是Map是存在不同的线程中的</strong>。另外，<strong>key value存储的都是地址。</strong></p>
+
+<h2 id="内存泄露问题">内存泄露问题</h2>
+
+<p>每个thread中都存在一个Map, Map的类型是ThreadLocal.ThreadLocalMap. <strong>Map中的key为一个threadlocal实例</strong>. 这个Map的确使用了弱引用,不过弱引用只是针对key. 每个key都弱引用指向threadlocal. 当把threadlocal实例置为null以后,没有任何强引用指向threadlocal实例,所以threadlocal将会被gc回收. 但是,我们的value却不能回收,因为存在一条从current thread连接过来的强引用. 只有当前thread结束以后, current thread就不会存在栈中,强引用断开, Current Thread, Map, value将全部被GC回收。所以得出一个结论就是<strong>只要这个线程对象被gc回收，就不会出现内存泄露，</strong>但在threadLocal设为null和线程结束这段时间不会被回收的，就发生了我们认为的内存泄露。其实这是一个对概念理解的不一致，也没什么好争论的。最要命的是线程对象不被回收的情况，这就发生了真正意义上的内存泄露。<strong>比如使用线程池的时候，线程结束是不会销毁的，会再次使用的就可能出现内存泄露 。（在web应用中，每次http请求都是一个线程，tomcat容器配置使用线程池时会出现内存泄漏问题）</strong>
+<a href="https://juejin.im/post/5ba9a6665188255c791b0520">参考链接</a> <a href="https://my.oschina.net/u/3790005/blog/3037839">参考2</a></p>
+
+<p>所以说，使用完ThreadLocal后，执行remove操作，避免出现内存溢出情况。另外，这个remove方法是针对每一个线程来说。</p>
+
+<h2 id="常用api">常用api：</h2>
+
+<p>ThreadLocal定义了四个方法:</p>
+
+<ul>
+  <li>get():返回此线程局部变量当前副本中的值</li>
+  <li>set(T value):将线程局部变量当前副本中的值设置为指定值</li>
+  <li>initialValue():返回此线程局部变量当前副本中的初始值</li>
+  <li>remove():移除此线程局部变量当前副本中的值</li>
+  <li>ThreadLocal还有一个特别重要的<strong>静态内部类ThreadLocalMap</strong>，该类才是实现线程隔离机制的关键。get()、set()、remove()都是基于该内部类进行操作，ThreadLocalMap用键值对方式存储每个线程变量的副本，key为当前的ThreadLocal对象，value为对应线程的变量副本。
+ 试想，每个线程都有自己的ThreadLocal对象，也就是都有自己的ThreadLocalMap，对自己的ThreadLocalMap操作，当然是互不影响的了，这就不存在线程安全问题了，所以ThreadLocal是以空间来交换安全性的解决思路。</li>
+</ul>
+
+<p>主要就是以上的api，然后解决问题。</p>
+
+<h2 id="get">get()</h2>
+
+<p>要获得当前线程私有的变量副本需要调用get()函数。首先，它会调用getMap()函数去获得当前线程的ThreadLocalMap，这个函数需要接收当前线程的实例作为参数。如果得到的ThreadLocalMap为null，那么就去调用setInitialValue()函数来进行初始化，如果不为null，就通过map来获得变量副本并返回。</p>
+
+<p>setInitialValue()函数会去先调用initialValue()函数来生成初始值，该函数默认返回null，我们可以通过重写这个函数来返回我们想要在ThreadLocal中维护的变量。之后，去调用getMap()函数获得ThreadLocalMap，如果该map已经存在，那么就用新获得value去覆盖旧值，否则就调用createMap()函数来创建新的map。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Returns the value in the current thread's copy of this
+ * thread-local variable.  If the variable has no value for the
+ * current thread, it is first initialized to the value returned
+ * by an invocation of the {@link #initialValue} method.
+ *
+ * @return the current thread's value of this thread-local
+ */</span>
+<span class="kd">public</span> <span class="no">T</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+    <span class="c1">//  t.threadLocals 获取每个线程绑定的Map</span>
+    <span class="nc">ThreadLocalMap</span> <span class="n">map</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">map</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ThreadLocalMap</span><span class="o">.</span><span class="na">Entry</span> <span class="n">e</span> <span class="o">=</span> <span class="n">map</span><span class="o">.</span><span class="na">getEntry</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unchecked"</span><span class="o">)</span>
+            <span class="no">T</span> <span class="n">result</span> <span class="o">=</span> <span class="o">(</span><span class="no">T</span><span class="o">)</span><span class="n">e</span><span class="o">.</span><span class="na">value</span><span class="o">;</span>
+            <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="nf">setInitialValue</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="c1">// 获取指定线程的threadLocals中的值。</span>
+<span class="nc">ThreadLocalMap</span> <span class="nf">getMap</span><span class="o">(</span><span class="nc">Thread</span> <span class="n">t</span><span class="o">){</span>
+    <span class="k">return</span> <span class="n">t</span><span class="o">.</span><span class="na">threadLocals</span><span class="o">;</span>
+<span class="o">}</span>
+	
+<span class="cm">/**
+ * Variant of set() to establish initialValue. Used instead
+ * of set() in case user has overridden the set() method.
+ *
+ * @return the initial value
+ */</span>
+<span class="kd">private</span> <span class="no">T</span> <span class="nf">setInitialValue</span><span class="o">()</span> <span class="o">{</span>
+    <span class="no">T</span> <span class="n">value</span> <span class="o">=</span> <span class="n">initialValue</span><span class="o">();</span>  <span class="c1">// 调用重写方法</span>
+    <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span>
+    <span class="nc">ThreadLocalMap</span> <span class="n">map</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">map</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="n">map</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="k">else</span>
+        <span class="nf">createMap</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span> <span class="c1">// 当第一次进行调用的时候，创建的就是自己重写的传进来的值。</span>
+    <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="c1">// 也就是自己重写的值， 这个其实是很重要的，这个泛型也就意味着，可以传进来一个对象进行初始化。</span>
+<span class="kd">protected</span> <span class="no">T</span> <span class="nf">initialValue</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="sett-value">set(T value)</h2>
+
+<p>ThreadLocal的set()与remove()函数要比get()的实现还要简单，都只是通过getMap()来获得ThreadLocalMap然后对其进行操作。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Sets the current thread's copy of this thread-local variable
+ * to the specified value.  Most subclasses will have no need to
+ * override this method, relying solely on the {@link #initialValue}
+ * method to set the values of thread-locals.
+ *
+ * @param value the value to be stored in the current thread's copy of
+ *        this thread-local.
+ */</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="no">T</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Thread</span> <span class="n">t</span> <span class="o">=</span> <span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">();</span> <span class="c1">//获取当前线程。</span>
+    <span class="nc">ThreadLocalMap</span> <span class="n">map</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="n">t</span><span class="o">);</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">map</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+        <span class="n">map</span><span class="o">.</span><span class="na">set</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="k">else</span>
+        <span class="nf">createMap</span><span class="o">(</span><span class="n">t</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="cm">/**
+ * Removes the current thread's value for this thread-local
+ * variable.  If this thread-local variable is subsequently
+ * {@linkplain #get read} by the current thread, its value will be
+ * reinitialized by invoking its {@link #initialValue} method,
+ * unless its value is {@linkplain #set set} by the current thread
+ * in the interim.  This may result in multiple invocations of the
+ * {@code initialValue} method in the current thread.
+ *
+ * @since 1.5
+ */</span>
+ <span class="kd">public</span> <span class="kt">void</span> <span class="nf">remove</span><span class="o">()</span> <span class="o">{</span>
+     <span class="nc">ThreadLocalMap</span> <span class="n">m</span> <span class="o">=</span> <span class="n">getMap</span><span class="o">(</span><span class="nc">Thread</span><span class="o">.</span><span class="na">currentThread</span><span class="o">());</span>
+     <span class="k">if</span> <span class="o">(</span><span class="n">m</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span>
+         <span class="n">m</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+ <span class="o">}</span>   <span class="n">rehash</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="threadlocalmap内部类">ThreadLocalMap内部类</h2>
+
+<p>ThreadLocal内部的数据存储是使用ThreadLocalMap内部类进行实现，并没有调用内部已经实现的HashMap。</p>
+
+<p>ThreadLocalMap内部是利用Entry来进行key-value的存储的。其中key为ThreadLocal的弱引用，value则为设置的值。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kd">class</span> <span class="nc">Entry</span> <span class="kd">extends</span> <span class="nc">WeakReference</span><span class="o">&lt;</span><span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;&gt;</span> <span class="o">{</span>
+    <span class="cm">/** The value associated with this ThreadLocal. */</span>
+    <span class="nc">Object</span> <span class="n">value</span><span class="o">;</span>
+
+    <span class="nc">Entry</span><span class="o">(</span><span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;</span> <span class="n">k</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">(</span><span class="n">k</span><span class="o">);</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">v</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>上面源码中key就是ThreadLocal，value就是值，Entry继承WeakReference，所以Entry对应key的引用（ThreadLocal实例）是一个弱引用。</p>
+
+<h3 id="setthreadlocal-key-object-value">set(ThreadLocal key, Object value)</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">void</span> <span class="nf">set</span><span class="o">(</span><span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;</span> <span class="n">key</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Entry</span><span class="o">[]</span> <span class="n">tab</span> <span class="o">=</span> <span class="n">table</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+    <span class="c1">//根据ThreadLocal的散列值，查找对应元素在数组中的位置</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">threadLocalHashCode</span> <span class="o">&amp;</span> <span class="o">(</span><span class="n">len</span><span class="o">-</span><span class="mi">1</span><span class="o">);</span>
+    <span class="c1">//采用线性探测法寻找合适位置</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Entry</span> <span class="n">e</span> <span class="o">=</span> <span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="o">];</span> <span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">;</span> <span class="n">e</span> <span class="o">=</span> <span class="n">tab</span><span class="o">[</span><span class="n">i</span> <span class="o">=</span> <span class="n">nextIndex</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">len</span><span class="o">)])</span> <span class="o">{</span>
+        <span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="c1">//key存在，直接覆盖</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">k</span> <span class="o">==</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="c1">// key == null，但是存在值（因为此处的e != null），说明之前的ThreadLocal对象已经被回收了</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">k</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">replaceStaleEntry</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">i</span><span class="o">);</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="c1">//ThreadLocal对应的key实例不存在，new一个</span>
+    <span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Entry</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">value</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">sz</span> <span class="o">=</span> <span class="o">++</span><span class="n">size</span><span class="o">;</span>
+    <span class="c1">// 清除陈旧的Entry(key == null的)</span>
+    <span class="c1">// 如果没有清理陈旧的 Entry 并且数组中的元素大于了阈值，则进行 rehash</span>
+    <span class="k">if</span> <span class="o">(!</span><span class="n">cleanSomeSlots</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">sz</span><span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="n">sz</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="o">)</span>
+        <span class="n">rehash</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>这个set操作和集合Map解决散列冲突的方法不同，集合Map采用的是链地址法，这里采用的是开放定址法（线性探测）。set()方法中的replaceStaleEntry()和cleanSomeSlots()，这两个方法可以清除掉key ==null的实例，防止内存泄漏。</p>
+
+<h3 id="getentry">getEntry()</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">Entry</span> <span class="nf">getEntry</span><span class="o">(</span><span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="na">threadLocalHashCode</span> <span class="o">&amp;</span> <span class="o">(</span><span class="n">table</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+    <span class="nc">Entry</span> <span class="n">e</span> <span class="o">=</span> <span class="n">table</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">e</span><span class="o">.</span><span class="na">get</span><span class="o">()</span> <span class="o">==</span> <span class="n">key</span><span class="o">)</span>
+        <span class="k">return</span> <span class="n">e</span><span class="o">;</span>
+    <span class="k">else</span>
+        <span class="k">return</span> <span class="nf">getEntryAfterMiss</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>由于采用了开放定址法，当前key的散列值和元素在数组中的索引并不是一一对应的，首先取一个猜测数（key的散列值），如果所对应的key是我们要找的元素，那么直接返回，否则调用getEntryAfterMiss</p>
+
+<blockquote>
+  <p>开发定址法是解决哈希冲突的解决方案。</p>
+
+  <p>开发定址法：线性探测、二次探测，其中线性探测则是如果当前坑被占，那么就选择下一个没有被占用的坑。二次探测为探测的地址下标尝试为 1的平方，-1的平方，2的平方，-2的平方一直往下，这种必线性探测效果更好。</p>
+
+  <p>拉链法：也就是如果当前有冲突，那么局直接使用链表进行往下存储，HashMap使用的也是这种方式。</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">Entry</span> <span class="nf">getEntryAfterMiss</span><span class="o">(</span><span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;</span> <span class="n">key</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="nc">Entry</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="nc">Entry</span><span class="o">[]</span> <span class="n">tab</span> <span class="o">=</span> <span class="n">table</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">tab</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+
+    <span class="k">while</span> <span class="o">(</span><span class="n">e</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ThreadLocal</span><span class="o">&lt;?&gt;</span> <span class="n">k</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">k</span> <span class="o">==</span> <span class="n">key</span><span class="o">)</span>
+            <span class="k">return</span> <span class="n">e</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">k</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+            <span class="n">expungeStaleEntry</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+        <span class="k">else</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">nextIndex</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">len</span><span class="o">);</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">tab</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>这里一直在探测寻找下一个元素，知道找的元素的key是我们要找的。这里当key==null时，调用expungeStaleEntry有利于GC的回收，用于防止内存泄漏。</p>
+
+<h2 id="总结">总结</h2>
+
+<ul>
+  <li>ThreadLocal不是用来解决共享变量的问题，也不是协调线程同步，他是为了方便各线程管理自己的状态而引用的一个机制。</li>
+  <li>每个ThreadLocal内部都有一个ThreadLocalMap,他保存的key是ThreadLocal的实例，他的值是当前线程的局部变量的副本的值。</li>
+</ul>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Docker使用记录</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/04/08/java-Docker.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Docker使用记录</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-04-08T00:00:00+08:00" itemprop="datePublished">
+          
+          Apr 8, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Docker使用记录</h1>
+    <p class="post-meta">
+      <time datetime="2020-04-08T00:00:00+08:00" itemprop="datePublished">
+        
+        Apr 8, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>之前苦于环境的搭建，总是很麻烦，突然发现现在都有docker这种工具了，很方便也很简单，记录一下</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#0简介" id="markdown-toc-0简介">0.简介</a></li>
+  <li><a href="#1核心概念" id="markdown-toc-1核心概念">1.核心概念</a></li>
+  <li><a href="#2安装docker" id="markdown-toc-2安装docker">2.安装Docker</a></li>
+  <li><a href="#3docker常用命令操作" id="markdown-toc-3docker常用命令操作">3.Docker常用命令&amp;操作</a>    <ul>
+      <li><a href="#1镜像操作" id="markdown-toc-1镜像操作">1）、镜像操作</a></li>
+      <li><a href="#2容器操作" id="markdown-toc-2容器操作">2）、容器操作</a></li>
+      <li><a href="#3安装mysql示例" id="markdown-toc-3安装mysql示例">3）、安装MySQL示例</a></li>
+    </ul>
+  </li>
+</ul>
+<h2 id="0简介">0.简介</h2>
+
+<p><strong>Docker</strong>是一个开源的应用容器引擎；是一个轻量级容器技术；他的功能与传统的虚拟机出发点不同，其对比图如下所示：</p>
+
+<p><a href="https://pic.tyzhang.top/image/dPQ1"><img src="https://pic.tyzhang.top/images/2020/04/09/docker.png" alt="docker.png" /></a></p>
+
+<p>从上图可以看出，传统的虚拟机的出现是为了让程序运行互不干扰，即每个系统之间没有联系，所以虚拟出来多个系统进行实现，但是解决的痛点可以概括为：<strong>为了程序运行的互不干扰而构建多个系统</strong>。这样来看其实花费是很大的，其一，<strong>不同的软件在不同的系统中都要进行安装配置</strong>，其二，<strong>两个系统的运行需要耗费更多的资源</strong>。基于以上问题，docker解决的思路是，既然是为了独立的运行程序互不干扰，那么我就直接提供一个引擎，可以<strong>直接的运行多个应用，并且互不干扰，互相隔离，即做到应用层的隔离</strong>。即采用类与对象的概念。而且针对第一个痛点，docker将每个应用程序的安装打包，使得安装变得非常的简单，类似于提供了一个应用商场，简化安装和配置。对于第二个痛点，<strong>因为是只有一个引擎层，所有使得占用的资源更少，而且运行的更快</strong>。</p>
+
+<p>实现的方法，就是将软件编译成一个镜像；镜像中已经做好了软件的配置。将镜像发布出去以后，其他使用者可以直接使用这个镜像，而不需要在此进行繁杂的配置，相当于对于软件的二次打包。</p>
+
+<p>运行中的这个镜像称为容器，容器启动是非常快速的。而且一个镜像可以开启多个容器，例如，下载了一个mysql镜像，然后可以同时运行好几个mysql，并且是各自独立的，相当于利用虚拟机的概念，将程序虚拟出来。很是方便。  其图标如下，也显示了其概念：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/04/08/20180303145450.png" alt="20180303145450.png" /></p>
+
+<p>原理图：就相当于之前的盗版系统，系统给你预安装好很多的东西，在次安装的时候一些常用的配置就不需要设置。这里系统镜像类比于程序，比如mysql，自己安装的时候很多步骤，但是在docker中，别人设置好的镜像直接下载，然后便能直接的运行，对应的设置也能更改，即将核心的抽取出来，一些繁琐的安装直接屏蔽，非常的简单。</p>
+
+<p><a href="https://pic.tyzhang.top/image/dNUo"><img src="https://pic.tyzhang.top/images/2020/04/08/20180303145531.png" alt="20180303145531.png" /></a></p>
+
+<h2 id="1核心概念">1.核心概念</h2>
+
+<p>docker主机(Host)：安装了Docker程序的机器（Docker直接安装在操作系统之上）；</p>
+
+<p>docker客户端(Client)：连接docker主机进行操作；</p>
+
+<p>docker仓库(Registry)：用来保存各种打包好的软件镜像；</p>
+
+<p><strong>docker镜像(Images)：软件打包好的镜像；放在docker仓库中；</strong></p>
+
+<p><strong>docker容器(Container)：镜像启动后的实例称为一个容器；容器是独立运行的一个或一组应用；</strong></p>
+
+<p><strong>docker镜像与容器的关系，类似与类与对象的关系。即镜像为类，容器为对象，即容器为具体镜像的运行实例。</strong></p>
+
+<p>使用Docker的步骤：</p>
+
+<p>1）、安装Docker；</p>
+
+<p>2）、去Docker仓库找到这个软件对应的镜像；</p>
+
+<p>3）、使用Docker运行这个镜像，这个镜像就会生成一个Docker容器；</p>
+
+<p>4）、对容器的启动停止就是对软件的启动停止；</p>
+
+<h2 id="2安装docker">2.安装Docker</h2>
+
+<p>安装docker的前提是有linux虚拟机，不建议在window上装docker，虚拟机的话失败了还能删除..</p>
+
+<p><strong>centOS上安装：</strong></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CentOS 安转docker
+1、检查内核版本，必须是3.10及以上
+<span class="nb">uname</span> <span class="nt">-r</span>
+2、安装yum-utils:
+yum <span class="nb">install</span> <span class="nt">-y</span> yum-utils device-mapper-persistent-data lvm2
+3.为yum源添加docker仓库位置
+yum-config-manager <span class="nt">--add-repo</span> https://download.docker.com/linux/centos/docker-ce.repo
+2、安装docker
+yum <span class="nb">install </span>docker-ce
+3、输入y确认安装
+4、启动docker
+<span class="o">[</span>root@localhost ~]# systemctl start docker
+<span class="o">[</span>root@localhost ~]# docker <span class="nt">-v</span>
+Docker version 1.12.6, build 3e8e77d/1.12.6
+5、开机启动docker
+<span class="o">[</span>root@localhost ~]# systemctl <span class="nb">enable </span>docker
+Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.
+6、停止docker
+systemctl stop docker
+</code></pre></div></div>
+
+<h2 id="3docker常用命令操作">3.Docker常用命令&amp;操作</h2>
+
+<h3 id="1镜像操作">1）、镜像操作</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>操作</th>
+      <th>命令</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>检索</td>
+      <td>docker  search 关键字  eg：docker  search redis</td>
+      <td>我们经常去docker  hub上检索镜像的详细信息，如镜像的TAG。</td>
+    </tr>
+    <tr>
+      <td>拉取</td>
+      <td>docker pull 镜像名:tag</td>
+      <td>:tag是可选的，tag表示标签，多为软件的版本，默认是latest</td>
+    </tr>
+    <tr>
+      <td>列表</td>
+      <td>docker images</td>
+      <td>查看所有本地镜像</td>
+    </tr>
+    <tr>
+      <td>删除</td>
+      <td>docker rmi image-id</td>
+      <td>删除指定的本地镜像</td>
+    </tr>
+    <tr>
+      <td>删除</td>
+      <td>docker rm container-id</td>
+      <td>删除安装的容器，即使用镜像安转程序。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a href="https://hub.docker.com/">官方网站</a></p>
+
+<p>在进行下载的时候可以现在官网上搜索，然后在使用命令下载，一般不要下载最新版。可以进行指定版本。eg docker pull mysql:5.5   下载mysql5.5版本。</p>
+
+<h3 id="2容器操作">2）、容器操作</h3>
+
+<p>软件镜像（QQ安装程序）—-运行镜像—-产生一个容器（正在运行的软件，运行的QQ）；</p>
+
+<p>每run一次就是新安转了一个程序，下次在使用start命令进行启动。</p>
+
+<p>步骤：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1、搜索镜像
+<span class="o">[</span>root@localhost ~]# docker search tomcat
+2、拉取镜像
+<span class="o">[</span>root@localhost ~]# docker pull tomcat
+3、根据镜像启动容器：这个也相当于安装， name 就是为这个应用自定义的名字，如果关闭，下次使用start命令进行启动，见命令7
+docker run <span class="nt">--name</span> mytomcat <span class="nt">-d</span> tomcat:latest
+4、docker ps  
+查看运行中的容器
+5、 停止运行中的容器
+docker stop  容器的id
+6、查看所有的容器
+docker ps <span class="nt">-a</span>
+7、启动容器
+docker start 容器id
+8、删除一个容器
+ docker <span class="nb">rm </span>容器id
+9、启动一个做了端口映射的tomcat
+<span class="o">[</span>root@localhost ~]# docker run <span class="nt">-d</span> <span class="nt">-p</span> 8888:8080 tomcat
+<span class="nt">-d</span>：后台运行
+<span class="nt">-p</span>: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口
+
+10、为了演示简单关闭了linux的防火墙
+service firewalld status ；查看防火墙状态
+service firewalld stop：关闭防火墙
+
+ubunte 
+关闭防火墙 ufw disable  
+开启 ufw <span class="nb">enable
+</span>查看状态 ufw status
+
+11、查看容器的日志
+docker logs container-name/container-id
+
+12、启动所有的容器命令
+docker start <span class="si">$(</span>docker ps <span class="nt">-a</span> | <span class="nb">awk</span> <span class="s1">'{ print $1}'</span> | <span class="nb">tail</span> <span class="nt">-n</span> +2<span class="si">)</span>
+
+13、关闭所有的容器命令
+docker stop <span class="si">$(</span>docker ps <span class="nt">-a</span> | <span class="nb">awk</span> <span class="s1">'{ print $1}'</span> | <span class="nb">tail</span> <span class="nt">-n</span> +2<span class="si">)</span>
+
+14、删除所有的容器命令
+docker <span class="nb">rm</span> <span class="si">$(</span>docker ps <span class="nt">-a</span> | <span class="nb">awk</span> <span class="s1">'{ print $1}'</span> | <span class="nb">tail</span> <span class="nt">-n</span> +2<span class="si">)</span>
+
+15、删除所有的镜像
+docker rmi <span class="si">$(</span>docker p_w_picpaths | <span class="nb">awk</span> <span class="s1">'{print $3}'</span> |tail <span class="nt">-n</span> +2<span class="si">)</span>
+
+更多命令参看
+https://docs.docker.com/engine/reference/commandline/docker/
+可以参考每一个镜像的文档
+</code></pre></div></div>
+
+<h3 id="3安装mysql示例">3）、安装MySQL示例</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker pull mysql:5.5   尽量不要下载最新版，5.5版本测试成功。
+</code></pre></div></div>
+
+<p>错误的启动</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost ~]# docker run <span class="nt">--name</span> mysql01 <span class="nt">-d</span> mysql
+42f09819908bb72dd99ae19e792e0a5d03c48638421fa64cce5f8ba0f40f5846
+
+mysql退出了
+<span class="o">[</span>root@localhost ~]# docker ps <span class="nt">-a</span>
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                           PORTS               NAMES
+42f09819908b        mysql               <span class="s2">"docker-entrypoint.sh"</span>   34 seconds ago      Exited <span class="o">(</span>1<span class="o">)</span> 33 seconds ago                            mysql01
+538bde63e500        tomcat              <span class="s2">"catalina.sh run"</span>        About an hour ago   Exited <span class="o">(</span>143<span class="o">)</span> About an hour ago                       compassionate_
+goldstine
+c4f1ac60b3fc        tomcat              <span class="s2">"catalina.sh run"</span>        About an hour ago   Exited <span class="o">(</span>143<span class="o">)</span> About an hour ago                       lonely_fermi
+81ec743a5271        tomcat              <span class="s2">"catalina.sh run"</span>        About an hour ago   Exited <span class="o">(</span>143<span class="o">)</span> About an hour ago                       sick_ramanujan
+
+
+//错误日志
+<span class="o">[</span>root@localhost ~]# docker logs 42f09819908b
+error: database is uninitialized and password option is not specified 
+  You need to specify one of MYSQL_ROOT_PASSWORD, MYSQL_ALLOW_EMPTY_PASSWORD and MYSQL_RANDOM_ROOT_PASSWORD；这个三个参数必须指定一个
+</code></pre></div></div>
+
+<p><strong>正确的安转启动</strong> ：但是没有做端口映射，外网访问不进来：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost ~]# docker run <span class="nt">--name</span> mysql01 <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>123456 <span class="nt">-d</span> mysql
+b874c56bec49fb43024b3805ab51e9097da779f2f572c22c695305dedd684c5f
+<span class="o">[</span>root@localhost ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS               NAMES
+b874c56bec49        mysql               <span class="s2">"docker-entrypoint.sh"</span>   4 seconds ago       Up 3 seconds        3306/tcp            mysql01
+</code></pre></div></div>
+
+<p><strong>做了端口映射安装启动</strong>  ：最终可以进行测试的。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@localhost ~]# docker run <span class="nt">-p</span> 3306:3306 <span class="nt">--name</span> mysql02 <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>123456 <span class="nt">-d</span> mysql
+ad10e4bc5c6a0f61cbad43898de71d366117d120e39db651844c0e73863b9434
+<span class="o">[</span>root@localhost ~]# docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+ad10e4bc5c6a        mysql               <span class="s2">"docker-entrypoint.sh"</span>   4 seconds ago       Up 2 seconds        0.0.0.0:3306-&gt;3306/tcp   mysql02
+</code></pre></div></div>
+
+<p>几个其他的高级操作</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docker run <span class="nt">--name</span> mysql03 <span class="nt">-v</span> /conf/mysql:/etc/mysql/conf.d <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>my-secret-pw <span class="nt">-d</span> mysql:tag
+把主机的/conf/mysql文件夹挂载到 mysqldocker容器的/etc/mysql/conf.d文件夹里面
+改mysql的配置文件就只需要把mysql配置文件放在自定义的文件夹下（/conf/mysql）
+
+docker run <span class="nt">--name</span> some-mysql <span class="nt">-e</span> <span class="nv">MYSQL_ROOT_PASSWORD</span><span class="o">=</span>my-secret-pw <span class="nt">-d</span> mysql:tag <span class="nt">--character-set-server</span><span class="o">=</span>utf8mb4 <span class="nt">--collation-server</span><span class="o">=</span>utf8mb4_unicode_ci
+指定mysql的一些配置参数
+</code></pre></div></div>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

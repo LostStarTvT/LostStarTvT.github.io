@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Spring：JdbcTemplate &amp; Transaction</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/04/21/java-jdbcTemplate.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Spring：JdbcTemplate &amp; Transaction</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-04-21T00:00:00+08:00" itemprop="datePublished">
+          
+          Apr 21, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Spring：JdbcTemplate &amp; Transaction</h1>
+    <p class="post-meta">
+      <time datetime="2020-04-21T00:00:00+08:00" itemprop="datePublished">
+        
+        Apr 21, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录spring中的jdbcTemplate和事务控制学习记录</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#1spring-jdbctemplates" id="markdown-toc-1spring-jdbctemplates">1.Spring JdbcTemplates</a>    <ul>
+      <li><a href="#11--简单实现" id="markdown-toc-11--简单实现">1.1  简单实现</a></li>
+      <li><a href="#12-基于三层架构的实现" id="markdown-toc-12-基于三层架构的实现">1.2 基于三层架构的实现</a></li>
+    </ul>
+  </li>
+  <li><a href="#2spring-transactionmanager" id="markdown-toc-2spring-transactionmanager">2.Spring TransactionManager</a>    <ul>
+      <li><a href="#21-基于xml声明式事务控制配置步骤" id="markdown-toc-21-基于xml声明式事务控制配置步骤">2.1 基于xml声明式事务控制配置步骤</a></li>
+      <li><a href="#22基于注解的方式" id="markdown-toc-22基于注解的方式">2.2基于注解的方式</a></li>
+    </ul>
+  </li>
+  <li><a href="#3基于纯注解的方式" id="markdown-toc-3基于纯注解的方式">3.基于纯注解的方式</a></li>
+</ul>
+<h2 id="1spring-jdbctemplates">1.Spring JdbcTemplates</h2>
+
+<h3 id="11--简单实现">1.1  简单实现</h3>
+
+<p>spring 也提供了实现简单的数据库操作，对于小型项目可以实现很好的支持。创建过程:</p>
+
+<p>bean.xml</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--使用jdbcTemplate 进行数据操作。--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"jdbcTemplate"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.core.JdbcTemplate"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--配置数据源--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"dataSource"</span> <span class="na">class=</span><span class="s">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!--注入连接数据库的必备信息--&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driverClass"</span> <span class="na">value=</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcUrl"</span> <span class="na">value=</span><span class="s">"jdbc:mysql://localhost:3306/study_test"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"user"</span> <span class="na">value=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"A123456"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+</code></pre></div></div>
+
+<p>测试类，进行增删改查</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ApplicationContext</span> <span class="n">ac</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ClassPathXmlApplicationContext</span><span class="o">(</span><span class="s">"bean.xml"</span><span class="o">);</span>
+    
+        <span class="nc">JdbcTemplate</span> <span class="n">jdbcTemplate</span> <span class="o">=</span> <span class="n">ac</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"jdbcTemplate"</span><span class="o">,</span><span class="nc">JdbcTemplate</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="c1">//保存</span>
+		<span class="c1">//jdbcTemplate.update("insert  into account(name,money) values(?,?)","eee",333f);</span>
+        
+    	<span class="c1">//更新</span>
+		<span class="c1">//jdbcTemplate.update("update account set name = ? ,money = ? where  id = ?","test",200f,3);</span>
+        
+    	<span class="c1">//删除</span>
+		<span class="c1">//jdbcTemplate.update("delete from account where  id = ?",5);</span>
+        
+    	<span class="c1">//查询方法 查询多个</span>
+		<span class="c1">//List&lt;Account&gt; query = jdbcTemplate.query("select * from account where money &gt; ?", new BeanPropertyRowMapper&lt;&gt;(Account.class), 1000f);</span>
+		<span class="c1">//for (Account account:query){</span>
+			<span class="c1">//System.out.println(account);</span>
+		<span class="c1">//}</span>
+        
+    	<span class="c1">//查询一个</span>
+		<span class="c1">// List&lt;Account&gt; accounts = jdbcTemplate.query("select * from account where id = ?", new BeanPropertyRowMapper&lt;&gt;(Account.class), 1);</span>
+		<span class="c1">//System.out.println(accounts.isEmpty()?"没有内容":accounts.get(0));</span>
+
+        <span class="c1">//查询返回一行一列 (使用聚合函数，但是不加group by字句)</span>
+        <span class="nc">Long</span> <span class="n">count</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">queryForObject</span><span class="o">(</span><span class="s">"select count(*) from account where money &gt; ?"</span><span class="o">,</span><span class="nc">Long</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="mi">1000</span><span class="n">f</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">count</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="12-基于三层架构的实现">1.2 基于三层架构的实现</h3>
+
+<p>更改与之前的用户转账操作，使用jdbctemplates实现。</p>
+
+<p>首先是AccountDaoImpl.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountDaoImpl</span> <span class="kd">implements</span> <span class="nc">IAccountDao</span> <span class="o">{</span>
+	
+    <span class="c1">//注入JdbcTemplate实现数据库操作</span>
+    <span class="kd">private</span> <span class="nc">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setJdbcTemplate</span><span class="o">(</span><span class="nc">JdbcTemplate</span> <span class="n">jdbcTemplate</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">jdbcTemplate</span> <span class="o">=</span> <span class="n">jdbcTemplate</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">//通过id查找用户</span>
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountById</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">accountId</span><span class="o">)</span> <span class="o">{</span>
+       <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Account</span><span class="o">&gt;</span> <span class="n">accounts</span> <span class="o">=</span>  <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from account where id = ?"</span><span class="o">,</span><span class="k">new</span> <span class="nc">BeanPropertyRowMapper</span><span class="o">&lt;&gt;(</span><span class="nc">Account</span><span class="o">.</span><span class="na">class</span><span class="o">),</span><span class="n">accountId</span><span class="o">);</span>
+       <span class="k">return</span> <span class="n">accounts</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">()?</span> <span class="kc">null</span> <span class="o">:</span> <span class="n">accounts</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//更新用户状态</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateAccount</span><span class="o">(</span><span class="nc">Account</span> <span class="n">account</span><span class="o">)</span> <span class="o">{</span>
+       <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="s">"update account set name  =  ? ,money = ? where id = ?"</span><span class="o">,</span><span class="n">account</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span><span class="n">account</span><span class="o">.</span><span class="na">getMoney</span><span class="o">(),</span><span class="n">account</span><span class="o">.</span><span class="na">getId</span><span class="o">());</span>
+    <span class="o">}</span>
+
+    <span class="c1">//通过名字查找用户</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountByName</span><span class="o">(</span><span class="nc">String</span> <span class="n">accountName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Account</span><span class="o">&gt;</span> <span class="n">accounts</span> <span class="o">=</span>  <span class="n">jdbcTemplate</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="s">"select * from account where name = ?"</span><span class="o">,</span><span class="k">new</span> <span class="nc">BeanPropertyRowMapper</span><span class="o">&lt;&gt;(</span><span class="nc">Account</span><span class="o">.</span><span class="na">class</span><span class="o">),</span><span class="n">accountName</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">accounts</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">())</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">accounts</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="o">)</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"结果不唯一"</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">accounts</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>AccountServiceImpl.class类进行调用持久层。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="nc">IAccountService</span> <span class="o">{</span>
+	
+    <span class="c1">//注入持久层</span>
+    <span class="kd">private</span> <span class="nc">IAccountDao</span> <span class="n">iAccountDao</span><span class="o">;</span>
+	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">setiAccountDao</span><span class="o">(</span><span class="nc">IAccountDao</span> <span class="n">iAccountDao</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">iAccountDao</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="cm">/**
+     * 根据用户id查找用户
+     * @param accountId
+     * @return Account
+     */</span>
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountById</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">accountId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">findAccountById</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
+    <span class="o">}</span>
+	<span class="c1">//根据名字查询</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountByName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 更新账号
+     * @param account
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateAccount</span><span class="o">(</span><span class="nc">Account</span> <span class="n">account</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 转账操作
+     * @param sourceName 源账户
+     * @param targetName 目的账户
+     * @param money 转账金额
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">transfer</span><span class="o">(</span><span class="nc">String</span> <span class="n">sourceName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">targetName</span><span class="o">,</span> <span class="nc">Float</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行了.."</span><span class="o">);</span>
+        <span class="c1">//1.根据名称查询转出账户</span>
+        <span class="nc">Account</span> <span class="n">source</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">sourceName</span><span class="o">);</span>
+        <span class="c1">//2.根据名称查询注入账户</span>
+        <span class="nc">Account</span> <span class="n">target</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">targetName</span><span class="o">);</span>
+        <span class="c1">//3.转出账户减钱</span>
+        <span class="n">source</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">source</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">-</span> <span class="n">money</span><span class="o">);</span>
+        <span class="c1">//4.转入账户加钱</span>
+        <span class="n">target</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">+</span> <span class="n">money</span><span class="o">);</span>
+        <span class="c1">//5.更新转出账户</span>
+        <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">source</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">;</span>
+        <span class="c1">//6.更新转入账户</span>
+        <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>bean.xml配置文件</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="na">xmlns:tx=</span><span class="s">"http://www.springframework.org/schema/tx"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!--使用jdbcTemplate 进行数据操作。--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"jdbcTemplate"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.core.JdbcTemplate"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="c">&lt;!--配置业务层--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountService"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.service.impl.AccountServiceImpl"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"iAccountDao"</span> <span class="na">ref=</span><span class="s">"accountDao"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="c">&lt;!--配置持久层--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"accountDao"</span> <span class="na">class=</span><span class="s">"com.diaowenjie.dao.impl.AccountDaoImpl"</span><span class="nt">&gt;</span>
+       <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcTemplate"</span> <span class="na">ref=</span><span class="s">"jdbcTemplate"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="c">&lt;!--配置数据源--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"dataSource"</span> <span class="na">class=</span><span class="s">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--注入连接数据库的必备信息--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driverClass"</span> <span class="na">value=</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcUrl"</span> <span class="na">value=</span><span class="s">"jdbc:mysql://localhost:3306/study_test"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"user"</span> <span class="na">value=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"A123456"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>以上就是只使用spring自带的jdbc包实现读数据库的操作。但是以上还没有进行事务的支持，之前是采用手动写java类，然后进行配置完成事务的绑定， 其实spring支持配置的模型完成jdbc事务的绑定。</p>
+
+<h2 id="2spring-transactionmanager">2.Spring TransactionManager</h2>
+
+<p>spring中通过配置实现事务的控制，与上面的进行结合实现。</p>
+
+<h3 id="21-基于xml声明式事务控制配置步骤">2.1 基于xml声明式事务控制配置步骤</h3>
+
+<p>不用自己写事务代码实现：</p>
+<ol>
+  <li>配置事务管理器</li>
+  <li>配置事务的通知：此时需要导入事务的约束,tx的名称控件和约束，同时也需要aop的
+    <ol>
+      <li>使用tx:advice标签配置事务通知：
+        <ol>
+          <li>id：给事务通知起一个唯一标识</li>
+          <li>transaction-manger:给职务通知提供一个事务管理器引用</li>
+        </ol>
+      </li>
+    </ol>
+  </li>
+  <li>配置AOP汇总的通用切入点表达式</li>
+  <li>建立事务通知和切入点标识的对应关系</li>
+  <li>配置事务的属性：是在事务的通知tx;advice标签内部
+        1. isolation=””  用于指定事务的隔离级别 默认default 标识使用数据库的默认隔离级别
+     2. propagation=” “ 用于指定事务的传播行为，默认是required，表示一定会有事务，增删改的选择，查询方法选择support
+     3. read-only=”” 用于指定事务是否只读，只有查询方法才能设置为true，默认是false，表示读写
+     4. timeout=”” 用于指定事务的超时时间，默认值是-1，表示永不超时，如果指定了数值，以秒为单位
+     5. rollback-for=”” 用于指定一个异常，当产生该异常时，事务回滚，产生其他异常时，事务不回滚，没有默认值，表示任何异常都回滚
+     6. no-rollback-for=”” 用于指定一个异常，当产生改异常时，事务不回滚，产生其他异常时，事务回滚，没有默认值，表示任何异常都回滚。</li>
+</ol>
+
+<p>对应xml配置代码: 与上面的配置文件结合成为完整版。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--配置事务管理器--&gt;</span>
+<span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"transactionManger"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">&gt;&lt;/property&gt;</span>
+<span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--配置事务通知--&gt;</span>
+<span class="nt">&lt;tx:advice</span> <span class="na">id=</span><span class="s">"txAdvice"</span> <span class="na">transaction-manager=</span><span class="s">"transactionManger"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tx:attributes&gt;</span>
+        <span class="c">&lt;!--*表示所有的方法都进行--&gt;</span>
+        <span class="nt">&lt;tx:method</span> <span class="na">name=</span><span class="s">"*"</span>  <span class="na">propagation=</span><span class="s">"REQUIRED"</span> <span class="na">read-only=</span><span class="s">"false"</span> <span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- 表示以find开头的方法匹配。 这样就要求命名要规范--&gt;</span>
+        <span class="nt">&lt;tx:method</span> <span class="na">name=</span><span class="s">"find*"</span> <span class="na">propagation=</span><span class="s">"SUPPORTS"</span> <span class="na">read-only=</span><span class="s">"true"</span><span class="nt">&gt;&lt;/tx:method&gt;</span>
+    <span class="nt">&lt;/tx:attributes&gt;</span>
+<span class="nt">&lt;/tx:advice&gt;</span>
+
+<span class="c">&lt;!--配置aop--&gt;</span>
+<span class="nt">&lt;aop:config&gt;</span>
+    <span class="c">&lt;!--配置切入点表达式--&gt;</span>
+    <span class="nt">&lt;aop:pointcut</span> <span class="na">id=</span><span class="s">"pt1"</span> <span class="na">expression=</span><span class="s">"execution(* com.diaowenjie.service.impl.*.*(..))"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--键入且锂电标识和事务通知的对应关系--&gt;</span>
+    <span class="nt">&lt;aop:advisor</span> <span class="na">advice-ref=</span><span class="s">"txAdvice"</span> <span class="na">pointcut-ref=</span><span class="s">"pt1"</span><span class="nt">&gt;&lt;/aop:advisor&gt;</span>
+<span class="nt">&lt;/aop:config&gt;</span>
+</code></pre></div></div>
+
+<p>通过以上配置，此时的边实现了之前aop中手动写代码实现的事务管理功能，即将转账业务合成了一整体，也即是说之前说的都是可以通过spring的配置实现的。</p>
+
+<h3 id="22基于注解的方式">2.2基于注解的方式</h3>
+
+<p>首先xml文件</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
+<span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+       <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+       <span class="na">xmlns:aop=</span><span class="s">"http://www.springframework.org/schema/aop"</span>
+       <span class="na">xmlns:tx=</span><span class="s">"http://www.springframework.org/schema/tx"</span>
+       <span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+       <span class="na">xsi:schemaLocation=</span><span class="s">"
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!--开启扫描--&gt;</span>
+    <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"com.diaowenjie"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--使用jdbcTemplate 进行数据操作。--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"jdbcTemplate"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.core.JdbcTemplate"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+    <span class="c">&lt;!--配置数据源--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"dataSource"</span> <span class="na">class=</span><span class="s">"com.mchange.v2.c3p0.ComboPooledDataSource"</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!--注入连接数据库的必备信息--&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driverClass"</span> <span class="na">value=</span><span class="s">"com.mysql.jdbc.Driver"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"jdbcUrl"</span> <span class="na">value=</span><span class="s">"jdbc:mysql://localhost:3306/study_test"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"user"</span> <span class="na">value=</span><span class="s">"root"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"A123456"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+<span class="c">&lt;!--    spring中基于注解的声明式事务控制配置步骤
+          1.配置事务管理器
+          2.开启spring对注解事务的支持
+          3.在需要事务支持的地方使用@Transaction注解
+--&gt;</span>
+    <span class="c">&lt;!--配置事务管理器--&gt;</span>
+    <span class="nt">&lt;bean</span> <span class="na">id=</span><span class="s">"transactionManger"</span> <span class="na">class=</span><span class="s">"org.springframework.jdbc.datasource.DataSourceTransactionManager"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"dataSource"</span> <span class="na">ref=</span><span class="s">"dataSource"</span><span class="nt">&gt;&lt;/property&gt;</span>
+    <span class="nt">&lt;/bean&gt;</span>
+
+	<span class="c">&lt;!--开始spring对于注解事务的支持--&gt;</span>
+    <span class="nt">&lt;tx:annotation-driven</span> <span class="na">transaction-manager=</span><span class="s">"transactionManger"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+</code></pre></div></div>
+
+<p>然后按照ioc的方式注入，但是在需要加事务的类中加上</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Service</span><span class="o">(</span><span class="s">"accountService"</span><span class="o">)</span>
+<span class="nd">@Transactional</span>  <span class="c1">//表示事务</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">AccountServiceImpl</span> <span class="kd">implements</span> <span class="nc">IAccountService</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">IAccountDao</span> <span class="n">iAccountDao</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * 根据用户id查找用户
+     * @param accountId
+     * @return Account
+     */</span>
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountById</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">accountId</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nf">findAccountById</span><span class="o">(</span><span class="n">accountId</span><span class="o">);</span>
+    <span class="o">}</span>
+
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Account</span> <span class="nf">findAccountByName</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 更新账号
+     * @param account
+     */</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateAccount</span><span class="o">(</span><span class="nc">Account</span> <span class="n">account</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 转账操作
+     * @param sourceName 源账户
+     * @param targetName 目的账户
+     * @param money 转账金额
+     */</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">transfer</span><span class="o">(</span><span class="nc">String</span> <span class="n">sourceName</span><span class="o">,</span> <span class="nc">String</span> <span class="n">targetName</span><span class="o">,</span> <span class="nc">Float</span> <span class="n">money</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"执行了.."</span><span class="o">);</span>
+        <span class="c1">//1.根据名称查询转出账户</span>
+        <span class="nc">Account</span> <span class="n">source</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">sourceName</span><span class="o">);</span>
+        <span class="c1">//2.根据名称查询注入账户</span>
+        <span class="nc">Account</span> <span class="n">target</span> <span class="o">=</span> <span class="n">iAccountDao</span><span class="o">.</span><span class="na">findAccountByName</span><span class="o">(</span><span class="n">targetName</span><span class="o">);</span>
+        <span class="c1">//3.转出账户减钱</span>
+        <span class="n">source</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">source</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">-</span> <span class="n">money</span><span class="o">);</span>
+        <span class="c1">//4.转入账户加钱</span>
+        <span class="n">target</span><span class="o">.</span><span class="na">setMoney</span><span class="o">(</span><span class="n">target</span><span class="o">.</span><span class="na">getMoney</span><span class="o">()</span> <span class="o">+</span> <span class="n">money</span><span class="o">);</span>
+        <span class="c1">//5.更新转出账户</span>
+        <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">source</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">;</span>
+        <span class="c1">//6.更新转入账户</span>
+        <span class="n">iAccountDao</span><span class="o">.</span><span class="na">updateAccount</span><span class="o">(</span><span class="n">target</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后就测试成功了，但是基于注解的方式会出现不智能的情况，就是有的方法需要设置不同的事务，还是基于xml的更好用，可以为每个方法指定。</p>
+
+<h2 id="3基于纯注解的方式">3.基于纯注解的方式</h2>
+
+<p>纯注解的方式就是需要使用config java类来代替xml配置文件，总共有三个类</p>
+
+<p>主配置类SpringConfiguration.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="nd">@ComponentScan</span><span class="o">(</span><span class="s">"com.diaowenjie"</span><span class="o">)</span>
+<span class="nd">@Import</span><span class="o">({</span><span class="nc">JdbcConfig</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="nc">TransactionConfig</span><span class="o">.</span><span class="na">class</span><span class="o">})</span>
+<span class="nd">@PropertySource</span><span class="o">(</span><span class="s">"classpath:jdbcConfig.properties"</span> <span class="o">)</span>
+<span class="nd">@EnableTransactionManagement</span> <span class="c1">//开启事务注解</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SpringConfiguration</span> <span class="o">{</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>数据库连接类jdbcConfig.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">JdbcConfig</span> <span class="o">{</span>
+
+    <span class="c1">//通过读取properties文件中的值，进行赋值，实现可以更改。</span>
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${jdbc.driver}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">driver</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${jdbc.url}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">url</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${jdbc.username}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+
+    <span class="nd">@Value</span><span class="o">(</span><span class="s">"${jdbc.password}"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span>
+    <span class="cm">/**
+     * 创建jdbcTemplate
+     * @param dataSource
+     * @return
+     */</span>
+    <span class="nd">@Bean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"jdbcTemplate"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">JdbcTemplate</span> <span class="nf">createJdbcTemplate</span><span class="o">(</span><span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">JdbcTemplate</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 创建数据源
+     * @return
+     */</span>
+    <span class="nd">@Bean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"dataSource"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">DataSource</span> <span class="nf">createDataSource</span><span class="o">(){</span>
+        <span class="nc">DriverManagerDataSource</span> <span class="n">ds</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">DriverManagerDataSource</span><span class="o">();</span>
+        <span class="n">ds</span><span class="o">.</span><span class="na">setDriverClassName</span><span class="o">(</span><span class="n">driver</span><span class="o">);</span>
+        <span class="n">ds</span><span class="o">.</span><span class="na">setUrl</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+        <span class="n">ds</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="n">username</span><span class="o">);</span>
+        <span class="n">ds</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">password</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">ds</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>事务控制器配置类TransactionConfig.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Configuration</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TransactionConfig</span> <span class="o">{</span>
+	<span class="c1">//新建一个事务管理类</span>
+    <span class="nd">@Bean</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"transactionManager"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">PlatformTransactionManager</span> <span class="nf">createTransactionManager</span><span class="o">(</span><span class="nc">DataSource</span> <span class="n">dataSource</span><span class="o">){</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">DataSourceTransactionManager</span><span class="o">(</span><span class="n">dataSource</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>还有一个数据库配置文件jdbcConfig.propertie文件,将连接数据库的文件不写死，通过读取进行分开。该文件在主配置类上进行设置。</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">jdbc.driver</span> <span class="p">=</span> <span class="s">com.mysql.jdbc.Driver</span>
+<span class="py">jdbc.url</span> <span class="p">=</span> <span class="s">jdbc:mysql://localhost:3306/study_test</span>
+<span class="py">jdbc.username</span> <span class="p">=</span> <span class="s">root</span>
+<span class="py">jdbc.password</span> <span class="p">=</span> <span class="s">A123456</span>
+</code></pre></div></div>
+
+<p>然后就是测试类，业务控制逻辑代码与上面一致，以上主要是在替换xml文件</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//读取配置类。</span>
+    <span class="nc">ApplicationContext</span> <span class="n">ac</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">AnnotationConfigApplicationContext</span><span class="o">(</span><span class="nc">SpringConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+    <span class="nc">IAccountService</span> <span class="n">as</span> <span class="o">=</span> <span class="o">(</span><span class="nc">IAccountService</span><span class="o">)</span> <span class="n">ac</span><span class="o">.</span><span class="na">getBean</span><span class="o">(</span><span class="s">"accountService"</span><span class="o">);</span>
+    <span class="c1">//通过测试转账有没有bug来实现整体的部署测试。</span>
+    <span class="n">as</span><span class="o">.</span><span class="na">transfer</span><span class="o">(</span><span class="s">"aaa"</span><span class="o">,</span><span class="s">"bbb"</span><span class="o">,</span><span class="mi">100</span><span class="n">f</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>OVER 注意多复习。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

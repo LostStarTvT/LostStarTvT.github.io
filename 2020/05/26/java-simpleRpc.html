@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>RPC：基于Netty和Zookeeper实现</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/05/26/java-simpleRpc.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">RPC：基于Netty和Zookeeper实现</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-05-26T00:00:00+08:00" itemprop="datePublished">
+          
+          May 26, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">RPC：基于Netty和Zookeeper实现</h1>
+    <p class="post-meta">
+      <time datetime="2020-05-26T00:00:00+08:00" itemprop="datePublished">
+        
+        May 26, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>介绍github上一个基于Netty和Zookeeper实现的rpc项目。</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#一介绍" id="markdown-toc-一介绍">一、介绍</a>    <ul>
+      <li><a href="#1搭建zookeeper环境" id="markdown-toc-1搭建zookeeper环境">1.搭建zookeeper环境</a></li>
+      <li><a href="#2快速开始" id="markdown-toc-2快速开始">2.快速开始</a></li>
+    </ul>
+  </li>
+  <li><a href="#二动态代理" id="markdown-toc-二动态代理">二、动态代理</a></li>
+  <li><a href="#三netty数据连接" id="markdown-toc-三netty数据连接">三、netty数据连接</a>    <ul>
+      <li><a href="#1-序列化与反序列化" id="markdown-toc-1-序列化与反序列化">1. 序列化与反序列化</a></li>
+      <li><a href="#2-封装请求体与响应体" id="markdown-toc-2-封装请求体与响应体">2. 封装请求体与响应体</a></li>
+      <li><a href="#3-异步实现netty服务" id="markdown-toc-3-异步实现netty服务">3. 异步实现netty服务</a></li>
+    </ul>
+  </li>
+  <li><a href="#四服务注册与发现" id="markdown-toc-四服务注册与发现">四、服务注册与发现</a>    <ul>
+      <li><a href="#1-连接zookeeper服务器" id="markdown-toc-1-连接zookeeper服务器">1. 连接zookeeper服务器</a></li>
+      <li><a href="#2-服务注册" id="markdown-toc-2-服务注册">2. 服务注册</a></li>
+      <li><a href="#3-服务发现" id="markdown-toc-3-服务发现">3. 服务发现</a></li>
+    </ul>
+  </li>
+</ul>
+<h2 id="一介绍">一、介绍</h2>
+
+<p>基于spring框架实现的一个简单的<a href="https://github.com/LostStarTvT/simpleRpc">RPC框架</a>，其中使用netty作为网络连接，使用zookeeper作为注册服务器。本项目主要分为三个部分，其一动态代理，其二netty网络通信，其三zookeeper客户端的使用。<a href="https://github.com/luxiaoxun/NettyRpc">参考项目</a> <a href="https://my.oschina.net/huangyong/blog/361751">黄勇老师教程</a></p>
+
+<h3 id="1搭建zookeeper环境">1.搭建zookeeper环境</h3>
+
+<p>本项目中的zookeeper环境是基于docker安装的，使用的脚本命令如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.下载镜像
+docker pull zookeeper
+2.启动容器并添加映射
+docker run <span class="nt">--privileged</span><span class="o">=</span><span class="nb">true</span> <span class="nt">-d</span> <span class="nt">--name</span> zookeeper <span class="nt">--publish</span> 2181:2181  <span class="nt">-d</span> zookeeper:latest
+3.添加防火墙端口
+firewall-cmd <span class="nt">--zone</span><span class="o">=</span>public <span class="nt">--add-port</span><span class="o">=</span>2181/tcp <span class="nt">--permanent</span>
+</code></pre></div></div>
+
+<p>zookeeper启动后无需其他的操作便可以直接使用，可以使用idea的插件连接zookeeper进行测试，<a href="https://blog.csdn.net/qq_26641781/article/details/80886831">Docker安装Zookeeper并进行操作</a></p>
+
+<h3 id="2快速开始">2.快速开始</h3>
+
+<p>主要的测试是在test包下，src/main下为主要的逻辑代码，进行测试时需要首先打开zookeeper服务器，然后配置zookeeper服务器地址，因为我的是虚拟机中，所以需要更改为自己的服务ip地址，目录为src/test/resources/rpc.properties</p>
+
+<div class="language-properties highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># rpc server
+</span><span class="py">rpc.service_address</span><span class="p">=</span><span class="s">127.0.0.1:8000</span>
+<span class="c"># zookeeper server
+</span><span class="py">rpc.registry_address</span><span class="p">=</span><span class="s">192.168.60.130:2181</span>
+</code></pre></div></div>
+
+<p>服务的测试主要是包含两步，第一开启服务器，test/server/RpcBootStarp.java 为启动服务器。第二开启测试，test/RpcTest.java</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.test</span><span class="o">;</span>
+
+<span class="nd">@RunWith</span><span class="o">(</span><span class="nc">SpringJUnit4ClassRunner</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@ContextConfiguration</span><span class="o">(</span><span class="n">locations</span> <span class="o">=</span> <span class="s">"classpath:client-spring.xml"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RPCTest</span> <span class="o">{</span>
+    <span class="nd">@Autowired</span>
+    <span class="nc">RpcProxy</span> <span class="n">rpcProxy</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * 测试返回string参数的代理
+     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">HelloServiceTest</span><span class="o">(){</span>
+        <span class="nc">HelloService</span> <span class="n">helloService</span> <span class="o">=</span> <span class="n">rpcProxy</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="nc">HelloService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">result</span> <span class="o">=</span> <span class="n">helloService</span><span class="o">.</span><span class="na">sayHello</span><span class="o">(</span><span class="s">"World"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 测试对个返回参数的代理
+     */</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">PersonServiceTest</span><span class="o">(){</span>
+        <span class="nc">PersonService</span> <span class="n">personService</span> <span class="o">=</span> <span class="n">rpcProxy</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="nc">PersonService</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Person</span><span class="o">&gt;</span> <span class="n">result2</span> <span class="o">=</span> <span class="n">personService</span><span class="o">.</span><span class="na">GetTestPerson</span><span class="o">(</span><span class="s">"小明"</span><span class="o">,</span><span class="mi">3</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Person</span> <span class="n">p</span> <span class="o">:</span> <span class="n">result2</span><span class="o">){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">p</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="二动态代理">二、动态代理</h2>
+
+<p>主要的实现类就是一个RpcProxy这个类，通过这个类使用netty进行网络连接调用远端的方法，因为用到了zookeeper所以在发送数据之前需要调用服务的发现，即获取到服务器的ip和监听端口。主要的关系就是客户端实现动态代理，服务器端实现反射调用函数。</p>
+
+<p>其中调用的对应关系如下，首先是客户端:主要有两个待实现的接口。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.test.client</span><span class="o">;</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">HelloService</span> <span class="o">{</span>
+    <span class="nc">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">PersonService</span> <span class="o">{</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Person</span><span class="o">&gt;</span> <span class="nf">GetTestPerson</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">num</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后是服务器端，对应两个具体的继承接口并且实现的类。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.test.server</span><span class="o">;</span>
+<span class="nd">@RpcService</span><span class="o">(</span><span class="n">value</span> <span class="o">=</span> <span class="nc">HelloService</span><span class="o">.</span><span class="na">class</span><span class="o">,</span><span class="n">version</span> <span class="o">=</span> <span class="s">"1.0"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HelloServiceImpl</span> <span class="kd">implements</span> <span class="nc">HelloService</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">sayHello</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"Hello "</span> <span class="o">+</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="nd">@RpcService</span><span class="o">(</span><span class="nc">PersonService</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonServiceImpl</span> <span class="kd">implements</span> <span class="nc">PersonService</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Person</span><span class="o">&gt;</span> <span class="nf">GetTestPerson</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">num</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Person</span><span class="o">&gt;</span> <span class="n">persons</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">num</span><span class="o">);</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">persons</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="nc">Integer</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">i</span><span class="o">),</span> <span class="n">name</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">persons</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后服务器通过使用RpcService注解，将这两个类扫描到HashMap容器中作为服务等待客户端调用，如下所示。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>com.dwj.rpc.test.client.HelloService<span class="o">=</span>com.dwj.rpc.test.server.HelloServiceImpl@51fadaff, 
+ com.dwj.rpc.test.client.PersonService<span class="o">=</span>com.dwj.rpc.test.server.PersonServiceImpl@401f7633<span class="o">}</span>
+</code></pre></div></div>
+
+<p>以上为server中hashMap中的保存的键值对，即反射调用的映射关系只需要发送客户端的包名，便能够获取到对应的实例化对象。</p>
+
+<p>注解的定义为：其中可以加上版本号进行实现。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//带有RpcService表示为直接的注解。</span>
+<span class="nd">@Target</span><span class="o">({</span><span class="nc">ElementType</span><span class="o">.</span><span class="na">TYPE</span><span class="o">})</span>
+<span class="nd">@Retention</span><span class="o">(</span><span class="nc">RetentionPolicy</span><span class="o">.</span><span class="na">RUNTIME</span><span class="o">)</span>
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="nd">@interface</span> <span class="nc">RpcService</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * 服务接口类
+     */</span>
+    <span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">value</span><span class="o">();</span>
+
+    <span class="cm">/**
+     * 服务版本号
+     */</span>
+    <span class="nc">String</span> <span class="nf">version</span><span class="o">()</span> <span class="k">default</span> <span class="s">""</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>客户端的动态代理实现：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unchecked"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">create</span><span class="o">(</span><span class="kd">final</span> <span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">interfaceClass</span><span class="o">,</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">serviceVersion</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">// 创建动态代理对象</span>
+    <span class="k">return</span> <span class="o">(</span><span class="no">T</span><span class="o">)</span> <span class="nc">Proxy</span><span class="o">.</span><span class="na">newProxyInstance</span><span class="o">(</span>
+        <span class="n">interfaceClass</span><span class="o">.</span><span class="na">getClassLoader</span><span class="o">(),</span>
+        <span class="k">new</span> <span class="nc">Class</span><span class="o">&lt;?&gt;[]{</span><span class="n">interfaceClass</span><span class="o">},</span>
+        <span class="k">new</span> <span class="nf">InvocationHandler</span><span class="o">()</span> <span class="o">{</span>
+            <span class="nd">@Override</span>
+            <span class="kd">public</span> <span class="nc">Object</span> <span class="nf">invoke</span><span class="o">(</span><span class="nc">Object</span> <span class="n">proxy</span><span class="o">,</span> <span class="nc">Method</span> <span class="n">method</span><span class="o">,</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+                <span class="c1">// 创建 RPC 请求对象并设置请求属性</span>
+                <span class="nc">RpcRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RpcRequest</span><span class="o">();</span>
+                <span class="n">request</span><span class="o">.</span><span class="na">setRequestId</span><span class="o">(</span><span class="no">UUID</span><span class="o">.</span><span class="na">randomUUID</span><span class="o">().</span><span class="na">toString</span><span class="o">());</span>
+
+                <span class="c1">//获取到的接口名称 com.dwj.rpc.test.client.HelloService</span>
+                <span class="n">request</span><span class="o">.</span><span class="na">setInterfaceName</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getDeclaringClass</span><span class="o">().</span><span class="na">getName</span><span class="o">());</span>
+
+                <span class="n">request</span><span class="o">.</span><span class="na">setServiceVersion</span><span class="o">(</span><span class="n">serviceVersion</span><span class="o">);</span>
+                <span class="n">request</span><span class="o">.</span><span class="na">setMethodName</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+                <span class="n">request</span><span class="o">.</span><span class="na">setParameterTypes</span><span class="o">(</span><span class="n">method</span><span class="o">.</span><span class="na">getParameterTypes</span><span class="o">());</span>
+                <span class="n">request</span><span class="o">.</span><span class="na">setParameters</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+               	<span class="c1">// 获取 RPC 服务地址</span>
+                <span class="c1">// 使用HashMap作为缓存</span>
+                <span class="c1">// 通过interface的全限定类名进行回去服务器的名称， 需要加上这个version字段。。 明天在搞吧。</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">serviceDiscovery</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="nc">String</span> <span class="n">interFaceName</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">getDeclaringClass</span><span class="o">().</span><span class="na">getName</span><span class="o">();</span>
+                    <span class="c1">// 需要判断 serviceVersion 是否为空。</span>
+                    <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">serviceVersion</span><span class="o">))</span> <span class="o">{</span>
+                        <span class="n">interFaceName</span> <span class="o">+=</span> <span class="s">"-"</span> <span class="o">+</span> <span class="n">serviceVersion</span><span class="o">;</span>
+                    <span class="o">}</span>
+                    <span class="n">serviceAddress</span> <span class="o">=</span> <span class="n">serviceDiscovery</span><span class="o">.</span><span class="na">discover</span><span class="o">(</span><span class="n">interFaceName</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="c1">//如果不使用zookeeper则需要将这个不进行注解。</span>
+                <span class="c1">//serviceAddress = "127.0.0.1:8000";</span>
+                <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">))</span> <span class="o">{</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"server address is empty"</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="c1">// 从 RPC 服务地址中解析主机名与端口号</span>
+                <span class="nc">String</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="nc">StringUtil</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">,</span> <span class="s">":"</span><span class="o">);</span>
+                <span class="nc">String</span> <span class="n">host</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+                <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+                <span class="c1">// 创建 RPC 客户端对象并发送 RPC 请求</span>
+                <span class="c1">// 使用地址和端口进行数据连接，</span>
+                <span class="nc">RpcClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RpcClient</span><span class="o">(</span><span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
+
+                <span class="kt">long</span> <span class="n">time</span> <span class="o">=</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">();</span>
+                <span class="c1">//但是这个获取到的response总是为空</span>
+                <span class="nc">RpcResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">send</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+                <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"time: {}ms"</span><span class="o">,</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">-</span> <span class="n">time</span><span class="o">);</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">response</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"response is null"</span><span class="o">);</span>
+                <span class="o">}</span>
+                <span class="c1">// 返回RPC响应结果</span>
+                <span class="k">if</span> <span class="o">(</span><span class="n">response</span><span class="o">.</span><span class="na">hasException</span><span class="o">())</span> <span class="o">{</span>
+                    <span class="k">throw</span> <span class="n">response</span><span class="o">.</span><span class="na">getException</span><span class="o">();</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    <span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>服务器端使用反射进行调用方法，主要就是进行解析request请求。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">Object</span> <span class="nf">handle</span><span class="o">(</span><span class="nc">RpcRequest</span> <span class="n">request</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+    <span class="c1">// 获取服务对象</span>
+    <span class="nc">String</span> <span class="n">serviceName</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getInterfaceName</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">serviceVersion</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getServiceVersion</span><span class="o">();</span>
+    <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">serviceVersion</span><span class="o">))</span> <span class="o">{</span>
+        <span class="n">serviceName</span> <span class="o">+=</span> <span class="s">"-"</span> <span class="o">+</span> <span class="n">serviceVersion</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="c1">//获取 hashMap中的保存的键值对</span>
+    <span class="nc">Object</span> <span class="n">serviceBean</span> <span class="o">=</span> <span class="n">handlerMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">serviceName</span><span class="o">);</span>
+    
+    <span class="k">if</span> <span class="o">(</span><span class="n">serviceBean</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"can not find service bean by key: %s"</span><span class="o">,</span> <span class="n">serviceName</span><span class="o">));</span>
+    <span class="o">}</span>
+    <span class="c1">// 获取反射调用所需的参数</span>
+    <span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">serviceClass</span> <span class="o">=</span> <span class="n">serviceBean</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+    <span class="nc">String</span> <span class="n">methodName</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getMethodName</span><span class="o">();</span>
+    <span class="nc">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">parameterTypes</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameterTypes</span><span class="o">();</span>
+    <span class="nc">Object</span><span class="o">[]</span> <span class="n">parameters</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="na">getParameters</span><span class="o">();</span>
+    <span class="c1">// 执行反射调用</span>
+    <span class="nc">Method</span> <span class="n">method</span> <span class="o">=</span> <span class="n">serviceClass</span><span class="o">.</span><span class="na">getMethod</span><span class="o">(</span><span class="n">methodName</span><span class="o">,</span> <span class="n">parameterTypes</span><span class="o">);</span>
+    <span class="n">method</span><span class="o">.</span><span class="na">setAccessible</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">method</span><span class="o">.</span><span class="na">invoke</span><span class="o">(</span><span class="n">serviceBean</span><span class="o">,</span> <span class="n">parameters</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="三netty数据连接">三、netty数据连接</h2>
+
+<p>上一个项目使用的是http协议进行的连接，现在打算使用netty作为网络连接。其实对于netty是不够了解的。</p>
+
+<h3 id="1-序列化与反序列化">1. 序列化与反序列化</h3>
+
+<p>在此也涉及到序列化与反序列化。使用的是第三方工具类Protostuff。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- Protostuff --&gt;</span>
+<span class="c">&lt;!--序列化工具--&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.dyuproject.protostuff<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>protostuff-core<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.8<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+<span class="nt">&lt;dependency&gt;</span>
+    <span class="nt">&lt;groupId&gt;</span>com.dyuproject.protostuff<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>protostuff-runtime<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>1.0.8<span class="nt">&lt;/version&gt;</span>
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+
+<p>其中实现的方式为：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.common.util</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 序列化工具类（基于 Protostuff 实现）
+ *
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SerializationUtil</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">Class</span><span class="o">&lt;?&gt;,</span> <span class="nc">Schema</span><span class="o">&lt;?&gt;&gt;</span> <span class="n">cachedSchema</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ConcurrentHashMap</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Objenesis</span> <span class="n">objenesis</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ObjenesisStd</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+
+    <span class="kd">private</span> <span class="nf">SerializationUtil</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 序列化（对象 -&gt; 字节数组）
+     */</span>
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unchecked"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="kt">byte</span><span class="o">[]</span> <span class="nf">serialize</span><span class="o">(</span><span class="no">T</span> <span class="n">obj</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Class</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">cls</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Class</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;)</span> <span class="n">obj</span><span class="o">.</span><span class="na">getClass</span><span class="o">();</span>
+        <span class="nc">LinkedBuffer</span> <span class="n">buffer</span> <span class="o">=</span> <span class="nc">LinkedBuffer</span><span class="o">.</span><span class="na">allocate</span><span class="o">(</span><span class="nc">LinkedBuffer</span><span class="o">.</span><span class="na">DEFAULT_BUFFER_SIZE</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">Schema</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">getSchema</span><span class="o">(</span><span class="n">cls</span><span class="o">);</span>
+            <span class="k">return</span> <span class="nc">ProtostuffIOUtil</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">(</span><span class="n">obj</span><span class="o">,</span> <span class="n">schema</span><span class="o">,</span> <span class="n">buffer</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">buffer</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * 反序列化（字节数组 -&gt; 对象）
+     */</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="no">T</span> <span class="nf">deserialize</span><span class="o">(</span><span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span><span class="o">,</span> <span class="nc">Class</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">cls</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="no">T</span> <span class="n">message</span> <span class="o">=</span> <span class="n">objenesis</span><span class="o">.</span><span class="na">newInstance</span><span class="o">(</span><span class="n">cls</span><span class="o">);</span>
+            <span class="nc">Schema</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">schema</span> <span class="o">=</span> <span class="n">getSchema</span><span class="o">(</span><span class="n">cls</span><span class="o">);</span>
+            <span class="nc">ProtostuffIOUtil</span><span class="o">.</span><span class="na">mergeFrom</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">message</span><span class="o">,</span> <span class="n">schema</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">message</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalStateException</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">getMessage</span><span class="o">(),</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@SuppressWarnings</span><span class="o">(</span><span class="s">"unchecked"</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nc">Schema</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="nf">getSchema</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">cls</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Schema</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="n">schema</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Schema</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;)</span> <span class="n">cachedSchema</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">cls</span><span class="o">);</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">schema</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">schema</span> <span class="o">=</span> <span class="nc">RuntimeSchema</span><span class="o">.</span><span class="na">createFrom</span><span class="o">(</span><span class="n">cls</span><span class="o">);</span>
+            <span class="n">cachedSchema</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">cls</span><span class="o">,</span> <span class="n">schema</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">schema</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>具体的使用：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * RPC 解码器
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcDecoder</span> <span class="kd">extends</span> <span class="nc">ByteToMessageDecoder</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">genericClass</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">RpcDecoder</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">genericClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">genericClass</span> <span class="o">=</span> <span class="n">genericClass</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">decode</span><span class="o">(</span><span class="nc">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="nc">ByteBuf</span> <span class="n">in</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Object</span><span class="o">&gt;</span> <span class="n">out</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">in</span><span class="o">.</span><span class="na">readableBytes</span><span class="o">()</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">in</span><span class="o">.</span><span class="na">markReaderIndex</span><span class="o">();</span>
+        <span class="kt">int</span> <span class="n">dataLength</span> <span class="o">=</span> <span class="n">in</span><span class="o">.</span><span class="na">readInt</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">in</span><span class="o">.</span><span class="na">readableBytes</span><span class="o">()</span> <span class="o">&lt;</span> <span class="n">dataLength</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">in</span><span class="o">.</span><span class="na">resetReaderIndex</span><span class="o">();</span>
+            <span class="k">return</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="n">dataLength</span><span class="o">];</span>
+        <span class="n">in</span><span class="o">.</span><span class="na">readBytes</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+        <span class="n">out</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">SerializationUtil</span><span class="o">.</span><span class="na">deserialize</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">genericClass</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.common.codec</span><span class="o">;</span>
+
+<span class="cm">/**
+ * RPC 编码器
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcEncoder</span> <span class="kd">extends</span> <span class="nc">MessageToByteEncoder</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">genericClass</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">RpcEncoder</span><span class="o">(</span><span class="nc">Class</span><span class="o">&lt;?&gt;</span> <span class="n">genericClass</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">genericClass</span> <span class="o">=</span> <span class="n">genericClass</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">encode</span><span class="o">(</span><span class="nc">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="nc">Object</span> <span class="n">in</span><span class="o">,</span> <span class="nc">ByteBuf</span> <span class="n">out</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">genericClass</span><span class="o">.</span><span class="na">isInstance</span><span class="o">(</span><span class="n">in</span><span class="o">))</span> <span class="o">{</span>
+            <span class="kt">byte</span><span class="o">[]</span> <span class="n">data</span> <span class="o">=</span> <span class="nc">SerializationUtil</span><span class="o">.</span><span class="na">serialize</span><span class="o">(</span><span class="n">in</span><span class="o">);</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">writeInt</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">);</span>
+            <span class="n">out</span><span class="o">.</span><span class="na">writeBytes</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="2-封装请求体与响应体">2. 封装请求体与响应体</h3>
+
+<p>使用封装体的方式使得关系更加的方便</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.common.bean</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 封装 RPC 请求
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcRequest</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">requestId</span><span class="o">;</span> <span class="c1">//请求id</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">interfaceName</span><span class="o">;</span> <span class="c1">//请求接口名称</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">serviceVersion</span><span class="o">;</span> <span class="c1">//请求版本</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">methodName</span><span class="o">;</span> <span class="c1">//请求方法名</span>
+    <span class="kd">private</span> <span class="nc">Class</span><span class="o">&lt;?&gt;[]</span> <span class="n">parameterTypes</span><span class="o">;</span> <span class="c1">//请求参数类型</span>
+    <span class="kd">private</span> <span class="nc">Object</span><span class="o">[]</span> <span class="n">parameters</span><span class="o">;</span> <span class="c1">//请求参数。</span>
+	<span class="c1">//get set</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.common.bean</span><span class="o">;</span>
+
+<span class="cm">/**
+ * 封装 RPC 响应
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcResponse</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">requestId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Exception</span> <span class="n">exception</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Object</span> <span class="n">result</span><span class="o">;</span>
+	<span class="c1">//get set</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="3-异步实现netty服务">3. 异步实现netty服务</h3>
+
+<p>客户端进行与服务器交互</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.client</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcClient</span> <span class="kd">extends</span> <span class="nc">SimpleChannelInboundHandler</span><span class="o">&lt;</span><span class="nc">RpcResponse</span><span class="o">&gt;</span> <span class="o">{</span>
+  
+    <span class="c1">// send 以后就是使用这个东西进行获取。</span>
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">channelRead0</span><span class="o">(</span><span class="nc">ChannelHandlerContext</span> <span class="n">channelHandlerContext</span><span class="o">,</span> <span class="nc">RpcResponse</span> <span class="n">rpcResponse</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">response</span> <span class="o">=</span> <span class="n">rpcResponse</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="nc">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="no">LOGGER</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"api caught exception"</span><span class="o">,</span> <span class="n">cause</span><span class="o">);</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     *  发送数据到服务器。
+     * @param request 发送请求
+     * @return 返回响应数据
+     * @throws Exception
+     */</span>
+    <span class="kd">public</span> <span class="nc">RpcResponse</span> <span class="nf">send</span><span class="o">(</span><span class="nc">RpcRequest</span> <span class="n">request</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="nc">EventLoopGroup</span> <span class="n">group</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NioEventLoopGroup</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 创建并初始化 Netty 客户端 Bootstrap 对象</span>
+            <span class="nc">Bootstrap</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Bootstrap</span><span class="o">();</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">group</span><span class="o">);</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="nc">NioSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">handler</span><span class="o">(</span><span class="k">new</span> <span class="nc">ChannelInitializer</span><span class="o">&lt;</span><span class="nc">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+                <span class="nd">@Override</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="nc">SocketChannel</span> <span class="n">channel</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+                    <span class="nc">ChannelPipeline</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">pipeline</span><span class="o">();</span>
+                    <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">RpcEncoder</span><span class="o">(</span><span class="nc">RpcRequest</span><span class="o">.</span><span class="na">class</span><span class="o">));</span> <span class="c1">// 编码 RPC 请求</span>
+                    <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">RpcDecoder</span><span class="o">(</span><span class="nc">RpcResponse</span><span class="o">.</span><span class="na">class</span><span class="o">));</span> <span class="c1">// 解码 RPC 响应</span>
+                    <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="nc">RpcClient</span><span class="o">.</span><span class="na">this</span><span class="o">);</span> <span class="c1">// 处理 RPC 响应</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">TCP_NODELAY</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+            <span class="c1">// 连接 RPC 服务器</span>
+            <span class="nc">ChannelFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="o">.</span><span class="na">connect</span><span class="o">(</span><span class="n">host</span><span class="o">,</span> <span class="n">port</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+            <span class="c1">// 写入 RPC 请求数据并关闭连接</span>
+            <span class="nc">Channel</span> <span class="n">channel</span> <span class="o">=</span> <span class="n">future</span><span class="o">.</span><span class="na">channel</span><span class="o">();</span>
+            <span class="n">channel</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">request</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+            <span class="n">channel</span><span class="o">.</span><span class="na">closeFuture</span><span class="o">().</span><span class="na">sync</span><span class="o">();</span>
+            <span class="c1">// 返回 RPC 响应对象</span>
+            <span class="k">return</span> <span class="n">response</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">group</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>服务器端：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.server</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcServer</span> <span class="kd">implements</span> <span class="nc">ApplicationContextAware</span><span class="o">,</span> <span class="nc">InitializingBean</span> <span class="o">{</span>
+
+    <span class="c1">//在进行设置好参数以后，进行开启服务器</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">afterPropertiesSet</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="nc">EventLoopGroup</span> <span class="n">bossGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NioEventLoopGroup</span><span class="o">();</span>
+        <span class="nc">EventLoopGroup</span> <span class="n">workerGroup</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">NioEventLoopGroup</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 创建并初始化 Netty 服务端 Bootstrap 对象</span>
+            <span class="nc">ServerBootstrap</span> <span class="n">bootstrap</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ServerBootstrap</span><span class="o">();</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">group</span><span class="o">(</span><span class="n">bossGroup</span><span class="o">,</span> <span class="n">workerGroup</span><span class="o">);</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">channel</span><span class="o">(</span><span class="nc">NioServerSocketChannel</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">childHandler</span><span class="o">(</span><span class="k">new</span> <span class="nc">ChannelInitializer</span><span class="o">&lt;</span><span class="nc">SocketChannel</span><span class="o">&gt;()</span> <span class="o">{</span>
+                <span class="nd">@Override</span>
+                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">initChannel</span><span class="o">(</span><span class="nc">SocketChannel</span> <span class="n">channel</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+                    <span class="nc">ChannelPipeline</span> <span class="n">pipeline</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="na">pipeline</span><span class="o">();</span>
+                    <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">RpcDecoder</span><span class="o">(</span><span class="nc">RpcRequest</span><span class="o">.</span><span class="na">class</span><span class="o">));</span> <span class="c1">// 解码 RPC 请求</span>
+                    <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">RpcEncoder</span><span class="o">(</span><span class="nc">RpcResponse</span><span class="o">.</span><span class="na">class</span><span class="o">));</span><span class="c1">// 编码 RPC 响应</span>
+                    <span class="n">pipeline</span><span class="o">.</span><span class="na">addLast</span><span class="o">(</span><span class="k">new</span> <span class="nc">RpcServerHandler</span><span class="o">(</span><span class="n">handlerMap</span><span class="o">));</span> <span class="c1">// 处理 RPC 请求</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">option</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_BACKLOG</span><span class="o">,</span> <span class="mi">1024</span><span class="o">);</span>
+            <span class="n">bootstrap</span><span class="o">.</span><span class="na">childOption</span><span class="o">(</span><span class="nc">ChannelOption</span><span class="o">.</span><span class="na">SO_KEEPALIVE</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+
+            <span class="c1">// 获取 RPC 服务器的 IP 地址与端口号</span>
+            <span class="nc">String</span><span class="o">[]</span> <span class="n">addressArray</span> <span class="o">=</span> <span class="nc">StringUtil</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">,</span> <span class="s">":"</span><span class="o">);</span>
+            <span class="nc">String</span> <span class="n">ip</span> <span class="o">=</span> <span class="n">addressArray</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+            <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">addressArray</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+            <span class="c1">// 启动 RPC 服务器</span>
+            <span class="nc">ChannelFuture</span> <span class="n">future</span> <span class="o">=</span> <span class="n">bootstrap</span><span class="o">.</span><span class="na">bind</span><span class="o">(</span><span class="n">ip</span><span class="o">,</span> <span class="n">port</span><span class="o">).</span><span class="na">sync</span><span class="o">();</span>
+
+            <span class="c1">// 注册服务到zookeeper服务器</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">serviceRegistry</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 获取本地扫描到的所有 注解的接口，放入数组。</span>
+                <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">interfaceNames</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">handlerMap</span><span class="o">.</span><span class="na">keySet</span><span class="o">());</span>
+                
+                <span class="n">serviceRegistry</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">,</span> <span class="n">interfaceNames</span><span class="o">);</span>
+                <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"register service: {} =&gt; {}"</span><span class="o">,</span> <span class="n">interfaceNames</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">serviceAddress</span><span class="o">);</span>
+            <span class="o">}</span>
+            <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"server started on port {}"</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"server started on port"</span> <span class="o">+</span> <span class="n">port</span><span class="o">);</span>
+            <span class="c1">// 关闭 RPC 服务器</span>
+            <span class="n">future</span><span class="o">.</span><span class="na">channel</span><span class="o">().</span><span class="na">closeFuture</span><span class="o">().</span><span class="na">sync</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">finally</span> <span class="o">{</span>
+            <span class="n">workerGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+            <span class="n">bossGroup</span><span class="o">.</span><span class="na">shutdownGracefully</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>服务器获取客户端的数据。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">com.dwj.rpc.server</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RpcServerHandler</span> <span class="kd">extends</span> <span class="nc">SimpleChannelInboundHandler</span><span class="o">&lt;</span><span class="nc">RpcRequest</span><span class="o">&gt;</span> <span class="o">{</span>
+   
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">channelRead0</span><span class="o">(</span><span class="kd">final</span> <span class="nc">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="nc">RpcRequest</span> <span class="n">request</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+        <span class="c1">// 创建并初始化 RPC 响应对象</span>
+        <span class="nc">RpcResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RpcResponse</span><span class="o">();</span>
+        <span class="n">response</span><span class="o">.</span><span class="na">setRequestId</span><span class="o">(</span><span class="n">request</span><span class="o">.</span><span class="na">getRequestId</span><span class="o">());</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="nc">Object</span> <span class="n">result</span> <span class="o">=</span> <span class="n">handle</span><span class="o">(</span><span class="n">request</span><span class="o">);</span> <span class="c1">//处理请求体，反射执行。</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setResult</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="no">LOGGER</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"handle result failure"</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+            <span class="n">response</span><span class="o">.</span><span class="na">setException</span><span class="o">(</span><span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="c1">// 写入 RPC 响应对象并自动关闭连接</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">writeAndFlush</span><span class="o">(</span><span class="n">response</span><span class="o">).</span><span class="na">addListener</span><span class="o">(</span><span class="nc">ChannelFutureListener</span><span class="o">.</span><span class="na">CLOSE</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">exceptionCaught</span><span class="o">(</span><span class="nc">ChannelHandlerContext</span> <span class="n">ctx</span><span class="o">,</span> <span class="nc">Throwable</span> <span class="n">cause</span><span class="o">)</span> <span class="o">{</span>
+        <span class="no">LOGGER</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">"server caught exception"</span><span class="o">,</span> <span class="n">cause</span><span class="o">);</span>
+        <span class="n">ctx</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="四服务注册与发现">四、服务注册与发现</h2>
+
+<p>使用zookeeper客户端进行服务的创建节点的时候，使用”/”表示一个目录，如</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">parent</span> <span class="o">=</span> <span class="s">"/servcice"</span><span class="o">;</span>
+<span class="n">child</span> <span class="o">=</span>  <span class="n">parent</span> <span class="o">+</span> <span class="s">"/interface"</span>
+</code></pre></div></div>
+
+<p>这样就表示创建了两个目录， 如果不加 “/” ，则直接表示根节点，会被覆盖，所以在创建的时候，需要做好拼接。</p>
+
+<p>注册服务主要是在服务器启动的时候进行使用，查看服务器的spring配置文件可以看出，在初始化服务器的时候，需要将服务器发现对象注入进去，并且使用也是，直接调用注册函数即可，其中注册需要传递两个参数，服务器ip地址，系统扫描到的接口全限定类名。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rpcServer</span><span class="o">.</span><span class="na">java</span>
+
+    <span class="c1">// 注册服务到zookeeper服务器</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">serviceRegistry</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// 获取本地扫描到的所有 注解的接口，放入数组。</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">interfaceNames</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;(</span><span class="n">handlerMap</span><span class="o">.</span><span class="na">keySet</span><span class="o">());</span>
+
+        <span class="n">serviceRegistry</span><span class="o">.</span><span class="na">register</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">,</span> <span class="n">interfaceNames</span><span class="o">);</span>
+        <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"register service: {} =&gt; {}"</span><span class="o">,</span> <span class="n">interfaceNames</span><span class="o">.</span><span class="na">toString</span><span class="o">(),</span> <span class="n">serviceAddress</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"server started on port {}"</span><span class="o">,</span> <span class="n">port</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>注册则是与之对应，主要就是在进行代理的时候进行发现服务器的ip地址，然后进行服务器的连接，需要将接口的全新定类名传递过去，从缓存中找到对应的服务器地址。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">RpcProxy</span><span class="o">.</span><span class="na">java</span>
+    <span class="c1">// 获取 RPC 服务地址</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">serviceDiscovery</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">interFaceName</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="na">getDeclaringClass</span><span class="o">().</span><span class="na">getName</span><span class="o">();</span>
+        <span class="c1">// 需要判断 serviceVersion 是否为空。</span>
+        <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isNotEmpty</span><span class="o">(</span><span class="n">serviceVersion</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">interFaceName</span> <span class="o">+=</span> <span class="s">"-"</span> <span class="o">+</span> <span class="n">serviceVersion</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">serviceAddress</span> <span class="o">=</span> <span class="n">serviceDiscovery</span><span class="o">.</span><span class="na">discover</span><span class="o">(</span><span class="n">interFaceName</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//如果不使用zookeeper则需要将这个不进行注解。</span>
+    <span class="c1">//serviceAddress = "127.0.0.1:8000";</span>
+    <span class="k">if</span> <span class="o">(</span><span class="nc">StringUtil</span><span class="o">.</span><span class="na">isEmpty</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">RuntimeException</span><span class="o">(</span><span class="s">"server address is empty"</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="c1">// 从 RPC 服务地址中解析主机名与端口号</span>
+    <span class="nc">String</span><span class="o">[]</span> <span class="n">array</span> <span class="o">=</span> <span class="nc">StringUtil</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="n">serviceAddress</span><span class="o">,</span> <span class="s">":"</span><span class="o">);</span>
+    <span class="nc">String</span> <span class="n">host</span> <span class="o">=</span> <span class="n">array</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+    <span class="kt">int</span> <span class="n">port</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+</code></pre></div></div>
+
+<p>从缓存中找到对应的地址。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">ZooKeeperServiceDiscovery</span><span class="o">.</span><span class="na">class</span>
+	<span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">discover</span><span class="o">(</span><span class="nc">String</span> <span class="n">interfaceName</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="c1">// 直接从数据中进行获取。</span>
+        <span class="k">return</span> <span class="n">serviceMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">interfaceName</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="1-连接zookeeper服务器">1. 连接zookeeper服务器</h3>
+
+<p>所有的与zookeeper服务器交互都是基于zookeeper客户端这个类进行，其中新建一个zookeeper客户端如下，需要注意的是，在进行创建zookeeper客户端时候需要使用<code class="language-plaintext highlighter-rouge">CountDownLatch</code>线程同步进行连接服务器。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="nc">CountDownLatch</span> <span class="n">latch</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">CountDownLatch</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+<span class="kd">private</span> <span class="kd">final</span> <span class="nc">ZooKeeper</span> <span class="n">zooKeeper</span><span class="o">;</span>
+<span class="c1">// 需要在构造器中进行初始化、</span>
+<span class="kd">public</span> <span class="nf">ZooKeeperServiceRegistry</span><span class="o">(</span><span class="nc">String</span> <span class="n">zkAddress</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+
+    <span class="c1">// 初始化的时候就进行连接到zookeeper服务器。</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">zooKeeper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ZooKeeper</span><span class="o">(</span><span class="n">zkAddress</span><span class="o">,</span> <span class="nc">Constant</span><span class="o">.</span><span class="na">ZK_CONNECTION_TIMEOUT</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>其中zookeeper的监听器为：需要此类继承<code class="language-plaintext highlighter-rouge">Watcher</code>接口。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 创建zookeeper同步所需要的同步锁。</span>
+<span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">process</span><span class="o">(</span><span class="nc">WatchedEvent</span> <span class="n">watchedEvent</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">(</span><span class="n">watchedEvent</span><span class="o">.</span><span class="na">getState</span><span class="o">()</span> <span class="o">==</span> <span class="nc">Event</span><span class="o">.</span><span class="na">KeeperState</span><span class="o">.</span><span class="na">SyncConnected</span><span class="o">){</span>
+        <span class="n">latch</span><span class="o">.</span><span class="na">countDown</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="2-服务注册">2. 服务注册</h3>
+
+<p>现阶段的注册都是只是单纯的把服务器的ip注册到zookeeper服务器中，并没有指定每一个service对应的服务器ip。具体的实现代码：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ZooKeeperServiceRegistry</span> <span class="kd">implements</span> <span class="nc">ServiceRegistry</span><span class="o">,</span> <span class="nc">Watcher</span>  <span class="o">{</span>
+
+       <span class="c1">//  注册持久性registry节点 其中只需要serviceAddress 就行，而 service 无序注册。</span>
+    <span class="c1">// 还需要传递 interfaceName。</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">register</span><span class="o">(</span><span class="nc">String</span> <span class="n">serviceAddress</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">interfaceName</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">KeeperException</span><span class="o">,</span> <span class="nc">InterruptedException</span> <span class="o">{</span>
+
+        <span class="c1">// 创建 registry 节点（持久）</span>
+        <span class="nc">String</span> <span class="n">registryPath</span> <span class="o">=</span> <span class="nc">Constant</span><span class="o">.</span><span class="na">ZK_REGISTRY_PATH</span><span class="o">;</span>
+        <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"create registry node: {}"</span><span class="o">,</span> <span class="n">registryPath</span><span class="o">);</span>
+        <span class="c1">// 当没有注册的时候才会进行注册。</span>
+        <span class="k">if</span> <span class="o">(</span><span class="kc">null</span><span class="o">==</span><span class="n">zooKeeper</span><span class="o">.</span><span class="na">exists</span><span class="o">(</span><span class="n">registryPath</span><span class="o">,</span> <span class="kc">false</span><span class="o">))</span> <span class="o">{</span>
+            <span class="c1">//  new byte[0] 表示该节点只是一个父节点，没有值。</span>
+            <span class="n">zooKeeper</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">registryPath</span><span class="o">,</span> <span class="k">new</span> <span class="kt">byte</span><span class="o">[</span><span class="mi">0</span><span class="o">],</span> <span class="nc">ZooDefs</span><span class="o">.</span><span class="na">Ids</span><span class="o">.</span><span class="na">OPEN_ACL_UNSAFE</span><span class="o">,</span> <span class="nc">CreateMode</span><span class="o">.</span><span class="na">PERSISTENT</span><span class="o">);</span>
+        <span class="o">}</span>
+
+        <span class="c1">//创建Server节点  这是个临时节点。</span>
+        <span class="n">createNode</span><span class="o">(</span><span class="n">zooKeeper</span><span class="o">,</span> <span class="n">serviceAddress</span><span class="o">,</span> <span class="n">interfaceName</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">//将服务器的地址保存进去， 在上面创建的/registry 节点下。</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">createNode</span><span class="o">(</span><span class="nc">ZooKeeper</span> <span class="n">zk</span><span class="o">,</span> <span class="nc">String</span> <span class="n">serviceAddress</span><span class="o">,</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">interfaceName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 获取serviceAddress的byte，</span>
+            <span class="kt">byte</span><span class="o">[]</span> <span class="nc">AddressBytes</span> <span class="o">=</span> <span class="n">serviceAddress</span><span class="o">.</span><span class="na">getBytes</span><span class="o">();</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">name</span> <span class="o">:</span><span class="n">interfaceName</span><span class="o">){</span>
+                <span class="c1">//采用的连接模式为 断开连接的时候会自动的删除。</span>
+                <span class="c1">// 创建节点并且将地址写进去。</span>
+                <span class="nc">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">zk</span><span class="o">.</span><span class="na">create</span><span class="o">(</span> <span class="nc">Constant</span><span class="o">.</span><span class="na">ZK_REGISTRY_PATH</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">name</span><span class="o">,</span> <span class="nc">AddressBytes</span><span class="o">,</span> 
+                                        <span class="nc">ZooDefs</span><span class="o">.</span><span class="na">Ids</span><span class="o">.</span><span class="na">OPEN_ACL_UNSAFE</span><span class="o">,</span> <span class="nc">CreateMode</span><span class="o">.</span><span class="na">EPHEMERAL</span><span class="o">);</span>
+                <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"create zookeeper node ({} =&gt; {})"</span><span class="o">,</span> <span class="n">path</span><span class="o">,</span> <span class="n">serviceAddress</span><span class="o">);</span>
+            <span class="o">}</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">KeeperException</span> <span class="o">|</span> <span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="no">LOGGER</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">""</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>需要说明的是，路径的规划为：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Constant</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="no">ZK_SESSION_TIMEOUT</span> <span class="o">=</span> <span class="mi">5000</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="no">ZK_CONNECTION_TIMEOUT</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">;</span>
+
+    <span class="nc">String</span> <span class="no">ZK_REGISTRY_PATH</span> <span class="o">=</span> <span class="s">"/registry"</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>其中注册的结果如下所示：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/28/zookeeperResult.png" alt="zookeeperResult.png" /></p>
+
+<p>可以看出，其中registry为持久性节点，自动注册的服务名称为接口的全限定类名，因为采用的是<code class="language-plaintext highlighter-rouge">CreateMode.EPHEMERAL</code>模式。最后节点的值为服务器的地址和端口。</p>
+
+<h3 id="3-服务发现">3. 服务发现</h3>
+
+<p>服务发现与注册是相辅相成的，也是先要创建一个zookeeper客户端，然后进行连接并进行查询，在本项目中采用的是使用一个watcher进行检测服务器,</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ZooKeeperServiceDiscovery</span> <span class="kd">implements</span> <span class="nc">ServiceDiscovery</span><span class="o">,</span> <span class="nc">Watcher</span> <span class="o">{</span>
+
+    <span class="c1">// 记录缓存，同步HashMap进行存储数据。</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">serviceMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ConcurrentHashMap</span><span class="o">&lt;&gt;();</span>
+    
+    <span class="kd">public</span> <span class="nf">ZooKeeperServiceDiscovery</span><span class="o">(</span><span class="nc">String</span> <span class="n">zkAddress</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="c1">// 创建 ZooKeeper 客户端</span>
+        <span class="n">zooKeeper</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ZooKeeper</span><span class="o">(</span><span class="n">zkAddress</span><span class="o">,</span> <span class="nc">Constant</span><span class="o">.</span><span class="na">ZK_CONNECTION_TIMEOUT</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">latch</span><span class="o">.</span><span class="na">await</span><span class="o">();</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="c1">//看着结点。</span>
+        <span class="n">watchNode</span><span class="o">(</span><span class="n">zooKeeper</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 根据接口的名称发现对应服务器的ip地址和端口。 每次获取都是从HashMap中获取，避免多次连接。</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">discover</span><span class="o">(</span><span class="nc">String</span> <span class="n">interfaceName</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="c1">// 直接从数据中进行获取。</span>
+        <span class="k">return</span> <span class="n">serviceMap</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">interfaceName</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 每次开始的时候会直接的进行连接。获取到所有的数据。</span>
+    <span class="c1">// 实现监听ZK_REGISTRY_PATH的child节点，当节点进行变化的时候便会回调这个方法，然后进行重新更新HashMap。</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">watchNode</span><span class="o">(</span><span class="kd">final</span> <span class="nc">ZooKeeper</span> <span class="n">zk</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">serviceMap</span><span class="o">.</span><span class="na">clear</span><span class="o">();</span> <span class="c1">//每次在进行检测子节点的变化的时候，需要先将Map 更新，然后在进行重新赋值。 所以要使用 ConcurrentHashMap</span>
+        <span class="c1">// 进行数据的同步</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="c1">// 将register下所有的节点进行遍历。</span>
+            <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">nodeList</span> <span class="o">=</span> <span class="n">zk</span><span class="o">.</span><span class="na">getChildren</span><span class="o">(</span><span class="nc">Constant</span><span class="o">.</span><span class="na">ZK_REGISTRY_PATH</span><span class="o">,</span> <span class="n">event</span> <span class="o">-&gt;</span> <span class="o">{</span>
+
+                <span class="k">if</span> <span class="o">(</span><span class="n">event</span><span class="o">.</span><span class="na">getType</span><span class="o">()</span> <span class="o">==</span> <span class="nc">Event</span><span class="o">.</span><span class="na">EventType</span><span class="o">.</span><span class="na">NodeChildrenChanged</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">watchNode</span><span class="o">(</span><span class="n">zk</span><span class="o">);</span> <span class="c1">// 这时候会重新的调用方法，然后进行更新状态。</span>
+                    <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Watcher:"</span><span class="o">,</span> <span class="s">"子节点的值发生了变化"</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">});</span>
+
+            <span class="c1">// 然后遍历registry节点下所有的节点。 并且使用HashMap缓存。</span>
+            <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">node</span> <span class="o">:</span> <span class="n">nodeList</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">// 在获取节点的时候需要使用监听器。</span>
+                <span class="kt">byte</span><span class="o">[]</span> <span class="n">bytes</span> <span class="o">=</span> <span class="n">zk</span><span class="o">.</span><span class="na">getData</span><span class="o">(</span><span class="nc">Constant</span><span class="o">.</span><span class="na">ZK_REGISTRY_PATH</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">node</span><span class="o">,</span> <span class="kc">true</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+                <span class="nc">String</span> <span class="n">value</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">String</span><span class="o">(</span><span class="n">bytes</span><span class="o">);</span>
+                <span class="c1">// 存到HashMap中。</span>
+                <span class="n">serviceMap</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">node</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+                <span class="c1">// Map :{com.dwj.rpc.test.client.PersonService : 127.0.0.1:8000}</span>
+            <span class="o">}</span>
+            <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"serviceMap data: {}"</span><span class="o">,</span> <span class="n">serviceMap</span><span class="o">);</span>
+            <span class="no">LOGGER</span><span class="o">.</span><span class="na">debug</span><span class="o">(</span><span class="s">"Service discovery triggered updating connected server node."</span><span class="o">);</span>
+
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="nc">KeeperException</span> <span class="o">|</span> <span class="nc">InterruptedException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="no">LOGGER</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="s">""</span><span class="o">,</span> <span class="n">e</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">process</span><span class="o">(</span><span class="nc">WatchedEvent</span> <span class="n">watchedEvent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">watchedEvent</span><span class="o">.</span><span class="na">getState</span><span class="o">()</span> <span class="o">==</span> <span class="nc">Event</span><span class="o">.</span><span class="na">KeeperState</span><span class="o">.</span><span class="na">SyncConnected</span><span class="o">){</span>
+            <span class="n">latch</span><span class="o">.</span><span class="na">countDown</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>服务发现采取的逻辑是，在刚开始的时候会从zookeeper中获取到所有的节点的列表，然后保存在ConcurrentHashMap中，并且一直监听这个节点的变化，当节点有变化的时候，便会更新ConcurrentHashMap，始终保存最新的服务缓存。</p>
+
+<p>以上便完成了整个的监听逻辑的设定。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

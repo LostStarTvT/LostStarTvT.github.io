@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：观察者模式</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/09/11/Observer.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：观察者模式</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-09-11T00:00:00+08:00" itemprop="datePublished">
+          
+          Sep 11, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：观察者模式</h1>
+    <p class="post-meta">
+      <time datetime="2020-09-11T00:00:00+08:00" itemprop="datePublished">
+        
+        Sep 11, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>总结并记录观察者模式的实现</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+</ul>
+<p>之前感觉比较新奇的接口回调其实也是一种观察者模式的实现，但是这种只是种一对一的观察者模式，传统的观察者模式是一对多的实现，即一个subject，对应多个observer，当subject中一个属性变化的时候，便会将变化通知到所有的观察者。具体的实现：</p>
+
+<p>创建subject类：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+ 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Subject</span> <span class="o">{</span>
+   
+   <span class="c1">// 所有观察者的集合。 需要存储所有观察者的地址，也相当于接口回调中的注册。</span>
+   <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Observer</span><span class="o">&gt;</span> <span class="n">observers</span> 
+      <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">Observer</span><span class="o">&gt;();</span>
+   <span class="kd">private</span> <span class="kt">int</span> <span class="n">state</span><span class="o">;</span>
+ 
+   <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getState</span><span class="o">()</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="n">state</span><span class="o">;</span>
+   <span class="o">}</span>
+   
+   <span class="c1">// 当有人调用更新主题属性的时候，便将更新通知到所有的观察者。</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setState</span><span class="o">(</span><span class="kt">int</span> <span class="n">state</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">state</span> <span class="o">=</span> <span class="n">state</span><span class="o">;</span>
+      <span class="n">notifyAllObservers</span><span class="o">();</span>
+   <span class="o">}</span>
+ 
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">attach</span><span class="o">(</span><span class="nc">Observer</span> <span class="n">observer</span><span class="o">){</span>
+      <span class="n">observers</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">observer</span><span class="o">);</span>      
+   <span class="o">}</span>
+ 	
+   <span class="c1">// 通知所有的观察者事件变化。</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">notifyAllObservers</span><span class="o">(){</span>
+      <span class="k">for</span> <span class="o">(</span><span class="nc">Observer</span> <span class="n">observer</span> <span class="o">:</span> <span class="n">observers</span><span class="o">)</span> <span class="o">{</span>
+         <span class="n">observer</span><span class="o">.</span><span class="na">update</span><span class="o">();</span>
+      <span class="o">}</span>
+   <span class="o">}</span>  
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>创建Observer类：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Observer</span> <span class="o">{</span>
+   <span class="kd">protected</span> <span class="nc">Subject</span> <span class="n">subject</span><span class="o">;</span> <span class="c1">// 里面有主题的类</span>
+   <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>创建具体的观察者：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 可以发现，在初始化构造方法中，需要把主题对象的地址传递进来，然后调用主题的attach()方法进行注册自己。</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">BinaryObserver</span> <span class="kd">extends</span> <span class="nc">Observer</span><span class="o">{</span>
+ 
+   <span class="kd">public</span> <span class="nf">BinaryObserver</span><span class="o">(</span><span class="nc">Subject</span> <span class="n">subject</span><span class="o">){</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">subject</span> <span class="o">=</span> <span class="n">subject</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">subject</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+   <span class="o">}</span>
+   
+   <span class="c1">// 然后注册自己想知道的通知，其实和接口回调是完全一致的。</span>
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">"Binary String: "</span> 
+      <span class="o">+</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toBinaryString</span><span class="o">(</span> <span class="n">subject</span><span class="o">.</span><span class="na">getState</span><span class="o">()</span> <span class="o">)</span> <span class="o">);</span> 
+   <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OctalObserver</span> <span class="kd">extends</span> <span class="nc">Observer</span><span class="o">{</span>
+ 
+   <span class="kd">public</span> <span class="nf">OctalObserver</span><span class="o">(</span><span class="nc">Subject</span> <span class="n">subject</span><span class="o">){</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">subject</span> <span class="o">=</span> <span class="n">subject</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">subject</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+   <span class="o">}</span>
+ 
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+     <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">"Octal String: "</span> 
+     <span class="o">+</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toOctalString</span><span class="o">(</span> <span class="n">subject</span><span class="o">.</span><span class="na">getState</span><span class="o">()</span> <span class="o">)</span> <span class="o">);</span> 
+   <span class="o">}</span>
+<span class="o">}</span>
+
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">HexaObserver</span> <span class="kd">extends</span> <span class="nc">Observer</span><span class="o">{</span>
+ 
+   <span class="kd">public</span> <span class="nf">HexaObserver</span><span class="o">(</span><span class="nc">Subject</span> <span class="n">subject</span><span class="o">){</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">subject</span> <span class="o">=</span> <span class="n">subject</span><span class="o">;</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">subject</span><span class="o">.</span><span class="na">attach</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+   <span class="o">}</span>
+ 
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">()</span> <span class="o">{</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span> <span class="s">"Hex String: "</span> 
+      <span class="o">+</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">toHexString</span><span class="o">(</span> <span class="n">subject</span><span class="o">.</span><span class="na">getState</span><span class="o">()</span> <span class="o">).</span><span class="na">toUpperCase</span><span class="o">()</span> <span class="o">);</span> 
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>测试程序：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ObserverPatternDemo</span> <span class="o">{</span>
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+      <span class="nc">Subject</span> <span class="n">subject</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Subject</span><span class="o">();</span>
+ 
+      <span class="k">new</span> <span class="nf">HexaObserver</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+      <span class="k">new</span> <span class="nf">OctalObserver</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+      <span class="k">new</span> <span class="nf">BinaryObserver</span><span class="o">(</span><span class="n">subject</span><span class="o">);</span>
+ 
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"First state change: 15"</span><span class="o">);</span>   
+      <span class="n">subject</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="mi">15</span><span class="o">);</span>
+      <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Second state change: 10"</span><span class="o">);</span>  
+      <span class="n">subject</span><span class="o">.</span><span class="na">setState</span><span class="o">(</span><span class="mi">10</span><span class="o">);</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>输出结果如下：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>First state change: 15
+Hex String: F
+Octal String: 17
+Binary String: 1111
+Second state change: 10
+Hex String: A
+Octal String: 12
+Binary String: 1010
+</code></pre></div></div>
+<p>类比于接口回调，正常情况下是A调用B的接口，然后进行输出，现阶段我们想让B调用A中的接口，那么就需要一点面向接口编程进行实现，即首先在B中定一个接口和接口的注册方法，然后在B中具体的业务中调用接口方法。在A中首先实现B中接口方法，然后获取B对象的地址，向B中注册该接口方法，那么A中在调用接口方法的时候，便会调用改接口，既然可以调用一个方法，那么我用一个数组存储下来所有注册接口的方法，那么就成为了观察者模式，这样也是Netty异步实现的基础。即当主题进行数据更新后，变化调用观察者的更新方法。</p>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

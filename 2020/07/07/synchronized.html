@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Java：Synchronize锁底层实现(转)</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/07/07/synchronized.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Java：Synchronize锁底层实现(转)</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-07-07T00:00:00+08:00" itemprop="datePublished">
+          
+          Jul 7, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Java：Synchronize锁底层实现(转)</h1>
+    <p class="post-meta">
+      <time datetime="2020-07-07T00:00:00+08:00" itemprop="datePublished">
+        
+        Jul 7, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录synchronized锁的实现，大致分析。转载 <a href="https://juejin.im/post/5bfe6ddee51d45491b0163eb">死磕Synchronized底层实现–概论</a>，具体的偏向锁，轻量级锁，重量级锁的实现参考博文中的链接。</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#synchronized简介" id="markdown-toc-synchronized简介">Synchronized简介</a></li>
+  <li><a href="#锁的几种形式" id="markdown-toc-锁的几种形式">锁的几种形式</a>    <ul>
+      <li><a href="#对象头" id="markdown-toc-对象头">对象头</a></li>
+      <li><a href="#一偏向锁" id="markdown-toc-一偏向锁">一、偏向锁</a>        <ul>
+          <li><a href="#对象创建" id="markdown-toc-对象创建">对象创建</a></li>
+          <li><a href="#加锁过程" id="markdown-toc-加锁过程">加锁过程</a></li>
+          <li><a href="#解锁过程" id="markdown-toc-解锁过程">解锁过程</a></li>
+          <li><a href="#批量重偏向与撤销" id="markdown-toc-批量重偏向与撤销">批量重偏向与撤销</a></li>
+          <li><a href="#锁升级" id="markdown-toc-锁升级">锁升级</a></li>
+        </ul>
+      </li>
+      <li><a href="#二轻量级锁" id="markdown-toc-二轻量级锁">二、轻量级锁</a>        <ul>
+          <li><a href="#解锁过程-1" id="markdown-toc-解锁过程-1">解锁过程</a></li>
+          <li><a href="#锁升级-1" id="markdown-toc-锁升级-1">锁升级</a></li>
+        </ul>
+      </li>
+      <li><a href="#三重量级锁" id="markdown-toc-三重量级锁">三、重量级锁</a></li>
+      <li><a href="#锁升级过程" id="markdown-toc-锁升级过程">锁升级过程</a></li>
+    </ul>
+  </li>
+  <li><a href="#end" id="markdown-toc-end">End</a></li>
+</ul>
+<h1 id="synchronized简介">Synchronized简介</h1>
+
+<p>Java中提供了两种实现同步的基础语义：<code class="language-plaintext highlighter-rouge">synchronized</code>方法和<code class="language-plaintext highlighter-rouge">synchronized</code>块， 我们来看个demo：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">SyncTest</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncBlock</span><span class="o">(){</span>
+        <span class="kd">synchronized</span> <span class="o">(</span><span class="k">this</span><span class="o">){</span>
+            <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"hello block"</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">(){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"hello method"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>当SyncTest.java被编译成class文件的时候，<code class="language-plaintext highlighter-rouge">synchronized</code>关键字和<code class="language-plaintext highlighter-rouge">synchronized</code>方法的字节码略有不同，我们可以用<code class="language-plaintext highlighter-rouge">javap -v</code> 命令查看class文件对应的JVM字节码信息，部分信息如下：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">{</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">syncBlock</span><span class="o">();</span>
+    <span class="nl">descriptor:</span> <span class="o">()</span><span class="no">V</span>
+    <span class="nl">flags:</span> <span class="no">ACC_PUBLIC</span>
+    <span class="nl">Code:</span>
+      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">3</span><span class="o">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+         <span class="mi">0</span><span class="o">:</span> <span class="n">aload_0</span>
+         <span class="mi">1</span><span class="o">:</span> <span class="n">dup</span>
+         <span class="mi">2</span><span class="o">:</span> <span class="n">astore_1</span>
+         <span class="mi">3</span><span class="o">:</span> <span class="n">monitorenter</span>				 	  <span class="c1">// monitorenter指令进入同步块</span>
+         <span class="mi">4</span><span class="o">:</span> <span class="n">getstatic</span>     <span class="err">#</span><span class="mi">2</span>                  <span class="c1">// Field java/lang/System.out:Ljava/io/PrintStream;</span>
+         <span class="mi">7</span><span class="o">:</span> <span class="n">ldc</span>           <span class="err">#</span><span class="mi">3</span>                  <span class="c1">// String hello block</span>
+         <span class="mi">9</span><span class="o">:</span> <span class="n">invokevirtual</span> <span class="err">#</span><span class="mi">4</span>                  <span class="c1">// Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
+        <span class="mi">12</span><span class="o">:</span> <span class="n">aload_1</span>
+        <span class="mi">13</span><span class="o">:</span> <span class="n">monitorexit</span>						  <span class="c1">// monitorexit指令退出同步块</span>
+        <span class="mi">14</span><span class="o">:</span> <span class="k">goto</span>          <span class="mi">22</span>
+        <span class="mi">17</span><span class="o">:</span> <span class="n">astore_2</span>
+        <span class="mi">18</span><span class="o">:</span> <span class="n">aload_1</span>
+        <span class="mi">19</span><span class="o">:</span> <span class="n">monitorexit</span>						  <span class="c1">// monitorexit指令退出同步块</span>
+        <span class="mi">20</span><span class="o">:</span> <span class="n">aload_2</span>
+        <span class="mi">21</span><span class="o">:</span> <span class="n">athrow</span>
+        <span class="mi">22</span><span class="o">:</span> <span class="k">return</span>
+      <span class="nc">Exception</span> <span class="nl">table:</span>
+         <span class="n">from</span>    <span class="n">to</span>  <span class="n">target</span> <span class="n">type</span>
+             <span class="mi">4</span>    <span class="mi">14</span>    <span class="mi">17</span>   <span class="n">any</span>
+            <span class="mi">17</span>    <span class="mi">20</span>    <span class="mi">17</span>   <span class="n">any</span>
+ 
+
+  <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">syncMethod</span><span class="o">();</span>
+    <span class="nl">descriptor:</span> <span class="o">()</span><span class="no">V</span>
+    <span class="nl">flags:</span> <span class="no">ACC_PUBLIC</span><span class="o">,</span> <span class="no">ACC_SYNCHRONIZED</span>      <span class="c1">//添加了ACC_SYNCHRONIZED标记</span>
+    <span class="nl">Code:</span>
+      <span class="n">stack</span><span class="o">=</span><span class="mi">2</span><span class="o">,</span> <span class="n">locals</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">args_size</span><span class="o">=</span><span class="mi">1</span>
+         <span class="mi">0</span><span class="o">:</span> <span class="n">getstatic</span>     <span class="err">#</span><span class="mi">2</span>                  <span class="c1">// Field java/lang/System.out:Ljava/io/PrintStream;</span>
+         <span class="mi">3</span><span class="o">:</span> <span class="n">ldc</span>           <span class="err">#</span><span class="mi">5</span>                  <span class="c1">// String hello method</span>
+         <span class="mi">5</span><span class="o">:</span> <span class="n">invokevirtual</span> <span class="err">#</span><span class="mi">4</span>                  <span class="c1">// Method java/io/PrintStream.println:(Ljava/lang/String;)V</span>
+         <span class="mi">8</span><span class="o">:</span> <span class="k">return</span>
+ 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>从上面的中文注释处可以看到，对于<code class="language-plaintext highlighter-rouge">synchronized</code>关键字而言，<code class="language-plaintext highlighter-rouge">javac</code>在编译时，会生成对应的<code class="language-plaintext highlighter-rouge">monitorenter</code>和<code class="language-plaintext highlighter-rouge">monitorexit</code>指令分别对应<code class="language-plaintext highlighter-rouge">synchronized</code>同步块的进入和退出，有两个<code class="language-plaintext highlighter-rouge">monitorexit</code>指令的原因是：为了保证抛异常的情况下也能释放锁，所以<code class="language-plaintext highlighter-rouge">javac</code>为同步代码块添加了一个隐式的try-finally，在finally中会调用<code class="language-plaintext highlighter-rouge">monitorexit</code>命令释放锁。而对于<code class="language-plaintext highlighter-rouge">synchronized</code>方法而言，<code class="language-plaintext highlighter-rouge">javac</code>为其生成了一个<code class="language-plaintext highlighter-rouge">ACC_SYNCHRONIZED</code>关键字，在JVM进行方法调用时，发现调用的方法被<code class="language-plaintext highlighter-rouge">ACC_SYNCHRONIZED</code>修饰，则会先尝试获得锁。</p>
+
+<p>在JVM底层，对于这两种<code class="language-plaintext highlighter-rouge">synchronized</code>语义的实现大致相同，在后文中会选择一种进行详细分析。</p>
+
+<p>因为本文旨在分析<code class="language-plaintext highlighter-rouge">synchronized</code>的实现原理，因此对于其使用的一些问题就不赘述了，不了解的朋友可以看看<a href="https://blog.csdn.net/luoweifu/article/details/46613015">这篇文章</a>。</p>
+
+<h1 id="锁的几种形式">锁的几种形式</h1>
+
+<p>传统的锁（也就是下文要说的重量级锁）依赖于系统的同步函数，在linux上使用<code class="language-plaintext highlighter-rouge">mutex</code>互斥锁，最底层实现依赖于<code class="language-plaintext highlighter-rouge">futex</code>，关于<code class="language-plaintext highlighter-rouge">futex</code>可以看我之前的<a href="https://github.com/farmerjohngit/myblog/issues/8">文章</a>，这些同步函数都涉及到用户态和内核态的切换、进程的上下文切换，成本较高。对于加了<code class="language-plaintext highlighter-rouge">synchronized</code>关键字但<strong>运行时并没有多线程竞争，或两个线程接近于交替执行的情况</strong>，使用传统锁机制无疑效率是会比较低的。</p>
+
+<p>在JDK 1.6之前,<code class="language-plaintext highlighter-rouge">synchronized</code>只有传统的锁机制，因此给开发者留下了<code class="language-plaintext highlighter-rouge">synchronized</code>关键字相比于其他同步机制性能不好的印象。</p>
+
+<p>在JDK 1.6引入了两种新型锁机制：偏向锁和轻量级锁，它们的引入是为了解决在没有多线程竞争或基本没有竞争的场景下因使用传统锁机制带来的性能开销问题。</p>
+
+<p>在看这几种锁机制的实现前，我们先来了解下对象头，它是实现多种锁机制的基础。</p>
+
+<h2 id="对象头">对象头</h2>
+
+<p>因为在Java中任意对象都可以用作锁，因此必定要有一个映射关系，存储该对象以及其对应的锁信息（比如当前哪个线程持有锁，哪些线程在等待）。一种很直观的方法是，用一个全局map，来存储这个映射关系，但这样会有一些问题：需要对map做线程安全保障，不同的<code class="language-plaintext highlighter-rouge">synchronized</code>之间会相互影响，性能差；另外当同步对象较多时，该map可能会占用比较多的内存。</p>
+
+<p>所以最好的办法是将这个映射关系存储在对象头中，因为对象头本身也有一些hashcode、GC相关的数据，所以如果能将锁信息与这些信息<strong>共存</strong>在对象头中就好了。</p>
+
+<p>在JVM中，对象在内存中除了本身的数据外还会有个对象头，对于普通对象而言，其对象头中有两类信息：<code class="language-plaintext highlighter-rouge">mark word</code>和类型指针。另外对于数组而言还会有一份记录数组长度的数据。</p>
+
+<p>类型指针是指向该对象所属类对象的指针，<code class="language-plaintext highlighter-rouge">mark word</code>用于存储对象的HashCode、GC分代年龄、锁状态等信息。在32位系统上<code class="language-plaintext highlighter-rouge">mark word</code>长度为32字节，64位系统上长度为64字节。为了能在有限的空间里存储下更多的数据，其存储格式是不固定的，在32位系统上各状态的格式如下：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/07/head.png" alt="head.png" /></p>
+
+<p>可以看到锁信息也是存在于对象的<code class="language-plaintext highlighter-rouge">mark word</code>中的。当对象状态为偏向锁（biasable）时，<code class="language-plaintext highlighter-rouge">mark word</code>存储的是偏向的线程ID；当状态为轻量级锁（lightweight locked）时，<code class="language-plaintext highlighter-rouge">mark word</code>存储的是指向线程栈中<code class="language-plaintext highlighter-rouge">Lock Record</code>的指针；当状态为重量级锁（inflated）时，为指向堆中的monitor对象的指针。</p>
+
+<p>java的Synchronized总共分为三种锁，按照偏向锁、轻量级锁、重量级锁的顺序其维护锁的花费越来越高。另外，JVM的锁升级也是按照以上的偏向锁、轻量级锁、重量级锁的顺序去升级。</p>
+
+<h2 id="一偏向锁">一、偏向锁</h2>
+
+<p>引入偏向锁的目的：在没有多线程竞争的情况下，尽量减少不必要的轻量级锁执行路径，轻量级锁的获取及释放依赖多次CAS原子指令，而偏向锁只依赖一次CAS原子指令置换ThreadID，一旦出现多个线程竞争时必须撤销偏向锁，所以撤销偏向锁消耗的性能必须小于之前节省下来的CAS原子操作的性能消耗，不然就得不偿失了。JDK 1.6中默认开启偏向锁，可以通过-XX:-UseBiasedLocking来禁用偏向锁。</p>
+
+<p>Java是支持多线程的语言，因此在很多二方包、基础库中为了保证代码在多线程的情况下也能正常运行，也就是我们常说的线程安全，都会加入如<code class="language-plaintext highlighter-rouge">synchronized</code>这样的同步语义。但是在应用在实际运行时，很可能只有一个线程会调用相关同步方法。比如下面这个demo：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SyncDemo1</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">SyncDemo1</span> <span class="n">syncDemo1</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SyncDemo1</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">syncDemo1</span><span class="o">.</span><span class="na">addString</span><span class="o">(</span><span class="s">"test:"</span> <span class="o">+</span> <span class="n">i</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+
+    <span class="kd">public</span> <span class="kd">synchronized</span> <span class="kt">void</span> <span class="nf">addString</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">s</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>在这个demo中为了保证对list操纵时线程安全，对addString方法加了<code class="language-plaintext highlighter-rouge">synchronized</code>的修饰，但实际使用时却只有一个线程调用到该方法，对于轻量级锁而言，每次调用addString时，加锁解锁都有一个CAS操作；对于重量级锁而言，加锁也会有一个或多个CAS操作（这里的”一个”、”多个” 数量词只是针对该demo，并不适用于所有场景）。</p>
+
+<p>在JDK1.6中为了<strong>提高一个对象在一段很长的时间内都只被一个线程用做锁对象场景下的性能</strong>，引入了偏向锁，在第一次获得锁时，会有一个CAS操作，之后该线程再获取锁，只会执行几个简单的命令，而不是开销相对较大的CAS命令。我们来看看偏向锁是如何做的。</p>
+
+<h3 id="对象创建">对象创建</h3>
+
+<p>当JVM启用了偏向锁模式（1.6以上默认开启），当新创建一个对象的时候，如果该对象所属的class没有关闭偏向锁模式（什么时候会关闭一个class的偏向模式下文会说，默认所有class的偏向模式都是是开启的），那新创建对象的<code class="language-plaintext highlighter-rouge">mark word</code>将是可偏向状态，此时<code class="language-plaintext highlighter-rouge">mark word中</code>的thread id（参见上文偏向状态下的<code class="language-plaintext highlighter-rouge">mark word</code>格式）为0，表示未偏向任何线程，也叫做匿名偏向(anonymously biased)。</p>
+
+<h3 id="加锁过程">加锁过程</h3>
+
+<p>case 1：当该对象第一次被线程获得锁的时候，发现是匿名偏向状态，则会用CAS指令，将<code class="language-plaintext highlighter-rouge">mark word</code>中的thread id由0改成当前线程Id。如果成功，则代表获得了偏向锁，继续执行同步块中的代码。否则，将偏向锁撤销，升级为轻量级锁。</p>
+
+<p>case 2：当被偏向的线程再次进入同步块时，发现锁对象偏向的就是当前线程，在通过一些额外的检查后（细节见后面的文章），会往当前线程的栈中添加一条<code class="language-plaintext highlighter-rouge">Displaced Mark Word</code>为空的<code class="language-plaintext highlighter-rouge">Lock Record</code>中，然后继续执行同步块的代码，因为操纵的是线程私有的栈，因此不需要用到CAS指令；由此可见偏向锁模式下，当被偏向的线程再次尝试获得锁时，仅仅进行几个简单的操作就可以了，在这种情况下，<code class="language-plaintext highlighter-rouge">synchronized</code>关键字带来的性能开销基本可以忽略。</p>
+
+<p>case 3.当其他线程进入同步块时，发现已经有偏向的线程了，则会进入到<strong>撤销偏向锁</strong>的逻辑里，一般来说，会在<code class="language-plaintext highlighter-rouge">safepoint</code>中去查看偏向的线程是否还存活，如果存活且还在同步块中则将锁升级为轻量级锁，原偏向的线程继续拥有锁，当前线程则走入到锁升级的逻辑里；如果偏向的线程已经不存活或者不在同步块中，则将对象头的<code class="language-plaintext highlighter-rouge">mark word</code>改为无锁状态（unlocked），之后再升级为轻量级锁。</p>
+
+<p>由此可见，偏向锁升级的时机为：当锁已经发生偏向后，只要有另一个线程尝试获得偏向锁，则该偏向锁就会升级成轻量级锁。当然这个说法不绝对，因为还有批量重偏向这一机制。</p>
+
+<h3 id="解锁过程">解锁过程</h3>
+
+<p>当有其他线程尝试获得锁时，是根据遍历偏向线程的<code class="language-plaintext highlighter-rouge">lock record</code>来确定该线程是否还在执行同步块中的代码。因此偏向锁的解锁很简单，仅仅将栈中的最近一条<code class="language-plaintext highlighter-rouge">lock record</code>的<code class="language-plaintext highlighter-rouge">obj</code>字段设置为null。需要注意的是，偏向锁的解锁步骤中<strong>并不会修改对象头中的thread id。</strong></p>
+
+<p>另外，偏向锁默认不是立即就启动的，在程序启动后，通常有几秒的延迟，可以通过命令 <code class="language-plaintext highlighter-rouge">-XX:BiasedLockingStartupDelay=0</code>来关闭延迟。</p>
+
+<h3 id="批量重偏向与撤销">批量重偏向与撤销</h3>
+
+<p>从上文偏向锁的加锁解锁过程中可以看出，当只有一个线程反复进入同步块时，偏向锁带来的性能开销基本可以忽略，但是当有其他线程尝试获得锁时，就需要等到<code class="language-plaintext highlighter-rouge">safe point</code>时将偏向锁撤销为无锁状态或升级为轻量级/重量级锁。<code class="language-plaintext highlighter-rouge">safe point</code>这个词我们在GC中经常会提到，其代表了一个状态，在该状态下所有线程都是暂停的（大概这么个意思），详细可以看这篇<a href="https://blog.csdn.net/ITer_ZC/article/details/41892567">文章</a>。总之，偏向锁的撤销是有一定成本的，如果说运行时的场景本身存在多线程竞争的，那偏向锁的存在不仅不能提高性能，而且会导致性能下降。因此，JVM中增加了一种批量重偏向/撤销的机制。</p>
+
+<p>存在如下两种情况：（见官方<a href="https://www.oracle.com/technetwork/java/biasedlocking-oopsla2006-wp-149958.pdf">论文</a>第4小节）:</p>
+
+<p>1.一个线程创建了大量对象并执行了初始的同步操作，之后在另一个线程中将这些对象作为锁进行之后的操作。这种case下，会导致大量的偏向锁撤销操作。</p>
+
+<p>2.存在明显多线程竞争的场景下使用偏向锁是不合适的，例如生产者/消费者队列。</p>
+
+<p>批量重偏向（bulk rebias）机制是为了解决第一种场景。批量撤销（bulk revoke）则是为了解决第二种场景。</p>
+
+<p>其做法是：以class为单位，为每个class维护一个偏向锁撤销计数器，每一次该class的对象发生偏向撤销操作时，该计数器+1，当这个值达到重偏向阈值（默认20）时，JVM就认为该class的偏向锁有问题，因此会进行批量重偏向。每个class对象会有一个对应的<code class="language-plaintext highlighter-rouge">epoch</code>字段，每个处于偏向锁状态对象的<code class="language-plaintext highlighter-rouge">mark word中</code>也有该字段，其初始值为创建该对象时，class中的<code class="language-plaintext highlighter-rouge">epoch</code>的值。每次发生批量重偏向时，就将该值+1，同时遍历JVM中所有线程的栈，找到该class所有正处于加锁状态的偏向锁，将其<code class="language-plaintext highlighter-rouge">epoch</code>字段改为新值。下次获得锁时，发现当前对象的<code class="language-plaintext highlighter-rouge">epoch</code>值和class的<code class="language-plaintext highlighter-rouge">epoch</code>不相等，那就算当前已经偏向了其他线程，也不会执行撤销操作，而是直接通过CAS操作将其<code class="language-plaintext highlighter-rouge">mark word</code>的Thread Id 改成当前线程Id。</p>
+
+<p>当达到重偏向阈值后，假设该class计数器继续增长，当其达到批量撤销的阈值后（默认40），JVM就认为该class的使用场景存在多线程竞争，会标记该class为不可偏向，之后，对于该class的锁，直接走轻量级锁的逻辑。</p>
+
+<h3 id="锁升级">锁升级</h3>
+
+<p>而一旦出现一个线程尝试去获取这个锁的情况，偏向模式就马上结束，根据目前对象是否处于被锁定的状态决定是否撤销偏向，撤销后标志位恢复到为锁定状态或则是轻量级锁定状态。</p>
+
+<h2 id="二轻量级锁">二、轻量级锁</h2>
+
+<p>引入轻量级锁的目的：<strong>在多线程交替执行同步块的情况下</strong>，尽量避免重量级锁引起的性能消耗，<strong>但是如果多个线程在同一时刻进入临界区，会导致轻量级锁膨胀升级重量级锁</strong>，所以轻量级锁的出现并非是要替代重量级锁。</p>
+
+<p>JVM的开发者发现在很多情况下，在Java程序运行时，同步块中的代码都是不存在竞争的，不同的线程交替的执行同步块中的代码。这种情况下，用重量级锁是没必要的。因此JVM引入了轻量级锁的概念。</p>
+
+<p>线程在执行同步块之前，JVM会先在当前的线程的栈帧中创建一个<code class="language-plaintext highlighter-rouge">Lock Record</code>，其包括一个用于存储对象头中的 <code class="language-plaintext highlighter-rouge">mark word</code>（官方称之为<code class="language-plaintext highlighter-rouge">Displaced Mark Word</code>）以及一个指向对象的指针。<strong>下图右边的部分就是一个<code class="language-plaintext highlighter-rouge">Lock Record</code></strong>。 即先将对象中的数据拷贝到自己的栈帧中，然后在更改左边对象的markwork为轻量级锁定的状态。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/07/lightLock.png" alt="lightLock.png" /></p>
+
+<p>加锁过程</p>
+
+<p>1.在线程栈中创建一个<code class="language-plaintext highlighter-rouge">Lock Record</code>，用于存储对象目前的mark work的拷贝，并将其<code class="language-plaintext highlighter-rouge">obj</code>（即上图的Object reference）字段指向锁对象。</p>
+
+<p>2.直接通过CAS指令将<code class="language-plaintext highlighter-rouge">Lock Record</code>的地址存储在对象头的<code class="language-plaintext highlighter-rouge">mark word</code>中，并将对象的mark work 的锁标志位更改为“00”，如果对象处于无锁状态则修改成功，代表该线程获得了轻量级锁。如果失败，进入到步骤3。</p>
+
+<p>3.如果是当前线程已经持有该锁了，代表这是一次锁重入。设置<code class="language-plaintext highlighter-rouge">Lock Record</code>第一部分（<code class="language-plaintext highlighter-rouge">Displaced Mark Word</code>）为null，起到了一个重入计数器的作用。然后结束。</p>
+
+<p>4.走到这一步说明发生了竞争，需要膨胀为重量级锁。</p>
+
+<h3 id="解锁过程-1">解锁过程</h3>
+
+<p>1.遍历线程栈,找到所有<code class="language-plaintext highlighter-rouge">obj</code>字段等于当前锁对象的<code class="language-plaintext highlighter-rouge">Lock Record</code>。</p>
+
+<p>2.如果<code class="language-plaintext highlighter-rouge">Lock Record</code>的<code class="language-plaintext highlighter-rouge">Displaced Mark Word</code>为null，代表这是一次重入，将<code class="language-plaintext highlighter-rouge">obj</code>设置为null后continue。</p>
+
+<p>3.如果<code class="language-plaintext highlighter-rouge">Lock Record</code>的<code class="language-plaintext highlighter-rouge">Displaced Mark Word</code>不为null，则利用CAS指令将对象头的<code class="language-plaintext highlighter-rouge">mark word</code>恢复成为<code class="language-plaintext highlighter-rouge">Displaced Mark Word</code>。如果成功，则continue，否则膨胀为重量级锁。</p>
+
+<h3 id="锁升级-1">锁升级</h3>
+
+<p>如果出现两条以上的线程争用同一个锁的情况，那么轻量级锁就不在有效，需要膨胀为重量级锁。</p>
+
+<h2 id="三重量级锁">三、重量级锁</h2>
+
+<p>重量级锁通过对象内部的监视器（monitor）实现，其中monitor的本质是依赖于底层操作系统的Mutex Lock实现，操作系统实现线程之间的切换需要从用户态到内核态的切换，切换成本非常高。重量级锁是我们常说的传统意义上的锁，其利用操作系统底层的同步机制去实现Java中的线程同步。</p>
+
+<p>重量级锁的状态下，对象的<code class="language-plaintext highlighter-rouge">mark word</code>为指向一个堆中monitor对象的指针。</p>
+
+<p>一个monitor对象包括这么几个关键字段：cxq（下图中的ContentionList），EntryList ，WaitSet，owner。</p>
+
+<p>其中cxq ，EntryList ，WaitSet都是由ObjectWaiter的链表结构，owner指向持有锁的线程。</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/07/heavyLock.png" alt="heavyLock.png" /></p>
+
+<p>当一个线程尝试获得锁时，如果该锁已经被占用，则会将该线程封装成一个ObjectWaiter对象插入到cxq的队列尾部，然后暂停当前线程。当持有锁的线程释放锁前，会将cxq中的所有元素移动到EntryList中去，并唤醒EntryList的队首线程。</p>
+
+<p>如果一个线程在同步块中调用了<code class="language-plaintext highlighter-rouge">Object#wait</code>方法，会将该线程对应的ObjectWaiter从EntryList移除并加入到WaitSet中，然后释放锁。当wait的线程被notify之后，会将对应的ObjectWaiter从WaitSet移动到EntryList中。</p>
+
+<p>以上只是对重量级锁流程的一个简述，其中涉及到的很多细节，比如ObjectMonitor对象从哪来？释放锁时是将cxq中的元素移动到EntryList的尾部还是头部？notfiy时，是将ObjectWaiter移动到EntryList的尾部还是头部？</p>
+
+<p>关于具体的细节，会在重量级锁的文章中分析。</p>
+
+<h2 id="锁升级过程">锁升级过程</h2>
+
+<p>下图展示了锁状态的转换流程：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/07/lockTrans.png" alt="lockTrans.png" /></p>
+
+<p>对应的对象头信息：</p>
+
+<p><img src="https://pic.tyzhang.top/images/2020/07/07/head.png" alt="head.png" /></p>
+
+<p>从对象头可以看出，对于JVM在检测对象的时候，会首先检测锁标志为，然后去检测是否为偏向锁的标志位，然后进行相应的操作。</p>
+
+<p>如果说轻量级锁是在无竞争情况下使用CAS操作去消除同步使用的互斥量，那偏向锁就是在无竞争的情况下把整个同步都给消除掉，连CAS操作都不去做了。偏向的偏，说的就是偏向于第一个获取他的线程，如果在接下来的情况下没有被其他线程获取，则持有的偏向锁线程将永远不需要在进行同步。而一旦出现一个线程尝试去获取这个锁的情况，偏向模式就马上结束，根据目前对象是否处于被锁定的状态决定是否撤销偏向，撤销后标志位恢复到为锁定状态或则是轻量级锁定状态。就如同上图锁的转换图一样。</p>
+
+<blockquote>
+  <p>细心的读者看到这里会发现一个问题：当对象进入偏向状态的时候，Mark Work大部分的控件都用于存储持有锁的线程ID了，这部分空间占用了原有存储对象哈希码的位置，那原来对象的哈希码怎么办？</p>
+
+  <p>在Java语言里面一个对象如果计算过哈希码，就应该一直保持不变（强烈推荐但是不强制，因为用户可重载hashCode()方法按自己的意愿放回哈希码），否则很多依赖对象哈希码的API可能出在出错的风险。而作为绝大多数哈希码来源的Objec::hashCode()方法，返回的是对象的一致性哈希码(Identity Hash Code)，这个值是能够强制保证不变的，他通过在对象头中存储计算结果来保证第一次计算之后，再次调用该方法取到的哈希值永远不会发生改变。因此，当一个对象已经计算过一致性哈希码后，它就再也无法进入偏向锁状态了；而当一个对象当前正处于偏向锁状态，而又收到需要计算其一致性哈希码请求时，它的偏向锁状态会被立刻撤销，并且锁会膨胀为重量级锁。在重量级锁的实现中，对象头指向了重量级锁的位置，代表重量级锁的ObjectMonitor类里有字段可以记录费加锁状态(标志位为“01”)下的Mark Word，其中自然可以存储原来的哈希值。</p>
+</blockquote>
+
+<h1 id="end">End</h1>
+
+<p>Java中的<code class="language-plaintext highlighter-rouge">synchronized</code>有偏向锁、轻量级锁、重量级锁三种形式，分别对应了锁只被一个线程持有、不同线程交替持有锁、多线程竞争锁三种情况。当条件不满足时，锁会按偏向锁-&gt;轻量级锁-&gt;重量级锁 的顺序升级。JVM种的锁也是能降级的，只不过条件很苛刻，不在我们讨论范围之内。该篇文章主要是对Java的<code class="language-plaintext highlighter-rouge">synchronized</code>做个基本介绍，后文会有更详细的分析。</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>

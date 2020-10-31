@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>Mybatis：连接池与事务分析</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/05/03/java-Mybatis-third.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">Mybatis：连接池与事务分析</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-05-03T00:00:00+08:00" itemprop="datePublished">
+          
+          May 3, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">Mybatis：连接池与事务分析</h1>
+    <p class="post-meta">
+      <time datetime="2020-05-03T00:00:00+08:00" itemprop="datePublished">
+        
+        May 3, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>记录Mybatis的连接池与事务分析</p>
+</blockquote>
+
+<h2 id="目录">目录</h2>
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#1连接池事务控制" id="markdown-toc-1连接池事务控制">1.连接池&amp;事务控制</a>    <ul>
+      <li><a href="#11连接池使用及分析" id="markdown-toc-11连接池使用及分析">1.1连接池使用及分析</a></li>
+      <li><a href="#12事务控制分析" id="markdown-toc-12事务控制分析">1.2事务控制分析</a></li>
+    </ul>
+  </li>
+  <li><a href="#2基于xml配置的动态sql语句" id="markdown-toc-2基于xml配置的动态sql语句">2.基于xml配置的动态SQL语句</a>    <ul>
+      <li><a href="#21-if-标签" id="markdown-toc-21-if-标签">2.1 if 标签</a></li>
+      <li><a href="#22-where-标签" id="markdown-toc-22-where-标签">2.2 where 标签</a></li>
+      <li><a href="#23-for-each标签" id="markdown-toc-23-for-each标签">2.3 for each标签</a></li>
+      <li><a href="#24-sql标签" id="markdown-toc-24-sql标签">2.4 sql标签</a></li>
+    </ul>
+  </li>
+  <li><a href="#3多表操作" id="markdown-toc-3多表操作">3.多表操作</a>    <ul>
+      <li><a href="#31一对一进行查询" id="markdown-toc-31一对一进行查询">3.1一对一进行查询</a></li>
+      <li><a href="#32-一对多查询" id="markdown-toc-32-一对多查询">3.2 一对多查询</a></li>
+      <li><a href="#32-维护多对多" id="markdown-toc-32-维护多对多">3.2 维护多对多</a></li>
+    </ul>
+  </li>
+  <li><a href="#4jndi" id="markdown-toc-4jndi">4.JNDI</a></li>
+</ul>
+<h1 id="1连接池事务控制">1.连接池&amp;事务控制</h1>
+
+<h2 id="11连接池使用及分析">1.1连接池使用及分析</h2>
+
+<p>1.连接池基本概念：</p>
+
+<ol>
+  <li>
+    <p>连接池就是用于存储连接的一个容器。</p>
+  </li>
+  <li>
+    <p>容器就是一个集合对象，该集合必须是线程安全的，不能两个线程拿到同一个连接。</p>
+  </li>
+  <li>
+    <p>该集合还必须实现队列的特性：先进先出。</p>
+  </li>
+</ol>
+
+<p>2.mybatis中的连接池：</p>
+
+<ol>
+  <li>mybatis连接池提供了三种方式的配置。
+    <ol>
+      <li>配置的位置：主配置文件sqlMapConfig.xml中的DataSource标签，type属性就是表示采用何种连接池方式</li>
+    </ol>
+  </li>
+  <li>type属性取值：
+    <ol>
+      <li>POOLED 采用传统的javax.sql.DataSource规范中的连接池， mybatis中有针对规范的实现</li>
+      <li>UNPOOLED 采用传统的获取连接的方式，虽然也实现Javax.sql.DataSource接口，但是并没有使用池的思想。</li>
+      <li>JNDI 采用服务器提供的JNDI技术实现，来获取DataSource对象，不同的服务器所能拿到的DataSource时不一样的。注意：如果不是web或者maven的war工程，是不能使用的。我们实际开发中使用的是tomcat服务器，采用的连接池也就是dbcp连接池。</li>
+    </ol>
+  </li>
+</ol>
+
+<p>对应的配置文件：</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 配置数据源(连接池)--&gt;</span>
+<span class="nt">&lt;dataSource</span> <span class="na">type=</span><span class="s">"POOLED"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- 配置连接数据的四个基本信息--&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"driver"</span> <span class="na">value=</span><span class="s">"${jdbc.driver}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"url"</span> <span class="na">value=</span><span class="s">"${jdbc.url}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"username"</span> <span class="na">value=</span><span class="s">"${jdbc.username}"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"password"</span> <span class="na">value=</span><span class="s">"${jdbc.password}"</span><span class="nt">/&gt;</span>
+<span class="nt">&lt;/dataSource&gt;</span>
+</code></pre></div></div>
+
+<h2 id="12事务控制分析">1.2事务控制分析</h2>
+
+<p>什么是事务？</p>
+
+<p>这些基础控制需要自己去查询，李姐万岁。</p>
+
+<p>事务的四大特性ACID。</p>
+
+<p>不考虑隔离性会产生的3个问题</p>
+
+<p>解决方法：四种隔离级别</p>
+
+<p>它是通过SQLSession对象的commit方法和rollback方法实现事务的提交和回滚。</p>
+
+<p>一般都是自己去控制提交，即设置自动事务提交为false，因为有些操作比如转账是多个事务组合，需要用一个事务去控制，如果全都是自动提交的话，是控制不住的，不能回滚，所以开发中总是将自动事务提交关闭，设置为手动提交。</p>
+
+<h1 id="2基于xml配置的动态sql语句">2.基于xml配置的动态SQL语句</h1>
+
+<p>在有些业务逻辑比较复杂的时候，其sql是动态变化的，所以需要动态sql语句。例如查询条件，有些条件可能有有些就没有，即模糊查询。</p>
+
+<h2 id="21-if-标签">2.1 if 标签</h2>
+
+<p>if标签可以进行判断是否有该条件。</p>
+
+<p>测试案例，通过传递一个user对象，进行模糊查询，其中if表示的条件为，如果有username，则进行查询，否则就不进行查询，后面的sex也是类似。其中接口不表。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--根据条件查询--&gt;</span>
+<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findUserByCondition"</span> <span class="na">resultType=</span><span class="s">"user"</span> <span class="na">parameterType=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+    select  * from user where 1=1
+    <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"username != null"</span><span class="nt">&gt;</span>
+        and username = #{ username }
+    <span class="nt">&lt;/if&gt;</span>
+    <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"sex != null"</span> <span class="nt">&gt;</span>
+        and sex = #{ sex }
+    <span class="nt">&lt;/if&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+</code></pre></div></div>
+
+<p>测试查询：表示查询一个叫老王的用户并且性别为女。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//测试查询所有</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span>  <span class="nf">testFindByCondition</span><span class="o">(){</span>
+    <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">User</span><span class="o">();</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setUsername</span><span class="o">(</span><span class="s">"老王"</span><span class="o">);</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setSex</span><span class="o">(</span><span class="s">"女"</span><span class="o">);</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findUserByCondition</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">User</span> <span class="nl">user1:</span><span class="n">users</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="22-where-标签">2.2 where 标签</h2>
+
+<p>where标签的使用也就是让mybatis自动的进行拼接sql语句,下面可以看出，上面if标签中的<code class="language-plaintext highlighter-rouge">where 1=1</code>没有了。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--根据条件查询--&gt;</span>
+<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findUserByCondition"</span> <span class="na">resultType=</span><span class="s">"user"</span> <span class="na">parameterType=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+    select  * from user
+    <span class="nt">&lt;where&gt;</span>
+        <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"username != null"</span><span class="nt">&gt;</span>
+            and username = #{ username }
+        <span class="nt">&lt;/if&gt;</span>
+        <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"sex != null"</span> <span class="nt">&gt;</span>
+            and sex = #{ sex }
+        <span class="nt">&lt;/if&gt;</span>
+    <span class="nt">&lt;/where&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+</code></pre></div></div>
+
+<h2 id="23-for-each标签">2.3 for each标签</h2>
+
+<p>对应的解决的SQL语句：<code class="language-plaintext highlighter-rouge">select * from user where id in (1,2,3)</code></p>
+
+<p>&lt;foreach &gt;标签用于遍历集合，属性：</p>
+
+<ol>
+  <li>collection:代表要遍历的集合元素，注意编写时不要写#{}</li>
+  <li>open:代表语句的开始部分，</li>
+  <li>close:代表结束部分</li>
+  <li>item:代表遍历集合的每个元素，生成的变量名</li>
+  <li>sperator:代表分隔符</li>
+</ol>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- 根据queryVo中的id集合实现查询用户列表--&gt;</span>
+<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findUserInIds"</span> <span class="na">resultType=</span><span class="s">"user"</span> <span class="na">parameterType=</span><span class="s">"QueryVo"</span><span class="nt">&gt;</span>
+    select * from user
+    <span class="nt">&lt;where&gt;</span>
+        <span class="nt">&lt;if</span> <span class="na">test=</span><span class="s">"ids != null and ids.size()&gt;0"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;foreach</span> <span class="na">collection=</span><span class="s">"ids"</span> <span class="na">open=</span><span class="s">"and id in ("</span> <span class="na">close=</span><span class="s">")"</span> <span class="na">item=</span><span class="s">"uid"</span> <span class="na">separator=</span><span class="s">","</span><span class="nt">&gt;</span>
+                #{uid}
+            <span class="nt">&lt;/foreach&gt;</span>
+        <span class="nt">&lt;/if&gt;</span>
+    <span class="nt">&lt;/where&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+</code></pre></div></div>
+
+<p>其中#<code class="language-plaintext highlighter-rouge">{uid}</code>与<code class="language-plaintext highlighter-rouge">item="uid"</code>名称必须保持一致。</p>
+
+<p>对应的测试类：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//接口</span>
+<span class="cm">/**
+ *  根据queryVo中提供的id，查询用户信息
+ * @param vo
+ * @return
+*/</span>
+<span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findUserInIds</span><span class="o">(</span><span class="nc">QueryVo</span> <span class="n">vo</span><span class="o">);</span>
+
+<span class="c1">//测试foreach方法</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span>  <span class="nf">testFindInIds</span><span class="o">(){</span>
+    <span class="nc">QueryVo</span> <span class="n">queryVo</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">QueryVo</span><span class="o">();</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">list</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+    <span class="n">list</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="mi">2</span><span class="o">);</span>
+    <span class="n">queryVo</span><span class="o">.</span><span class="na">setIds</span><span class="o">(</span><span class="n">list</span><span class="o">);</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findUserInIds</span><span class="o">(</span><span class="n">queryVo</span><span class="o">);</span>
+
+    <span class="k">for</span> <span class="o">(</span><span class="nc">User</span> <span class="nl">user1:</span><span class="n">users</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user1</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>查询结果：会将id为1,2的查询出来。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>1, <span class="nv">username</span><span class="o">=</span><span class="s1">'测试'</span>, <span class="nv">birthday</span><span class="o">=</span>Wed Apr 22 00:00:00 CST 2020, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}</span>
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>2, <span class="nv">username</span><span class="o">=</span><span class="s1">'小小'</span>, <span class="nv">birthday</span><span class="o">=</span>Wed Apr 22 00:00:00 CST 2020, <span class="nv">sex</span><span class="o">=</span><span class="s1">'女'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'上海'</span><span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="24-sql标签">2.4 sql标签</h2>
+
+<p>这个是抽取重复的sql语句，比如抽取<code class="language-plaintext highlighter-rouge">select * from user</code>这条语句。了解下就行。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!--不要写分号--&gt;</span>
+<span class="nt">&lt;sql</span> <span class="na">id=</span><span class="s">"defaultUser"</span> <span class="nt">&gt;</span>
+    select * from user
+<span class="nt">&lt;/sql&gt;</span>
+
+<span class="c">&lt;!--查询所有--&gt;</span>
+<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findAll"</span> <span class="na">resultType=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+    -- select * from user; 
+    <span class="c">&lt;!-- 直接插入 --&gt;</span>
+    <span class="nt">&lt;include</span> <span class="na">refid=</span><span class="s">"defaultUser"</span><span class="nt">&gt;&lt;/include&gt;</span>
+<span class="nt">&lt;/select&gt;</span>
+</code></pre></div></div>
+
+<h1 id="3多表操作">3.多表操作</h1>
+
+<p>表之间的关系，一对多，多对一，一对一，多对多。这三个实现的思想都是一样的，主要就是sql语句的拼写，还是要加强学习一下。。外连接连接查询的高级操作。。</p>
+
+<p><strong>实例分析：用户和账户。</strong></p>
+
+<ol>
+  <li>一个用户可以有多个账户</li>
+  <li>一个账户只能属于一个用户</li>
+</ol>
+
+<h2 id="31一对一进行查询">3.1一对一进行查询</h2>
+
+<p>需要实现的功能，将account表与user表通过id进行连接查询，实现查询出来每个账户的详细信息，即将account表与user表信息一一对应。</p>
+
+<p>实现的sql语句如下：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">select</span> <span class="n">u</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="k">as</span> <span class="n">aid</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">money</span> <span class="k">from</span> <span class="n">account</span> <span class="n">a</span><span class="p">,</span><span class="k">user</span> <span class="n">u</span> <span class="k">where</span> <span class="n">u</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">uid</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><a href="https://pic.tyzhang.top/image/dwnL"><img src="https://pic.tyzhang.top/images/2020/05/04/one4one.png" alt="one4one.png" /></a></p>
+
+<p>以下是实现步骤。</p>
+
+<p>1.数据库建表:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="err">创建用户表</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="nv">`user`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">`user`</span> <span class="p">(</span>
+  <span class="nv">`id`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="n">auto_increment</span><span class="p">,</span>
+  <span class="nv">`username`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'用户名称'</span><span class="p">,</span>
+  <span class="nv">`birthday`</span> <span class="nb">datetime</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'生日'</span><span class="p">,</span>
+  <span class="nv">`sex`</span> <span class="nb">char</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'性别'</span><span class="p">,</span>
+  <span class="nv">`address`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">256</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'地址'</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span>  <span class="p">(</span><span class="nv">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">导入用户数据</span>
+<span class="k">insert</span>  <span class="k">into</span> <span class="nv">`user`</span><span class="p">(</span><span class="nv">`id`</span><span class="p">,</span><span class="nv">`username`</span><span class="p">,</span><span class="nv">`birthday`</span><span class="p">,</span><span class="nv">`sex`</span><span class="p">,</span><span class="nv">`address`</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">41</span><span class="p">,</span><span class="s1">'老王'</span><span class="p">,</span><span class="s1">'2018-02-27 17:47:08'</span><span class="p">,</span><span class="s1">'男'</span><span class="p">,</span><span class="s1">'北京'</span><span class="p">),(</span><span class="mi">42</span><span class="p">,</span><span class="s1">'小二王'</span><span class="p">,</span><span class="s1">'2018-03-02 15:09:37'</span><span class="p">,</span><span class="s1">'女'</span><span class="p">,</span><span class="s1">'北京金燕龙'</span><span class="p">),(</span><span class="mi">43</span><span class="p">,</span><span class="s1">'小二王'</span><span class="p">,</span><span class="s1">'2018-03-04 11:34:34'</span><span class="p">,</span><span class="s1">'女'</span><span class="p">,</span><span class="s1">'北京金燕龙'</span><span class="p">),(</span><span class="mi">45</span><span class="p">,</span><span class="s1">'传智播客'</span><span class="p">,</span><span class="s1">'2018-03-04 12:04:06'</span><span class="p">,</span><span class="s1">'男'</span><span class="p">,</span><span class="s1">'北京金燕龙'</span><span class="p">),(</span><span class="mi">46</span><span class="p">,</span><span class="s1">'老王'</span><span class="p">,</span><span class="s1">'2018-03-07 17:37:26'</span><span class="p">,</span><span class="s1">'男'</span><span class="p">,</span><span class="s1">'北京'</span><span class="p">),(</span><span class="mi">48</span><span class="p">,</span><span class="s1">'小马宝莉'</span><span class="p">,</span><span class="s1">'2018-03-08 11:44:00'</span><span class="p">,</span><span class="s1">'女'</span><span class="p">,</span><span class="s1">'北京修正'</span><span class="p">);</span>
+<span class="o">#</span> <span class="err">创建账户表，外键为</span><span class="n">uid</span><span class="err">，关联用户表的</span><span class="n">id</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="nv">`account`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">`account`</span> <span class="p">(</span>
+  <span class="nv">`id`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'编号'</span><span class="p">,</span>
+  <span class="nv">`uid`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'用户编号'</span><span class="p">,</span>
+  <span class="nv">`money`</span> <span class="nb">double</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'金额'</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span>  <span class="p">(</span><span class="nv">`id`</span><span class="p">),</span>
+  <span class="k">KEY</span> <span class="nv">`FK_Reference_8`</span> <span class="p">(</span><span class="nv">`uid`</span><span class="p">),</span>
+  <span class="k">CONSTRAINT</span> <span class="nv">`FK_Reference_8`</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="nv">`uid`</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="nv">`user`</span> <span class="p">(</span><span class="nv">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">导入账户数据</span>
+<span class="k">insert</span>  <span class="k">into</span> <span class="nv">`account`</span><span class="p">(</span><span class="nv">`id`</span><span class="p">,</span><span class="nv">`uid`</span><span class="p">,</span><span class="nv">`money`</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">46</span><span class="p">,</span><span class="mi">1000</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="mi">45</span><span class="p">,</span><span class="mi">1000</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="mi">46</span><span class="p">,</span><span class="mi">2000</span><span class="p">);</span><span class="n">study_test</span>
+</code></pre></div></div>
+
+<p>2.建立account和user类。<strong>因为主要是对account表操作，所有需要对account类进行改造</strong>，</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Account</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">uid</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Double</span> <span class="n">money</span><span class="o">;</span>
+
+    <span class="c1">//从表实体应该包含一个主表实体的对象引用</span>
+    <span class="kd">private</span> <span class="nc">User</span> <span class="n">user</span><span class="o">;</span>
+	<span class="c1">//get and set toSting</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Date</span> <span class="n">birthday</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">sex</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">address</span><span class="o">;</span>
+	<span class="c1">//get and set toString </span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>3.对应的查询接口</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IAccountDao</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     *  返回所有账户
+     * @return
+     */</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Account</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">IUserDao</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * 查询所有
+     * @return
+     */</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="nf">findAll</span><span class="o">();</span>
+
+    <span class="cm">/**
+     * 根据id查询用户
+     * @param userId
+     * @return
+     */</span>
+    <span class="nc">User</span> <span class="nf">findById</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">userId</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>4.xml实现类</p>
+
+<p>通过配置实现如下查询结果：</p>
+
+<p><a href="https://pic.tyzhang.top/image/dwnL"><img src="https://pic.tyzhang.top/images/2020/05/04/one4one.png" alt="one4one.png" /></a></p>
+
+<p>IAccountDao.xml,主要就是需要定义一个resultMap对应关系，其中对应关系就是需要显示的信息，其中account类中注入user类，然后第二个就是配置注入的对应关系，对应关系就是java对象中的属性与查询表结果名的一一对应。名称映射对则可以直接将数据注入。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.diaowenjie.dao.IAccountDao"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!--定义封装account和user的resultMap  主要是因为account中注入一个user类--&gt;</span>
+    <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">"accountUserMap"</span> <span class="na">type=</span><span class="s">"account"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">"id"</span> <span class="na">column=</span><span class="s">"aid"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"uid"</span> <span class="na">column=</span><span class="s">"uid"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"money"</span> <span class="na">column=</span><span class="s">"money"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!--一对一的关系映射，配置封装user的内容--&gt;</span>
+        <span class="nt">&lt;association</span> <span class="na">property=</span><span class="s">"user"</span> <span class="na">column=</span><span class="s">"id"</span> <span class="na">javaType=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">"id"</span> <span class="na">column=</span><span class="s">"id"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"username"</span> <span class="na">property=</span><span class="s">"username"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"address"</span> <span class="na">property=</span><span class="s">"address"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"sex"</span> <span class="na">property=</span><span class="s">"sex"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"birthday"</span> <span class="na">property=</span><span class="s">"birthday"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/association&gt;</span>
+    <span class="nt">&lt;/resultMap&gt;</span>
+    <span class="c">&lt;!--查询所有--&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findAll"</span> <span class="na">resultMap=</span><span class="s">"accountUserMap"</span><span class="nt">&gt;</span>
+        select u.*, a.id as aid, a.uid, a.money from account a,user u where u.id = a.uid;
+    <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></div></div>
+<p>IUserDao.xml</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.diaowenjie.dao.IUserDao"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!--查询所有--&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findAll"</span> <span class="na">resultType=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+        select * from user;
+    <span class="nt">&lt;/select&gt;</span>
+
+    <span class="c">&lt;!--根据id查询用户 --&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findById"</span> <span class="na">parameterType=</span><span class="s">"Integer"</span> <span class="na">resultType=</span><span class="s">"com.diaowenjie.domain.User"</span><span class="nt">&gt;</span>
+        select * from user where id  = #{id};
+    <span class="nt">&lt;/select&gt;</span>
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></div></div>
+
+<p>测试类；</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span>  <span class="nf">testFindAllAccount</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+    <span class="c1">//5.使用代理对象执行方法</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Account</span><span class="o">&gt;</span> <span class="n">accounts</span> <span class="o">=</span> <span class="n">accountDao</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Account</span> <span class="nl">account:</span><span class="n">accounts</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">account</span><span class="o">.</span><span class="na">getUser</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>然后便能够输出结果：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Account<span class="o">{</span><span class="nb">id</span><span class="o">=</span>1, <span class="nv">uid</span><span class="o">=</span>46, <span class="nv">money</span><span class="o">=</span>1000.0<span class="o">}</span>
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>46, <span class="nv">username</span><span class="o">=</span><span class="s1">'老王'</span>, <span class="nv">birthday</span><span class="o">=</span>Wed Mar 07 17:37:26 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}</span>
+Account<span class="o">{</span><span class="nb">id</span><span class="o">=</span>2, <span class="nv">uid</span><span class="o">=</span>45, <span class="nv">money</span><span class="o">=</span>1000.0<span class="o">}</span>
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>45, <span class="nv">username</span><span class="o">=</span><span class="s1">'传智播客'</span>, <span class="nv">birthday</span><span class="o">=</span>Sun Mar 04 12:04:06 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京金燕龙'</span><span class="o">}</span>
+Account<span class="o">{</span><span class="nb">id</span><span class="o">=</span>3, <span class="nv">uid</span><span class="o">=</span>46, <span class="nv">money</span><span class="o">=</span>2000.0<span class="o">}</span>
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>46, <span class="nv">username</span><span class="o">=</span><span class="s1">'老王'</span>, <span class="nv">birthday</span><span class="o">=</span>Wed Mar 07 17:37:26 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="32-一对多查询">3.2 一对多查询</h2>
+
+<p>需求：查询所有用户信息以及用户关联的账户信息 <strong>(一个用户可以有多个账户)</strong>，即将用户与账户表关联，查询出每个用户拥有账号的属性，查询结果如下图所示。</p>
+
+<p>分析：用户信息和他的账户信息为一对多的关系，并且查询过程中如果用户没有账户信息，此时也要将用户信息查询出来，我们想到的就是左外连接查询会比较合适。</p>
+
+<p>需要执行的sql语句：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">u</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">id</span> <span class="k">AS</span> <span class="n">aid</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">uid</span><span class="p">,</span> <span class="n">a</span><span class="p">.</span><span class="n">money</span> <span class="k">FROM</span> <span class="k">user</span> <span class="n">u</span> <span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">account</span> <span class="n">a</span> <span class="k">ON</span> <span class="n">u</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">uid</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><a href="https://pic.tyzhang.top/image/dZvs"><img src="https://pic.tyzhang.top/images/2020/05/04/one4Plus.png" alt="one4Plus.png" /></a></p>
+
+<p>因为是对user进行查询，所以user为主表，首先对user进行改造，因为用户可以有多个账户，所以用List存储。</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Date</span> <span class="n">birthday</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">sex</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">address</span><span class="o">;</span>
+
+    <span class="c1">//一对多关系映射， 主表实体应该包含从表实体的集合引用</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Account</span><span class="o">&gt;</span> <span class="n">accounts</span><span class="o">;</span>
+	<span class="c1">//get and set to string </span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>更改user的findAll操作，实体类中是集合，所以此处标签也是用&lt;collection&gt;</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">"userAccountMap"</span> <span class="na">type=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">"id"</span> <span class="na">column=</span><span class="s">"id"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"username"</span> <span class="na">column=</span><span class="s">"username"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"address"</span> <span class="na">column=</span><span class="s">"address"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"sex"</span> <span class="na">column=</span><span class="s">"sex"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"birthday"</span> <span class="na">column=</span><span class="s">"birthday"</span><span class="nt">/&gt;</span>
+    <span class="c">&lt;!--配置user对象中的accounts集合的映射 其中column表示查询结果中的属性名称，property为实体类中的属性名称。需要一一对应--&gt;</span>
+    <span class="nt">&lt;collection</span> <span class="na">property=</span><span class="s">"accounts"</span> <span class="na">ofType=</span><span class="s">"account"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;id</span> <span class="na">column=</span><span class="s">"aid"</span> <span class="na">property=</span><span class="s">"id"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"uid"</span> <span class="na">property=</span><span class="s">"uid"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">column=</span><span class="s">"money"</span> <span class="na">property=</span><span class="s">"money"</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;/collection&gt;</span>
+<span class="nt">&lt;/resultMap&gt;</span>
+<span class="c">&lt;!--查询所有--&gt;</span>
+<span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findAll"</span> <span class="na">resultMap=</span><span class="s">"userAccountMap"</span><span class="nt">&gt;</span>
+    SELECT u.*, a.id AS aid, a.uid, a.money FROM user u LEFT OUTER JOIN account a ON u.id = a.uid;
+<span class="nt">&lt;/select&gt;</span>
+</code></pre></div></div>
+
+<p>对应测试类：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span>  <span class="nf">testFindAllUser</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+
+    <span class="c1">//5.使用代理对象执行方法</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">userDao</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">User</span> <span class="nl">user:</span><span class="n">users</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"-----每个用户信息----"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getAccounts</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>查询结果:此时与在sql中查询的结果一致。见上图。</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-----</span>每个用户信息----
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>41, <span class="nv">username</span><span class="o">=</span><span class="s1">'老王'</span>, <span class="nv">birthday</span><span class="o">=</span>Tue Feb 27 17:47:08 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}</span>
+<span class="o">[]</span>
+<span class="nt">-----</span>每个用户信息----
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>42, <span class="nv">username</span><span class="o">=</span><span class="s1">'小二王'</span>, <span class="nv">birthday</span><span class="o">=</span>Fri Mar 02 15:09:37 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'女'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京金燕龙'</span><span class="o">}</span>
+<span class="o">[]</span>
+<span class="nt">-----</span>每个用户信息----
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>43, <span class="nv">username</span><span class="o">=</span><span class="s1">'小二王'</span>, <span class="nv">birthday</span><span class="o">=</span>Sun Mar 04 11:34:34 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'女'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京金燕龙'</span><span class="o">}</span>
+<span class="o">[]</span>
+<span class="nt">-----</span>每个用户信息----
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>45, <span class="nv">username</span><span class="o">=</span><span class="s1">'传智播客'</span>, <span class="nv">birthday</span><span class="o">=</span>Sun Mar 04 12:04:06 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京金燕龙'</span><span class="o">}</span>
+<span class="o">[</span>Account<span class="o">{</span><span class="nb">id</span><span class="o">=</span>2, <span class="nv">uid</span><span class="o">=</span>45, <span class="nv">money</span><span class="o">=</span>1000.0<span class="o">}]</span>
+<span class="nt">-----</span>每个用户信息----
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>46, <span class="nv">username</span><span class="o">=</span><span class="s1">'老王'</span>, <span class="nv">birthday</span><span class="o">=</span>Wed Mar 07 17:37:26 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}</span>
+<span class="o">[</span>Account<span class="o">{</span><span class="nb">id</span><span class="o">=</span>1, <span class="nv">uid</span><span class="o">=</span>46, <span class="nv">money</span><span class="o">=</span>1000.0<span class="o">}</span>, Account<span class="o">{</span><span class="nb">id</span><span class="o">=</span>3, <span class="nv">uid</span><span class="o">=</span>46, <span class="nv">money</span><span class="o">=</span>2000.0<span class="o">}]</span>  //拥有两个的会直接封装成一个list。
+<span class="nt">-----</span>每个用户信息----
+User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>48, <span class="nv">username</span><span class="o">=</span><span class="s1">'小马宝莉'</span>, <span class="nv">birthday</span><span class="o">=</span>Thu Mar 08 11:44:00 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'女'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京修正'</span><span class="o">}</span>
+<span class="o">[]</span>
+</code></pre></div></div>
+
+<h2 id="32-维护多对多">3.2 维护多对多</h2>
+
+<p>用户和角色，用户可以有多个角色，一个角色也可以有多个用户，故二者是多对多。</p>
+
+<p>需要实现的功能：</p>
+
+<ol>
+  <li>当查询用户时，可以同时得到用户所包含的角色信息</li>
+  <li>当查询角色时，可以同时得到角色的所赋予的用户信息</li>
+</ol>
+
+<p>首先是添加数据库支持：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">#</span> <span class="err">创建角色表</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="nv">`role`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">`role`</span> <span class="p">(</span>
+  <span class="nv">`id`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'编号'</span><span class="p">,</span>
+  <span class="nv">`role_name`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'角色名称'</span><span class="p">,</span>
+  <span class="nv">`role_desc`</span> <span class="nb">varchar</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span> <span class="k">default</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'角色描述'</span><span class="p">,</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span>  <span class="p">(</span><span class="nv">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">添加角色数据</span>
+<span class="k">insert</span>  <span class="k">into</span> <span class="nv">`role`</span><span class="p">(</span><span class="nv">`ID`</span><span class="p">,</span><span class="nv">`ROLE_NAME`</span><span class="p">,</span><span class="nv">`ROLE_DESC`</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">'院长'</span><span class="p">,</span><span class="s1">'管理整个学院'</span><span class="p">),(</span><span class="mi">2</span><span class="p">,</span><span class="s1">'总裁'</span><span class="p">,</span><span class="s1">'管理整个公司'</span><span class="p">),(</span><span class="mi">3</span><span class="p">,</span><span class="s1">'校长'</span><span class="p">,</span><span class="s1">'管理整个学校'</span><span class="p">);</span>
+<span class="o">#</span> <span class="err">创建用户角色表，也就是中间表</span>
+<span class="o">#</span> <span class="n">uid</span> <span class="err">和</span> <span class="n">rid</span><span class="err">是复合主键，同时也是外键</span>
+<span class="k">DROP</span> <span class="k">TABLE</span> <span class="n">IF</span> <span class="k">EXISTS</span> <span class="nv">`user_role`</span><span class="p">;</span>
+<span class="k">CREATE</span> <span class="k">TABLE</span> <span class="nv">`user_role`</span> <span class="p">(</span>
+  <span class="nv">`uid`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'用户编号'</span><span class="p">,</span>
+  <span class="nv">`rid`</span> <span class="nb">int</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="k">NOT</span> <span class="k">NULL</span> <span class="k">COMMENT</span> <span class="s1">'角色编号'</span><span class="p">,</span><span class="n">study_test</span>
+  <span class="k">PRIMARY</span> <span class="k">KEY</span>  <span class="p">(</span><span class="nv">`uid`</span><span class="p">,</span><span class="nv">`rid`</span><span class="p">),</span>
+  <span class="k">KEY</span> <span class="nv">`FK_Reference_10`</span> <span class="p">(</span><span class="nv">`rid`</span><span class="p">),</span>
+  <span class="k">CONSTRAINT</span> <span class="nv">`FK_Reference_10`</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="nv">`rid`</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="nv">`role`</span> <span class="p">(</span><span class="nv">`id`</span><span class="p">),</span>
+  <span class="k">CONSTRAINT</span> <span class="nv">`FK_Reference_9`</span> <span class="k">FOREIGN</span> <span class="k">KEY</span> <span class="p">(</span><span class="nv">`uid`</span><span class="p">)</span> <span class="k">REFERENCES</span> <span class="nv">`user`</span> <span class="p">(</span><span class="nv">`id`</span><span class="p">)</span>
+<span class="p">)</span> <span class="n">ENGINE</span><span class="o">=</span><span class="n">InnoDB</span> <span class="k">DEFAULT</span> <span class="n">CHARSET</span><span class="o">=</span><span class="n">utf8</span><span class="p">;</span>
+<span class="o">#</span> <span class="err">添加用户角色数据</span>
+<span class="k">insert</span>  <span class="k">into</span> <span class="nv">`user_role`</span><span class="p">(</span><span class="nv">`uid`</span><span class="p">,</span><span class="nv">`rid`</span><span class="p">)</span> <span class="k">values</span> <span class="p">(</span><span class="mi">41</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">45</span><span class="p">,</span><span class="mi">1</span><span class="p">),(</span><span class="mi">41</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>需要实现的结果：</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">u</span><span class="p">.</span><span class="o">*</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">id</span> <span class="k">as</span> <span class="n">rid</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">role_name</span><span class="p">,</span> <span class="n">r</span><span class="p">.</span><span class="n">role_desc</span> <span class="k">FROM</span> <span class="k">role</span> <span class="n">r</span> 
+	<span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="n">user_role</span> <span class="n">ur</span> <span class="k">ON</span> <span class="n">r</span><span class="p">.</span><span class="n">id</span> <span class="o">=</span> <span class="n">ur</span><span class="p">.</span><span class="n">rid</span> 
+	<span class="k">LEFT</span> <span class="k">OUTER</span> <span class="k">JOIN</span> <span class="k">user</span> <span class="n">u</span> <span class="k">ON</span> <span class="n">ur</span><span class="p">.</span><span class="n">uid</span> <span class="o">=</span> <span class="n">u</span><span class="p">.</span><span class="n">id</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p><a href="https://pic.tyzhang.top/image/d6D5"><img src="https://pic.tyzhang.top/images/2020/05/05/multi4multi.png" alt="multi4multi.png" /></a></p>
+
+<p>需要实体类：user.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">username</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Date</span> <span class="n">birthday</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">sex</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">address</span><span class="o">;</span>
+	<span class="c1">//get and set to string</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>role.class</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Role</span> <span class="kd">implements</span> <span class="nc">Serializable</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Integer</span> <span class="n">roleId</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">roleName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">roleDesc</span><span class="o">;</span>
+
+    <span class="c1">//多对多的映射关系；一个角色可以赋予多个用户</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">User</span><span class="o">&gt;</span> <span class="n">users</span><span class="o">;</span>
+    <span class="c1">//get and set to string</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>查询所有的接口（省略不表）和实现类配置IRoleDao.xml</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;?xml version="1.0" encoding="UTF-8" ?&gt;</span>
+<span class="cp">&lt;!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd"&gt;</span>
+<span class="nt">&lt;mapper</span> <span class="na">namespace=</span><span class="s">"com.diaowenjie.dao.IRoleDao"</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!--定义role的resultMap--&gt;</span>
+    <span class="nt">&lt;resultMap</span> <span class="na">id=</span><span class="s">"roleMap"</span> <span class="na">type=</span><span class="s">"role"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">"roleId"</span> <span class="na">column=</span><span class="s">"rid"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"roleName"</span> <span class="na">column=</span><span class="s">"role_name"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"roleDesc"</span> <span class="na">column=</span><span class="s">"role_desc"</span><span class="nt">/&gt;</span>
+        <span class="c">&lt;!-- 配置role对象中users集合的映射 --&gt;</span>
+        <span class="nt">&lt;collection</span> <span class="na">property=</span><span class="s">"users"</span> <span class="na">ofType=</span><span class="s">"user"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;id</span> <span class="na">property=</span><span class="s">"id"</span> <span class="na">column=</span><span class="s">"id"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"username"</span> <span class="na">column=</span><span class="s">"username"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"sex"</span> <span class="na">column=</span><span class="s">"sex"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"birthday"</span> <span class="na">column=</span><span class="s">"birthday"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;result</span> <span class="na">property=</span><span class="s">"address"</span> <span class="na">column=</span><span class="s">"address"</span><span class="nt">/&gt;</span>
+        <span class="nt">&lt;/collection&gt;</span>
+    <span class="nt">&lt;/resultMap&gt;</span>
+    <span class="c">&lt;!--查询所有 对于sql语句换行的时候，需要多加空格防止换行的时候连接导致执行失败。--&gt;</span>
+    <span class="nt">&lt;select</span> <span class="na">id=</span><span class="s">"findAll"</span> <span class="na">resultMap=</span><span class="s">"roleMap"</span><span class="nt">&gt;</span>
+         SELECT u.*, r.id as rid, r.role_name, r.role_desc FROM role r
+            LEFT OUTER JOIN user_role ur ON r.id = ur.rid
+            LEFT OUTER JOIN user u ON ur.uid = u.id;
+    <span class="nt">&lt;/select&gt;</span>
+
+<span class="nt">&lt;/mapper&gt;</span>
+</code></pre></div></div>
+
+<p>测试类：</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//根据id查询用户</span>
+<span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testFindAllRole</span><span class="o">(){</span>
+    <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Role</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="n">roleDao</span><span class="o">.</span><span class="na">findAll</span><span class="o">();</span>
+    <span class="k">for</span> <span class="o">(</span><span class="nc">Role</span> <span class="nl">role:</span><span class="n">roles</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"-----每个角色信息-----"</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">role</span><span class="o">);</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">role</span><span class="o">.</span><span class="na">getUsers</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>对应测试结果：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-----</span>每个角色信息-----
+Role<span class="o">{</span><span class="nv">roleId</span><span class="o">=</span>1, <span class="nv">roleName</span><span class="o">=</span><span class="s1">'院长'</span>, <span class="nv">roleDesc</span><span class="o">=</span><span class="s1">'管理整个学院'</span><span class="o">}</span>
+<span class="o">[</span>User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>41, <span class="nv">username</span><span class="o">=</span><span class="s1">'老王'</span>, <span class="nv">birthday</span><span class="o">=</span>Tue Feb 27 17:47:08 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}</span>, User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>45, <span class="nv">username</span><span class="o">=</span><span class="s1">'传智播客'</span>, <span class="nv">birthday</span><span class="o">=</span>Sun Mar 04 12:04:06 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京金燕龙'</span><span class="o">}]</span>
+<span class="nt">-----</span>每个角色信息-----
+Role<span class="o">{</span><span class="nv">roleId</span><span class="o">=</span>2, <span class="nv">roleName</span><span class="o">=</span><span class="s1">'总裁'</span>, <span class="nv">roleDesc</span><span class="o">=</span><span class="s1">'管理整个公司'</span><span class="o">}</span>
+<span class="o">[</span>User<span class="o">{</span><span class="nb">id</span><span class="o">=</span>41, <span class="nv">username</span><span class="o">=</span><span class="s1">'老王'</span>, <span class="nv">birthday</span><span class="o">=</span>Tue Feb 27 17:47:08 CST 2018, <span class="nv">sex</span><span class="o">=</span><span class="s1">'男'</span>, <span class="nv">address</span><span class="o">=</span><span class="s1">'北京'</span><span class="o">}]</span>
+<span class="nt">-----</span>每个角色信息-----
+Role<span class="o">{</span><span class="nv">roleId</span><span class="o">=</span>3, <span class="nv">roleName</span><span class="o">=</span><span class="s1">'校长'</span>, <span class="nv">roleDesc</span><span class="o">=</span><span class="s1">'管理整个学校'</span><span class="o">}</span>
+<span class="o">[]</span>
+</code></pre></div></div>
+
+<p>可以看出查询的结果与在sql中查询的是一致的。</p>
+
+<h1 id="4jndi">4.JNDI</h1>
+
+<p>可以了解一下。。模仿window中的注册表。一种数据保存形式？</p>
+
+<p>JNDI: Java Naming and Directory Interface是SUN公司推出的一套规范，属于JavaEE技术之一，目的是模仿Windows系统中的注册表。</p>
+
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>
