@@ -502,36 +502,36 @@ cnpm <span class="nb">install</span> <span class="nt">-g</span> github-webhook-h
 
 <p>/usr/lib/node_modules/github-webhook-handler/deploy.js</p>
 
-<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>var http <span class="o">=</span> require<span class="o">(</span><span class="s1">'http'</span><span class="o">)</span>
-var createHandler <span class="o">=</span> require<span class="o">(</span><span class="s1">'github-webhook-handler'</span><span class="o">)</span>
-var handler <span class="o">=</span> createHandler<span class="o">({</span> path: <span class="s1">'/deploy'</span>, secret: <span class="s1">'123455'</span> <span class="o">})</span>  <span class="c"># 监听请求路径，和Github配置的密码</span>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">http</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">http</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">createHandler</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">github-webhook-handler</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">handler</span> <span class="o">=</span> <span class="nx">createHandler</span><span class="p">({</span> <span class="na">path</span><span class="p">:</span> <span class="dl">'</span><span class="s1">/deploy</span><span class="dl">'</span><span class="p">,</span> <span class="na">secret</span><span class="p">:</span> <span class="dl">'</span><span class="s1">123455</span><span class="dl">'</span> <span class="p">})</span>  <span class="c1">// 监听请求路径，和Github配置的密码</span>
  
-<span class="k">function </span>run_cmd<span class="o">(</span>cmd, args, callback<span class="o">)</span> <span class="o">{</span>
-  var spawn <span class="o">=</span> require<span class="o">(</span><span class="s1">'child_process'</span><span class="o">)</span>.spawn<span class="p">;</span>
-  var child <span class="o">=</span> spawn<span class="o">(</span>cmd, args<span class="o">)</span><span class="p">;</span>
-  var resp <span class="o">=</span> <span class="s2">""</span><span class="p">;</span>
+<span class="kd">function</span> <span class="nx">run_cmd</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">callback</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">spawn</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">child_process</span><span class="dl">'</span><span class="p">).</span><span class="nx">spawn</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">spawn</span><span class="p">(</span><span class="nx">cmd</span><span class="p">,</span> <span class="nx">args</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">resp</span> <span class="o">=</span> <span class="dl">""</span><span class="p">;</span>
  
-  child.stdout.on<span class="o">(</span><span class="s1">'data'</span>, <span class="k">function</span><span class="o">(</span>buffer<span class="o">)</span> <span class="o">{</span> resp +<span class="o">=</span> buffer.toString<span class="o">()</span><span class="p">;</span> <span class="o">})</span><span class="p">;</span>
-  child.stdout.on<span class="o">(</span><span class="s1">'end'</span>, <span class="k">function</span><span class="o">()</span> <span class="o">{</span> callback <span class="o">(</span>resp<span class="o">)</span> <span class="o">})</span><span class="p">;</span>
-<span class="o">}</span>
+  <span class="nx">child</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">data</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">buffer</span><span class="p">)</span> <span class="p">{</span> <span class="nx">resp</span> <span class="o">+=</span> <span class="nx">buffer</span><span class="p">.</span><span class="nx">toString</span><span class="p">();</span> <span class="p">});</span>
+  <span class="nx">child</span><span class="p">.</span><span class="nx">stdout</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">end</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span> <span class="nx">callback</span> <span class="p">(</span><span class="nx">resp</span><span class="p">)</span> <span class="p">});</span>
+<span class="p">}</span>
  
-http.createServer<span class="o">(</span><span class="k">function</span> <span class="o">(</span>req, res<span class="o">)</span> <span class="o">{</span>
-  handler<span class="o">(</span>req, res, <span class="k">function</span> <span class="o">(</span>err<span class="o">)</span> <span class="o">{</span>
-    res.statusCode <span class="o">=</span> 404
-    res.end<span class="o">(</span><span class="s1">'no such location'</span><span class="o">)</span>
-  <span class="o">})</span>
-<span class="o">})</span>.listen<span class="o">(</span>3006<span class="o">)</span> <span class="c"># 监听的端口</span>
+<span class="nx">http</span><span class="p">.</span><span class="nx">createServer</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">handler</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">statusCode</span> <span class="o">=</span> <span class="mi">404</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">end</span><span class="p">(</span><span class="dl">'</span><span class="s1">no such location</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">})</span>
+<span class="p">}).</span><span class="nx">listen</span><span class="p">(</span><span class="mi">3006</span><span class="p">)</span> <span class="c1">// 监听的端口</span>
  
-handler.on<span class="o">(</span><span class="s1">'error'</span>, <span class="k">function</span> <span class="o">(</span>err<span class="o">)</span> <span class="o">{</span>
-  console.error<span class="o">(</span><span class="s1">'Error:'</span>, err.message<span class="o">)</span>
-<span class="o">})</span>
+<span class="nx">handler</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">error</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">Error:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">.</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span>
  
-handler.on<span class="o">(</span><span class="s1">'push'</span>, <span class="k">function</span> <span class="o">(</span>event<span class="o">)</span> <span class="o">{</span>
-  console.log<span class="o">(</span><span class="s1">'Received a push event for %s to %s'</span>,
-    event.payload.repository.name,
-    event.payload.ref<span class="o">)</span><span class="p">;</span>
-  run_cmd<span class="o">(</span><span class="s1">'sh'</span>, <span class="o">[</span><span class="s1">'/usr/local/deploy.sh'</span><span class="o">]</span>, <span class="k">function</span><span class="o">(</span>text<span class="o">){</span> console.log<span class="o">(</span>text<span class="o">)</span> <span class="o">})</span><span class="p">;</span> <span class="c"># 成功后，执行的脚本。 注意检查脚本名称和路径，要一致。</span>
-<span class="o">})</span>
+<span class="nx">handler</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">push</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">'</span><span class="s1">Received a push event for %s to %s</span><span class="dl">'</span><span class="p">,</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">repository</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">payload</span><span class="p">.</span><span class="nx">ref</span><span class="p">);</span>
+  <span class="nx">run_cmd</span><span class="p">(</span><span class="dl">'</span><span class="s1">sh</span><span class="dl">'</span><span class="p">,</span> <span class="p">[</span><span class="dl">'</span><span class="s1">/usr/local/deploy.sh</span><span class="dl">'</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">text</span><span class="p">){</span> <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">text</span><span class="p">)</span> <span class="p">});</span> <span class="c1">// 成功后，执行的脚本。 注意检查脚本名称和路径，要一致。</span>
+<span class="p">})</span>
 </code></pre></div></div>
 
 <p>脚本的作用就是启动一个监听端口来接收请求，接收到请求后执行部署脚本，脚本内容的关键点已经标注上注释。</p>
@@ -574,6 +574,8 @@ git pull https://github.com/LostStarTvT/lostStarTvT.github.io.git
 如果报错：
 /root/node-v8.12.0-linux-x64/lib/node_modules/forever/bin/forever start <span class="nt">-a</span> <span class="nt">-l</span> forever.log <span class="nt">-o</span> out.log <span class="nt">-e</span> err.log deploy.js
 </code></pre></div></div>
+
+<p>/root/.forever/forever.log forever 线程的日志文件</p>
 
 <p>同时一般情况下，我们不会对外保留很多端口，所以需要通过博客的地址来转发，需要在 Nginx 上面添加一个转发配置，用来监听的 /deploy 请求转发到 nodejs 服务上，配置代码如下：</p>
 
