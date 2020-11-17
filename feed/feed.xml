@@ -212,7 +212,7 @@
 
 &lt;p&gt;&lt;a href=&quot;http://diaowenjie.cn/onepiece/993.pdf&quot;&gt;第992话 残党&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;第991话 然我们死吧&lt;/p&gt;
+&lt;p&gt;第991话 让我们死吧&lt;/p&gt;
 
 &lt;p&gt;第990话 孤军&lt;/p&gt;
 
@@ -566,7 +566,7 @@ cnpm &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;
 
 &lt;p&gt;然后在/usr/local/目录下进行创建deploy.sh脚本。&lt;/p&gt;
 
-&lt;p&gt;vi /usr/local/depoly.sh&lt;/p&gt;
+&lt;p&gt;vi /usr/local/deploy.sh  此脚本就是 run_cmd(‘sh’, [‘/usr/local/deploy.sh’] 调用的脚本。&lt;/p&gt;
 
 &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;date&lt;/span&gt;&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;
 &lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /usr/local/nginx/lostStarTvT.github.io 
