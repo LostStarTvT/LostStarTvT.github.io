@@ -9,13 +9,13 @@
 
     
 
-    <title>Typora + PicGo 自动上传图片</title>
+    <title>Java：Enum使用说明</title>
 
     
       
     
 
-    <link rel="canonical" href="www.diaowenjie.cn/2020/12/02/pictureGo.html">
+    <link rel="canonical" href="www.diaowenjie.cn/2020/12/08/enum.html">
 
     
     <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
@@ -164,13 +164,13 @@
     </script>
 
     <section class="page-header">
-      <h1 class="project-name">Typora + PicGo 自动上传图片</h1>
+      <h1 class="project-name">Java：Enum使用说明</h1>
       <h2 class="project-tagline"></h2>
       
         <h2 class="project-date">
-        <time datetime="2020-12-02T00:00:00+08:00" itemprop="datePublished">
+        <time datetime="2020-12-08T00:00:00+08:00" itemprop="datePublished">
           
-          Dec 2, 2020
+          Dec 8, 2020
         </time>
         
         
@@ -186,11 +186,11 @@
 
   <header class="post-header">
       <link rel="dns-prefetch" href="//cdn.bootcss.com" />
-    <h1 class="post-title" itemprop="name headline">Typora + PicGo 自动上传图片</h1>
+    <h1 class="post-title" itemprop="name headline">Java：Enum使用说明</h1>
     <p class="post-meta">
-      <time datetime="2020-12-02T00:00:00+08:00" itemprop="datePublished">
+      <time datetime="2020-12-08T00:00:00+08:00" itemprop="datePublished">
         
-        Dec 2, 2020
+        Dec 8, 2020
       </time>
       </p>
   </header>
@@ -201,60 +201,73 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   
   <div itemprop="articleBody">
     <blockquote>
-  <p>PicGo的配置与使用，本篇文章的所有图片都是自动保存在图床上。</p>
+  <p>介绍Java枚举，说明其使用的场景。</p>
 </blockquote>
 
 <h1 id="目录">目录</h1>
 
 <ul id="markdown-toc">
   <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
-  <li><a href="#picgo" id="markdown-toc-picgo">PicGo</a></li>
-  <li><a href="#阿里oss" id="markdown-toc-阿里oss">阿里OSS</a></li>
-  <li><a href="#typora设置" id="markdown-toc-typora设置">Typora设置</a></li>
 </ul>
-<ul>
-  <li>参考 <a href="https://blog.csdn.net/sinat_36184075/article/details/106227866">Typora编辑markdown图床设置（阿里云）</a></li>
-</ul>
+<p>枚举类即该类的所有对象是有限的，比如说Week类，其实例只会有7个，周一、周二直到周日，那么就可以直接使用枚举类将其一次性实例化，如下所示：</p>
 
-<h1 id="picgo">PicGo</h1>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 定义一个星期的枚举类</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="nc">WeekEnum</span> <span class="o">{</span>
+    <span class="c1">// 在第一行显式地列出7个枚举实例(枚举值)，系统会自动添加 public static final 修饰</span>
+    <span class="no">SUNDAY</span><span class="o">,</span> <span class="no">MONDAY</span><span class="o">,</span> <span class="no">TUESDAY</span><span class="o">,</span> <span class="no">WEDNESDAY</span><span class="o">,</span> <span class="no">THURSDAY</span><span class="o">,</span> <span class="no">FRIDAY</span><span class="o">,</span> <span class="no">SATURDAY</span><span class="o">;</span> <span class="c1">// 相当于一次性实例化了7个WeekEnum对象。</span>
+<span class="o">}</span> 
+</code></pre></div></div>
 
-<p>picGo<a href="https://github.com/Molunerfinn/PicGo">下载链接</a>，GitHub开源项目，现在已经集成了多家图床的自动上传功能，支持的图床如下所示：</p>
+<p>以上是使用默认构造器的枚举类，那么对于带构造函数的枚举类来说，则需要在定义对象的时候进行调用构造函数：</p>
 
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202200706525.png" alt="image-20201202200706525" /></p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="nn">enumtest</span><span class="o">;</span>
 
-<p>下载完成以后只需要一路next打开就行。上面是采用的阿里的OSS存储服务，自动的将服务存储在服务器上，看情况应该是收费的。通过这种方式就不需要每次的手动进行更改名称和手动的上传到图床上。</p>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="nc">WeekEnum</span> <span class="o">{</span>
+    
+    <span class="c1">// 需要传递参数使用自定义构造函数进行初始化对象。 实际是调用 private WeekEnum(String date) 构造方法。</span>
+    <span class="no">SUNDAY</span><span class="o">(</span><span class="s">"星期日"</span><span class="o">),</span> <span class="no">MONDAY</span><span class="o">(</span><span class="s">"星期一"</span><span class="o">),</span> <span class="no">TUESDAY</span><span class="o">(</span><span class="s">"星期二"</span><span class="o">),</span> <span class="no">WEDNESDAY</span><span class="o">(</span><span class="s">"星期三"</span><span class="o">),</span> 
+    <span class="no">THURSDAY</span><span class="o">(</span><span class="s">"星期四"</span><span class="o">),</span> <span class="no">FRIDAY</span><span class="o">(</span><span class="s">"星期五"</span><span class="o">),</span> <span class="no">SATURDAY</span><span class="o">(</span><span class="s">"星期六"</span><span class="o">);</span> 
 
-<h1 id="阿里oss">阿里OSS</h1>
+    <span class="c1">// 定义一个 private 修饰的实例变量</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">date</span><span class="o">;</span>
 
-<p>首先需要使用阿里云账号新建一个OSS服务，如下选择：</p>
+    <span class="c1">// 定义一个带参数的构造器，枚举类的构造器只能使用 private 修饰</span>
+    <span class="kd">private</span> <span class="nf">WeekEnum</span><span class="o">(</span><span class="nc">String</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">;</span>
+    <span class="o">}</span>
 
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202201218195.png" alt="image-20201202201218195" /></p>
+    <span class="c1">// 定义 get set 方法</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getDate</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">date</span><span class="o">;</span>
+    <span class="o">}</span>
 
-<p>然后选择创建一个Bucket，貌似相当于创建一个容器，然后将图片传递进去。</p>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setDate</span><span class="o">(</span><span class="nc">String</span> <span class="n">date</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202201410467.png" alt="image-20201202201410467" /></p>
+<p>从上面可以看出，枚举类相当于是一种对只需要初始化有限个对象的类简化构造过程，不需要一个个进行new，而且其实例对象就在类中，对于上面的</p>
 
-<p>创建选项：需要新建一个访问名称，</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="no">SUNDAY</span><span class="o">(</span><span class="s">"星期日"</span><span class="o">),</span>
+</code></pre></div></div>
 
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202201642472.png" alt="image-20201202201642472" /></p>
+<p>就类似于如下：</p>
 
-<p>创建成功以后，便会有一个文件的目录，以后上传的文件都是在这：</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">final</span> <span class="nc">WeekEnum</span> <span class="no">SUNDAY</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">WeekEnum</span><span class="o">(</span><span class="s">"星期日"</span><span class="o">);</span>
+</code></pre></div></div>
 
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202202130252.png" alt="image-20201202202130252" /></p>
+<p>其实就是一种语法糖，能够更加方便的构造对象。使用枚举的前提是该类的实例是固定的，对于通用类来说，因为其实例需要的情况不能控制，所以不使用枚举。除了写法不同以外，其他的调用和普通的类没有区别。直接进行方法调用即可。另外，也可以使用枚举创建线程安全的单例对象，如下所示。</p>
 
-<p>创建成功以后，找到AccessKey复制下来：如果没有的话可以新建一个。</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 枚举实现单例模式。</span>
+<span class="kd">public</span> <span class="kd">enum</span> <span class="nc">Singleton</span> <span class="o">{</span>
+    <span class="no">INSTANCE</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">doSomething</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"doSomething"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202202248839.png" alt="image-20201202202248839" /></p>
-
-<p>AccseeKey是为了配置PicGo里的图床设置，见PicGo配置。</p>
-
-<h1 id="typora设置">Typora设置</h1>
-
-<p>点击文件-&gt;偏好设置-&gt;选项找到图床设置：</p>
-
-<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201202202715934.png" alt="image-20201202202715934" /></p>
-
-<p>选择到PicGo的安装目录，此时点击验证图片上传选项即可测试成功。之后便可以直接复制图片然后上传到图床，也可以选择其他的图床进行设置。</p>
 
   </div>
 
@@ -262,7 +275,7 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 <footer>
     <div style="color: #B0BEC5">标签：
     
-    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#工具使用">#工具使用</a>
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
     
   </div>
 </footer>

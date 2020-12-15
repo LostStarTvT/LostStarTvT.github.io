@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="theme-color" content="#546E7A">
+
+    
+
+    <title>工具：python爬虫</title>
+
+    
+      
+    
+
+    <link rel="canonical" href="www.diaowenjie.cn/2020/12/08/python-crawl.html">
+
+    
+    <meta name="keywords" itemprop="keywords" content="blog,css,html,php">
+    <link rel="shortcut icon" sizes="128x128" href="/avatar/favicon.png">
+
+    <meta name="robots" content="noarchive">
+
+   
+    <style>
+.site-header {
+   background-color: #546E7A;
+   }
+.page-header {
+   background: url("https://api.dujin.org/bing/1920.php") no-repeat center; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size:cover; max-width:100%; margin: auto;text-align: center;margin-bottom:20px;
+}
+</style>
+
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/fade.css">
+    <meta name="google-site-verification" content="tb5-LFfZ4ccQdqYC0-JKdEi3uWBF3IFo8PNsDcahigs" />
+  </head>
+  <body>
+
+    <header class="site-header" role="banner">
+
+  <div class="wrapper">
+    
+    
+
+    
+      <a class="site-title" href="/">刁文杰的博客</a>
+    
+
+    
+      <nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#ffffff" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#ffffff" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#ffffff" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger">
+          
+            
+            
+              
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/Billboard.html">Billboard</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/about.html">About</a>
+              
+            
+          
+            
+            
+              
+                <a class="page-link" href="/archives.html">Archives</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/links.html">Links</a>
+              
+            
+          
+            
+            
+          
+            
+            
+              
+                <a class="page-link" href="/pages/tags.html">Tags</a>
+              
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+            
+            
+          
+        </div>
+      </nav>
+    
+  </div>
+</header>
+
+
+    
+    
+    
+    
+    <script>
+      var OriginTitile = document.title;
+      var titleTime;
+      document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          clearTimeout(titleTime);
+        }
+        else {
+          document.title = '刁文杰的博客 ' + OriginTitile;
+          titleTime = setTimeout(function() {
+            document.title = OriginTitile;
+          }, 2000);
+        }});
+
+    </script>
+
+    <section class="page-header">
+      <h1 class="project-name">工具：python爬虫</h1>
+      <h2 class="project-tagline"></h2>
+      
+        <h2 class="project-date">
+        <time datetime="2020-12-08T00:00:00+08:00" itemprop="datePublished">
+          
+          Dec 8, 2020
+        </time>
+        
+        
+          • <span itemprop="author" itemscope itemtype=""><span itemprop="name">刁文杰的博客</span></span>
+        
+        </h2>
+      
+    </section>
+
+    <section class="main-content fade">
+
+      <article itemscope itemtype="">
+
+  <header class="post-header">
+      <link rel="dns-prefetch" href="//cdn.bootcss.com" />
+    <h1 class="post-title" itemprop="name headline">工具：python爬虫</h1>
+    <p class="post-meta">
+      <time datetime="2020-12-08T00:00:00+08:00" itemprop="datePublished">
+        
+        Dec 8, 2020
+      </time>
+      </p>
+  </header>
+<script type="text/javascript" async
+src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  document.getElementsByTagName("img").className="bbb";  
+  </script>
+  
+  <div itemprop="articleBody">
+    <blockquote>
+  <p>介绍使用python进行爬取海贼王的过程，附上爬虫基础的教程。</p>
+</blockquote>
+
+<h1 id="目录">目录</h1>
+
+<ul id="markdown-toc">
+  <li><a href="#目录" id="markdown-toc-目录">目录</a></li>
+  <li><a href="#爬虫综述" id="markdown-toc-爬虫综述">爬虫综述</a>    <ul>
+      <li><a href="#静态界面" id="markdown-toc-静态界面">静态界面</a></li>
+      <li><a href="#动态界面" id="markdown-toc-动态界面">动态界面</a></li>
+    </ul>
+  </li>
+  <li><a href="#demo" id="markdown-toc-demo">Demo</a></li>
+  <li><a href="#附言" id="markdown-toc-附言">附言</a></li>
+</ul>
+<h1 id="爬虫综述">爬虫综述</h1>
+
+<p>爬虫即模拟浏览器发送请求然后解析响应界面，静态界面只需使用request发送请求、BeautifulSoup解析服务器返回数据。但现在大多数使用的是ajax动态进行界面的渲染，这种动态界面则需要捕获到发送的数据格式，然后使用request直接构造json格式的请求包，然后使用BeautifulSoup解析服务器返回的数据。另外也可以使用Selenium控制浏览器进行自动化的数据请求，但这种方式因为需要浏览器，所有会多一步界面的渲染，对比于直接解析html代码的方式这种事效率最低的，一般不推荐使用。</p>
+
+<p>综上爬虫需要的东西包括下面三个包</p>
+
+<ul>
+  <li>request  进行发送请求</li>
+  <li>BeautifulSoup  解析服务器返回的html 代码</li>
+  <li>Selenium  控制浏览器进行自动化操作</li>
+</ul>
+
+<h2 id="静态界面">静态界面</h2>
+
+<p>静态界面爬虫只需要使用request+BeautifulSoup。最简单的代码如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span> 
+
+<span class="c1"># get 请求
+</span><span class="n">html</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'www.baidu.com'</span><span class="p">)</span>
+<span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">html</span><span class="p">,</span> <span class="s">"html5lib"</span><span class="p">)</span>
+
+<span class="c1"># 接下来就可直接按照标签进行数据的查找，背后使用正则表达式进行支撑
+</span><span class="k">print</span><span class="p">(</span><span class="n">soup</span><span class="p">.</span><span class="n">find</span><span class="p">(</span><span class="s">'p'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li><a href="https://segmentfault.com/a/1190000012456106">Python 爬虫实战（一）：使用 requests 和 BeautifulSoup</a> 更多细致的讲解</li>
+</ul>
+
+<p>另外，request也可以设置重连，如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
+<span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'http://'</span><span class="p">,</span><span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># 尝试重试5次，
+</span><span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'https://'</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">urlList</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">pic</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+     <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">ReadTimeout</span><span class="p">:</span>
+        <span class="n">st</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># 随机休眠
+</span>        <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="动态界面">动态界面</h2>
+
+<p>动态界面最好分析捕获到其内部的请求连接，然后使用request直接进行请求，如果分析不来则可以使用Selenium进行控制浏览器然后进行自动化操作。该自动化操作包括模拟按键、模拟鼠标点击、自动请求等功能，即大部分人能够主动进行的操作其都能够进行模拟(<a href="https://selenium-python-zh.readthedocs.io/en/latest/getting-started.html">官方文档</a>)。 当浏览器解析完成以后，便可以像静态界面一样进行操作。</p>
+
+<p>需要注意的问题：因为需要浏览器进行界面的渲染，而有些标签是在渲染完成以后才出现，在渲染完成之前是获取不到对应的标签，所以Selenium内置一个等待界面加载的函数，很多时候获取不到就是因为程序运行的太快而浏览器没有将数据渲染完成。</p>
+
+<p>使用Selenium需要下载一个驱动：<a href="https://chromedriver.chromium.org/downloads">ChromeDriver</a> 不同的驱动对应不同的chrome版本。</p>
+
+<p>最简单的控制代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># 打开浏览器
+</span><span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">"./dirver/chromedriver.exe"</span><span class="p">)</span> <span class="c1"># 打开一个自动化测试的浏览器
+# 访问网站
+</span><span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.baidu.com'</span><span class="p">)</span> 
+
+<span class="c1"># 通过class名称查找对应的标签
+</span><span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">'img#cp_image'</span><span class="p">)</span>
+
+<span class="c1"># 关闭浏览器
+</span><span class="n">driver</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>  
+</code></pre></div></div>
+
+<p>此时就会自动的打开一个浏览器然后访问百度。</p>
+
+<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201215203524210.png" alt="image-20201215203524210" /></p>
+
+<p><strong>一个小技巧</strong>，当需要精确查找到一个标签时，最好是使用浏览器的审阅模式，然后就可以准确的定位到需要的标签的class标签，如下所示：此时我们需要找到的就是这个img#cp_image标签，此时就和BeautifulSoup是一样的。</p>
+
+<p><img src="https://jaystars.oss-cn-beijing.aliyuncs.com/imgimage-20201215204518539.png" alt="image-20201215204518539" /></p>
+
+<p><a href="https://selenium-python-zh.readthedocs.io/en/latest/waits.html">等待界面加载完成</a>，因为当前主流的网站都是使用ajax进行数据的加载，所以在没有加载完成数据之前，如果就直接进行获取标签是会报错的，所以就需要一个检测函数，本次的爬虫中采用如下方式：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">_click</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">'img#cp_image'</span><span class="p">)</span>
+ <span class="c1"># 判断_click.is_displayed() 是否已经出现，最大等待100秒。
+</span><span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">100</span><span class="p">).</span><span class="n">until</span><span class="p">(</span><span class="k">lambda</span> <span class="n">drivers</span> <span class="p">:</span> <span class="n">_click</span><span class="p">.</span><span class="n">is_displayed</span><span class="p">())</span> 
+<span class="n">_url</span> <span class="o">=</span> <span class="n">_click</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'src'</span><span class="p">)</span> <span class="c1"># 如果不等待是获取不到的。 
+</span>
+</code></pre></div></div>
+
+<p>更多的检测方式见官网。</p>
+
+<h1 id="demo">Demo</h1>
+
+<p>request + Selenium爬取海贼王图片：</p>
+
+<ol>
+  <li>获取所有话访问连接</li>
+  <li>使用selenium控制浏览器获取到图片的下载连接</li>
+  <li>使用request下载图片并且保存</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python 
+# -*- coding: utf-8 -*-
+# @Time    : 2020/12/12 19:35
+# @Author  : JayStars
+# @Software: PyCharm
+# @Describe: 爬虫保存海贼王图片全集。 爬取的网站主站 http://www.mangabz.com/ 
+</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="kn">from</span> <span class="nn">requests.adapters</span> <span class="kn">import</span> <span class="n">HTTPAdapter</span>
+<span class="kn">from</span> <span class="nn">selenium</span> <span class="kn">import</span> <span class="n">webdriver</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver</span> <span class="kn">import</span> <span class="n">ActionChains</span>
+<span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
+
+<span class="c1"># 获取图片下载链接
+</span><span class="k">def</span> <span class="nf">getPicDLUrl</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+
+    <span class="n">base</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="s">"#ipg"</span>
+    <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+    <span class="c1"># 根据css 解析对应的url
+</span>    <span class="n">_urlList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># 主要就是打开与关闭的问题。
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+        <span class="n">_click</span> <span class="o">=</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_element_by_css_selector</span><span class="p">(</span><span class="s">'img#cp_image'</span><span class="p">)</span>
+        <span class="n">WebDriverWait</span><span class="p">(</span><span class="n">driver</span><span class="p">,</span><span class="mi">100</span><span class="p">).</span><span class="n">until</span><span class="p">(</span><span class="k">lambda</span> <span class="n">drivers</span> <span class="p">:</span> <span class="n">_click</span><span class="p">.</span><span class="n">is_displayed</span><span class="p">())</span> <span class="c1"># 判断是否是出现。
+</span>        <span class="n">_url</span> <span class="o">=</span> <span class="n">_click</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'src'</span><span class="p">)</span>
+        <span class="n">_urlList</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">_url</span><span class="p">)</span>
+        <span class="c1"># print(_url)
+</span>        <span class="n">ActionChains</span><span class="p">(</span><span class="n">driver</span><span class="p">).</span><span class="n">click</span><span class="p">(</span><span class="n">_click</span><span class="p">).</span><span class="n">perform</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">_urlList</span>
+
+<span class="c1"># 获取到所有的下载链接，直接复制保存到txt文档中。
+</span><span class="k">def</span> <span class="nf">getBaseUrl</span><span class="p">():</span>
+    <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.mangabz.com/139bz/'</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_elements_by_css_selector</span><span class="p">(</span><span class="s">'a.detail-list-form-item'</span><span class="p">):</span>
+        <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"download-index.txt"</span><span class="p">,</span><span class="s">'a'</span><span class="p">)</span>
+        <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+        <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'text'</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+
+    <span class="n">path</span> <span class="o">=</span> <span class="s">"./download-index.txt"</span>   <span class="c1">#  控制下载的数据连接，里面保存了多少话，则
+</span>    <span class="n">key</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 下载链接
+</span>    <span class="n">value</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 生成的名称
+</span>    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"\d+P"</span><span class="p">)</span>
+    <span class="n">numberPattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"\d+"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s">'UTF-8'</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">key</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># 删回车键
+</span>            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># 使用正则表达式提取出来有多少话，然后就模拟点击多少次。
+</span>            <span class="n">page</span> <span class="o">=</span> <span class="n">numberPattern</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="n">line</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">value</span><span class="p">.</span><span class="n">append</span><span class="p">(</span> <span class="n">line</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">' '</span><span class="o">+</span> <span class="n">page</span><span class="p">)</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># 生成字典。
+</span>    <span class="n">indexDict</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
+
+    <span class="c1"># 获取主界面的所有的下载界面
+</span>    <span class="n">baseDir</span> <span class="o">=</span> <span class="s">"./onePiece"</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">baseDir</span><span class="p">):</span>
+        <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">baseDir</span><span class="p">)</span>
+
+    <span class="c1"># 打开浏览器
+</span>    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">"./dirver/chromedriver.exe"</span><span class="p">)</span>
+    <span class="n">driver</span><span class="p">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 隐形的等待100s  因为不等待的话可能出现还没有获取到资源然后就开始直接的进行下载数据。
+</span>    <span class="n">getBaseUrl</span><span class="p">()</span> <span class="c1">#  在下载之前需要先将所有需要下载的连接保存下来，
+</span>    <span class="k">for</span> <span class="n">url</span> <span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">indexDict</span><span class="p">:</span>
+        <span class="n">_dir</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 获取安装路径
+</span>        <span class="n">_page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># 获取当前话有多少图片需要下载
+</span>        <span class="n">tmpDir</span> <span class="o">=</span> <span class="n">baseDir</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">_dir</span> <span class="c1"># 新建下载名称
+</span>        <span class="c1"># 创建下载目录
+</span>        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmpDir</span><span class="p">):</span>
+            <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">tmpDir</span><span class="p">)</span>
+        <span class="n">urlList</span> <span class="o">=</span> <span class="n">getPicDLUrl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">_page</span><span class="p">)</span> <span class="c1"># 获取每话的每章图片的下载链接。
+</span>        <span class="c1"># 获取到图片下载链接以后进行图片的下载。
+</span>        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
+        <span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'http://'</span><span class="p">,</span><span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># 尝试重试5次，
+</span>        <span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'https://'</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">urlList</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">pic</span> <span class="o">=</span> <span class="n">session</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+                <span class="c1"># 保存图片。
+</span>                <span class="n">file_full_name</span> <span class="o">=</span> <span class="n">tmpDir</span> <span class="o">+</span> <span class="s">'/'</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">+</span> <span class="s">'.jpg'</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_full_name</span><span class="p">,</span> <span class="s">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">pic</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">ReadTimeout</span><span class="p">:</span>
+                <span class="n">st</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># 随机休眠
+</span>                <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">"下载好"</span> <span class="o">+</span> <span class="n">_dir</span><span class="p">)</span>
+        <span class="n">driver</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>      <span class="c1"># 关闭浏览器
+</span></code></pre></div></div>
+
+<p>download-index.txt 文件内容：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>http://www.mangabz.com/m152913/
+第998話 古代種                    （11P）                                
+http://www.mangabz.com/m151094/
+第997話 “焰”                    （16P）                                
+http://www.mangabz.com/m150201/
+第996話 最強者棲息之島                    （18P）                                
+http://www.mangabz.com/m149386/
+第995話 女忍的誓言                    （17P）                                
+http://www.mangabz.com/m147446/
+第994話 別名為大和                    （16P）                                
+http://www.mangabz.com/m146512/
+第993話 和之國的夢                    （17P）                                
+http://www.mangabz.com/m145436/
+第992話 殘黨                    （13P）                                
+http://www.mangabz.com/m143051/
+第991話 讓我赴死                    （15P）                                
+http://www.mangabz.com/m140300/
+第990話 孤軍                    （16P）                                
+http://www.mangabz.com/m139512/
+第989話 不覺得會輸                    （14P）                                
+http://www.mangabz.com/m137424/
+第988話 久等了                    （13P）    
+
+</code></pre></div></div>
+
+<p>第一行为访问连接，第二行为该话的名称+页数，其中名称需要作为目录名称，页数控制鼠标点击的次数。该文件控制程序需要下载哪些话。</p>
+
+<h1 id="附言">附言</h1>
+
+<p>上面只是一个简单的爬虫实现，对于</p>
+
+  </div>
+
+    
+<footer>
+    <div style="color: #B0BEC5">标签：
+    
+    <a class="tag" style="color: #E91E63;font-weight:bold" href="/pages/tags#java">#java</a>
+    
+  </div>
+</footer>
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+</article>
+
+
+      <footer class="site-footer">
+        <!-- <span class="site-footer-owner"> 刁文杰的博客©2018-2019.</span> -->
+        
+      <center>
+          <span class="site-footer-credits">刁文杰的博客©2018-2020.</span><br>
+          <!-- <span class="site-footer-credits" style="font-size:12px">Already <span id="sitetime"></span> days.</span><br> -->
+          <!-- <span class="site-footer-credits" href>浙ICP备2020039014号</span><br> -->
+          <a href="http://beian.miit.gov.cn/" class="site-footer-credits"> 浙ICP备2020039014号</a> <br>
+      </center>
+
+     
+        
+
+      </footer>
+    </section>
+
+    
+
+    
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+      inlineMath: [['$','$']]
+    }
+  });
+</script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+
+
+      <script>
+          ajax()
+  function ajax(option){
+    var xhr = null;
+    if(window.XMLHttpRequest){
+      xhr = new window.XMLHttpRequest();
+    }else{ // ie
+      xhr = new ActiveObject("Microsoft")
+    }
+    xhr.open("get","");
+    xhr.send(null);
+    xhr.onreadystatechange = function(){
+      var time = null,
+          curDate = null;
+      if(xhr.readyState===2){
+        // Get time
+        time = xhr.getResponseHeader("Date");
+        console.log(xhr.getAllResponseHeaders())
+        curDate = new Date(time);
+        document.getElementById("sitetime").innerHTML = (parseInt((((curDate.getTime() / 1000) - 1571133419 ) / 86400 )));
+        
+      }
+    }
+  }
+      </script>
+      
+      <script src = '/assets/js/instantclick.min.js' data-no-instant></script>
+      <script data-no-instant>InstantClick.init();</script>
+      
+  </body>
+</html>
