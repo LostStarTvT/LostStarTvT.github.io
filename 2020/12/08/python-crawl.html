@@ -218,14 +218,26 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </ul>
 <h1 id="爬虫综述">爬虫综述</h1>
 
-<p>爬虫即模拟浏览器发送请求然后解析响应界面，静态界面只需使用request发送请求、BeautifulSoup解析服务器返回数据。但现在大多数使用的是ajax动态进行界面的渲染，这种动态界面则需要捕获到发送的数据格式，然后使用request直接构造json格式的请求包，然后使用BeautifulSoup解析服务器返回的数据。另外也可以使用Selenium控制浏览器进行自动化的数据请求，但这种方式因为需要浏览器，所有会多一步界面的渲染，对比于直接解析html代码的方式这种事效率最低的，一般不推荐使用。</p>
+<p>爬虫即模拟浏览器发送请求然后解析响应界面。现阶段的网页可以被分为两大类，静态界面和动态界面。</p>
+
+<ul>
+  <li>静态界面：服务器一次性将渲染好的HTML界面返回给浏览器进行渲染。</li>
+  <li>动态界面：服务器先返回基础的HTML界面，然后浏览器使用AJAX请求部分数据，浏览器然后将其进行组合</li>
+</ul>
+
+<p>二者最大的区别为发送的url的对象不同，静态界面是浏览器输入url，然后发送请求。 而动态界面使用JavaScript进行发送请求。因此二者的爬虫思路有所不同。</p>
+
+<ul>
+  <li>静态界面：使用request发送请求、BeautifulSoup解析服务器返回数据。</li>
+  <li>动态界面：需要分析使用AJAX发送的url，即捕获浏览器发送的请求。然后使用request直接构造json格式的请求包，使用BeautifulSoup解析服务器返回的数据。另外也可以使用Selenium控制浏览器进行自动化的数据请求，但这种方式因为需要浏览器，所有会多一步界面的渲染，对比于直接解析html代码的方式这种事效率最低的，一般不推荐使用。</li>
+</ul>
 
 <p>综上爬虫需要的东西包括下面三个包</p>
 
 <ul>
-  <li>request  进行发送请求</li>
-  <li>BeautifulSoup  解析服务器返回的html 代码</li>
-  <li>Selenium  控制浏览器进行自动化操作</li>
+  <li>request ：进行发送请求</li>
+  <li>BeautifulSoup： 解析服务器返回的html 代码</li>
+  <li>Selenium ： 控制浏览器进行自动化操作</li>
 </ul>
 
 <h2 id="静态界面">静态界面</h2>

@@ -201,7 +201,7 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
   
   <div itemprop="articleBody">
     <blockquote>
-  <p>在进行数据处理的时候，可能会有数据文件名称不一致的问题，本文使用 fnmatch 进行匹配文件名称然后进行批量读取文件。</p>
+  <p>在进行数据处理的时，可能会出现数据文件名称不一致的问题，本文使用 fnmatch 进行匹配文件名称并批量读取文件。核心也就是正则表达式的使用。</p>
 </blockquote>
 
 <h2 id="目录">目录</h2>
@@ -213,11 +213,11 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </ul>
 <h1 id="一使用场景">一、使用场景</h1>
 
-<p>在处理数据的时候，总会出现很多不同的文件需要一一读取，但是因为有些命名不规范导致读取很麻烦，比如说下如下所示：</p>
+<p>如下所示，我需要循环读取文件中的18<em>HandPhone_Keyboard</em> * csv文件，从图中可以看出来，18和19文件夹下的命名后缀不同，本文则是要将所有前缀为HandPhone_Keyboard 的文件读取到内存。</p>
 
 <p><img src="https://pic.tyzhang.top/images/2020/05/23/example99c2a4d0a4c971b3.png" alt="example99c2a4d0a4c971b3.png" /></p>
 
-<p>需要读取每个文件夹中的HandPhone_keyboard的数据，但是因为命名的不规范，后缀为HTC与Sam，使得读取文件很复杂。python中的<code class="language-plaintext highlighter-rouge">fnmatch</code>插件可以很好的解决这种文件读取，采用的方法为先将文件夹中的所有的文件名称读取进来，然后使用<code class="language-plaintext highlighter-rouge">fnmatch</code>进行匹配需要的文件夹名称。</p>
+<p>python中的<code class="language-plaintext highlighter-rouge">fnmatch</code>插件可以解决此种读取需求。即先读取文件夹中所有的<strong>文件名称</strong>，然后使用<code class="language-plaintext highlighter-rouge">fnmatch</code>进行匹配需要的文件夹名称，本质也就是正则匹配。</p>
 
 <h1 id="二读取结果">二、读取结果</h1>
 
@@ -247,14 +247,9 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 
 <h1 id="三实现代码">三、实现代码</h1>
 
-<p>代码中主要的就是使用字符串进行拼接出来路径，然后进行读取文件。对于<code class="language-plaintext highlighter-rouge">fnmatch</code>，实现的方法为首先目录中的所有文件名使用<code class="language-plaintext highlighter-rouge">os.listdir</code>读取进来，然后使用<code class="language-plaintext highlighter-rouge">fnmatch.fnmatchcase</code>方法进行匹配，如果匹配成功则输出。其中<code class="language-plaintext highlighter-rouge">pattern = str(i) + '_HandPhone_Keyboard_*.csv'</code>是进行匹配的规则，其中*表示后面的所有字符都进行匹配。</p>
+<p>代码中主要的就是使用字符串进行拼接出来路径，然后进行读取文件。对于<code class="language-plaintext highlighter-rouge">fnmatch</code>，实现的方法为首先目录中的所有文件名使用<code class="language-plaintext highlighter-rouge">os.listdir</code>读取进来，然后使用<code class="language-plaintext highlighter-rouge">fnmatch.fnmatchcase</code>方法进行匹配，如果匹配成功则输出。其中<code class="language-plaintext highlighter-rouge">pattern = str(i) + '_HandPhone_Keyboard_*.csv'</code>是匹配规则，其中*表示后面的所有字符都进行匹配。</p>
 
-<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env python 
-# -*- coding:utf-8 -*-
-# author: Seven time: 2020/5/15 
-# Describe : 进行读取数据。
-</span>
-<span class="kn">import</span> <span class="nn">random</span>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">random</span>
 <span class="kn">import</span> <span class="nn">fnmatch</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
@@ -273,7 +268,7 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
         <span class="c1"># 设置过滤条件，进行匹配需要的数据，* 表示任意匹配
 </span>        <span class="n">pattern</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">'_HandPhone_Keyboard_*.csv'</span>
         <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
-            <span class="c1"># 因为有很多的路径，所以需要读取到的本地路径与 pattern有没有匹配，匹配成功的是需要的
+            <span class="c1"># 进行正则匹配
 </span>            <span class="k">if</span> <span class="n">fnmatch</span><span class="p">.</span><span class="n">fnmatchcase</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">pattern</span><span class="p">):</span>
                 <span class="c1"># 获取到需要的数据。
 </span>                <span class="n">path</span> <span class="o">=</span> <span class="n">base_path</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">name</span>
