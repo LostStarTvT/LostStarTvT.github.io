@@ -328,7 +328,7 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 # @Time    : 2020/12/12 19:35
 # @Author  : JayStars
 # @Software: PyCharm
-# @Describe: 爬虫保存海贼王图片全集。 爬取的网站主站 http://www.mangabz.com/ 
+# @Describe: 下载海贼王图片全集保存。 http://www.mangabz.com/ 自动化全部跑下载。
 </span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
@@ -341,9 +341,13 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 <span class="kn">from</span> <span class="nn">selenium.webdriver</span> <span class="kn">import</span> <span class="n">ActionChains</span>
 <span class="kn">from</span> <span class="nn">selenium.webdriver.support.wait</span> <span class="kn">import</span> <span class="n">WebDriverWait</span>
 
-<span class="c1"># 获取图片下载链接
-</span><span class="k">def</span> <span class="nf">getPicDLUrl</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
-
+<span class="k">def</span> <span class="nf">getPicDLUrl</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+    <span class="s">"""
+    获取一话漫画的所有图片下载链接。
+    :param base:  某一话的链接
+    :param number: 该话有多少页数。
+    :return: 返回该话的所有图片下载链接
+    """</span>
     <span class="n">base</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="s">"#ipg"</span>
     <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
     <span class="c1"># 根据css 解析对应的url
@@ -358,54 +362,42 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </span>        <span class="n">ActionChains</span><span class="p">(</span><span class="n">driver</span><span class="p">).</span><span class="n">click</span><span class="p">(</span><span class="n">_click</span><span class="p">).</span><span class="n">perform</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">_urlList</span>
 
-<span class="c1"># 获取到所有的下载链接，直接复制保存到txt文档中。
-</span><span class="k">def</span> <span class="nf">getBaseUrl</span><span class="p">():</span>
-    <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.mangabz.com/139bz/'</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_elements_by_css_selector</span><span class="p">(</span><span class="s">'a.detail-list-form-item'</span><span class="p">):</span>
-        <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"download-index.txt"</span><span class="p">,</span><span class="s">'a'</span><span class="p">)</span>
-        <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-        <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'text'</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-
-    <span class="n">path</span> <span class="o">=</span> <span class="s">"./download-index.txt"</span>   <span class="c1">#  控制下载的数据连接，里面保存了多少话，则
-</span>    <span class="n">key</span> <span class="o">=</span> <span class="p">[]</span>    <span class="c1"># 下载链接
+<span class="k">def</span> <span class="nf">DownloadAllPic</span><span class="p">():</span>
+    <span class="s">"""
+    下载download-index.txt中所有的漫画
+    """</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">"./download-index.txt"</span>  <span class="c1"># 读取所有的路径
+</span>    <span class="n">key</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 下载链接
 </span>    <span class="n">value</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># 生成的名称
 </span>    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="n">pattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"\d+P"</span><span class="p">)</span>
     <span class="n">numberPattern</span> <span class="o">=</span> <span class="n">re</span><span class="p">.</span><span class="nb">compile</span><span class="p">(</span><span class="s">"\d+"</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s">'UTF-8'</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s">'UTF-8'</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="n">key</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># 删回车键
+            <span class="n">key</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 删回车键
 </span>            <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="c1"># 使用正则表达式提取出来有多少话，然后就模拟点击多少次。
 </span>            <span class="n">page</span> <span class="o">=</span> <span class="n">numberPattern</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="n">pattern</span><span class="p">.</span><span class="n">findall</span><span class="p">(</span><span class="n">line</span><span class="p">)[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">value</span><span class="p">.</span><span class="n">append</span><span class="p">(</span> <span class="n">line</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">' '</span><span class="o">+</span> <span class="n">page</span><span class="p">)</span>
+            <span class="n">value</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">' '</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">page</span><span class="p">)</span>
             <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
     <span class="c1"># 生成字典。
-</span>    <span class="n">indexDict</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">key</span><span class="p">,</span><span class="n">value</span><span class="p">)</span>
-
+</span>    <span class="n">indexDict</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
     <span class="c1"># 获取主界面的所有的下载界面
 </span>    <span class="n">baseDir</span> <span class="o">=</span> <span class="s">"./onePiece"</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">baseDir</span><span class="p">):</span>
         <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">baseDir</span><span class="p">)</span>
-
-    <span class="c1"># 打开浏览器
-</span>    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">"./dirver/chromedriver.exe"</span><span class="p">)</span>
-    <span class="n">driver</span><span class="p">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 隐形的等待100s  因为不等待的话可能出现还没有获取到资源然后就开始直接的进行下载数据。
-</span>    <span class="n">getBaseUrl</span><span class="p">()</span> <span class="c1">#  在下载之前需要先将所有需要下载的连接保存下来，
-</span>    <span class="k">for</span> <span class="n">url</span> <span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">indexDict</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">url</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">indexDict</span><span class="p">:</span>
         <span class="n">_dir</span> <span class="o">=</span> <span class="n">value</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 获取安装路径
-</span>        <span class="n">_page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># 获取当前话有多少图片需要下载
-</span>        <span class="n">tmpDir</span> <span class="o">=</span> <span class="n">baseDir</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">_dir</span> <span class="c1"># 新建下载名称
+</span>        <span class="n">_page</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">" "</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 获取当前话有多少图片需要下载
+</span>        <span class="n">tmpDir</span> <span class="o">=</span> <span class="n">baseDir</span> <span class="o">+</span> <span class="s">"/"</span> <span class="o">+</span> <span class="n">_dir</span>  <span class="c1"># 新建下载名称
 </span>        <span class="c1"># 创建下载目录
 </span>        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">tmpDir</span><span class="p">):</span>
             <span class="n">os</span><span class="p">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">tmpDir</span><span class="p">)</span>
-        <span class="n">urlList</span> <span class="o">=</span> <span class="n">getPicDLUrl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">_page</span><span class="p">)</span> <span class="c1"># 获取每话的每章图片的下载链接。
+        <span class="n">urlList</span> <span class="o">=</span> <span class="n">getPicDLUrl</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">_page</span><span class="p">)</span>  <span class="c1"># 获取每话的每章图片的下载链接。
 </span>        <span class="c1"># 获取到图片下载链接以后进行图片的下载。
 </span>        <span class="n">session</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">Session</span><span class="p">()</span>
-        <span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'http://'</span><span class="p">,</span><span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span> <span class="c1"># 尝试重试5次，
+        <span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'http://'</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>  <span class="c1"># 尝试重试5次，
 </span>        <span class="n">session</span><span class="p">.</span><span class="n">mount</span><span class="p">(</span><span class="s">'https://'</span><span class="p">,</span> <span class="n">HTTPAdapter</span><span class="p">(</span><span class="n">max_retries</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
         <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
         <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">urlList</span><span class="p">:</span>
@@ -417,10 +409,39 @@ src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
                     <span class="n">f</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">pic</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
                 <span class="n">index</span> <span class="o">=</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
             <span class="k">except</span> <span class="n">requests</span><span class="p">.</span><span class="n">exceptions</span><span class="p">.</span><span class="n">ReadTimeout</span><span class="p">:</span>
-                <span class="n">st</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span> <span class="c1"># 随机休眠
+                <span class="n">st</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>  <span class="c1"># 随机休眠
 </span>                <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">st</span><span class="p">)</span>
         <span class="k">print</span><span class="p">(</span><span class="s">"下载好"</span> <span class="o">+</span> <span class="n">_dir</span><span class="p">)</span>
-        <span class="n">driver</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>      <span class="c1"># 关闭浏览器
+
+
+<span class="k">def</span> <span class="nf">getAllDownLoadUrl</span><span class="p">():</span>
+    <span class="s">"""
+    获取对应漫画的所有话的连接。 存储到download.txt文件中。
+    :return:
+    """</span>
+    <span class="n">driver</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="s">'http://www.mangabz.com/139bz/'</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">driver</span><span class="p">.</span><span class="n">find_elements_by_css_selector</span><span class="p">(</span><span class="s">'detail-list-form-con'</span><span class="p">):</span>
+        <span class="nb">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">"download.txt"</span><span class="p">,</span> <span class="s">'a'</span><span class="p">)</span> <span class="c1"># a 追加模式
+</span>        <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'href'</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+        <span class="nb">file</span><span class="p">.</span><span class="n">write</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">get_attribute</span><span class="p">(</span><span class="s">'text'</span><span class="p">)</span> <span class="o">+</span> <span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
+    <span class="s">"""
+    使用说明： 
+    1， 首先，使用getAllDownLoadUrl()获取所有的画的下载链接，其被保存到download.txt中。
+    2， 其次，将getAllDownLoadUrl()方法注释掉，并将download.txt中的下载链接复制到download-index.txt中。
+    3， 最后，调用DownloadAllPic()方法下载所有画。
+    """</span>
+    <span class="n">driver</span> <span class="o">=</span> <span class="n">webdriver</span><span class="p">.</span><span class="n">Chrome</span><span class="p">(</span><span class="s">"./dirver/chromedriver.exe"</span><span class="p">)</span>
+    <span class="n">driver</span><span class="p">.</span><span class="n">implicitly_wait</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># 隐形的等待100s  因为不等待的话可能出现还没有获取到资源然后就开始直接的进行下载数据。
+</span>
+    <span class="c1"># 获取所有话的下载连接
+</span>    <span class="n">getAllDownLoadUrl</span><span class="p">()</span>
+
+    <span class="c1"># 下载每一话。
+</span>    <span class="c1">#DownloadAllPic()
+</span>    <span class="n">driver</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>  <span class="c1"># 关闭浏览器
 </span></code></pre></div></div>
 
 <p>download-index.txt 文件内容：</p>
