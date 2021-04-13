@@ -1222,11 +1222,9 @@ worker_processes  1&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;c&quot;&gt;#pid        logs/nginx.pid;&lt;/span&gt;
 
-
 events &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     worker_connections  1024&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
 
 http &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
     include       mime.types&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
